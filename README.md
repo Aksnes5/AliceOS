@@ -1,6 +1,6 @@
-# AliceOS (Linux Kernel Edition)
+# AliceOS 
 
-基于 Web + Electron 的桌面仿真操作系统环境，底层换装 **Linux 6.10 虚拟内核**，完全支持在 Windows 环境下直接运行与打包为 Windows `.exe` 可执行程序。
+基于 Web + Electron 的桌面仿真操作系统环境，底层为 **Linux 6.10 虚拟内核**，完全支持在 Windows 环境下直接运行与打包为 Windows `.exe` 可执行程序。
 
 ## 内核特性 (Linux Kernel Subsystem)
 - **进程管理 (`src/kernel/pm.js`)**：Linux `task_struct` 进程数据结构，内置 PID 1 `systemd` 与 PID 2 `kthreadd`，支持 Linux `ps aux` 状态监控。
