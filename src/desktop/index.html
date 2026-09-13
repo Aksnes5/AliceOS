@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AliceOS - 桌面操作系统</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Boot Screen -->
+  <div id="boot-screen" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background-color:black;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;transition:opacity 1s ease;">
+    <div style="font-size:80px;margin-bottom:40px;"></div>
+    <div style="width:200px;height:4px;background-color:#333;border-radius:2px;overflow:hidden;">
+      <div id="boot-progress" style="width:0%;height:100%;background-color:white;transition:width 1.5s linear;"></div>
+    </div>
+  </div>
+
+  <!-- Screensaver -->
+  <div id="screensaver" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background-color:black;z-index:9998;display:none;">
+    <div id="ss-logo" style="position:absolute;font-size:50px;font-weight:bold;color:lime;text-shadow:0 0 10px lime;">AliceOS</div>
+  </div>
+
+  <!-- BSOD -->
+  <div id="bsod" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background-color:#0000aa;color:white;z-index:10000;display:none;font-family:monospace;padding:50px;box-sizing:border-box;">
+    <div style="background:white;color:#0000aa;display:inline-block;padding:2px 8px;font-weight:bold;margin-bottom:20px;">AliceOS</div>
+    <p>A fatal exception 0E has occurred at 0028:C0011E36 in VXD VMM(01) + 00010E36.</p>
+    <p>The current application will be terminated.</p>
+    <p>* Press any key to terminate the current application.<br>* Press CTRL+ALT+DEL again to restart your computer. You will lose any unsaved information in all applications.</p>
+    <p style="text-align:center;margin-top:50px;">Press any key to continue _</p>
+  </div>
+
+  <!-- macOS Solar Dynamic Wallpaper Stack -->
+  <div id="dynamic-wallpaper-layer" class="dynamic-wallpaper-layer"></div>
+  <div id="dynamic-wallpaper-overlay" class="dynamic-wallpaper-overlay"></div>
+
+  <!-- Notification Container -->
+  <div id="notification-container" class="notification-container"></div>
+
+  <!-- Desktop Icons Grid -->
+  <div id="desktop-grid" class="desktop-grid">
+    <!-- Populated by JS -->
+  </div>
+
+  <!-- Alice Siri-Style Voice Orb Overlay -->
+  <div id="alice-orb-overlay" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.7);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);z-index:9000;display:none;flex-direction:column;align-items:center;justify-content:center;opacity:0;transition:opacity 0.5s ease;">
+    <div id="alice-orb-text" data-i18n="ai_orb_help" style="position:absolute;top:25%;width:80%;text-align:center;font-size:64px;font-weight:200;color:white;text-shadow:0 0 20px rgba(255,255,255,0.5);">请问有什么可以帮您？</div>
+    <div id="alice-orb" style="position:absolute;bottom:20%;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle at 30% 30%, #ff00cc, #333399);box-shadow:0 0 50px #ff00cc, inset 0 0 50px #333399;transition:all 0.1s;cursor:pointer;"></div>
+  </div>
+
+  <!-- macOS Quick Look Overlay & Multi-File Carousel -->
+  <div id="quick-look-overlay" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.4);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);z-index:8500;display:none;align-items:center;justify-content:center;opacity:0;transition:opacity 0.22s ease;padding:40px;box-sizing:border-box;">
+    <div id="quick-look-box" class="quick-look-window">
+      <!-- Quick Look macOS Window Header -->
+      <div class="quick-look-header">
+        <div class="quick-look-controls">
+          <button class="ql-btn ql-close-btn" onclick="toggleQuickLook()" title="关闭 (空格或 Esc)" data-i18n-title="ql_close">✕</button>
+        </div>
+        <div class="quick-look-nav">
+          <button class="ql-nav-btn" id="ql-prev-btn" onclick="quickLookNavigate(-1)" title="上一个文件" data-i18n-title="ql_prev">‹</button>
+          <div class="ql-title-group">
+            <span id="quick-look-title" data-i18n="ql_preview">快速查看</span>
+            <span id="quick-look-counter" class="ql-counter-pill">1 of 1</span>
+          </div>
+          <button class="ql-nav-btn" id="ql-next-btn" onclick="quickLookNavigate(1)" title="下一个文件" data-i18n-title="ql_next">›</button>
+        </div>
+        <div class="quick-look-actions">
+          <button class="ql-action-btn" id="ql-open-btn" onclick="quickLookOpenInApp()" title="Open in native app" data-i18n="ql_open_app">打开应用 ↗</button>
+        </div>
+      </div>
+      <!-- Quick Look Body Viewport -->
+      <div id="quick-look-content" class="quick-look-viewport">
+      </div>
+      <!-- Quick Look Footer Info Bar -->
+      <div class="quick-look-footer" id="quick-look-footer">
+        <span class="ql-meta-tag" id="ql-meta-kind" data-i18n="finder_plain_text">纯文本文稿</span>
+        <span class="ql-meta-tag" id="ql-meta-size">-- KB</span>
+        <span class="ql-meta-tag" id="ql-meta-date" data-i18n="ql_modified_today">今天修改</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- macOS Sonoma Desktop Widgets -->
+  <div id="desktop-widgets" style="position:fixed;top:60px;right:40px;width:300px;display:flex;flex-direction:column;gap:20px;z-index:5;transition:opacity 0.4s, filter 0.4s;pointer-events:none;">
+    <!-- Empty widgets placeholder when all widgets are removed -->
+    <div id="widgets-empty-placeholder" class="widgets-empty-placeholder" onclick="openWidgetGallery()">
+      <span>🧩</span> <span data-i18n="w_empty_prompt">+ 点击打开小组件库添加</span>
+    </div>
+
+    <!-- Clock Widget -->
+    <div class="sonoma-widget" id="widget-clock" data-widget-type="clock" onclick="cycleWidgetClockCity()" oncontextmenu="openWidgetContextMenu(event, this)" title="Click to cycle world cities" style="background:rgba(255,255,255,0.12);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);border-radius:24px;padding:20px;box-shadow:0 10px 30px rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.2);color:white;pointer-events:auto;cursor:pointer;">
+      <div class="widget-action-group">
+        <button class="widget-action-btn widget-change-btn" onclick="cycleWidget(this.closest('.sonoma-widget'), event)" title="更换小组件">🔄</button>
+        <button class="widget-action-btn widget-close-btn" onclick="removeWidget(this.closest('.sonoma-widget'), event)" title="关闭/删除小组件">✕</button>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+        <span id="widget-clock-city" style="font-size:14px;font-weight:600;opacity:0.85;">Cupertino</span>
+        <span id="widget-clock-tz" style="font-size:11px;opacity:0.6;font-weight:600;">CUP (UTC-7)</span>
+      </div>
+      <div id="widget-time" style="font-size:46px;font-weight:200;letter-spacing:-1.5px;line-height:1;">12:00:00</div>
+      <div id="widget-clock-date" data-i18n="qn_today" style="font-size:11px;opacity:0.65;margin-top:6px;">今天</div>
+    </div>
+    
+    <!-- Weather Widget -->
+    <div class="sonoma-widget" id="widget-weather" data-widget-type="weather" onclick="cycleWidgetWeatherCity()" oncontextmenu="openWidgetContextMenu(event, this)" title="Click to cycle cities" style="background:rgba(0,0,0,0.25);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);border-radius:24px;padding:20px;box-shadow:0 10px 30px rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.15);color:white;display:flex;align-items:center;pointer-events:auto;cursor:pointer;">
+      <div class="widget-action-group">
+        <button class="widget-action-btn widget-change-btn" onclick="cycleWidget(this.closest('.sonoma-widget'), event)" title="更换小组件">🔄</button>
+        <button class="widget-action-btn widget-close-btn" onclick="removeWidget(this.closest('.sonoma-widget'), event)" title="关闭/删除小组件">✕</button>
+      </div>
+      <div style="flex:1;">
+        <div id="widget-weather-city" style="font-size:14px;font-weight:600;opacity:0.9;">Cupertino</div>
+        <div id="widget-weather-temp" style="font-size:36px;font-weight:300;line-height:1.1;">72°</div>
+        <div id="widget-weather-cond" style="font-size:11px;opacity:0.7;margin-top:2px;">Mostly Sunny • H:75° L:55°</div>
+      </div>
+      <div id="widget-weather-icon" class="weather-icon-anim" style="font-size:48px;text-shadow:0 2px 12px rgba(0,0,0,0.5);">☀️</div>
+    </div>
+    
+    <!-- System Activity Widget -->
+    <div class="sonoma-widget" id="widget-sys" data-widget-type="sys" onclick="cycleWidgetSysMode()" oncontextmenu="openWidgetContextMenu(event, this)" title="Click to toggle view" style="background:rgba(255,255,255,0.12);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);border-radius:24px;padding:20px;box-shadow:0 10px 30px rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.2);color:white;pointer-events:auto;cursor:pointer;">
+      <div class="widget-action-group">
+        <button class="widget-action-btn widget-change-btn" onclick="cycleWidget(this.closest('.sonoma-widget'), event)" title="更换小组件">🔄</button>
+        <button class="widget-action-btn widget-close-btn" onclick="removeWidget(this.closest('.sonoma-widget'), event)" title="关闭/删除小组件">✕</button>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div style="font-size:13px;font-weight:600;opacity:0.9;display:flex;align-items:center;gap:6px;"><span>📈</span> <span id="widget-sys-title" data-i18n="app_hostinfo">系统性能</span></div>
+        <span id="widget-sys-badge" style="font-size:10px;font-weight:700;background:rgba(52,199,89,0.25);color:#34c759;padding:2px 6px;border-radius:6px;">NORMAL</span>
+      </div>
+      <div style="display:flex;gap:15px;">
+        <div style="flex:1;height:6px;background:rgba(255,255,255,0.2);border-radius:3px;overflow:hidden;">
+          <div id="widget-cpu-bar" style="width:24%;height:100%;background:#34c759;border-radius:3px;transition:width 0.8s ease;"></div>
+        </div>
+        <div style="flex:1;height:6px;background:rgba(255,255,255,0.2);border-radius:3px;overflow:hidden;">
+          <div id="widget-ram-bar" style="width:36%;height:100%;background:#007aff;border-radius:3px;transition:width 0.8s ease;"></div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;opacity:0.75;margin-top:6px;">
+        <span id="widget-cpu-lbl">CPU: 24%</span>
+        <span id="widget-ram-lbl">RAM: 5.8 GB</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Context Menu -->
+  <div id="desktop-context-menu" class="context-menu">
+    <div class="context-menu-item" onclick="createNewFolder()" data-i18n="ctx_new_folder">新建文件夹</div>
+    <div class="context-menu-item" onclick="createNewTextFile()" data-i18n="ctx_new_file">新建文本文件</div>
+    <div class="context-menu-item" onclick="createStickyNote()" data-i18n="ctx_new_sticky">新建便签</div>
+    <div class="context-menu-item" id="ctx-stacks-toggle" onclick="toggleDesktopStacks()" data-i18n="ctx_use_stacks">🥞 使用叠放</div>
+    <div class="context-menu-item" onclick="openWidgetGallery()" data-i18n="ctx_edit_widgets">🧩 编辑小组件...</div>
+    <div class="context-menu-item" onclick="toggleDesktopWidgets()"><span id="ctx-toggle-widgets-label" data-i18n="ctx_toggle_widgets">👁️ 隐藏桌面小组件</span></div>
+    <div class="context-menu-item" onclick="openAirDrop()" data-i18n="ctx_airdrop">📡 隔空投送...</div>
+    <div class="context-separator"></div>
+    <div class="context-menu-item" onclick="launchSettings()" data-i18n="ctx_wallpaper">更改壁纸...</div>
+    <div class="context-separator"></div>
+    <div class="context-menu-item" onclick="launchSystemInfo()" data-i18n="ctx_about">关于 AliceOS</div>
+  </div>
+
+  <!-- Widget Context Menu -->
+  <div id="widget-context-menu" class="context-menu" style="display:none;z-index:9999;">
+    <div class="context-menu-item" id="w-ctx-remove-btn" onclick="removeActiveWidget()">
+      <span>🗑️</span> <span data-i18n="w_ctx_remove">移除小组件</span>
+    </div>
+    <div class="context-separator"></div>
+    <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.45);padding:4px 14px 2px 14px;text-transform:uppercase;" data-i18n="w_ctx_replace_title">更换为...</div>
+    <div class="context-menu-item" onclick="replaceActiveWidget('clock')">
+      <span>🕒</span> <span data-i18n="w_type_clock">世界时钟</span>
+    </div>
+    <div class="context-menu-item" onclick="replaceActiveWidget('weather')">
+      <span>⛅</span> <span data-i18n="w_type_weather">天气预报</span>
+    </div>
+    <div class="context-menu-item" onclick="replaceActiveWidget('sys')">
+      <span>📈</span> <span data-i18n="w_type_sys">系统性能</span>
+    </div>
+    <div class="context-menu-item" onclick="replaceActiveWidget('battery')">
+      <span>🔋</span> <span data-i18n="w_type_battery">电池电量</span>
+    </div>
+    <div class="context-menu-item" onclick="replaceActiveWidget('calendar')">
+      <span>📅</span> <span data-i18n="w_type_calendar">日历日程</span>
+    </div>
+    <div class="context-menu-item" onclick="replaceActiveWidget('music')">
+      <span>🎵</span> <span data-i18n="w_type_music">音乐播放</span>
+    </div>
+    <div class="context-separator"></div>
+    <div class="context-menu-item" onclick="openWidgetGallery()">
+      <span>🧩</span> <span data-i18n="ctx_edit_widgets">编辑小组件...</span>
+    </div>
+    <div class="context-menu-item" onclick="toggleDesktopWidgets()">
+      <span>👁️</span> <span id="w-ctx-toggle-label" data-i18n="w_ctx_toggle_hide">隐藏桌面小组件</span>
+    </div>
+  </div>
+
+  <!-- macOS Sonoma / iOS 17 Style Lock Screen -->
+  <div id="login-screen" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9500;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;transition:transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease, filter 0.5s ease;user-select:none;overflow:hidden;">
+    <!-- Live Sonoma Aerial Motion Backdrop -->
+    <div id="lock-aerial-bg" class="aerial-landscape-motion"></div>
+    <div style="position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 50% 35%, rgba(0,0,0,0.18), rgba(0,0,0,0.6));backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px);pointer-events:none;z-index:0;"></div>
+    
+    <!-- Lock Header Group: Glyph, Typographic Clock & Widgets -->
+    <div id="lock-header-group" style="position:absolute;top:6%;display:flex;flex-direction:column;align-items:center;z-index:1;transition:all 0.55s cubic-bezier(0.16, 1, 0.3, 1);">
+      <!-- Lock Glyph Status -->
+      <div id="lock-glyph" style="font-size:24px;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.4));transition:transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);margin-bottom:6px;">🔒</div>
+      
+      <!-- Big Typographic Sonoma Clock -->
+      <div id="lock-time" style="font-size:96px;font-weight:200;text-shadow:0 4px 20px rgba(0,0,0,0.4);font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;letter-spacing:-2px;line-height:1;">12:00</div>
+      <div id="lock-date" style="font-size:20px;font-weight:400;text-shadow:0 2px 10px rgba(0,0,0,0.4);font-family:-apple-system, sans-serif;opacity:0.9;margin-top:6px;">Monday, January 1</div>
+
+      <!-- Lock Screen Widgets Row -->
+      <div id="lock-widgets" style="display:flex;gap:12px;opacity:0.85;margin-top:14px;">
+        <div style="background:rgba(255,255,255,0.14);backdrop-filter:blur(10px);padding:6px 14px;border-radius:20px;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;border:1px solid rgba(255,255,255,0.2);">
+          <span>🔋</span><span>100%</span>
+        </div>
+        <div style="background:rgba(255,255,255,0.14);backdrop-filter:blur(10px);padding:6px 14px;border-radius:20px;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;border:1px solid rgba(255,255,255,0.2);">
+          <span>📅</span><span data-i18n="lock_no_events">今天无日程</span>
+        </div>
+        <div style="background:rgba(255,255,255,0.14);backdrop-filter:blur(10px);padding:6px 14px;border-radius:20px;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;border:1px solid rgba(255,255,255,0.2);">
+          <span>⭕</span><span>740/500 CAL</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Center User Avatar & Password Box -->
+    <div id="login-box" style="display:flex;flex-direction:column;align-items:center;margin-top:130px;z-index:1;transition:all 0.45s cubic-bezier(0.16, 1, 0.3, 1);">
+      <div style="width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:55px;margin-bottom:15px;box-shadow:0 10px 30px rgba(0,0,0,0.35);border:2px solid rgba(255,255,255,0.2);cursor:pointer;" id="login-avatar" onclick="triggerFaceID()" title="Click to unlock with Face ID">👩‍💻</div>
+      
+      <select id="login-user-select" style="font-size:22px;margin-bottom:20px;font-weight:600;background:transparent;border:none;color:white;outline:none;cursor:pointer;text-align:center;text-shadow:0 2px 8px rgba(0,0,0,0.5);appearance:none;-webkit-appearance:none;">
+        <option value="alice" style="color:black;">Alice</option>
+        <option value="guest" style="color:black;">Guest</option>
+      </select>
+      
+      <div id="login-input-row" style="display:flex;align-items:center;background:rgba(255,255,255,0.2);border-radius:24px;padding:3px;border:1px solid rgba(255,255,255,0.3);box-shadow:0 4px 15px rgba(0,0,0,0.2);backdrop-filter:blur(15px);">
+        <input type="password" id="login-password" placeholder="输入密码" data-i18n-placeholder="lock_enter_password" style="padding:10px 16px;width:180px;border:none;outline:none;background:transparent;color:white;font-size:14px;text-align:center;font-family:inherit;">
+        <button onclick="loginUser()" style="width:34px;height:34px;border-radius:50%;border:none;background:rgba(255,255,255,0.35);color:white;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-right:2px;transition:all 0.2s;font-size:14px;">➜</button>
+      </div>
+      <div onclick="triggerFaceID()" style="cursor:pointer;display:flex;align-items:center;gap:6px;margin-top:14px;font-size:12px;opacity:0.85;background:rgba(255,255,255,0.12);padding:6px 14px;border-radius:16px;border:1px solid rgba(255,255,255,0.2);transition:all 0.2s;" onmouseenter="this.style.opacity='1';this.style.background='rgba(255,255,255,0.2)'" onmouseleave="this.style.opacity='0.85';this.style.background='rgba(255,255,255,0.12)'">
+        <span>🙂</span> <span id="faceid-prompt-text" data-i18n="lock_faceid_btn">面容 ID 或输入密码</span>
+      </div>
+    </div>
+
+    <!-- iOS Face ID Biometric HUD Modal -->
+    <div id="faceid-modal">
+      <div class="faceid-frame" id="faceid-icon-container">
+        <div class="faceid-corner faceid-tl"></div>
+        <div class="faceid-corner faceid-tr"></div>
+        <div class="faceid-corner faceid-bl"></div>
+        <div class="faceid-corner faceid-br"></div>
+        <span id="faceid-glyph-icon" style="font-size:26px;transition:transform 0.2s ease;">🙂</span>
+      </div>
+      <div id="faceid-status-text" data-i18n="lock_faceid_title" style="font-size:12px;margin-top:10px;font-weight:600;letter-spacing:0.5px;">面容 ID</div>
+    </div>
+
+    <!-- Bottom Quick Action Buttons (iOS Flashlight & Camera) -->
+    <div style="position:absolute;bottom:40px;left:50px;width:50px;height:50px;border-radius:50%;background:rgba(0,0,0,0.35);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,0.3);transition:transform 0.15s ease;" onmousedown="this.style.transform='scale(0.92)'" onmouseup="this.style.transform='scale(1)'" onclick="toggleFlashlight()" title="手电筒" data-i18n-title="lock_flashlight">
+      🔦
+    </div>
+    <div style="position:absolute;bottom:40px;right:50px;width:50px;height:50px;border-radius:50%;background:rgba(0,0,0,0.35);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,0.3);transition:transform 0.15s ease;" onmousedown="this.style.transform='scale(0.92)'" onmouseup="this.style.transform='scale(1)'" onclick="launchCamera()" title="相机" data-i18n-title="lock_camera">
+      📷
+    </div>
+  </div>
+
+  <!-- iOS Flashlight Torch Overlay -->
+  <div id="flashlight-overlay" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(255,255,255,0.98);z-index:9998;display:none;opacity:0;transition:opacity 0.3s ease;pointer-events:none;"></div>
+
+  <!-- Launchpad Overlay -->
+  <div id="launchpad" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background-color:rgba(0,0,0,0.6);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);z-index:3000;display:none;flex-wrap:wrap;align-content:flex-start;justify-content:center;padding:100px;gap:40px;opacity:0;transition:opacity 0.3s ease;">
+    <!-- Filled via JS -->
+  </div>
+
+  <!-- iOS / macOS Launchpad Folder Expansion View -->
+  <div id="launchpad-folder-modal" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.45);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);z-index:3500;display:none;align-items:center;justify-content:center;opacity:0;transition:opacity 0.25s ease;">
+    <div id="launchpad-folder-card" style="width:460px;background:rgba(255,255,255,0.22);backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);border-radius:28px;border:1px solid rgba(255,255,255,0.3);box-shadow:0 25px 65px rgba(0,0,0,0.45);padding:30px;display:flex;flex-direction:column;align-items:center;transform:scale(0.8);transition:transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+      <div id="launchpad-folder-title" data-i18n="finder_folder" style="font-size:26px;font-weight:600;color:white;margin-bottom:25px;text-shadow:0 2px 10px rgba(0,0,0,0.5);">文件夹</div>
+      <div id="launchpad-folder-grid" style="display:grid;grid-template-columns:repeat(3, 1fr);gap:24px;width:100%;justify-items:center;">
+        <!-- Filled by folder apps -->
+      </div>
+    </div>
+  </div>
+
+  <!-- macOS App Switcher HUD (Cmd+Tab / Alt+Tab) -->
+  <div id="app-switcher-hud" style="position:fixed;top:50%;left:50%;transform:translate(-50%, -50%) scale(0.9);background:rgba(30,30,30,0.78);backdrop-filter:blur(35px);-webkit-backdrop-filter:blur(35px);border-radius:20px;border:1px solid rgba(255,255,255,0.2);box-shadow:0 25px 65px rgba(0,0,0,0.6);display:none;padding:16px 22px;gap:14px;align-items:center;z-index:9999;opacity:0;transition:all 0.18s cubic-bezier(0.16, 1, 0.3, 1);user-select:none;">
+    <!-- Filled dynamically by running windows -->
+  </div>
+
+  <!-- Spotlight Search Overlay -->
+  <div id="spotlight" style="position:fixed;top:20vh;left:50%;transform:translateX(-50%);width:500px;background:rgba(255,255,255,0.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.5);z-index:4000;display:none;flex-direction:column;opacity:0;transition:opacity 0.2s ease;">
+    <input type="text" id="spotlight-input" placeholder="聚焦搜索" data-i18n-placeholder="spotlight_placeholder" style="width:100%;background:transparent;border:none;outline:none;font-size:24px;padding:15px 20px;box-sizing:border-box;color:#333;font-weight:300;">
+    <div id="spotlight-results" style="max-height:300px;overflow-y:auto;border-top:1px solid rgba(0,0,0,0.1);display:none;"></div>
+  </div>
+
+  <!-- iOS AirDrop Modal Overlay -->
+  <div id="airdrop-modal" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.35);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);z-index:8600;display:none;align-items:center;justify-content:center;opacity:0;transition:opacity 0.25s ease;">
+    <div style="width:480px;background:rgba(255,255,255,0.88);backdrop-filter:blur(30px);border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.4);overflow:hidden;font-family:-apple-system, sans-serif;color:#1d1d1f;display:flex;flex-direction:column;">
+      <div style="padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(0,0,0,0.08);">
+        <div style="font-weight:700;font-size:16px;display:flex;align-items:center;gap:8px;">
+          <span style="font-size:20px;">📡</span> <span data-i18n="ctx_airdrop">📡 隔空投送...</span>
+        </div>
+        <button onclick="closeAirDrop()" style="background:rgba(0,0,0,0.06);border:none;border-radius:50%;width:26px;height:26px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;color:#666;">✕</button>
+      </div>
+
+      <div style="position:relative;height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;background:radial-gradient(circle, rgba(0,122,255,0.08) 0%, transparent 70%);">
+        <div class="airdrop-ripple" style="animation-delay: 0s;"></div>
+        <div class="airdrop-ripple" style="animation-delay: 1s;"></div>
+        <div class="airdrop-ripple" style="animation-delay: 2s;"></div>
+
+        <div style="width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#007aff,#5856d6);display:flex;align-items:center;justify-content:center;font-size:28px;color:white;box-shadow:0 4px 15px rgba(0,122,255,0.4);z-index:2;">
+          👩‍💻
+        </div>
+        <div style="margin-top:10px;font-size:13px;font-weight:600;z-index:2;" data-i18n="airdrop_this_mac">Alice（这台 Mac）</div>
+        <div style="font-size:11px;opacity:0.6;z-index:2;" data-i18n="airdrop_scanning">正在扫描附近的设备...</div>
+      </div>
+
+      <div style="padding:16px 20px;border-top:1px solid rgba(0,0,0,0.08);background:rgba(255,255,255,0.5);">
+        <div style="font-size:12px;font-weight:600;opacity:0.6;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px;" data-i18n="airdrop_devices">附近的 Apple 设备</div>
+        <div style="display:flex;gap:16px;justify-content:center;">
+          <div class="airdrop-target" onclick="sendAirDrop('Alice\'s iPhone 16 Pro', '📱')" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;padding:10px 14px;border-radius:12px;transition:background 0.2s;">
+            <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#34c759,#30b0c7);display:flex;align-items:center;justify-content:center;font-size:24px;color:white;box-shadow:0 3px 10px rgba(0,0,0,0.15);">📱</div>
+            <div style="font-size:11px;font-weight:600;text-align:center;max-width:80px;">iPhone 16 Pro</div>
+            <div style="font-size:10px;color:#34c759;font-weight:500;" data-i18n="airdrop_ready">就绪</div>
+          </div>
+          <div class="airdrop-target" onclick="sendAirDrop('MacBook Pro M3 Max', '💻')" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;padding:10px 14px;border-radius:12px;transition:background 0.2s;">
+            <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#af52de,#ff2d55);display:flex;align-items:center;justify-content:center;font-size:24px;color:white;box-shadow:0 3px 10px rgba(0,0,0,0.15);">💻</div>
+            <div style="font-size:11px;font-weight:600;text-align:center;max-width:80px;">MacBook Pro</div>
+            <div style="font-size:10px;color:#34c759;font-weight:500;" data-i18n="airdrop_ready">就绪</div>
+          </div>
+          <div class="airdrop-target" onclick="sendAirDrop('Alice\'s iPad Pro M4', '📲')" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;padding:10px 14px;border-radius:12px;transition:background 0.2s;">
+            <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#ff9500,#ffcc00);display:flex;align-items:center;justify-content:center;font-size:24px;color:white;box-shadow:0 3px 10px rgba(0,0,0,0.15);">📲</div>
+            <div style="font-size:11px;font-weight:600;text-align:center;max-width:80px;">iPad Pro M4</div>
+            <div style="font-size:10px;color:#34c759;font-weight:500;" data-i18n="airdrop_ready">就绪</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Menu Bar -->
+  <div class="menubar" id="top-menubar">
+    <div class="menubar-left">
+      <div class="menu-item bold" id="apple-menu-btn"> AliceOS</div>
+      <div class="menu-item" id="menu-file-btn" onclick="toggleTopMenu(event, 'file-menu')" data-i18n="menu_file">文件</div>
+      <div class="menu-item" id="menu-edit-btn" onclick="toggleTopMenu(event, 'edit-menu')" data-i18n="menu_edit">编辑</div>
+      <div class="menu-item" id="menu-view-btn" onclick="toggleTopMenu(event, 'view-menu')" data-i18n="menu_view">显示</div>
+      <div class="menu-item" id="menu-help-btn" onclick="toggleTopMenu(event, 'help-menu')" data-i18n="menu_help">帮助</div>
+    </div>
+    <div class="menubar-drag-spacer" id="menubar-drag-spacer"></div>
+    <div class="menubar-right">
+      <!-- Language Switcher Item -->
+      <div class="menu-item" id="lang-btn" onclick="toggleLanguagePopover(event)" style="cursor:pointer;font-size:12px;font-weight:600;display:flex;align-items:center;gap:4px;" title="Language / 语言 / 言語">
+        <span>🌐</span> <span id="current-lang-label">中</span>
+      </div>
+      <!-- macOS Sound Output Item -->
+      <div class="menu-item" id="sound-btn" onclick="toggleSoundPopover()" style="cursor:pointer;font-size:13px;" title="Sound Output">🔊</div>
+      <!-- macOS Battery Status -->
+      <div class="menu-item" id="battery-btn" onclick="toggleBatteryPopover()" style="display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer;">
+        <span id="battery-level-icon">🔋</span><span id="battery-level-pct">98%</span>
+      </div>
+      <div class="menu-item" id="ai-btn" onclick="toggleAssistant()">✨</div>
+      <div class="menu-item" id="cc-btn">🎛️</div>
+      <div class="menu-item" id="time-display" onclick="toggleNotificationCenter()" style="cursor:pointer;padding:0 15px;">00:00</div>
+    </div>
+  </div>
+
+  <!-- macOS Language Popover -->
+  <div id="lang-popover" class="lang-popover" onclick="event.stopPropagation()">
+    <div style="font-weight:700;font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:8px;letter-spacing:0.5px;" data-i18n="lang_popover_title">首选语言</div>
+    <div class="lang-popover-item" id="lang-opt-en" onclick="setSystemLanguage('en')">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:16px;">🇺🇸</span>
+        <div>
+          <div style="font-weight:600;font-size:13px;">English (US)</div>
+          <div style="font-size:10px;opacity:0.6;" data-i18n="lang_sub_en">英文（美国）</div>
+        </div>
+      </div>
+      <span class="lang-check" id="lang-check-en" style="display:none;">✓</span>
+    </div>
+    <div class="lang-popover-item active" id="lang-opt-zh" onclick="setSystemLanguage('zh')">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:16px;">🇨🇳</span>
+        <div>
+          <div style="font-weight:600;font-size:13px;">简体中文</div>
+          <div style="font-size:10px;opacity:0.6;" data-i18n="lang_sub_zh">简体中文</div>
+        </div>
+      </div>
+      <span class="lang-check" id="lang-check-zh">✓</span>
+    </div>
+    <div class="lang-popover-item" id="lang-opt-ja" onclick="setSystemLanguage('ja')">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:16px;">🇯🇵</span>
+        <div>
+          <div style="font-weight:600;font-size:13px;">日本語</div>
+          <div style="font-size:10px;opacity:0.6;" data-i18n="lang_sub_ja">日文</div>
+        </div>
+      </div>
+      <span class="lang-check" id="lang-check-ja" style="display:none;">✓</span>
+    </div>
+    <div style="height:1px;background:rgba(255,255,255,0.1);margin:8px 0;"></div>
+    <div class="lang-popover-footer" onclick="openLanguageSettings()">
+      <span data-i18n="lang_open_settings">语言与地区设置...</span> <span>⚙️</span>
+    </div>
+  </div>
+
+  <!-- macOS Sound / AirPlay Menu Popover -->
+  <div id="sound-popover" class="sound-popover">
+    <div style="font-weight:700;font-size:13px;margin-bottom:8px;color:inherit;" data-i18n="cc_sound">声音</div>
+    <!-- Volume Slider Row -->
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;background:rgba(255,255,255,0.06);padding:8px 12px;border-radius:12px;">
+      <span id="sound-pop-icon" style="font-size:16px;">🔊</span>
+      <input type="range" id="sound-pop-slider" min="0" max="100" value="75" style="flex:1;cursor:pointer;">
+      <span id="sound-pop-pct" style="font-size:12px;font-weight:600;min-width:32px;text-align:right;">75%</span>
+    </div>
+
+    <!-- Output Section -->
+    <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.5);margin-bottom:6px;letter-spacing:0.5px;" data-i18n="cc_output">输出</div>
+    <div class="sound-device-item active" onclick="selectSoundDevice(this, 'MacBook Pro Speakers', '💻')">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="font-size:16px;">💻</span>
+        <div>
+          <div style="font-size:12px;font-weight:600;" data-i18n="cc_macbook_speakers">MacBook Pro 扬声器</div>
+          <div style="font-size:10px;opacity:0.6;" data-i18n="cc_builtin_audio">内置音频</div>
+        </div>
+      </div>
+      <span class="sound-check">✓</span>
+    </div>
+    <div class="sound-device-item" onclick="selectSoundDevice(this, 'Alice\\'s AirPods Pro', '🎧')">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="font-size:16px;">🎧</span>
+        <div>
+          <div style="font-size:12px;font-weight:600;" data-i18n="cc_airpods_pro">Alice 的 AirPods Pro</div>
+          <div style="font-size:10px;opacity:0.6;" data-i18n="cc_anc_active">降噪模式已开启</div>
+        </div>
+      </div>
+      <span class="sound-check" style="display:none;">✓</span>
+    </div>
+    <div class="sound-device-item" onclick="selectSoundDevice(this, 'Living Room HomePod', '📻')">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="font-size:16px;">📻</span>
+        <div>
+          <div style="font-size:12px;font-weight:600;" data-i18n="cc_homepod">客厅 HomePod</div>
+          <div style="font-size:10px;opacity:0.6;" data-i18n="cc_airplay_audio">隔空播放音频</div>
+        </div>
+      </div>
+      <span class="sound-check" style="display:none;">✓</span>
+    </div>
+  </div>
+
+  <!-- macOS Battery Menu Popover -->
+  <div id="battery-popover">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:1px solid rgba(0,0,0,0.08);">
+      <div style="font-weight:700;font-size:14px;" data-i18n="cc_battery">电池</div>
+      <div id="battery-pop-pct" style="font-weight:600;font-size:14px;color:#34c759;">98%</div>
+    </div>
+    <div style="margin-top:10px;font-size:12px;opacity:0.75;" data-i18n="cc_power_source">电源：电池</div>
+    <div style="font-size:11px;opacity:0.6;margin-top:2px;" data-i18n="cc_remaining_time">剩余时间：8小时42分钟</div>
+    
+    <div style="margin-top:12px;padding:10px;background:rgba(0,0,0,0.05);border-radius:10px;display:flex;justify-content:space-between;align-items:center;">
+      <div>
+        <div style="font-weight:600;font-size:12px;" data-i18n="cc_low_power_mode">低电量模式</div>
+        <div style="font-size:10px;opacity:0.6;" data-i18n="cc_low_power_desc">降低耗电量以延长电池续航</div>
+      </div>
+      <input type="checkbox" id="battery-low-power-toggle" onchange="toggleLowPowerMode(this.checked)" style="cursor:pointer;">
+    </div>
+
+    <div style="margin-top:12px;font-size:11px;font-weight:600;opacity:0.6;text-transform:uppercase;" data-i18n="cc_significant_energy">显著耗能的应用</div>
+    <div style="display:flex;align-items:center;gap:8px;margin-top:6px;font-size:12px;">
+      <span>🌐</span><span data-i18n="app_browser">Safari 浏览器</span>
+    </div>
+  </div>
+
+  <!-- macOS Notification Banner Toast Container -->
+  <div id="notification-container" class="notification-container"></div>
+
+  <!-- macOS Notification Center Sidebar -->
+  <div id="nc-sidebar" style="position:fixed;top:30px;right:-400px;width:350px;height:calc(100vh - 30px);background:rgba(0,0,0,0.5);backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);z-index:7900;transition:right 0.4s cubic-bezier(0.25,1,0.3,1);display:flex;flex-direction:column;padding:20px;box-sizing:border-box;overflow-y:auto;gap:15px;color:white;border-left:1px solid rgba(255,255,255,0.1);">
+    <div style="font-size:24px;font-weight:bold;margin-bottom:10px;" data-i18n="nc_title">通知中心</div>
+    <div id="nc-notifications-list" style="display:flex;flex-direction:column;gap:10px;">
+      <!-- Populated dynamically -->
+      <div style="opacity:0.5;font-size:14px;text-align:center;padding:20px 0;" data-i18n="nc_no_notifications">无新通知</div>
+    </div>
+    
+    <div style="font-size:20px;font-weight:bold;margin-top:20px;margin-bottom:10px;" data-i18n="nc_widgets">小组件</div>
+    <!-- Mini Calendar Widget -->
+    <div class="sonoma-widget" style="background:rgba(255,255,255,0.1);border-radius:18px;padding:15px;border:1px solid rgba(255,255,255,0.1);">
+      <div style="color:#ff3b30;font-weight:bold;font-size:14px;margin-bottom:5px;" id="nc-month">SEPTEMBER</div>
+      <div style="font-size:36px;font-weight:300;line-height:1;" id="nc-day">14</div>
+    </div>
+    
+    <!-- Screen Time Widget -->
+    <div class="sonoma-widget" style="background:rgba(255,255,255,0.1);border-radius:18px;padding:15px;border:1px solid rgba(255,255,255,0.1);">
+      <div style="font-weight:bold;font-size:14px;opacity:0.8;margin-bottom:10px;" data-i18n="nc_screen_time">⏳ 屏幕使用时间</div>
+      <div style="font-size:24px;font-weight:bold;">4h 12m</div>
+      <div style="font-size:12px;opacity:0.6;margin-top:5px;" data-i18n="nc_today">今天</div>
+    </div>
+  </div>
+
+  <!-- iOS 17 Dynamic Island with Multi-Activity Fluid Expansion -->
+  <div id="dynamic-island" class="dynamic-island-capsule" onclick="toggleIslandClick(event)">
+    <!-- Compact Pill Mode (Default) -->
+    <div id="island-compact-wrap" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+      <div id="island-content" style="opacity:0;transition:opacity 0.2s;display:flex;align-items:center;gap:15px;width:100%;padding:0 20px;box-sizing:border-box;">
+        <div id="island-icon" style="font-size:24px;">☀️</div>
+        <div style="flex:1;">
+          <div id="island-title" style="font-weight:bold;font-size:14px;" data-i18n="island_brightness">屏幕亮度</div>
+          <div id="island-value" style="width:100%;height:6px;background:rgba(255,255,255,0.2);border-radius:3px;margin-top:5px;overflow:hidden;">
+            <div id="island-bar" style="width:100%;height:100%;background:white;border-radius:3px;"></div>
+          </div>
+        </div>
+      </div>
+      <!-- Mini Live Activity Indicators (Compact state) -->
+      <div id="island-live-activity" style="display:none;align-items:center;justify-content:space-between;width:100%;padding:0 14px;box-sizing:border-box;">
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;">
+          <span id="island-live-icon">🎵</span>
+          <span id="island-live-label" style="font-size:11px;font-weight:600;max-width:70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Alice</span>
+        </div>
+        <div class="eq-container" id="island-live-eq" style="height:12px;gap:2px;">
+          <div class="island-eq-bar"></div>
+          <div class="island-eq-bar"></div>
+          <div class="island-eq-bar"></div>
+          <div class="island-eq-bar"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Expanded Live Activities Container (iOS 17 Fluid Modal) -->
+    <div id="island-expanded-container" style="display:none;width:100%;height:100%;flex-direction:column;opacity:0;transition:opacity 0.25s ease;" onclick="event.stopPropagation()">
+      <!-- Activity Switcher Header -->
+      <div class="island-activity-tabs">
+        <div class="island-act-tab active" id="act-tab-music" onclick="switchIslandTab('music')" data-i18n="island_music">🎵 音乐</div>
+        <div class="island-act-tab" id="act-tab-timer" onclick="switchIslandTab('timer')" data-i18n="island_timer">⏱️ 计时器</div>
+        <div class="island-act-tab" id="act-tab-airdrop" onclick="switchIslandTab('airdrop')" data-i18n="island_airdrop">📡 隔空投送</div>
+        <div class="island-close-btn" onclick="toggleIslandClick(event)" title="Collapse">✕</div>
+      </div>
+
+      <!-- 1. Music Live Activity -->
+      <div id="island-pane-music" class="island-pane active">
+        <div style="display:flex;align-items:center;gap:14px;width:100%;">
+          <div class="island-album-art" id="island-music-art">
+            <span style="font-size:26px;">💿</span>
+          </div>
+          <div style="flex:1;overflow:hidden;">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <div id="island-track-title" style="font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px;">Alice Symphony</div>
+              <!-- Dancing Live EQ Waveform -->
+              <div class="eq-container" style="height:15px;gap:3px;">
+                <div class="island-eq-bar"></div>
+                <div class="island-eq-bar"></div>
+                <div class="island-eq-bar"></div>
+                <div class="island-eq-bar"></div>
+              </div>
+            </div>
+            <div id="island-track-artist" style="font-size:12px;opacity:0.65;margin-top:2px;">Cupertino Soundscape</div>
+            <!-- Scrubber Progress Bar -->
+            <div style="display:flex;align-items:center;gap:8px;margin-top:8px;">
+              <span id="island-track-curr" style="font-size:10px;opacity:0.6;font-family:monospace;">0:45</span>
+              <div id="island-scrubber-track" class="island-scrubber" onclick="seekIslandMusic(event)">
+                <div id="island-scrubber-fill" class="island-scrubber-fill" style="width:35%;"></div>
+              </div>
+              <span id="island-track-dur" style="font-size:10px;opacity:0.6;font-family:monospace;">3:20</span>
+            </div>
+          </div>
+        </div>
+        <!-- Playback Controls & AirPlay Route -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding:0 6px;">
+          <div class="island-airplay-badge">
+            <span>🎧</span> <span data-i18n="cc_airpods_pro">Alice 的 AirPods Pro</span>
+          </div>
+          <div style="display:flex;gap:18px;font-size:16px;align-items:center;">
+            <span class="island-ctrl-btn" onclick="skipTrack(-1)">⏮</span>
+            <span class="island-ctrl-btn play-btn" id="island-play-toggle" onclick="toggleIslandPlayback()">▶</span>
+            <span class="island-ctrl-btn" onclick="skipTrack(1)">⏭</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Timer Live Activity -->
+      <div id="island-pane-timer" class="island-pane" style="display:none;">
+        <div style="display:flex;align-items:center;gap:18px;width:100%;height:100%;">
+          <!-- SVG Circular Progress Ring -->
+          <div style="position:relative;width:68px;height:68px;display:flex;align-items:center;justify-content:center;">
+            <svg width="68" height="68" viewBox="0 0 68 68">
+              <circle cx="34" cy="34" r="28" stroke="rgba(255,255,255,0.15)" stroke-width="5" fill="none"/>
+              <circle id="island-timer-ring" cx="34" cy="34" r="28" stroke="#ff9f0a" stroke-width="5" fill="none" stroke-linecap="round" stroke-dasharray="175.9" stroke-dashoffset="40" style="transform:rotate(-90deg);transform-origin:50% 50%;transition:stroke-dashoffset 0.8s ease;"/>
+            </svg>
+            <span style="position:absolute;font-size:22px;">⏱️</span>
+          </div>
+          <div style="flex:1;">
+            <div style="font-size:11px;opacity:0.6;text-transform:uppercase;letter-spacing:0.5px;" data-i18n="island_focus_timer">专注计时器</div>
+            <div id="island-timer-digits" style="font-size:26px;font-weight:800;letter-spacing:0.5px;font-family:'SF Mono', Menlo, monospace;color:#ff9f0a;">14:20</div>
+            <div style="display:flex;gap:8px;margin-top:6px;">
+              <button class="island-pill-btn" onclick="addIslandTimer(60)" data-i18n="island_plus_1m">+1 分钟</button>
+              <button class="island-pill-btn" id="island-timer-toggle-btn" onclick="toggleIslandTimer()" data-i18n="island_pause">暂停</button>
+              <button class="island-pill-btn" onclick="resetIslandTimer()" data-i18n="island_reset">重置</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. AirDrop Live Activity -->
+      <div id="island-pane-airdrop" class="island-pane" style="display:none;">
+        <div style="display:flex;align-items:center;gap:16px;width:100%;">
+          <div class="island-radar-circle">
+            <div class="island-radar-ripple"></div>
+            <div class="island-radar-ripple" style="animation-delay:0.8s;"></div>
+            <span style="font-size:24px;position:relative;z-index:2;">📡</span>
+          </div>
+          <div style="flex:1;">
+            <div style="font-weight:700;font-size:13px;" data-i18n="island_airdrop_transfer">隔空投送传输</div>
+            <div style="font-size:11px;opacity:0.7;margin-top:2px;" data-i18n="island_sending">正在发送</div>
+            <div style="width:100%;height:5px;background:rgba(255,255,255,0.15);border-radius:3px;margin-top:8px;overflow:hidden;">
+              <div id="island-airdrop-progress" style="width:68%;height:100%;background:linear-gradient(90deg,#30d158,#34c759);border-radius:3px;transition:width 0.4s;"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:10px;opacity:0.6;margin-top:4px;">
+              <span data-i18n="island_to_mac">发送至：Alice 的 MacBook Pro</span>
+              <span id="island-airdrop-pct">68% — 4s remaining</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Apple Menu Dropdown -->
+  <div class="menu-dropdown" id="apple-menu">
+    <div class="menu-dropdown-item" onclick="launchSystemInfo()" data-i18n="apple_about">关于本系统</div>
+    <div class="menu-dropdown-separator"></div>
+    <div class="menu-dropdown-item" onclick="launchSettings()" data-i18n="apple_settings">系统设置...</div>
+    <div class="menu-dropdown-separator"></div>
+    <div class="menu-dropdown-item" onclick="lockScreen()" style="display:flex;justify-content:space-between;align-items:center;">
+      <span data-i18n="apple_lock">锁定屏幕</span>
+      <span style="opacity:0.5;font-size:11px;">⌃⌥L</span>
+    </div>
+    <div class="menu-dropdown-item" onclick="enterStandByMode()" style="display:flex;justify-content:space-between;align-items:center;">
+      <span data-i18n="apple_standby">待机显示...</span>
+      <span style="opacity:0.5;font-size:11px;">⌃⌥S</span>
+    </div>
+    <div class="menu-dropdown-item" onclick="logoutUser()" data-i18n="apple_logout">退出登录...</div>
+    <div class="menu-dropdown-item" onclick="window.aliceOS.closeWindow()" data-i18n="apple_shutdown">关机</div>
+  </div>
+
+  <!-- File Menu Dropdown -->
+  <div class="menu-dropdown" id="file-menu" style="left: 82px;">
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); launchFinder();" style="display:flex;justify-content:space-between;align-items:center;">
+      <span data-i18n="menu_new_finder">新建访达窗口</span>
+      <span style="opacity:0.5;font-size:11px;">⌘N</span>
+    </div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); launchNotes();" style="display:flex;justify-content:space-between;align-items:center;">
+      <span data-i18n="menu_new_note">新建备忘录</span>
+      <span style="opacity:0.5;font-size:11px;">⌘T</span>
+    </div>
+    <div class="menu-dropdown-separator"></div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); closeActiveWindow();" style="display:flex;justify-content:space-between;align-items:center;">
+      <span data-i18n="menu_close_win">关闭窗口</span>
+      <span style="opacity:0.5;font-size:11px;">⌘W</span>
+    </div>
+  </div>
+
+  <!-- Edit Menu Dropdown -->
+  <div class="menu-dropdown" id="edit-menu" style="left: 122px;">
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); document.execCommand('undo');" style="display:flex;justify-content:space-between;align-items:center;">
+      <span data-i18n="menu_undo">撤销</span>
+      <span style="opacity:0.5;font-size:11px;">⌘Z</span>
+    </div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); document.execCommand('redo');" style="display:flex;justify-content:space-between;align-items:center;">
+      <span data-i18n="menu_redo">重做</span>
+      <span style="opacity:0.5;font-size:11px;">⇧⌘Z</span>
+    </div>
+    <div class="menu-dropdown-separator"></div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); document.execCommand('cut');" style="display:flex;justify-content:space-between;align-items:center;">
+      <span data-i18n="menu_cut">剪切</span>
+      <span style="opacity:0.5;font-size:11px;">⌘X</span>
+    </div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); document.execCommand('copy');" style="display:flex;justify-content:space-between;align-items:center;">
+      <span data-i18n="menu_copy">拷贝</span>
+      <span style="opacity:0.5;font-size:11px;">⌘C</span>
+    </div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); document.execCommand('paste');" style="display:flex;justify-content:space-between;align-items:center;">
+      <span data-i18n="menu_paste">粘贴</span>
+      <span style="opacity:0.5;font-size:11px;">⌘V</span>
+    </div>
+    <div class="menu-dropdown-separator"></div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); document.execCommand('selectAll');" style="display:flex;justify-content:space-between;align-items:center;">
+      <span data-i18n="menu_select_all">全选</span>
+      <span style="opacity:0.5;font-size:11px;">⌘A</span>
+    </div>
+  </div>
+
+  <!-- View Menu Dropdown -->
+  <div class="menu-dropdown" id="view-menu" style="left: 165px;">
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); toggleStageManager();" style="display:flex;justify-content:space-between;align-items:center;">
+      <span data-i18n="cc_stage_manager">台前调度</span>
+      <span style="opacity:0.5;font-size:11px;">⌃S</span>
+    </div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); toggleDesktopStacks();" style="display:flex;justify-content:space-between;align-items:center;">
+      <span data-i18n="ctx_use_stacks">🥞 使用叠放</span>
+    </div>
+    <div class="menu-dropdown-separator"></div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); toggleFullScreen();" style="display:flex;justify-content:space-between;align-items:center;">
+      <span data-i18n="menu_fullscreen">进入全屏幕</span>
+      <span style="opacity:0.5;font-size:11px;">⌃⌘F</span>
+    </div>
+  </div>
+
+  <!-- Help Menu Dropdown -->
+  <div class="menu-dropdown" id="help-menu" style="left: 215px;">
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); launchSystemInfo();" data-i18n="menu_help_title">AliceOS 帮助</div>
+    <div class="menu-dropdown-separator"></div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); toggleAssistant();" style="display:flex;justify-content:space-between;align-items:center;">
+      <span data-i18n="ai_title">✨ Alice 智能助理</span>
+      <span style="opacity:0.5;font-size:11px;">⌃␣</span>
+    </div>
+  </div>
+
+  <!-- macOS Control Center -->
+  <div id="control-center" style="position:absolute;top:35px;right:10px;width:320px;background:rgba(255,255,255,0.15);backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);border-radius:18px;border:1px solid rgba(255,255,255,0.2);box-shadow:0 10px 30px rgba(0,0,0,0.3);z-index:9000;padding:15px;display:none;flex-direction:column;gap:12px;opacity:0;transform:translateY(-20px);transition:all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);color:white;font-family:-apple-system, sans-serif;">
+    <!-- Top Row: Toggles -->
+    <div style="display:flex;gap:12px;">
+      <!-- Connectivity -->
+      <div style="flex:1;background:rgba(0,0,0,0.2);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:10px;position:relative;">
+        <div id="cc-wifi-toggle" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:2px 4px;border-radius:8px;transition:background 0.2s;" onclick="toggleCCWifi()">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:30px;height:30px;border-radius:50%;background:#007aff;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 5px rgba(0,0,0,0.2);font-size:16px;">📡</div>
+            <div><div style="font-weight:600;font-size:13px;" data-i18n="cc_wifi">无线局域网</div><div id="cc-wifi-name" style="font-size:11px;opacity:0.7;">Alice-5G</div></div>
+          </div>
+          <div style="font-size:14px;opacity:0.6;">›</div>
+        </div>
+
+        <!-- Wi-Fi Popover -->
+        <div id="cc-wifi-popover" class="cc-popover">
+          <div style="font-size:11px;font-weight:700;opacity:0.5;padding:2px 6px;text-transform:uppercase;" data-i18n="cc_wifi_preferred">首选网络</div>
+          <div class="cc-popover-item active" onclick="selectWifi('Alice-5G')"><span>✓ Alice-5G</span><span>📶 5 GHz</span></div>
+          <div style="font-size:11px;font-weight:700;opacity:0.5;padding:6px 6px 2px 6px;text-transform:uppercase;" data-i18n="cc_wifi_other">其他网络</div>
+          <div class="cc-popover-item" onclick="selectWifi('Apple Park Guest')"><span>Apple Park Guest</span><span>🔒</span></div>
+          <div class="cc-popover-item" onclick="selectWifi('Alice\'s iPhone 16 Pro')"><span>Alice\'s iPhone 16 Pro</span><span>📱</span></div>
+          <div class="cc-popover-item" onclick="selectWifi('Studio_M3_Mesh')"><span>Studio_M3_Mesh</span><span>🔒</span></div>
+        </div>
+
+        <div id="cc-bt-toggle" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:2px 4px;border-radius:8px;transition:background 0.2s;" onclick="toggleCCBluetooth()">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:30px;height:30px;border-radius:50%;background:#007aff;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 5px rgba(0,0,0,0.2);font-size:16px;">📶</div>
+            <div><div style="font-weight:600;font-size:13px;" data-i18n="cc_bluetooth">蓝牙</div><div id="cc-bt-status" style="font-size:11px;opacity:0.7;">3 Devices</div></div>
+          </div>
+          <div style="font-size:14px;opacity:0.6;">›</div>
+        </div>
+
+        <!-- Bluetooth Popover -->
+        <div id="cc-bluetooth-popover" class="cc-popover">
+          <div style="font-size:11px;font-weight:700;opacity:0.5;padding:2px 6px;text-transform:uppercase;" data-i18n="cc_bt_devices">已连接设备</div>
+          <div class="cc-popover-item active" onclick="toggleBTDevice(this, 'AirPods Pro 2')"><span>🎧 AirPods Pro 2</span><span style="color:#34c759;font-weight:600;">89%</span></div>
+          <div class="cc-popover-item active" onclick="toggleBTDevice(this, 'Magic Keyboard')"><span>⌨️ Magic Keyboard</span><span style="color:#34c759;font-weight:600;">92%</span></div>
+          <div class="cc-popover-item active" onclick="toggleBTDevice(this, 'Magic Trackpad')"><span>🖱️ Magic Trackpad</span><span style="color:#34c759;font-weight:600;">85%</span></div>
+        </div>
+      </div>
+      <!-- DND & AirDrop -->
+      <div style="flex:1;display:flex;flex-direction:column;gap:12px;">
+        <div style="flex:1;background:rgba(0,0,0,0.2);border-radius:14px;display:flex;align-items:center;padding:0 12px;gap:10px;cursor:pointer;" onclick="this.style.background = this.style.background.includes('0.2') ? 'rgba(255,255,255,0.9)' : 'rgba(0,0,0,0.2)'; this.style.color = this.style.color === 'black' ? 'white' : 'black';">
+          <div style="font-size:18px;">🌙</div>
+          <div style="font-weight:600;font-size:14px;" data-i18n="cc_dnd">勿扰模式</div>
+        </div>
+        <div id="cc-stage-manager-btn" style="flex:1;background:rgba(0,0,0,0.2);border-radius:14px;display:flex;align-items:center;padding:0 12px;gap:10px;cursor:pointer;transition:all 0.2s ease;" onclick="toggleStageManager()">
+          <div style="font-size:18px;">🪟</div>
+          <div style="font-weight:600;font-size:14px;" data-i18n="cc_stage_manager">台前调度</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Brightness & Volume Sliders with iOS 17 3D Expanders -->
+    <div style="background:rgba(0,0,0,0.2);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:12px;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:14px;width:20px;text-align:center;cursor:pointer;" onclick="openCCExpandedSlider('brightness')" title="Expand 3D Brightness Capsule">☀️</span>
+        <input type="range" id="cc-brightness" min="0" max="100" value="100" style="flex:1;appearance:none;height:24px;border-radius:12px;background:rgba(255,255,255,0.2);outline:none;overflow:hidden;">
+        <span class="cc-slider-expand-btn" onclick="openCCExpandedSlider('brightness')" title="Expand 3D Slider">⤢</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span id="cc-volume-icon" style="font-size:14px;width:20px;text-align:center;cursor:pointer;" onclick="openCCExpandedSlider('volume')" title="Expand 3D Volume Capsule">🔊</span>
+        <input type="range" id="cc-volume" min="0" max="100" value="50" style="flex:1;appearance:none;height:24px;border-radius:12px;background:rgba(255,255,255,0.2);outline:none;overflow:hidden;">
+        <span class="cc-slider-expand-btn" onclick="openCCExpandedSlider('volume')" title="Expand 3D Slider">⤢</span>
+      </div>
+    </div>
+
+    <!-- Music Player with Live Equalizer -->
+    <div style="background:rgba(0,0,0,0.2);border-radius:14px;padding:14px;display:flex;align-items:center;gap:14px;">
+      <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg, #FF2D55 0%, #FECFEF 100%);box-shadow:0 4px 12px rgba(255,45,85,0.3);display:flex;align-items:center;justify-content:center;font-size:22px;">🎵</div>
+      <div style="flex:1;">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div style="font-weight:bold;font-size:14px;">Alice Symphony</div>
+          <!-- Live Audio EQ Waveform -->
+          <div class="eq-container" id="cc-eq-wave" style="display:none;">
+            <div class="eq-bar"></div>
+            <div class="eq-bar"></div>
+            <div class="eq-bar"></div>
+            <div class="eq-bar"></div>
+          </div>
+        </div>
+        <div style="font-size:12px;opacity:0.7;">Cupertino Soundscape</div>
+        <div style="display:flex;gap:16px;margin-top:6px;font-size:15px;align-items:center;">
+          <span style="cursor:pointer;opacity:0.8;" onclick="skipTrack(-1)">⏮</span>
+          <span id="cc-music-play-btn" style="cursor:pointer;font-size:18px;" onclick="toggleCCMusic()">▶️</span>
+          <span style="cursor:pointer;opacity:0.8;" onclick="skipTrack(1)">⏭</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- iOS 17 / macOS Expandable 3D Slider Modal -->
+  <div id="cc-slider-modal" class="cc-slider-modal-overlay" onclick="closeCCSliderModal(event)">
+    <div class="cc-slider-modal-card" id="cc-slider-modal-card" onclick="event.stopPropagation()">
+      <div class="cc-modal-header">
+        <span id="cc-modal-icon" style="font-size:24px;">🔊</span>
+        <div style="flex:1;text-align:center;">
+          <div style="font-weight:600;font-size:16px;" id="cc-modal-title" data-i18n="cc_sound">声音</div>
+          <div style="font-size:11px;opacity:0.75;margin-top:2px;" id="cc-modal-subtitle" data-i18n="cc_macbook_speakers">MacBook Pro 扬声器</div>
+        </div>
+        <span id="cc-modal-percent" class="cc-modal-percent-pill">50%</span>
+      </div>
+      
+      <!-- Liquid Glass Vertical Track -->
+      <div class="cc-vertical-track-container" id="cc-vertical-track-container">
+        <div class="cc-vertical-track" id="cc-vertical-track">
+          <div class="cc-vertical-fill" id="cc-vertical-fill" style="height: 50%;"></div>
+          <div class="cc-vertical-thumb-glyph" id="cc-vertical-thumb-glyph">🔊</div>
+        </div>
+      </div>
+
+      <!-- Quick Action Presets Pill Row -->
+      <div class="cc-modal-presets" id="cc-modal-presets">
+      </div>
+    </div>
+  </div>
+
+  <div id="brightness-overlay" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:black;opacity:0;pointer-events:none;z-index:9999;transition:opacity 0.1s;"></div>
+
+  <!-- AI Assistant Panel -->
+  <div id="ai-panel" style="position:absolute;top:32px;right:45px;width:300px;background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);border-radius:12px;padding:15px;box-shadow:0 5px 20px rgba(0,0,0,0.3);display:none;flex-direction:column;z-index:2000;">
+    <div style="font-weight:bold;margin-bottom:10px;display:flex;align-items:center;gap:5px;" data-i18n="ai_title">✨ Alice 智能助理</div>
+    <div id="ai-chat" style="flex-grow:1;height:150px;overflow-y:auto;background:rgba(0,0,0,0.05);border-radius:8px;padding:10px;margin-bottom:10px;font-size:12px;display:flex;flex-direction:column;gap:8px;">
+      <div><em data-i18n="ai_help_prompt">我能帮您做什么？试着说“打开音乐”或“现在几点了”。</em></div>
+    </div>
+    <div style="display:flex;gap:5px;">
+      <button id="ai-mic-btn" onclick="startVoiceRecognition()" style="background:#ff3b30;color:white;border:none;border-radius:15px;padding:6px 10px;cursor:pointer;" title="Voice Command">🎤</button>
+      <input type="text" id="ai-input" placeholder="咨询 Alice..." data-i18n-placeholder="ai_placeholder" style="flex-grow:1;padding:6px;border:1px solid #ccc;border-radius:15px;outline:none;">
+      <button onclick="handleAIInput()" style="background:#007aff;color:white;border:none;border-radius:15px;padding:6px 12px;cursor:pointer;" data-i18n="ai_ask">发送</button>
+    </div>
+  </div>
+
+  <!-- Desktop Area (for windows) -->
+  <div class="desktop" id="desktop">
+  </div>
+
+  <!-- macOS Stage Manager Left Shelf -->
+  <div id="stage-manager-shelf" class="stage-manager-shelf"></div>
+
+  <!-- Bottom Dock -->
+  <div class="dock-container">
+    <div class="dock" id="dock-ui">
+      <div class="dock-icon" data-app="finder" onclick="launchFinder()">
+        <div class="icon-placeholder">📁</div>
+        <div class="dock-dot"></div>
+      </div>
+      <div class="dock-icon" data-app="launchpad" onclick="toggleLaunchpad()">
+        <div style="font-size:40px;background:linear-gradient(45deg,#8e2de2,#4a00e0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">🚀</div>
+      </div>
+      <div class="dock-icon" data-app="missioncontrol" onclick="toggleMissionControl()">
+        <div style="font-size:40px;background:linear-gradient(45deg,#ff9a9e,#fecfef);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">🗂️</div>
+      </div>
+      <div class="dock-icon" data-app="terminal" onclick="launchTerminal()">
+        <div class="icon-placeholder">＞_</div>
+        <div class="dock-dot"></div>
+      </div>
+      <div class="dock-icon" data-app="notes" onclick="launchNotes()">
+        <div class="icon-placeholder">📝</div>
+      </div>
+      <div class="dock-icon" data-app="calculator" onclick="launchCalculator()">
+        <div class="icon-placeholder">🧮</div>
+      </div>
+      <div class="dock-icon" data-app="browser" onclick="launchBrowser()">
+        <div class="icon-placeholder">🌐</div>
+      </div>
+      <div class="dock-icon" data-app="music" onclick="launchMusic()">
+        <div class="icon-placeholder">🎵</div>
+      </div>
+      <div class="dock-icon" data-app="camera" onclick="launchCamera()">
+        <div class="icon-placeholder">📷</div>
+      </div>
+      <div class="dock-icon" data-app="iphonemirror" onclick="launchIPhoneMirroring()" title="iPhone 镜像" data-i18n-title="app_iphonemirror">
+        <div class="icon-placeholder" style="background:linear-gradient(145deg, #1f2937, #111827);border:1px solid rgba(255,255,255,0.22);box-shadow:0 4px 12px rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:center;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:#60a5fa;">
+            <rect x="5" y="2" width="14" height="20" rx="3" ry="3" stroke="#e5e5ea" stroke-width="1.8"></rect>
+            <line x1="10" y1="4.5" x2="14" y2="4.5" stroke="#9ca3af" stroke-width="1.8"></line>
+            <circle cx="12" cy="18.5" r="0.9" fill="#9ca3af"></circle>
+          </svg>
+        </div>
+        <div class="dock-dot"></div>
+      </div>
+      <div class="dock-icon" data-app="paint" onclick="launchPaint()">
+        <div class="icon-placeholder">🎨</div>
+      </div>
+      <div class="dock-icon" data-app="snake" onclick="launchSnake()">
+        <div class="icon-placeholder">🐍</div>
+      </div>
+      <div class="dock-icon" data-app="maps" onclick="launchMaps()">
+        <div class="icon-placeholder">🗺️</div>
+      </div>
+      <div class="dock-icon" data-app="video" onclick="launchVideo()">
+        <div class="icon-placeholder">🎬</div>
+      </div>
+      <div class="dock-icon" data-app="radar" onclick="launchRadar()">
+        <div class="icon-placeholder">👽</div>
+      </div>
+      <div class="dock-icon" data-app="settings" onclick="launchSettings()">
+        <div class="icon-placeholder">⚙️</div>
+      </div>
+      <div class="dock-icon" data-app="spotlight" onclick="toggleSpotlight()">
+        <div class="icon-placeholder">🔍</div>
+      </div>
+      <div style="width:1px;height:40px;background:rgba(255,255,255,0.2);margin:0 10px;"></div>
+      <div class="dock-icon" id="dock-trash" onclick="openTrash()">
+        <div class="icon-placeholder">🗑️</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- macOS Picture-in-Picture Floating Window -->
+  <div id="pip-window" class="pip-window">
+    <video id="pip-video" style="width:100%;height:100%;object-fit:cover;background:#000;" loop></video>
+    <div class="pip-overlay">
+      <div class="pip-header">
+        <button class="pip-btn" onclick="closePiP()" title="Close">✕</button>
+        <div id="pip-title" style="font-size:12px;font-weight:600;color:white;text-shadow:0 1px 4px rgba(0,0,0,0.8);max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" data-i18n="pip_title">画中画</div>
+        <button class="pip-btn" onclick="restorePiPToWindow()" title="Back to Window">⤢</button>
+      </div>
+      <div class="pip-footer">
+        <button class="pip-btn" id="pip-play-btn" onclick="togglePiPPlay()">⏸</button>
+        <div style="font-size:11px;color:rgba(255,255,255,0.8);font-family:-apple-system,sans-serif;">macOS PiP</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- macOS Window Split Snap Preview Silhouette -->
+  <div id="window-snap-preview"></div>
+
+  <!-- macOS Quick Note Peek Dog-Ear & Floating Card -->
+  <div id="quick-note-peek" onclick="openQuickNote()" title="快速备忘" data-i18n-title="qn_title">📝</div>
+  <div id="quick-note-card">
+    <div class="quick-note-header">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <button onclick="closeQuickNote()" style="background:rgba(0,0,0,0.06);border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;color:#555;">✕</button>
+        <span style="font-weight:600;font-size:13px;color:#854d0e;" data-i18n="qn_title">快速备忘</span>
+      </div>
+      <div style="font-size:11px;opacity:0.6;" id="quick-note-time" data-i18n="qn_today">今天</div>
+      <button onclick="saveAndCloseQuickNote()" style="background:#eab308;color:white;border:none;border-radius:10px;padding:3px 10px;font-size:11px;font-weight:600;cursor:pointer;" data-i18n="qn_done">完成</button>
+    </div>
+    <textarea id="quick-note-text" class="quick-note-textarea" placeholder="随时记录下灵感与想法..." data-i18n-placeholder="qn_placeholder"></textarea>
+  </div>
+
+  <!-- Floating Volume HUD -->
+  <div id="volume-hud">
+    <span id="volume-hud-icon">🔊</span>
+    <div style="width:100px;height:5px;background:rgba(255,255,255,0.25);border-radius:3px;overflow:hidden;">
+      <div id="volume-hud-bar" style="width:50%;height:100%;background:white;border-radius:3px;transition:width 0.12s cubic-bezier(0.16, 1, 0.3, 1);"></div>
+    </div>
+  </div>
+
+  <!-- iOS 17 / macOS StandBy Mode Overlay -->
+  <div id="standby-overlay">
+    <!-- Left Widget: Apple Analog Clock -->
+    <div class="standby-widget">
+      <div class="standby-clock-face">
+        <div class="standby-hand standby-hand-hour" id="sb-hand-hour"></div>
+        <div class="standby-hand standby-hand-minute" id="sb-hand-minute"></div>
+        <div class="standby-hand standby-hand-second" id="sb-hand-second"></div>
+        <div style="position:absolute;width:12px;height:12px;border-radius:50%;background:#ff9500;z-index:5;"></div>
+        <div style="position:absolute;top:15px;font-size:16px;font-weight:700;">12</div>
+        <div style="position:absolute;bottom:15px;font-size:16px;font-weight:700;">6</div>
+        <div style="position:absolute;left:18px;font-size:16px;font-weight:700;">9</div>
+        <div style="position:absolute;right:18px;font-size:16px;font-weight:700;">3</div>
+      </div>
+      <div style="margin-top:20px;font-size:18px;font-weight:600;letter-spacing:1px;" id="sb-city">CUPERTINO</div>
+    </div>
+
+    <!-- Right Widget: Live Weather & Calendar -->
+    <div class="standby-widget" style="padding:30px;box-sizing:border-box;justify-content:space-between;align-items:stretch;">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div>
+          <div style="font-size:16px;font-weight:600;opacity:0.75;" id="sb-day-name">MONDAY</div>
+          <div style="font-size:42px;font-weight:200;letter-spacing:-1px;" id="sb-date-num">14</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:38px;">⛅</div>
+          <div style="font-size:24px;font-weight:300;">72°</div>
+        </div>
+      </div>
+
+      <div style="height:1px;background:rgba(255,255,255,0.15);margin:15px 0;"></div>
+
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+        <div style="font-size:13px;font-weight:600;opacity:0.6;margin-bottom:8px;" data-i18n="standby_schedule">待办日程</div>
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(255,255,255,0.06);border-radius:12px;">
+          <div style="width:4px;height:24px;background:#007aff;border-radius:2px;"></div>
+          <div>
+            <div style="font-size:13px;font-weight:600;" data-i18n="standby_wwdc">WWDC 主题演讲</div>
+            <div style="font-size:11px;opacity:0.6;" data-i18n="standby_wwdc_loc">上午 10:00 — 史蒂夫·乔布斯剧院</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- StandBy Controls -->
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:15px;">
+        <button onclick="toggleStandByNightMode()" style="background:rgba(255,255,255,0.12);color:inherit;border:none;padding:6px 14px;border-radius:14px;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:6px;">
+          <span>🔴</span> <span data-i18n="standby_night_mode">夜间模式</span>
+        </button>
+        <button onclick="exitStandByMode()" style="background:#007aff;color:white;border:none;padding:6px 16px;border-radius:14px;font-size:12px;font-weight:600;cursor:pointer;" data-i18n="standby_exit">退出</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- macOS Sequoia Window Tile Popover -->
+  <div id="window-tile-popover" class="window-tile-popover">
+    <div class="tile-popover-title" data-i18n="tile_title">排布与分屏</div>
+    <div class="tile-popover-item" id="tile-act-left">
+      <span class="tile-icon">◧</span>
+      <div class="tile-text">
+        <div class="tile-name" data-i18n="tile_left">窗口平铺至屏幕左侧</div>
+        <div class="tile-sub" data-i18n="tile_left_sub">占据左半屏并保留 8px 边距</div>
+      </div>
+    </div>
+    <div class="tile-popover-item" id="tile-act-right">
+      <span class="tile-icon">◨</span>
+      <div class="tile-text">
+        <div class="tile-name" data-i18n="tile_right">窗口平铺至屏幕右侧</div>
+        <div class="tile-sub" data-i18n="tile_right_sub">占据右半屏并保留 8px 边距</div>
+      </div>
+    </div>
+    <div class="tile-popover-separator"></div>
+    <div class="tile-popover-item" id="tile-act-zoom">
+      <span class="tile-icon">⬚</span>
+      <div class="tile-text">
+        <div class="tile-name" data-i18n="tile_zoom">缩放 / 填满屏幕</div>
+        <div class="tile-sub" data-i18n="tile_zoom_sub">最大化窗口至整个桌面工作区</div>
+      </div>
+    </div>
+    <div class="tile-popover-item" id="tile-act-center">
+      <span class="tile-icon">▣</span>
+      <div class="tile-text">
+        <div class="tile-name" data-i18n="tile_center">居中于桌面</div>
+        <div class="tile-sub" data-i18n="tile_center_sub">恢复标准浮动窗口尺寸并居中</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- macOS Sonoma Widget Gallery Sheet -->
+  <div id="widget-gallery-sheet">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <div>
+        <div style="font-size:18px;font-weight:700;" data-i18n="gallery_title">小组件图库</div>
+        <div style="font-size:12px;opacity:0.6;" data-i18n="gallery_subtitle">选择要添加到桌面的小组件</div>
+      </div>
+      <button onclick="closeWidgetGallery()" style="background:#007aff;color:white;border:none;padding:6px 18px;border-radius:14px;font-size:13px;font-weight:600;cursor:pointer;" data-i18n="gallery_done">完成</button>
+    </div>
+
+    <!-- Gallery Cards Row -->
+    <div class="widget-gallery-cards">
+      <!-- Card: World Clock -->
+      <div class="gallery-card">
+        <div>
+          <div style="font-size:24px;margin-bottom:6px;">🕒</div>
+          <div style="font-size:14px;font-weight:700;" data-i18n="widget_world_clock">世界时钟</div>
+          <div style="font-size:11px;opacity:0.6;margin-top:2px;" data-i18n="widget_world_clock_desc">库比蒂诺、东京、伦敦</div>
+        </div>
+        <button class="gallery-add-btn" onclick="addWidgetToDesktop('clock')" data-i18n="gallery_add_btn">+ 添加小组件</button>
+      </div>
+
+      <!-- Card: Weather -->
+      <div class="gallery-card">
+        <div>
+          <div style="font-size:24px;margin-bottom:6px;">⛅</div>
+          <div style="font-size:14px;font-weight:700;" data-i18n="widget_weather_forecast">天气预报</div>
+          <div style="font-size:11px;opacity:0.6;margin-top:2px;" data-i18n="widget_weather_forecast_desc">库比蒂诺 22° 晴</div>
+        </div>
+        <button class="gallery-add-btn" onclick="addWidgetToDesktop('weather')" data-i18n="gallery_add_btn">+ 添加小组件</button>
+      </div>
+
+      <!-- Card: Battery Status -->
+      <div class="gallery-card">
+        <div>
+          <div style="font-size:24px;margin-bottom:6px;">🔋</div>
+          <div style="font-size:14px;font-weight:700;" data-i18n="widget_battery_status">电池电量</div>
+          <div style="font-size:11px;opacity:0.6;margin-top:2px;" data-i18n="widget_battery_status_desc">MacBook Pro 与 AirPods Pro</div>
+        </div>
+        <button class="gallery-add-btn" onclick="addWidgetToDesktop('battery')" data-i18n="gallery_add_btn">+ 添加小组件</button>
+      </div>
+
+      <!-- Card: System Activity -->
+      <div class="gallery-card">
+        <div>
+          <div style="font-size:24px;margin-bottom:6px;">📈</div>
+          <div style="font-size:14px;font-weight:700;" data-i18n="widget_system_usage">系统使用情况</div>
+          <div style="font-size:11px;opacity:0.6;margin-top:2px;" data-i18n="widget_system_usage_desc">实时 CPU 与内存负荷表</div>
+        </div>
+        <button class="gallery-add-btn" onclick="addWidgetToDesktop('system')" data-i18n="gallery_add_btn">+ 添加小组件</button>
+      </div>
+
+      <!-- Card: Now Playing -->
+      <div class="gallery-card">
+        <div>
+          <div style="font-size:24px;margin-bottom:6px;">🎵</div>
+          <div style="font-size:14px;font-weight:700;" data-i18n="widget_now_playing">正在播放</div>
+          <div style="font-size:11px;opacity:0.6;margin-top:2px;" data-i18n="widget_now_playing_desc">Alice 交响乐与音频控制</div>
+        </div>
+        <button class="gallery-add-btn" onclick="addWidgetToDesktop('music')" data-i18n="gallery_add_btn">+ 添加小组件</button>
+      </div>
+
+      <!-- Card: Calendar -->
+      <div class="gallery-card">
+        <div>
+          <div style="font-size:24px;margin-bottom:6px;">📅</div>
+          <div style="font-size:14px;font-weight:700;" data-i18n="w_type_calendar">日历日程</div>
+          <div style="font-size:11px;opacity:0.6;margin-top:2px;" data-i18n="widget_calendar_desc">今天日期与即将到来的安排</div>
+        </div>
+        <button class="gallery-add-btn" onclick="addWidgetToDesktop('calendar')" data-i18n="gallery_add_btn">+ 添加小组件</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
