@@ -91,7 +91,7 @@ let fileSystem = {
               name: 'settings.json',
               content: JSON.stringify({
                 wallpaper: "url('https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?w=1920&q=80')",
-                theme: 'dark',
+                theme: 'light',
                 isometric: 'off',
                 island: 'on',
                 stageManager: 'off',
@@ -271,6 +271,11 @@ function initVFS(dbPath) {
           const s = JSON.parse(settingsNode.content);
           if (s && !s._userChangedLang && s.lang === 'en') {
             s.lang = 'zh';
+            settingsNode.content = JSON.stringify(s);
+            saveVFS();
+          }
+          if (s && !s._userExplicitTheme && (!s.theme || s.theme === 'dark')) {
+            s.theme = 'light';
             settingsNode.content = JSON.stringify(s);
             saveVFS();
           }
