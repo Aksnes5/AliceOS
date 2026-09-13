@@ -1117,6 +1117,48 @@
     </div>
   </div>
 
+  <!-- macOS Interactive Screenshot Tool Overlay & Rubberband -->
+  <div id="screenshot-overlay">
+    <div id="screenshot-selection">
+      <div id="screenshot-dims">0 × 0</div>
+    </div>
+  </div>
+
+  <!-- macOS Floating Screenshot Thumbnail (Bottom-Right) -->
+  <div id="screenshot-floating-card" class="screenshot-floating-card" style="display:none;" onclick="openScreenshotMarkup()">
+    <img id="screenshot-thumb-img" class="screenshot-floating-preview" src="" alt="Screenshot" />
+    <div class="screenshot-floating-actions" onclick="event.stopPropagation()">
+      <button class="screenshot-thumb-btn primary" onclick="copyScreenshotThumb()" title="拷贝到剪贴板">📋 拷贝</button>
+      <button class="screenshot-thumb-btn" onclick="saveScreenshotThumb()" title="存入桌面">💾 存储</button>
+      <button class="screenshot-thumb-btn" onclick="openScreenshotMarkup()" title="标记">✏️ 标注</button>
+      <button class="screenshot-thumb-btn" onclick="dismissScreenshotThumb()" title="关闭">✕</button>
+    </div>
+  </div>
+
+  <!-- macOS Screenshot Quick Look Markup Modal -->
+  <div id="markup-modal">
+    <div class="markup-window">
+      <div class="markup-toolbar">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-weight:600;font-size:14px;color:#1d1d1f;">✏️ 截屏标注</span>
+          <button class="screenshot-thumb-btn" onclick="setMarkupColor('#ff3b30')" style="background:#ff3b30;color:white;border-radius:50%;width:22px;height:22px;padding:0;display:inline-block;"></button>
+          <button class="screenshot-thumb-btn" onclick="setMarkupColor('#007aff')" style="background:#007aff;color:white;border-radius:50%;width:22px;height:22px;padding:0;display:inline-block;"></button>
+          <button class="screenshot-thumb-btn" onclick="setMarkupColor('#ffcc00')" style="background:#ffcc00;color:white;border-radius:50%;width:22px;height:22px;padding:0;display:inline-block;"></button>
+          <button class="screenshot-thumb-btn" onclick="setMarkupColor('#34c759')" style="background:#34c759;color:white;border-radius:50%;width:22px;height:22px;padding:0;display:inline-block;"></button>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <button class="screenshot-thumb-btn" onclick="clearMarkupCanvas()">清空画笔</button>
+          <button class="screenshot-thumb-btn primary" onclick="saveMarkupAndClose()">完成并存至桌面</button>
+          <button class="screenshot-thumb-btn" onclick="closeMarkupModal()">取消</button>
+        </div>
+      </div>
+      <div class="markup-canvas-wrap">
+        <canvas id="markup-canvas" style="border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.15);cursor:crosshair;background:white;"></canvas>
+      </div>
+    </div>
+  </div>
+
   <script src="renderer.js"></script>
 </body>
 </html>
+

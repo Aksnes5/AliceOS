@@ -9,8 +9,14 @@ body {
   height: 100vh;
   width: 100vw;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  background-color: #1a1a1a;
-  background-image: url('https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?w=1920&q=80');
+  background-color: #1a162b;
+  background-image: 
+    radial-gradient(at 10% 20%, rgba(139, 92, 246, 0.42) 0px, transparent 50%),
+    radial-gradient(at 90% 15%, rgba(244, 63, 94, 0.38) 0px, transparent 50%),
+    radial-gradient(at 50% 95%, rgba(14, 165, 233, 0.4) 0px, transparent 55%),
+    radial-gradient(at 85% 85%, rgba(251, 146, 60, 0.3) 0px, transparent 50%),
+    linear-gradient(135deg, #181824 0%, #2e2842 50%, #111424 100%),
+    url('https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?w=1920&q=80');
   background-size: cover;
   background-position: center;
   color: white;
@@ -3902,4 +3908,215 @@ body.dark-mode .finder-col-divider::after {
 .iphone-home-bar:hover {
   background: #ffffff;
   transform: translateX(-50%) scale(1.06);
+}
+
+/* ====================================================
+   macOS Interactive Screenshot Tool & Floating Thumbnail
+   ==================================================== */
+#screenshot-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10500;
+  cursor: crosshair;
+  display: none;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+}
+
+#screenshot-selection {
+  position: absolute;
+  border: 1.5px solid #007aff;
+  background: rgba(0, 122, 255, 0.08);
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+  display: none;
+}
+
+#screenshot-dims {
+  position: absolute;
+  bottom: -32px;
+  right: 0;
+  background: rgba(20, 20, 20, 0.85);
+  backdrop-filter: blur(12px);
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* macOS Floating Thumbnail (Bottom-Right Corner) */
+.screenshot-floating-card {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 10600;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 3px solid rgba(255, 255, 255, 0.95);
+  border-radius: 14px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.35s ease;
+  animation: floatCardSlideIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  max-width: 220px;
+  user-select: none;
+  cursor: pointer;
+}
+
+@keyframes floatCardSlideIn {
+  from {
+    transform: translate3d(80px, 40px, 0) scale(0.7);
+    opacity: 0;
+  }
+  to {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+}
+
+.screenshot-floating-card.slide-out {
+  transform: translate3d(120%, 0, 0) scale(0.85) !important;
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+.screenshot-floating-preview {
+  width: 100%;
+  max-height: 130px;
+  object-fit: cover;
+  display: block;
+  background: #222;
+}
+
+.screenshot-floating-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 6px 10px;
+  box-sizing: border-box;
+  background: rgba(245, 245, 247, 0.85);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  gap: 6px;
+}
+
+.screenshot-thumb-btn {
+  background: rgba(0, 0, 0, 0.06);
+  border: none;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #1d1d1f;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.screenshot-thumb-btn:hover {
+  background: rgba(0, 0, 0, 0.12);
+  transform: scale(1.04);
+}
+
+.screenshot-thumb-btn.primary {
+  background: #007aff;
+  color: white;
+}
+
+.screenshot-thumb-btn.primary:hover {
+  background: #0066d6;
+}
+
+/* Markup Modal */
+#markup-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10700;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.markup-window {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(35px);
+  border-radius: 16px;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-width: 85vw;
+  max-height: 85vh;
+}
+
+.markup-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: rgba(240, 240, 242, 0.85);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.markup-canvas-wrap {
+  padding: 20px;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* ====================================================
+   macOS Genie Minimizing Fluid Suction Animation
+   ==================================================== */
+.window-genie-minimizing {
+  transition: all 0.42s cubic-bezier(0.2, 0.9, 0.3, 1) !important;
+  transform-origin: bottom center !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  filter: blur(4px) saturate(1.2);
+}
+
+.window-genie-restoring {
+  transition: all 0.38s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  opacity: 1 !important;
+}
+
+/* Dock Bounce Physics */
+@keyframes dockBounce {
+  0% { transform: translateY(0) scale(1); }
+  30% { transform: translateY(-22px) scale(1.15); }
+  50% { transform: translateY(-2px) scale(0.95); }
+  70% { transform: translateY(-10px) scale(1.05); }
+  90% { transform: translateY(-1px) scale(0.98); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+.dock-icon.dock-bounce {
+  animation: dockBounce 0.75s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
 }

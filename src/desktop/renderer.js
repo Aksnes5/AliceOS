@@ -2499,43 +2499,49 @@ function createWindow(pid, title, contentHtml, explicitAppKey = null) {
     win.dataset.preMinLeft = win.style.left;
     win.dataset.preMinTransform = win.style.transform;
     
-    // Animate to bottom center (approximate dock position)
-    win.style.transition = 'all 0.6s cubic-bezier(0.25, 1, 0.3, 1)';
-    win.style.transform = 'translateY(100vh) scale(0.1)';
+    // Calculate target dock position for Genie suction
+    const dock = document.getElementById('dock-ui');
+    const targetIcon = appKey ? document.querySelector(`.dock-icon[data-app="${appKey}"]`) : null;
+    let targetX = window.innerWidth / 2;
+    if (targetIcon) {
+      const rect = targetIcon.getBoundingClientRect();
+      targetX = rect.left + rect.width / 2;
+      targetIcon.classList.remove('dock-bounce');
+      void targetIcon.offsetWidth;
+      targetIcon.classList.add('dock-bounce');
+      setTimeout(() => targetIcon.classList.remove('dock-bounce'), 800);
+    }
+
+    const winRect = win.getBoundingClientRect();
+    const winCenterX = winRect.left + winRect.width / 2;
+    const deltaX = targetX - winCenterX;
+    const deltaY = window.innerHeight - winRect.top - 65;
+
+    // Play subtle audio pop cue
+    if (window.appleAudio) window.appleAudio.playPop();
+
+    // Execute macOS Genie Fluid Morphing Transition
+    win.classList.remove('window-genie-restoring');
+    win.style.transition = 'transform 0.44s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.36s ease, filter 0.38s ease';
+    win.style.transformOrigin = 'bottom center';
+    win.style.transform = `translate3d(${deltaX}px, ${deltaY}px, 0) scale(0.04, 0.02)`;
     win.style.opacity = '0';
+    win.style.filter = 'blur(4px) saturate(1.3)';
     
     setTimeout(() => {
       win.style.display = 'none';
+      win.style.filter = '';
       
-      // Add a dynamic icon to the dock!
-      const dock = document.getElementById('dock-ui');
-      if (dock) {
+      // If no dedicated dock icon exists for this app, add dynamic mini icon
+      if (!targetIcon && dock) {
         const minIcon = document.createElement('div');
         minIcon.className = 'dock-icon';
         minIcon.id = `dock-min-${pid}`;
-        minIcon.innerHTML = `<div class="icon-placeholder" style="background:#444;font-size:24px;">🗔</div><div class="dock-dot" style="background:#ffbd2e;"></div>`;
-        
-        minIcon.onclick = () => {
-          // Restore
-          delete win.dataset.isMinimized;
-          win.style.display = 'flex';
-          setTimeout(() => {
-            win.style.transform = win.dataset.preMinTransform || 'none';
-            win.style.top = win.dataset.preMinTop;
-            win.style.left = win.dataset.preMinLeft;
-            win.style.opacity = '1';
-            focusWindow(win);
-          }, 10);
-          
-          setTimeout(() => {
-            win.style.transition = 'none';
-          }, 600);
-          
-          minIcon.remove();
-        };
+        minIcon.innerHTML = `<div class="icon-placeholder" style="background:#333;font-size:24px;">🗔</div><div class="dock-dot" style="background:#ffbd2e;"></div>`;
+        minIcon.onclick = () => restoreGenieWindow(win, minIcon);
         dock.appendChild(minIcon);
       }
-    }, 600);
+    }, 440);
   });
   
   // Maximize logic helper
