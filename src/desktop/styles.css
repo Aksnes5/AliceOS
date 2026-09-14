@@ -324,6 +324,26 @@ body.dark-mode .dock {
   transition: width 0.2s ease, height 0.2s ease;
 }
 
+img.macos-app-icon {
+  width: var(--dock-icon-size);
+  height: var(--dock-icon-size);
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  image-rendering: -webkit-optimize-contrast;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.28));
+  border-radius: 22.5%;
+}
+
+/* Launchpad PNG icons */
+.launchpad-item-icon img {
+  border-radius: 22.5%;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35));
+  transition: transform 0.15s ease;
+}
+
 .dock-dot {
   position: absolute;
   bottom: -4px;
@@ -9317,3 +9337,420 @@ body:not(.dark-mode) .wifi-popover-footer:hover {
   background: rgba(0, 0, 0, 0.05);
 }
 
+
+/* ============================================================
+   macOS Sequoia Control Center — Bento Grid Panel
+   ============================================================ */
+#control-center.cc-panel {
+  position: absolute;
+  top: 35px;
+  right: 10px;
+  width: 300px;
+  background: rgba(30, 30, 32, 0.82);
+  backdrop-filter: blur(48px) saturate(180%);
+  -webkit-backdrop-filter: blur(48px) saturate(180%);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.55), 0 0 0 0.5px rgba(255,255,255,0.06) inset;
+  z-index: 9000;
+  padding: 12px;
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  opacity: 0;
+  transform: scale(0.94) translateY(-12px);
+  transform-origin: top right;
+  transition: opacity 0.22s cubic-bezier(0.16,1,0.3,1),
+              transform 0.22s cubic-bezier(0.16,1,0.3,1);
+  color: white;
+  font-family: -apple-system, 'SF Pro Text', sans-serif;
+  font-size: 13px;
+}
+
+#control-center.cc-panel.cc-open {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  display: flex !important;
+}
+
+.cc-row {
+  display: flex;
+  gap: 8px;
+}
+
+/* Bento cards */
+.cc-card {
+  background: rgba(255, 255, 255, 0.095);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: background 0.18s ease, transform 0.18s cubic-bezier(0.34,1.56,0.64,1);
+}
+.cc-card:active {
+  transform: scale(0.97);
+  background: rgba(255,255,255,0.14);
+}
+
+.cc-bento-lg {
+  flex: 1.6;
+  padding: 6px 4px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cc-col-sm {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cc-bento-sm {
+  flex: 1;
+  min-height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 10px;
+  cursor: pointer;
+}
+.cc-bento-sm.cc-toggle-btn.active {
+  background: rgba(10, 132, 255, 0.45);
+  border-color: rgba(10,132,255,0.3);
+}
+
+.cc-bento-full {
+  width: 100%;
+}
+
+/* Toggle rows inside big card */
+.cc-toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  -webkit-user-select: none;
+}
+.cc-toggle-row:hover {
+  background: rgba(255,255,255,0.08);
+}
+.cc-toggle-row:active {
+  background: rgba(255,255,255,0.14);
+}
+
+.cc-toggle-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s ease;
+}
+.cc-toggle-icon.cc-blue { background: #007aff; }
+.cc-toggle-icon.cc-off  { background: rgba(120,120,128,0.4); }
+
+.cc-toggle-text { flex: 1; }
+.cc-toggle-label { font-weight: 600; font-size: 13px; }
+.cc-toggle-sub   { font-size: 11px; opacity: 0.6; margin-top: 1px; }
+.cc-chevron      { font-size: 16px; opacity: 0.4; }
+
+.cc-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.08);
+  margin: 2px 10px;
+}
+
+/* Small tile icon + label */
+.cc-sm-icon {
+  color: white;
+  opacity: 0.9;
+  display: flex;
+  align-items: center;
+}
+.cc-sm-label {
+  font-size: 11px;
+  font-weight: 600;
+  margin-top: 4px;
+  opacity: 0.75;
+}
+
+/* Horizontal slider cards */
+.cc-slider-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+}
+.cc-slider-icon {
+  width: 20px;
+  flex-shrink: 0;
+  opacity: 0.75;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cc-slider-track-wrap { flex: 1; }
+
+/* macOS-style custom range slider */
+.cc-hslider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.2);
+  outline: none;
+  cursor: pointer;
+}
+.cc-hslider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.cc-hslider::-webkit-slider-thumb:active {
+  transform: scale(1.25);
+}
+.cc-hslider::-webkit-slider-runnable-track {
+  height: 5px;
+  border-radius: 3px;
+  background: linear-gradient(to right, rgba(255,255,255,0.85) var(--val,50%), rgba(255,255,255,0.2) var(--val,50%));
+}
+
+.cc-expand-btn {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  opacity: 0.7;
+  transition: background 0.15s ease, opacity 0.15s ease;
+}
+.cc-expand-btn:hover { background: rgba(255,255,255,0.22); opacity: 1; }
+
+/* Now Playing card */
+.cc-nowplaying {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  position: relative;
+}
+.cc-np-art {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #fc3c44, #f9233b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(249,35,59,0.4);
+  overflow: hidden;
+}
+.cc-np-info { flex: 1; overflow: hidden; }
+.cc-np-title  { font-weight: 600; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cc-np-artist { font-size: 11px; opacity: 0.6; margin-top: 2px; }
+.cc-np-controls { display: flex; align-items: center; gap: 14px; }
+.cc-np-btn {
+  opacity: 0.75;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.15s;
+}
+.cc-np-btn:hover { opacity: 1; }
+.cc-np-play {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+}
+.cc-np-play:hover { background: rgba(255,255,255,0.28); }
+
+/* Popover */
+.cc-popover {
+  display: none;
+  position: absolute;
+  top: 35px;
+  right: 330px;
+  width: 240px;
+  background: rgba(28,28,30,0.92);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.55);
+  padding: 6px;
+  z-index: 9100;
+  color: white;
+  font-family: -apple-system, sans-serif;
+  font-size: 13px;
+  animation: cc-popover-in 0.18s cubic-bezier(0.16,1,0.3,1);
+}
+@keyframes cc-popover-in {
+  from { opacity: 0; transform: scale(0.9) translateX(8px); }
+  to   { opacity: 1; transform: scale(1) translateX(0); }
+}
+.cc-popover.show { display: block; }
+.cc-popover-header {
+  font-size: 11px;
+  font-weight: 700;
+  opacity: 0.45;
+  padding: 4px 8px 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.cc-popover-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.12s ease;
+  font-size: 13px;
+}
+.cc-popover-item:hover  { background: rgba(255,255,255,0.1); }
+.cc-popover-item.active { font-weight: 600; }
+
+/* ============================================================
+   macOS Sequoia Window Tiling Menu
+   ============================================================ */
+.tiling-menu-card {
+  background: rgba(28, 28, 30, 0.92);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  padding: 12px;
+  color: white;
+  font-family: -apple-system, 'SF Pro Text', sans-serif;
+  min-width: 200px;
+  animation: tiling-in 0.16s cubic-bezier(0.16,1,0.3,1);
+}
+
+@keyframes tiling-in {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.tiling-menu-title {
+  font-size: 11px;
+  font-weight: 700;
+  opacity: 0.4;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 2px 4px 8px;
+}
+
+.tiling-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.tiling-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  padding: 8px 4px 6px;
+  border-radius: 10px;
+  transition: background 0.12s ease, transform 0.12s ease;
+  font-size: 10px;
+  opacity: 0.7;
+  font-weight: 500;
+}
+.tiling-btn:hover {
+  background: rgba(255,255,255,0.12);
+  opacity: 1;
+  transform: scale(1.05);
+}
+.tiling-btn:active {
+  transform: scale(0.95);
+  background: rgba(10,132,255,0.35);
+}
+
+.tiling-icon {
+  width: 36px;
+  height: 26px;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  border-radius: 4px;
+  position: relative;
+  background: rgba(255,255,255,0.05);
+  overflow: hidden;
+}
+
+/* Tiling preview fills */
+.tiling-full::after {
+  content: '';
+  position: absolute; inset: 2px;
+  background: rgba(10,132,255,0.5);
+  border-radius: 2px;
+}
+.tiling-left::after {
+  content: '';
+  position: absolute; inset: 2px 50% 2px 2px;
+  background: rgba(10,132,255,0.5);
+  border-radius: 2px 0 0 2px;
+}
+.tiling-right::after {
+  content: '';
+  position: absolute; inset: 2px 2px 2px 50%;
+  background: rgba(10,132,255,0.5);
+  border-radius: 0 2px 2px 0;
+}
+.tiling-center::after {
+  content: '';
+  position: absolute; inset: 4px 8px;
+  background: rgba(10,132,255,0.5);
+  border-radius: 2px;
+}
+.tiling-topleft::after {
+  content: '';
+  position: absolute; inset: 2px 50% 50% 2px;
+  background: rgba(10,132,255,0.5);
+  border-radius: 2px 0 0 0;
+}
+.tiling-topright::after {
+  content: '';
+  position: absolute; inset: 2px 2px 50% 50%;
+  background: rgba(10,132,255,0.5);
+  border-radius: 0 2px 0 0;
+}
+.tiling-botleft::after {
+  content: '';
+  position: absolute; inset: 50% 50% 2px 2px;
+  background: rgba(10,132,255,0.5);
+  border-radius: 0 0 0 2px;
+}
+.tiling-botright::after {
+  content: '';
+  position: absolute; inset: 50% 2px 2px 50%;
+  background: rgba(10,132,255,0.5);
+  border-radius: 0 0 2px 0;
+}
+
+/* Traffic light green button hover triggers tiling */
+.macos-traffic-light.btn-maximize:hover .tiling-trigger-hint {
+  display: flex;
+}

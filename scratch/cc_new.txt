@@ -1,0 +1,141 @@
+﻿  <!-- macOS Sequoia Control Center — Bento Grid -->
+  <div id="control-center" class="cc-panel">
+
+    <!-- Row 1: Connectivity Bento Card + DND/AirDrop column -->
+    <div class="cc-row">
+
+      <!-- Big connectivity card (Wi-Fi + Bluetooth) -->
+      <div class="cc-bento cc-bento-lg cc-card" id="cc-connectivity-card">
+        <!-- Wi-Fi -->
+        <div class="cc-toggle-row" id="cc-wifi-toggle" onclick="toggleCCWifi()">
+          <div class="cc-toggle-icon cc-blue" id="cc-wifi-icon-wrap">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1" fill="white"/></svg>
+          </div>
+          <div class="cc-toggle-text">
+            <div class="cc-toggle-label" data-i18n="cc_wifi">无线局域网</div>
+            <div class="cc-toggle-sub" id="cc-wifi-name">Alice-5G</div>
+          </div>
+          <div class="cc-chevron">›</div>
+        </div>
+        <!-- Divider -->
+        <div class="cc-divider"></div>
+        <!-- Bluetooth -->
+        <div class="cc-toggle-row" id="cc-bt-toggle" onclick="toggleCCBluetooth()">
+          <div class="cc-toggle-icon cc-blue" id="cc-bt-icon-wrap">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6.5 6.5 17.5 17.5 12 23 12 1 17.5 6.5 6.5 17.5"/></svg>
+          </div>
+          <div class="cc-toggle-text">
+            <div class="cc-toggle-label" data-i18n="cc_bluetooth">蓝牙</div>
+            <div class="cc-toggle-sub" id="cc-bt-status">3 Devices</div>
+          </div>
+          <div class="cc-chevron">›</div>
+        </div>
+        <!-- Divider -->
+        <div class="cc-divider"></div>
+        <!-- AirDrop -->
+        <div class="cc-toggle-row" onclick="toggleCCAirdrop()">
+          <div class="cc-toggle-icon cc-blue" id="cc-airdrop-icon-wrap">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M6.34 6.34a8 8 0 0 0 0 11.32M17.66 6.34a8 8 0 0 1 0 11.32M3.51 3.51a13 13 0 0 0 0 16.98M20.49 3.51a13 13 0 0 1 0 16.98"/></svg>
+          </div>
+          <div class="cc-toggle-text">
+            <div class="cc-toggle-label">AirDrop</div>
+            <div class="cc-toggle-sub">所有人</div>
+          </div>
+          <div class="cc-chevron">›</div>
+        </div>
+      </div>
+
+      <!-- Right column: small tiles -->
+      <div class="cc-col-sm">
+        <!-- DND -->
+        <div class="cc-bento cc-bento-sm cc-card cc-toggle-btn" id="cc-dnd-btn" onclick="toggleCCDND()">
+          <div class="cc-sm-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </div>
+          <div class="cc-sm-label" data-i18n="cc_dnd">勿扰</div>
+        </div>
+        <!-- Stage Manager -->
+        <div class="cc-bento cc-bento-sm cc-card cc-toggle-btn" id="cc-stage-manager-btn" onclick="toggleStageManager()">
+          <div class="cc-sm-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="4" width="14" height="16" rx="2"/><rect x="3" y="7" width="2" height="10" rx="1" fill="currentColor"/><rect x="1" y="9" width="1" height="6" rx="0.5" fill="currentColor"/></svg>
+          </div>
+          <div class="cc-sm-label" data-i18n="cc_stage_manager">台前调度</div>
+        </div>
+        <!-- Screen Mirroring -->
+        <div class="cc-bento cc-bento-sm cc-card cc-toggle-btn" onclick="">
+          <div class="cc-sm-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </div>
+          <div class="cc-sm-label">投屏</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2: Brightness Slider -->
+    <div class="cc-bento cc-bento-full cc-card cc-slider-card">
+      <div class="cc-slider-icon">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41m14.14-14.14l-1.41 1.41"/></svg>
+      </div>
+      <div class="cc-slider-track-wrap">
+        <input type="range" id="cc-brightness" min="0" max="100" value="80" class="cc-hslider">
+      </div>
+      <span class="cc-expand-btn" onclick="openCCExpandedSlider('brightness')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+      </span>
+    </div>
+
+    <!-- Row 3: Volume Slider -->
+    <div class="cc-bento cc-bento-full cc-card cc-slider-card">
+      <div class="cc-slider-icon" id="cc-volume-icon">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <div class="cc-slider-track-wrap">
+        <input type="range" id="cc-volume" min="0" max="100" value="50" class="cc-hslider">
+      </div>
+      <span class="cc-expand-btn" onclick="openCCExpandedSlider('volume')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+      </span>
+    </div>
+
+    <!-- Row 4: Now Playing -->
+    <div class="cc-bento cc-bento-full cc-card cc-nowplaying" id="cc-nowplaying">
+      <div class="cc-np-art" id="cc-np-art">
+        <svg width="28" height="28" viewBox="0 0 100 100"><path d="M 68 22 L 42 28 C 39 29 37 31 37 34 L 37 66 C 35 64 32 63 28 63 C 21 63 16 67 16 73 C 16 79 21 83 28 83 C 35 83 40 78 40 72 L 40 42 L 65 37 L 65 60 C 63 58 60 57 56 57 C 49 57 44 61 44 67 C 44 73 49 77 56 77 C 63 77 68 72 68 66 Z" fill="#ffffff"/></svg>
+      </div>
+      <div class="cc-np-info">
+        <div class="cc-np-title" id="cc-np-title">Alice Symphony</div>
+        <div class="cc-np-artist" id="cc-np-artist">Cupertino Soundscape</div>
+      </div>
+      <div class="cc-np-controls">
+        <span onclick="skipTrack(-1)" class="cc-np-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="4" x2="5" y2="20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+        </span>
+        <span id="cc-music-play-btn" onclick="toggleCCMusic()" class="cc-np-btn cc-np-play">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </span>
+        <span onclick="skipTrack(1)" class="cc-np-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="4" x2="19" y2="20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+        </span>
+      </div>
+      <!-- EQ wave -->
+      <div class="eq-container" id="cc-eq-wave" style="display:none;">
+        <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
+      </div>
+    </div>
+
+    <!-- Popovers (hidden, shown on toggle) -->
+    <div id="cc-wifi-popover" class="cc-popover">
+      <div class="cc-popover-header" data-i18n="cc_wifi_preferred">首选网络</div>
+      <div class="cc-popover-item active" onclick="selectWifi('Alice-5G')"><span>✓ Alice-5G</span><span>5 GHz</span></div>
+      <div class="cc-popover-header" data-i18n="cc_wifi_other">其他网络</div>
+      <div class="cc-popover-item" onclick="selectWifi('Apple Park Guest')"><span>Apple Park Guest</span><span>🔒</span></div>
+      <div class="cc-popover-item" onclick="selectWifi('Alice\'s iPhone 16 Pro')"><span>Alice's iPhone 16 Pro</span><span>📱</span></div>
+    </div>
+    <div id="cc-bluetooth-popover" class="cc-popover">
+      <div class="cc-popover-header" data-i18n="cc_bt_devices">已连接设备</div>
+      <div class="cc-popover-item active" onclick="toggleBTDevice(this,'AirPods Pro 2')"><span>AirPods Pro 2</span><span style="color:#34c759;">89%</span></div>
+      <div class="cc-popover-item active" onclick="toggleBTDevice(this,'Magic Keyboard')"><span>Magic Keyboard</span><span style="color:#34c759;">92%</span></div>
+      <div class="cc-popover-item active" onclick="toggleBTDevice(this,'Magic Trackpad')"><span>Magic Trackpad</span><span style="color:#34c759;">85%</span></div>
+    </div>
+  </div>
+

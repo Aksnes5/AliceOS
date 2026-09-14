@@ -2950,6 +2950,26 @@ const DOCK_APP_ICONS = {
 };
 
 function getAppDockSvg(appKey) {
+  const DOCK_PNG = {
+    finder:     'assets/icons/finder.png',
+    browser:    'assets/icons/safari.png',
+    music:      'assets/icons/music.png',
+    paint:      'assets/icons/photos.png',
+    store:      'assets/icons/appstore.png',
+    settings:   'assets/icons/settings.png',
+    notes:      'assets/icons/notes.png',
+    calculator: 'assets/icons/calculator.png',
+    maps:       'assets/icons/maps.png',
+    video:      'assets/icons/video.png',
+    facetime:   'assets/icons/facetime.png',
+    messages:   'assets/icons/messages.png',
+    contacts:   'assets/icons/contacts.png',
+    podcasts:   'assets/icons/podcasts.png',
+    mail:       'assets/icons/mail.png',
+  };
+  if (DOCK_PNG[appKey]) {
+    return `<img src="${DOCK_PNG[appKey]}" alt="${appKey}" style="width:100%;height:100%;object-fit:contain;border-radius:22.5%;pointer-events:none;">`;
+  }
   if (DOCK_APP_ICONS[appKey]) return DOCK_APP_ICONS[appKey];
   return `<div class="macos-app-icon" style="background:linear-gradient(135deg,#6366f1,#3b82f6);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:20px;border-radius:22.5%;">${(appKey || 'A').charAt(0).toUpperCase()}</div>`;
 }
@@ -8140,21 +8160,63 @@ const ccMenu = document.getElementById('control-center');
 const brightnessSlider = document.getElementById('cc-brightness');
 const brightnessOverlay = document.getElementById('brightness-overlay');
 
+// ── Slider track live-fill ──────────────────────────────────────────────────
+function initCCSliders() {
+  const setFill = (el) => {
+    if (!el) return;
+    const pct = ((el.value - el.min) / (el.max - el.min)) * 100;
+    el.style.setProperty('--val', pct + '%');
+    el.style.background = `linear-gradient(to right, rgba(255,255,255,0.85) ${pct}%, rgba(255,255,255,0.2) ${pct}%)`;
+  };
+  ['cc-brightness', 'cc-volume'].forEach(id => {
+    const sl = document.getElementById(id);
+    if (!sl) return;
+    setFill(sl);
+    sl.addEventListener('input', () => setFill(sl));
+  });
+  const bSlider = document.getElementById('cc-brightness');
+  if (bSlider) {
+    bSlider.addEventListener('input', () => {
+      const v = bSlider.value / 100;
+      if (brightnessOverlay) brightnessOverlay.style.opacity = (1 - v) * 0.7;
+      if (typeof window.notifyIslandLocal === 'function') window.notifyIslandLocal('☀️', 'Brightness', parseInt(bSlider.value));
+    });
+  }
+}
+document.addEventListener('DOMContentLoaded', initCCSliders);
+
+// ── Tiling menu close-on-outside-click ──────────────────────────────────────
+document.addEventListener('click', (e) => {
+  const tm = document.getElementById('tiling-menu');
+  if (tm && tm.style.display !== 'none' && !tm.contains(e.target)) {
+    hideTilingMenu();
+  }
+});
+
+
 function toggleControlCenter() {
   const ccMenu = document.getElementById('control-center');
   if (!ccMenu) return;
-  if (ccMenu.style.display === 'flex') {
+  const isOpen = ccMenu.classList.contains('cc-open');
+  if (isOpen) {
     ccMenu.style.opacity = '0';
-    ccMenu.style.transform = 'translateY(-20px)';
-    setTimeout(() => ccMenu.style.display = 'none', 300);
+    ccMenu.style.transform = 'scale(0.94) translateY(-12px)';
+    setTimeout(() => {
+      ccMenu.style.display = 'none';
+      ccMenu.classList.remove('cc-open');
+    }, 220);
   } else {
     if (typeof ncActive !== 'undefined' && ncActive && typeof toggleNotificationCenter === 'function') {
       toggleNotificationCenter();
     }
     ccMenu.style.display = 'flex';
     void ccMenu.offsetWidth;
-    ccMenu.style.opacity = '1';
-    ccMenu.style.transform = 'translateY(0)';
+    ccMenu.classList.add('cc-open');
+    // Update slider track fills
+    ['cc-brightness', 'cc-volume'].forEach(id => {
+      const sl = document.getElementById(id);
+      if (sl) sl.style.setProperty('--val', sl.value + '%');
+    });
   }
 }
 
@@ -9082,6 +9144,37 @@ const launchpad = document.getElementById('launchpad');
 function getAppIconSvg(id, size = 64) {
   const normId = (id || '').toLowerCase().trim();
   const uid = `${normId}-${Math.floor(Math.random() * 1000000)}`;
+
+  // ── Real macOS PNG icons (highest priority) ──────────────────────────────
+  const MACOS_PNG = {
+    finder:     'assets/icons/finder.png',
+    browser:    'assets/icons/safari.png',
+    safari:     'assets/icons/safari.png',
+    music:      'assets/icons/music.png',
+    paint:      'assets/icons/photos.png',
+    photos:     'assets/icons/photos.png',
+    store:      'assets/icons/appstore.png',
+    appstore:   'assets/icons/appstore.png',
+    settings:   'assets/icons/settings.png',
+    notes:      'assets/icons/notes.png',
+    calculator: 'assets/icons/calculator.png',
+    maps:       'assets/icons/maps.png',
+    video:      'assets/icons/video.png',
+    facetime:   'assets/icons/facetime.png',
+    messages:   'assets/icons/messages.png',
+    contacts:   'assets/icons/contacts.png',
+    podcasts:   'assets/icons/podcasts.png',
+    books:      'assets/icons/books.png',
+    findmy:     'assets/icons/findmy.png',
+    home:       'assets/icons/home.png',
+    voicememos: 'assets/icons/voicememos.png',
+    siri:       'assets/icons/siri.png',
+    mail:       'assets/icons/mail.png',
+  };
+  if (MACOS_PNG[normId]) {
+    return `<img src="${MACOS_PNG[normId]}" alt="${normId}" width="${size}" height="${size}" style="border-radius:${Math.round(size*0.225)}px;object-fit:contain;display:block;pointer-events:none;">`;
+  }
+  // ────────────────────────────────────────────────────────────────────────
 
   if (normId === 'finder') {
     return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
@@ -21651,3 +21744,90 @@ window.launchClock = launchClock;
 window.launchReminders = launchReminders;
 window.launchTextEdit = launchTextEdit;
 window.updateDockCalendarIcon = updateDockCalendarIcon;
+
+// ============================================================
+// macOS Sequoia Window Tiling — applyTiling() public API
+// ============================================================
+let _tilingTargetWin = null;
+
+function showTilingMenu(win, anchorEl) {
+  _tilingTargetWin = win;
+  const menu = document.getElementById('tiling-menu');
+  if (!menu) return;
+  const rect = anchorEl ? anchorEl.getBoundingClientRect() : { left: window.innerWidth/2 - 100, bottom: 80 };
+  menu.style.left = Math.max(8, rect.left - 10) + 'px';
+  menu.style.top  = (rect.bottom + 8) + 'px';
+  menu.style.display = 'block';
+}
+
+function hideTilingMenu() {
+  const menu = document.getElementById('tiling-menu');
+  if (menu) menu.style.display = 'none';
+  _tilingTargetWin = null;
+}
+
+function applyTiling(mode) {
+  const win = _tilingTargetWin || (typeof activeTileWin !== 'undefined' ? activeTileWin : document.querySelector('.window:not([style*="display: none"]):last-of-type'));
+  hideTilingMenu();
+  if (typeof hideWindowTilePopover === 'function') hideWindowTilePopover();
+  if (!win) return;
+
+  const mb = 28; // menubar height
+  const db = 82; // dock height + padding
+  const gap = 8;
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+
+  const halfW  = Math.floor((vw - gap * 3) / 2);
+  const halfH  = Math.floor((vh - mb - db - gap * 3) / 2);
+  const fullH  = vh - mb - db - gap * 2;
+  const fullW  = vw - gap * 2;
+  const centerW = Math.min(760, vw - 100);
+  const centerH = Math.min(520, vh - mb - db - 60);
+
+  const positions = {
+    full:     { left: gap,           top: mb + gap,               width: fullW,  height: fullH  },
+    left:     { left: gap,           top: mb + gap,               width: halfW,  height: fullH  },
+    right:    { left: halfW+gap*2,   top: mb + gap,               width: halfW,  height: fullH  },
+    center:   { left: (vw-centerW)/2,top: mb + (vh-mb-db-centerH)/2, width: centerW, height: centerH },
+    topleft:  { left: gap,           top: mb + gap,               width: halfW,  height: halfH  },
+    topright: { left: halfW+gap*2,   top: mb + gap,               width: halfW,  height: halfH  },
+    botleft:  { left: gap,           top: mb + halfH + gap*2,     width: halfW,  height: halfH  },
+    botright: { left: halfW+gap*2,   top: mb + halfH + gap*2,     width: halfW,  height: halfH  },
+  };
+
+  const p = positions[mode];
+  if (!p) return;
+
+  win.style.transition = 'all 0.38s cubic-bezier(0.16, 1, 0.3, 1)';
+  Object.assign(win.style, {
+    left:   p.left   + 'px',
+    top:    p.top    + 'px',
+    width:  p.width  + 'px',
+    height: p.height + 'px',
+  });
+  win.dataset.snapped = mode;
+  if (typeof focusWindow === 'function') focusWindow(win);
+  setTimeout(() => win.style.transition = '', 400);
+}
+
+// Hook green button to show our new tiling menu
+document.addEventListener('DOMContentLoaded', () => {
+  // Re-init any existing windows' maximize btn to also show tiling menu
+  document.querySelectorAll('.window').forEach(win => {
+    const maxBtn = win.querySelector('.maximize, .control.maximize');
+    if (maxBtn && !maxBtn._tilingHooked) {
+      maxBtn._tilingHooked = true;
+      let timer;
+      maxBtn.addEventListener('mouseenter', () => {
+        timer = setTimeout(() => showTilingMenu(win, maxBtn), 300);
+      });
+      maxBtn.addEventListener('mouseleave', () => clearTimeout(timer));
+    }
+  });
+});
+
+// Expose globally
+window.applyTiling  = applyTiling;
+window.showTilingMenu = showTilingMenu;
+window.hideTilingMenu = hideTilingMenu;
