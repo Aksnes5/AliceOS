@@ -4134,7 +4134,7 @@ function getSFSymbol(name, size = 16, color = 'currentColor') {
       svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>`;
   }
 
-  return `<span class="sf-icon" style="width:${size}px;height:${size}px;">${svg}</span>`;
+  return `<i class="sf-icon" style="width:${size}px;height:${size}px;font-style:normal;">${svg}</i>`;
 }
 
 // macOS Sequoia System Vector Glyphs Helpers
@@ -8119,39 +8119,39 @@ async function launchSettings() {
 
           <div class="ventura-nav-item active" data-tab="appearance">
             <div class="ventura-badge" style="background:linear-gradient(135deg,#007aff,#5856d6);">${getSFSymbol('palette', 12, '#fff')}</div>
-            <span data-i18n="settings_appearance">${t('settings_appearance', 'Appearance')}</span>
+            <span class="ventura-nav-label" data-i18n="settings_appearance">${t('settings_appearance', 'Appearance')}</span>
           </div>
           <div class="ventura-nav-item" data-tab="wallpaper">
             <div class="ventura-badge" style="background:linear-gradient(135deg,#af52de,#ff2d55);">${getSFSymbol('doc-image', 12, '#fff')}</div>
-            <span data-i18n="settings_wallpaper">${t('settings_wallpaper', 'Wallpaper')}</span>
+            <span class="ventura-nav-label" data-i18n="settings_wallpaper">${t('settings_wallpaper', 'Wallpaper')}</span>
           </div>
           <div class="ventura-nav-item" data-tab="displays">
             <div class="ventura-badge" style="background:linear-gradient(135deg,#007aff,#30b0c7);">${getSFSymbol('desktop', 12, '#fff')}</div>
-            <span data-i18n="settings_displays">${t('settings_displays', 'Displays')}</span>
+            <span class="ventura-nav-label" data-i18n="settings_displays">${t('settings_displays', 'Displays')}</span>
           </div>
           <div class="ventura-nav-item" data-tab="desktop">
             <div class="ventura-badge" style="background:linear-gradient(135deg,#30b0c7,#34c759);">${getSFSymbol('grid', 12, '#fff')}</div>
-            <span data-i18n="settings_desktop">${t('settings_desktop', 'Desktop & Stage')}</span>
+            <span class="ventura-nav-label" data-i18n="settings_desktop">${t('settings_desktop', 'Desktop & Stage')}</span>
           </div>
           <div class="ventura-nav-item" data-tab="sound">
             <div class="ventura-badge" style="background:linear-gradient(135deg,#ff2d55,#ff375f);">${getSFSymbol('speaker', 12, '#fff')}</div>
-            <span data-i18n="settings_sound">${t('settings_sound', 'Sound')}</span>
+            <span class="ventura-nav-label" data-i18n="settings_sound">${t('settings_sound', 'Sound')}</span>
           </div>
           <div class="ventura-nav-item" data-tab="battery">
             <div class="ventura-badge" style="background:linear-gradient(135deg,#34c759,#30b0c7);">${getSFSymbol('battery', 12, '#fff')}</div>
-            <span data-i18n="settings_battery">${t('settings_battery', 'Battery')}</span>
+            <span class="ventura-nav-label" data-i18n="settings_battery">${t('settings_battery', 'Battery')}</span>
           </div>
           <div class="ventura-nav-item" data-tab="wifi">
             <div class="ventura-badge" style="background:linear-gradient(135deg,#007aff,#0a84ff);">${getSFSymbol('wifi', 12, '#fff')}</div>
-            <span data-i18n="settings_wifi">${t('settings_wifi', 'Wi-Fi')}</span>
+            <span class="ventura-nav-label" data-i18n="settings_wifi">${t('settings_wifi', 'Wi-Fi')}</span>
           </div>
           <div class="ventura-nav-item" data-tab="language">
             <div class="ventura-badge" style="background:linear-gradient(135deg,#5856d6,#007aff);">${getSFSymbol('globe', 12, '#fff')}</div>
-            <span data-i18n="settings_lang_region">${t('settings_lang_region', 'Language & Region')}</span>
+            <span class="ventura-nav-label" data-i18n="settings_lang_region">${t('settings_lang_region', 'Language & Region')}</span>
           </div>
           <div class="ventura-nav-item" data-tab="about">
             <div class="ventura-badge" style="background:linear-gradient(135deg,#8e8e93,#636366);">${getSFSymbol('gear', 12, '#fff')}</div>
-            <span data-i18n="settings_about">${t('settings_about', 'General & About')}</span>
+            <span class="ventura-nav-label" data-i18n="settings_about">${t('settings_about', 'General & About')}</span>
           </div>
         </div>
 
@@ -8782,8 +8782,8 @@ async function launchSettings() {
       const d = dict || i18nDict[lang] || i18nDict.en;
       win.querySelectorAll('.ventura-nav-item').forEach(item => {
         const tabKey = item.dataset.tab;
-        const span = item.querySelector('span');
-        if (span) {
+        const label = item.querySelector('.ventura-nav-label') || item.querySelector('span[data-i18n]');
+        if (label) {
           const keyMap = {
             appearance: d.settings_appearance,
             wallpaper: d.settings_wallpaper,
@@ -8795,7 +8795,27 @@ async function launchSettings() {
             language: d.settings_lang_region,
             about: d.settings_about
           };
-          if (keyMap[tabKey]) span.innerText = keyMap[tabKey];
+          if (keyMap[tabKey]) label.innerText = keyMap[tabKey];
+        }
+
+        // Guarantee badge icon stays pristine with Apple SF Symbol
+        const badge = item.querySelector('.ventura-badge');
+        if (badge) {
+          const badgeDefs = {
+            appearance: { bg: 'linear-gradient(135deg,#007aff,#5856d6)', sym: 'palette' },
+            wallpaper: { bg: 'linear-gradient(135deg,#af52de,#ff2d55)', sym: 'doc-image' },
+            displays: { bg: 'linear-gradient(135deg,#007aff,#30b0c7)', sym: 'desktop' },
+            desktop: { bg: 'linear-gradient(135deg,#30b0c7,#34c759)', sym: 'grid' },
+            sound: { bg: 'linear-gradient(135deg,#ff2d55,#ff375f)', sym: 'speaker' },
+            battery: { bg: 'linear-gradient(135deg,#34c759,#30b0c7)', sym: 'battery' },
+            wifi: { bg: 'linear-gradient(135deg,#007aff,#0a84ff)', sym: 'wifi' },
+            language: { bg: 'linear-gradient(135deg,#5856d6,#007aff)', sym: 'globe' },
+            about: { bg: 'linear-gradient(135deg,#8e8e93,#636366)', sym: 'gear' }
+          };
+          if (badgeDefs[tabKey]) {
+            badge.style.background = badgeDefs[tabKey].bg;
+            badge.innerHTML = getSFSymbol(badgeDefs[tabKey].sym, 12, '#fff');
+          }
         }
       });
       const adminLabel = win.querySelector('[data-i18n="settings_admin"]');
@@ -12185,13 +12205,13 @@ async function launchPaint(initialFilePath = null) {
       if (item && text) item.innerText = text;
     });
 
-    const backTxt = win.querySelector(`#photos-back-${pid} span`);
+    const backTxt = win.querySelector(`#photos-back-${pid} span:not(.sf-icon)`);
     if (backTxt && d.photos_back) backTxt.innerText = d.photos_back;
-    const newBtnSpan = win.querySelector(`#photos-new-blank-${pid} span`);
+    const newBtnSpan = win.querySelector(`#photos-new-blank-${pid} span:not(.sf-icon)`);
     if (newBtnSpan && d.photos_new_canvas) newBtnSpan.innerText = d.photos_new_canvas;
-    const editBtnSpan = win.querySelector(`#photos-edit-${pid} span`);
+    const editBtnSpan = win.querySelector(`#photos-edit-${pid} span:not(.sf-icon)`);
     if (editBtnSpan && d.photos_edit) editBtnSpan.innerText = d.photos_edit;
-    const exportBtnSpan = win.querySelector(`#photos-export-${pid} span`);
+    const exportBtnSpan = win.querySelector(`#photos-export-${pid} span:not(.sf-icon)`);
     if (exportBtnSpan && d.photos_export) exportBtnSpan.innerText = d.photos_export;
 
     if (rotateBtn && d.photos_rotate) rotateBtn.title = d.photos_rotate;
@@ -12232,7 +12252,7 @@ async function launchPaint(initialFilePath = null) {
       'eraser': d.photos_eraser
     };
     Object.entries(markupTools).forEach(([tKey, label]) => {
-      const btn = win.querySelector(`.markup-tool-btn[data-tool="${tKey}"] span`);
+      const btn = win.querySelector(`.markup-tool-btn[data-tool="${tKey}"] span:not(.sf-icon)`);
       if (btn && label) btn.innerText = label;
     });
 
@@ -18843,7 +18863,7 @@ print("[SWIFTUI] ContentView rendered.");`,
       const clrB = win.querySelector(`#xcode-clear-btn-${pid}`);
       if (clrB) {
         if (d.xcode_clear) clrB.title = d.xcode_clear;
-        const span = clrB.querySelector('span');
+        const span = clrB.querySelector('span:not(.sf-icon)');
         if (span && d.xcode_clear) span.innerText = d.xcode_clear;
       }
       const navTitle = win.querySelector(`#xcode-nav-title-${pid}`);
