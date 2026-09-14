@@ -3633,35 +3633,62 @@ async function launchTerminal() {
 }
 
 // Modify the old testVFS to just be an example app
+// About This Mac (macOS Sequoia Design)
 async function launchSystemInfo() {
   const res = await window.aliceOS.pm.spawn('system-info');
   if (res.success) {
     const pid = res.data.pid;
-    const win = createWindow(pid, t('about_title', 'About This System'), `
-      <div id="sys-about-${pid}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 20px;text-align:center;font-family:-apple-system, sans-serif;height:100%;box-sizing:border-box;background:inherit;color:inherit;">
-        <div style="font-size:64px;margin-bottom:12px;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.15));"></div>
-        <h2 style="margin:0 0 4px 0;font-size:22px;font-weight:700;color:inherit;">AliceOS</h2>
-        <div style="font-size:13px;opacity:0.65;margin-bottom:18px;">Sonoma 14.5 (Build 23F79)</div>
-        <div style="width:100%;max-width:280px;background:rgba(0,0,0,0.04);border-radius:12px;padding:12px 16px;text-align:left;font-size:12px;display:flex;flex-direction:column;gap:8px;border:1px solid rgba(0,0,0,0.06);">
-          <div style="display:flex;justify-content:space-between;"><span style="opacity:0.6;" id="about-lbl-chip-${pid}">${t('about_chip', 'Chip')}</span><span style="font-weight:600;">Alice M3 Ultra</span></div>
-          <div style="display:flex;justify-content:space-between;"><span style="opacity:0.6;" id="about-lbl-mem-${pid}">${t('about_memory', 'Memory')}</span><span style="font-weight:600;" id="about-val-mem-${pid}">${t('about_memory_val', '32 GB Unified Memory')}</span></div>
-          <div style="display:flex;justify-content:space-between;"><span style="opacity:0.6;" id="about-lbl-ser-${pid}">${t('about_serial', 'Serial Number')}</span><span style="font-family:monospace;font-weight:600;">C02AL1CEOS88</span></div>
+    const win = createWindow(pid, t('about_title', 'About This Mac'), `
+      <div id="sys-about-${pid}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:26px 24px;text-align:center;font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;height:100%;box-sizing:border-box;background:inherit;color:inherit;user-select:none;">
+        <div style="font-size:56px;margin-bottom:12px;filter:drop-shadow(0 6px 16px rgba(0,0,0,0.25));line-height:1;"></div>
+        <h2 style="margin:0 0 4px 0;font-size:24px;font-weight:700;letter-spacing:-0.5px;">macOS Sequoia</h2>
+        <div style="font-size:12px;opacity:0.65;margin-bottom:18px;">Version 15.1 (Build 24B83)</div>
+
+        <div style="width:100%;max-width:320px;background:rgba(0,0,0,0.04);border-radius:14px;padding:14px 18px;text-align:left;font-size:12px;display:flex;flex-direction:column;gap:9px;border:1px solid rgba(0,0,0,0.07);">
+          <div style="display:flex;justify-content:space-between;"><span style="opacity:0.6;">MacBook Pro</span><span style="font-weight:600;">16-inch, Nov 2024</span></div>
+          <div style="display:flex;justify-content:space-between;"><span style="opacity:0.6;">Chip</span><span style="font-weight:600;">Apple M4 Max</span></div>
+          <div style="display:flex;justify-content:space-between;"><span style="opacity:0.6;">Memory</span><span style="font-weight:600;">36 GB Unified Memory</span></div>
+          <div style="display:flex;justify-content:space-between;"><span style="opacity:0.6;">Startup Disk</span><span style="font-weight:600;">Macintosh HD</span></div>
+          <div style="display:flex;justify-content:space-between;"><span style="opacity:0.6;">Serial Number</span><span style="font-family:ui-monospace,SF Mono,monospace;font-weight:600;">C02AL1CEOS88</span></div>
         </div>
-        <button onclick="launchSettings()" style="margin-top:18px;background:rgba(0,0,0,0.08);border:none;padding:6px 16px;border-radius:14px;font-size:12px;font-weight:600;cursor:pointer;color:inherit;" id="about-btn-more-${pid}">${t('about_more_info', 'More Info...')}</button>
+
+        <!-- Storage Bar Preview -->
+        <div style="width:100%;max-width:320px;margin-top:14px;text-align:left;">
+          <div style="display:flex;justify-content:space-between;font-size:11px;opacity:0.7;margin-bottom:5px;">
+            <span>Macintosh HD</span>
+            <span>412.5 GB available of 1 TB</span>
+          </div>
+          <div style="height:8px;background:rgba(0,0,0,0.1);border-radius:4px;overflow:hidden;display:flex;">
+            <div style="width:28%;background:#007aff;" title="macOS System"></div>
+            <div style="width:22%;background:#ff9500;" title="Apps"></div>
+            <div style="width:12%;background:#af52de;" title="Developer"></div>
+            <div style="width:8%;background:#34c759;" title="Documents"></div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:10px;margin-top:18px;">
+          <button id="about-btn-report-${pid}" style="background:rgba(0,0,0,0.06);border:1px solid rgba(0,0,0,0.1);padding:6px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;color:inherit;">System Report...</button>
+          <button id="about-btn-more-${pid}" style="background:rgba(0,0,0,0.06);border:1px solid rgba(0,0,0,0.1);padding:6px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;color:inherit;">More Info...</button>
+        </div>
       </div>
     `, 'hostinfo');
 
+    win.style.width = '380px';
+    win.style.height = '430px';
+
+    const reportBtn = win.querySelector(`#about-btn-report-${pid}`);
+    const moreBtn = win.querySelector(`#about-btn-more-${pid}`);
+
+    reportBtn.addEventListener('click', () => {
+      launchHostMonitor();
+    });
+
+    moreBtn.addEventListener('click', () => {
+      launchSettings();
+    });
+
     win._onLanguageChange = () => {
-      const chipEl = win.querySelector(`#about-lbl-chip-${pid}`);
-      if (chipEl) chipEl.innerText = t('about_chip', 'Chip');
-      const memEl = win.querySelector(`#about-lbl-mem-${pid}`);
-      if (memEl) memEl.innerText = t('about_memory', 'Memory');
-      const valMemEl = win.querySelector(`#about-val-mem-${pid}`);
-      if (valMemEl) valMemEl.innerText = t('about_memory_val', '32 GB Unified Memory');
-      const serEl = win.querySelector(`#about-lbl-ser-${pid}`);
-      if (serEl) serEl.innerText = t('about_serial', 'Serial Number');
-      const moreBtn = win.querySelector(`#about-btn-more-${pid}`);
-      if (moreBtn) moreBtn.innerText = t('about_more_info', 'More Info...');
+      win.querySelector('.title').innerText = t('about_title', 'About This Mac');
     };
   }
 }
@@ -8642,139 +8669,479 @@ async function launchPaint() {
   }
 }
 
-// Snake Game App
+// Snake Game App (Apple Arcade Edition)
 async function launchSnake() {
   const res = await window.aliceOS.pm.spawn('snake');
   if (res.success) {
     const pid = res.data.pid;
-    const win = createWindow(pid, t('app_snake', 'Snake'), `
-      <div style="background:#222;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;">
-        <div style="color:white;margin-bottom:10px;font-family:monospace;font-size:20px;"><span id="snake-lbl-${pid}">${t('snake_score', 'Score')}</span>: <span id="snake-score-${pid}">0</span></div>
-        <canvas id="snake-canvas-${pid}" width="400" height="400" style="background:#000;border:2px solid #555;"></canvas>
-        <div id="snake-hint-${pid}" style="color:#888;margin-top:10px;font-size:12px;">${t('snake_hint', 'Use Arrow Keys to play. Click here to focus.')}</div>
+    let highScore = parseInt(localStorage.getItem('alice_snake_highscore') || '0', 10);
+    let currentScore = 0;
+    let isPaused = false;
+    let isGameOver = false;
+    let currentSpeed = 80; // ms per tick
+    let currentTheme = 'cyber'; // cyber, garden, obsidian
+
+    const win = createWindow(pid, t('app_snake', 'Snake Pro — Apple Arcade'), `
+      <div class="mac-arcade-app">
+        <!-- Arcade Header -->
+        <div class="mac-arcade-header">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:28px;height:28px;background:linear-gradient(135deg,#ff2d55,#ff9500);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 2px 6px rgba(255,45,85,0.4);">🕹️</div>
+            <div>
+              <div style="font-size:13px;font-weight:700;letter-spacing:-0.2px;">Snake Pro</div>
+              <div style="font-size:10px;color:#a1a1aa;">Apple Arcade • Game Center</div>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div class="mac-arcade-pill">
+              <span style="color:#a1a1aa;">Score:</span>
+              <span id="snake-score-${pid}" style="font-family:ui-monospace,SF Mono,monospace;font-weight:700;color:#34c759;">0</span>
+            </div>
+            <div class="mac-arcade-pill">
+              <span style="color:#fbbf24;">🏆</span>
+              <span id="snake-high-${pid}" style="font-family:ui-monospace,SF Mono,monospace;font-weight:700;color:#fbbf24;">${highScore}</span>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;">
+            <select id="snake-diff-${pid}" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);color:white;padding:3px 8px;border-radius:6px;font-size:11px;outline:none;cursor:pointer;">
+              <option value="110">Casual</option>
+              <option value="80" selected>Classic</option>
+              <option value="50">Pro</option>
+              <option value="35">Turbo</option>
+            </select>
+            <select id="snake-theme-${pid}" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);color:white;padding:3px 8px;border-radius:6px;font-size:11px;outline:none;cursor:pointer;">
+              <option value="cyber">Neon Cyber</option>
+              <option value="garden">Emerald Garden</option>
+              <option value="obsidian">Obsidian Gold</option>
+            </select>
+            <button id="snake-pause-btn-${pid}" class="mac-arcade-btn" title="Pause / Resume">⏸️</button>
+          </div>
+        </div>
+
+        <!-- Canvas Area -->
+        <div style="flex:1;position:relative;display:flex;align-items:center;justify-content:center;background:#0d0e12;overflow:hidden;" id="snake-container-${pid}">
+          <canvas id="snake-canvas-${pid}" width="480" height="420" style="background:#14161d;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.06);"></canvas>
+          
+          <!-- Game Over Overlay -->
+          <div id="snake-overlay-${pid}" class="mac-arcade-overlay" style="display:none;">
+            <div style="background:rgba(28,28,32,0.95);border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:24px 32px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,0.8);max-width:320px;width:100%;">
+              <div style="font-size:36px;margin-bottom:8px;" id="snake-overlay-icon-${pid}">💥</div>
+              <h2 id="snake-overlay-title-${pid}" style="margin:0 0 6px 0;font-size:20px;font-weight:700;">Game Over</h2>
+              <div id="snake-overlay-desc-${pid}" style="font-size:12px;color:#a1a1aa;margin-bottom:16px;">You collided with the wall!</div>
+              
+              <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:12px;margin-bottom:20px;display:flex;justify-content:space-around;">
+                <div>
+                  <div style="font-size:11px;color:#a1a1aa;">FINAL SCORE</div>
+                  <div id="snake-final-score-${pid}" style="font-size:22px;font-weight:700;color:#34c759;">0</div>
+                </div>
+                <div style="width:1px;background:rgba(255,255,255,0.1);"></div>
+                <div>
+                  <div style="font-size:11px;color:#a1a1aa;">BEST RECORD</div>
+                  <div id="snake-best-score-${pid}" style="font-size:22px;font-weight:700;color:#fbbf24;">${highScore}</div>
+                </div>
+              </div>
+
+              <div style="display:flex;gap:10px;justify-content:center;">
+                <button id="snake-restart-btn-${pid}" class="mac-arcade-btn primary" style="padding:8px 24px;font-size:13px;">Play Again</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Hint Bar -->
+        <div style="height:28px;background:rgba(20,20,24,0.9);border-top:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:space-between;padding:0 16px;font-size:11px;color:#71717a;">
+          <span>Use <b>Arrow Keys</b> or <b>W/A/S/D</b> to steer</span>
+          <span>Press <b>Space</b> to pause</span>
+        </div>
       </div>
     `, 'snake');
+
+    win.style.width = '560px';
+    win.style.height = '540px';
 
     const canvas = win.querySelector(`#snake-canvas-${pid}`);
     const ctx = canvas.getContext('2d');
     const scoreEl = win.querySelector(`#snake-score-${pid}`);
-    const scoreLbl = win.querySelector(`#snake-lbl-${pid}`);
-    const hintEl = win.querySelector(`#snake-hint-${pid}`);
+    const highEl = win.querySelector(`#snake-high-${pid}`);
+    const diffSelect = win.querySelector(`#snake-diff-${pid}`);
+    const themeSelect = win.querySelector(`#snake-theme-${pid}`);
+    const pauseBtn = win.querySelector(`#snake-pause-btn-${pid}`);
+    const overlay = win.querySelector(`#snake-overlay-${pid}`);
+    const overlayIcon = win.querySelector(`#snake-overlay-icon-${pid}`);
+    const overlayTitle = win.querySelector(`#snake-overlay-title-${pid}`);
+    const overlayDesc = win.querySelector(`#snake-overlay-desc-${pid}`);
+    const finalScoreEl = win.querySelector(`#snake-final-score-${pid}`);
+    const bestScoreEl = win.querySelector(`#snake-best-score-${pid}`);
+    const restartBtn = win.querySelector(`#snake-restart-btn-${pid}`);
 
-    win._onLanguageChange = () => {
-      if (scoreLbl) scoreLbl.innerText = t('snake_score', 'Score');
-      if (hintEl) hintEl.innerText = t('snake_hint', 'Use Arrow Keys to play. Click here to focus.');
-    };
+    // Audio synthesizer for sound effects
+    let audioCtx = null;
+    function playSfx(type) {
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        const t = audioCtx.currentTime;
 
-    // Game loop logic
-    let grid = 16;
-    let count = 0;
-    let score = 0;
-    
-    let snake = {
-      x: 160,
-      y: 160,
-      dx: grid,
-      dy: 0,
-      cells: [],
-      maxCells: 4
-    };
-    
-    let apple = {
-      x: 320,
-      y: 320
-    };
-
-    function getRandomInt(min, max) {
-      return Math.floor(Math.random() * (max - min)) + min;
+        if (type === 'eat') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(440, t);
+          osc.frequency.exponentialRampToValueAtTime(880, t + 0.12);
+          gain.gain.setValueAtTime(0.2, t);
+          gain.gain.exponentialRampToValueAtTime(0.01, t + 0.12);
+          osc.start(t);
+          osc.stop(t + 0.12);
+        } else if (type === 'golden') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(587.33, t);
+          osc.frequency.exponentialRampToValueAtTime(1174.66, t + 0.25);
+          gain.gain.setValueAtTime(0.25, t);
+          gain.gain.exponentialRampToValueAtTime(0.01, t + 0.25);
+          osc.start(t);
+          osc.stop(t + 0.25);
+        } else if (type === 'crash') {
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(160, t);
+          osc.frequency.exponentialRampToValueAtTime(40, t + 0.3);
+          gain.gain.setValueAtTime(0.3, t);
+          gain.gain.exponentialRampToValueAtTime(0.01, t + 0.3);
+          osc.start(t);
+          osc.stop(t + 0.3);
+        }
+      } catch (e) {}
     }
 
-    let animationId;
+    // Game grid & state
+    const gridSize = 20;
+    const cols = canvas.width / gridSize;
+    const rows = canvas.height / gridSize;
 
-    function loop() {
-      // check if window is closed
-      if (!document.getElementById(`window-${pid}`)) {
-        cancelAnimationFrame(animationId);
+    let snake = [];
+    let dir = { x: 1, y: 0 };
+    let nextDir = { x: 1, y: 0 };
+    let food = { x: 10, y: 10, isGolden: false };
+    let particles = [];
+    let gameTimer = null;
+
+    function initGame() {
+      snake = [
+        { x: 8, y: 10 },
+        { x: 7, y: 10 },
+        { x: 6, y: 10 },
+        { x: 5, y: 10 }
+      ];
+      dir = { x: 1, y: 0 };
+      nextDir = { x: 1, y: 0 };
+      currentScore = 0;
+      scoreEl.innerText = '0';
+      isGameOver = false;
+      isPaused = false;
+      overlay.style.display = 'none';
+      pauseBtn.innerText = '⏸️';
+      spawnFood();
+      render();
+      startGameLoop();
+    }
+
+    function spawnFood() {
+      let valid = false;
+      while (!valid) {
+        food.x = Math.floor(Math.random() * cols);
+        food.y = Math.floor(Math.random() * rows);
+        food.isGolden = Math.random() < 0.15; // 15% chance for golden star apple
+        valid = !snake.some(seg => seg.x === food.x && seg.y === food.y);
+      }
+    }
+
+    function createParticles(x, y, color) {
+      for (let i = 0; i < 14; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 3 + 1;
+        particles.push({
+          x: x * gridSize + gridSize / 2,
+          y: y * gridSize + gridSize / 2,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          life: 1.0,
+          decay: Math.random() * 0.05 + 0.02,
+          color: color,
+          size: Math.random() * 3 + 2
+        });
+      }
+    }
+
+    function update() {
+      if (isPaused || isGameOver) return;
+
+      dir = nextDir;
+      const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
+
+      // Wall collision
+      if (head.x < 0 || head.x >= cols || head.y < 0 || head.y >= rows) {
+        gameOver('Wall Collision');
         return;
       }
-      
-      animationId = requestAnimationFrame(loop);
-      
-      if (++count < 6) return; // slow down game loop to 10fps
-      count = 0;
-      
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      
-      snake.x += snake.dx;
-      snake.y += snake.dy;
-      
-      // wrap snake position horizontally on edge of screen
-      if (snake.x < 0) snake.x = canvas.width - grid;
-      else if (snake.x >= canvas.width) snake.x = 0;
-      
-      // wrap snake position vertically on edge of screen
-      if (snake.y < 0) snake.y = canvas.height - grid;
-      else if (snake.y >= canvas.height) snake.y = 0;
-      
-      snake.cells.unshift({x: snake.x, y: snake.y});
-      if (snake.cells.length > snake.maxCells) snake.cells.pop();
-      
-      // draw apple
-      ctx.fillStyle = 'red';
-      ctx.fillRect(apple.x, apple.y, grid-1, grid-1);
-      
-      // draw snake
-      ctx.fillStyle = 'lime';
-      snake.cells.forEach(function(cell, index) {
-        ctx.fillRect(cell.x, cell.y, grid-1, grid-1);
-        
-        // snake ate apple
-        if (cell.x === apple.x && cell.y === apple.y) {
-          snake.maxCells++;
-          score++;
-          scoreEl.innerText = score;
-          apple.x = getRandomInt(0, 25) * grid;
-          apple.y = getRandomInt(0, 25) * grid;
+
+      // Self collision
+      if (snake.some(seg => seg.x === head.x && seg.y === head.y)) {
+        gameOver('Self Collision');
+        return;
+      }
+
+      snake.unshift(head);
+
+      // Check food
+      if (head.x === food.x && head.y === food.y) {
+        const pts = food.isGolden ? 50 : 10;
+        currentScore += pts;
+        scoreEl.innerText = currentScore;
+        if (currentScore > highScore) {
+          highScore = currentScore;
+          highEl.innerText = highScore;
+          localStorage.setItem('alice_snake_highscore', highScore.toString());
         }
-        
-        // check collision with all cells after this one (modified bubble sort)
-        for (let i = index + 1; i < snake.cells.length; i++) {
-          if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
-            snake.x = 160;
-            snake.y = 160;
-            snake.cells = [];
-            snake.maxCells = 4;
-            snake.dx = grid;
-            snake.dy = 0;
-            score = 0;
-            scoreEl.innerText = score;
-            apple.x = getRandomInt(0, 25) * grid;
-            apple.y = getRandomInt(0, 25) * grid;
-          }
+        createParticles(food.x, food.y, food.isGolden ? '#fbbf24' : '#ff453a');
+        playSfx(food.isGolden ? 'golden' : 'eat');
+        spawnFood();
+      } else {
+        snake.pop();
+      }
+
+      // Update particles
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life -= p.decay;
+        if (p.life <= 0) particles.splice(i, 1);
+      }
+    }
+
+    function render() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Grid background pattern
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x <= canvas.width; x += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+      }
+      for (let y = 0; y <= canvas.height; y += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+      }
+
+      // Themes
+      let headColor = '#007aff';
+      let bodyGradStart = '#34c759';
+      let bodyGradEnd = '#30b0c7';
+      if (currentTheme === 'cyber') {
+        headColor = '#00f2fe';
+        bodyGradStart = '#4facfe';
+        bodyGradEnd = '#00f2fe';
+      } else if (currentTheme === 'garden') {
+        headColor = '#34c759';
+        bodyGradStart = '#30d158';
+        bodyGradEnd = '#248a3d';
+      } else if (currentTheme === 'obsidian') {
+        headColor = '#ffd60a';
+        bodyGradStart = '#ff9f0a';
+        bodyGradEnd = '#d97706';
+      }
+
+      // Draw Food (Apple)
+      const fx = food.x * gridSize + gridSize / 2;
+      const fy = food.y * gridSize + gridSize / 2;
+      ctx.save();
+      if (food.isGolden) {
+        // Golden Star Apple with glowing halo
+        ctx.shadowColor = '#fbbf24';
+        ctx.shadowBlur = 12;
+        ctx.fillStyle = '#fbbf24';
+        ctx.beginPath();
+        ctx.arc(fx, fy, gridSize * 0.42, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#fff';
+        ctx.font = '10px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('★', fx, fy);
+      } else {
+        // Juicy Apple with leaf & stem
+        ctx.shadowColor = '#ff453a';
+        ctx.shadowBlur = 10;
+        ctx.fillStyle = '#ff3b30';
+        ctx.beginPath();
+        ctx.arc(fx, fy + 1, gridSize * 0.4, 0, Math.PI * 2);
+        ctx.fill();
+        // Leaf
+        ctx.shadowBlur = 0;
+        ctx.fillStyle = '#34c759';
+        ctx.beginPath();
+        ctx.ellipse(fx + 3, fy - 6, 4, 2, Math.PI / 4, 0, Math.PI * 2);
+        ctx.fill();
+        // Stem
+        ctx.fillStyle = '#8b5a2b';
+        ctx.fillRect(fx - 1, fy - 7, 2, 4);
+      }
+      ctx.restore();
+
+      // Draw Snake Body
+      snake.forEach((seg, i) => {
+        const sx = seg.x * gridSize;
+        const sy = seg.y * gridSize;
+        ctx.save();
+        if (i === 0) {
+          // Snake Head
+          ctx.shadowColor = headColor;
+          ctx.shadowBlur = 12;
+          ctx.fillStyle = headColor;
+          ctx.beginPath();
+          ctx.roundRect(sx + 1, sy + 1, gridSize - 2, gridSize - 2, 6);
+          ctx.fill();
+
+          // Eyes
+          ctx.shadowBlur = 0;
+          ctx.fillStyle = '#ffffff';
+          let ex1 = sx + 5, ey1 = sy + 5, ex2 = sx + 13, ey2 = sy + 5;
+          if (dir.x === 1) { ex1 = sx + 12; ey1 = sy + 5; ex2 = sx + 12; ey2 = sy + 13; }
+          else if (dir.x === -1) { ex1 = sx + 6; ey1 = sy + 5; ex2 = sx + 6; ey2 = sy + 13; }
+          else if (dir.y === 1) { ex1 = sx + 5; ey1 = sy + 12; ex2 = sx + 13; ey2 = sy + 12; }
+          ctx.beginPath();
+          ctx.arc(ex1, ey1, 2.5, 0, Math.PI * 2);
+          ctx.arc(ex2, ey2, 2.5, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#000';
+          ctx.beginPath();
+          ctx.arc(ex1, ey1, 1.2, 0, Math.PI * 2);
+          ctx.arc(ex2, ey2, 1.2, 0, Math.PI * 2);
+          ctx.fill();
+        } else {
+          // Snake Segments with gradient color transition
+          const factor = i / snake.length;
+          ctx.fillStyle = bodyGradStart;
+          ctx.beginPath();
+          ctx.roundRect(sx + 2, sy + 2, gridSize - 4, gridSize - 4, 4);
+          ctx.fill();
         }
+        ctx.restore();
+      });
+
+      // Draw Particles
+      particles.forEach(p => {
+        ctx.save();
+        ctx.globalAlpha = p.life;
+        ctx.fillStyle = p.color;
+        ctx.shadowColor = p.color;
+        ctx.shadowBlur = 6;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
       });
     }
 
-    // focus canvas to accept keys
+    function gameOver(reason) {
+      isGameOver = true;
+      clearInterval(gameTimer);
+      playSfx('crash');
+      finalScoreEl.innerText = currentScore;
+      bestScoreEl.innerText = highScore;
+      overlayTitle.innerText = currentScore >= highScore && currentScore > 0 ? '🎉 New Record!' : 'Game Over';
+      overlayDesc.innerText = reason === 'Wall Collision' ? 'You collided with the boundary!' : 'You ran into yourself!';
+      overlayIcon.innerText = currentScore >= highScore && currentScore > 0 ? '🏆' : '💥';
+      overlay.style.display = 'flex';
+    }
+
+    function togglePause() {
+      if (isGameOver) return;
+      isPaused = !isPaused;
+      pauseBtn.innerText = isPaused ? '▶️' : '⏸️';
+      if (isPaused) {
+        overlayTitle.innerText = 'Game Paused';
+        overlayDesc.innerText = 'Press Space or click Resume to continue';
+        overlayIcon.innerText = '⏸️';
+        finalScoreEl.innerText = currentScore;
+        bestScoreEl.innerText = highScore;
+        restartBtn.innerText = 'Resume';
+        overlay.style.display = 'flex';
+      } else {
+        overlay.style.display = 'none';
+        restartBtn.innerText = 'Play Again';
+      }
+    }
+
+    function startGameLoop() {
+      clearInterval(gameTimer);
+      gameTimer = setInterval(() => {
+        if (!windows.has(pid)) {
+          clearInterval(gameTimer);
+          return;
+        }
+        update();
+        render();
+      }, currentSpeed);
+    }
+
+    // Input handling
     win.setAttribute('tabindex', '0');
     win.focus();
-    win.addEventListener('keydown', function(e) {
-      if (e.which === 37 && snake.dx === 0) {
-        snake.dx = -grid; snake.dy = 0;
+    win.addEventListener('keydown', (e) => {
+      if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) {
+        e.preventDefault();
       }
-      else if (e.which === 38 && snake.dy === 0) {
-        snake.dy = -grid; snake.dx = 0;
+      if (e.key === ' ' || e.code === 'Space') {
+        if (isGameOver) {
+          initGame();
+        } else {
+          togglePause();
+        }
+        return;
       }
-      else if (e.which === 39 && snake.dx === 0) {
-        snake.dx = grid; snake.dy = 0;
-      }
-      else if (e.which === 40 && snake.dy === 0) {
-        snake.dy = grid; snake.dx = 0;
+      if (isPaused || isGameOver) return;
+
+      if ((e.key === 'ArrowUp' || e.key.toLowerCase() === 'w') && dir.y === 0) {
+        nextDir = { x: 0, y: -1 };
+      } else if ((e.key === 'ArrowDown' || e.key.toLowerCase() === 's') && dir.y === 0) {
+        nextDir = { x: 0, y: 1 };
+      } else if ((e.key === 'ArrowLeft' || e.key.toLowerCase() === 'a') && dir.x === 0) {
+        nextDir = { x: -1, y: 0 };
+      } else if ((e.key === 'ArrowRight' || e.key.toLowerCase() === 'd') && dir.x === 0) {
+        nextDir = { x: 1, y: 0 };
       }
     });
 
-    // start game
-    requestAnimationFrame(loop);
+    diffSelect.addEventListener('change', () => {
+      currentSpeed = parseInt(diffSelect.value, 10);
+      if (!isGameOver && !isPaused) startGameLoop();
+    });
+
+    themeSelect.addEventListener('change', () => {
+      currentTheme = themeSelect.value;
+      render();
+    });
+
+    pauseBtn.addEventListener('click', togglePause);
+
+    restartBtn.addEventListener('click', () => {
+      if (isPaused) {
+        togglePause();
+      } else {
+        initGame();
+      }
+    });
+
+    initGame();
   }
 }
 
@@ -10287,204 +10654,565 @@ async function launchMaps() {
   }
 }
 
-// Video Player App
+// QuickTime Player (macOS Sequoia Design)
 async function launchVideo() {
   const res = await window.aliceOS.pm.spawn('video');
   if (res.success) {
     const pid = res.data.pid;
-    const win = createWindow(pid, t('app_video', 'Video Player'), `
-      <div style="background:black;height:100%;display:flex;flex-direction:column;position:relative;overflow:hidden;">
-        <div style="position:absolute;top:12px;right:14px;z-index:10;display:flex;gap:8px;">
-          <button id="video-pip-${pid}" style="background:rgba(0,0,0,0.6);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,0.25);color:white;padding:5px 12px;border-radius:14px;cursor:pointer;font-size:12px;display:flex;align-items:center;gap:6px;transition:all 0.2s;">
-            <span>⤢</span> <span id="video-pip-txt-${pid}">${t('video_pip', 'Picture in Picture')}</span>
-          </button>
+    const mediaTracks = [
+      { id: 'sequoia', title: 'macOS Sequoia Keynote & Intelligence', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4', icon: '' },
+      { id: 'bunny', title: 'Big Buck Bunny (Apple 4K ProRes)', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', icon: '🎬' },
+      { id: 'tears', title: 'Tears of Steel (Sci-Fi Cinema)', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4', icon: '🚀' }
+    ];
+    let currentTrack = mediaTracks[0];
+
+    const win = createWindow(pid, t('app_video', 'QuickTime Player'), `
+      <div class="mac-qt-app" id="qt-app-${pid}">
+        <!-- Top Track Selector -->
+        <div style="position:absolute;top:12px;left:14px;right:14px;z-index:20;display:flex;align-items:center;justify-content:space-between;pointer-events:none;">
+          <div style="display:flex;background:rgba(20,20,24,0.75);backdrop-filter:blur(25px);border:1px solid rgba(255,255,255,0.15);padding:3px;border-radius:12px;pointer-events:auto;gap:2px;">
+            ${mediaTracks.map((t, idx) => `
+              <button class="qt-track-pill ${idx === 0 ? 'active' : ''}" data-idx="${idx}" style="border:none;background:${idx === 0 ? 'rgba(255,255,255,0.2)' : 'transparent'};color:white;padding:4px 10px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;">${t.icon} ${t.title.split(' ')[0]}</button>
+            `).join('')}
+          </div>
+          <div style="display:flex;gap:6px;pointer-events:auto;">
+            <button id="qt-pip-${pid}" style="background:rgba(20,20,24,0.75);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.15);color:white;padding:4px 10px;border-radius:10px;font-size:11px;cursor:pointer;">⤢ PiP</button>
+          </div>
         </div>
-        <video id="video-player-${pid}" width="100%" height="100%" controls autoplay style="outline:none;flex:1;background:black;">
-          <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
+
+        <!-- Viewport -->
+        <div class="mac-qt-viewport" id="qt-viewport-${pid}">
+          <video id="qt-video-${pid}" width="100%" height="100%" autoplay style="width:100%;height:100%;object-fit:contain;background:black;">
+            <source src="${currentTrack.src}" type="video/mp4">
+          </video>
+          <canvas id="qt-canvas-fallback-${pid}" width="800" height="480" style="display:none;width:100%;height:100%;object-fit:cover;"></canvas>
+        </div>
+
+        <!-- QuickTime Floating Glass HUD -->
+        <div class="mac-qt-hud" id="qt-hud-${pid}">
+          <button class="mac-qt-btn" id="qt-rewind-${pid}" title="Rewind 10s">↺ 10</button>
+          <button class="mac-qt-btn" id="qt-play-btn-${pid}" style="font-size:20px;" title="Play/Pause">⏸</button>
+          <button class="mac-qt-btn" id="qt-forward-${pid}" title="Forward 10s">↻ 10</button>
+
+          <!-- Scrubber -->
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span id="qt-cur-time-${pid}" style="font-size:11px;font-variant-numeric:tabular-nums;opacity:0.8;">0:00</span>
+            <input type="range" id="qt-scrub-${pid}" min="0" max="100" value="0" style="width:200px;cursor:pointer;accent-color:#007aff;">
+            <span id="qt-dur-time-${pid}" style="font-size:11px;font-variant-numeric:tabular-nums;opacity:0.8;">0:00</span>
+          </div>
+
+          <!-- Volume -->
+          <div style="display:flex;align-items:center;gap:6px;">
+            <span style="font-size:12px;opacity:0.8;">🔊</span>
+            <input type="range" id="qt-vol-${pid}" min="0" max="1" step="0.05" value="0.8" style="width:60px;cursor:pointer;accent-color:#007aff;">
+          </div>
+
+          <!-- Speed Pill -->
+          <button id="qt-speed-${pid}" style="background:rgba(255,255,255,0.12);border:none;color:white;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;">1.0x</button>
+        </div>
       </div>
-    `, 'video');
+    `);
+
+    win.style.width = '820px';
+    win.style.height = '520px';
+
+    const videoEl = win.querySelector(`#qt-video-${pid}`);
+    const canvasFallback = win.querySelector(`#qt-canvas-fallback-${pid}`);
+    const playBtn = win.querySelector(`#qt-play-btn-${pid}`);
+    const rewindBtn = win.querySelector(`#qt-rewind-${pid}`);
+    const forwardBtn = win.querySelector(`#qt-forward-${pid}`);
+    const scrubBar = win.querySelector(`#qt-scrub-${pid}`);
+    const curTimeTxt = win.querySelector(`#qt-cur-time-${pid}`);
+    const durTimeTxt = win.querySelector(`#qt-dur-time-${pid}`);
+    const volBar = win.querySelector(`#qt-vol-${pid}`);
+    const speedBtn = win.querySelector(`#qt-speed-${pid}`);
+    const pipBtn = win.querySelector(`#qt-pip-${pid}`);
+    const trackPills = win.querySelectorAll('.qt-track-pill');
+
+    let isPlaying = true;
+    let fallbackAnim = null;
+
+    function formatTime(s) {
+      if (isNaN(s) || !isFinite(s)) return '0:00';
+      const m = Math.floor(s / 60);
+      const sec = Math.floor(s % 60);
+      return `${m}:${sec < 10 ? '0' : ''}${sec}`;
+    }
+
+    videoEl.addEventListener('loadedmetadata', () => {
+      durTimeTxt.innerText = formatTime(videoEl.duration);
+    });
+
+    videoEl.addEventListener('timeupdate', () => {
+      if (!scrubBar.matches(':active')) {
+        const pct = (videoEl.currentTime / videoEl.duration) * 100 || 0;
+        scrubBar.value = pct;
+      }
+      curTimeTxt.innerText = formatTime(videoEl.currentTime);
+    });
+
+    videoEl.addEventListener('error', () => {
+      // Remote video failed or blocked -> switch smoothly to Apple Retina visualizer animation
+      videoEl.style.display = 'none';
+      canvasFallback.style.display = 'block';
+      const ctx = canvasFallback.getContext('2d');
+      let angle = 0;
+      fallbackAnim = setInterval(() => {
+        if (!windows.has(pid)) {
+          clearInterval(fallbackAnim);
+          return;
+        }
+        angle += 0.02;
+        ctx.fillStyle = '#09090b';
+        ctx.fillRect(0, 0, 800, 480);
+
+        const grad = ctx.createRadialGradient(400, 240, 20, 400, 240, 320);
+        grad.addColorStop(0, 'rgba(0, 122, 255, 0.35)');
+        grad.addColorStop(0.6, 'rgba(88, 86, 214, 0.2)');
+        grad.addColorStop(1, '#09090b');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 800, 480);
+
+        // Apple Silicon M4 3D rotating rings
+        ctx.lineWidth = 3;
+        for (let i = 0; i < 4; i++) {
+          ctx.strokeStyle = i % 2 === 0 ? '#38bdf8' : '#a855f7';
+          ctx.beginPath();
+          ctx.ellipse(400, 240, 140 + i * 25, 60 + i * 15, angle + i * 0.4, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+
+        ctx.font = 'bold 24px -apple-system, sans-serif';
+        ctx.fillStyle = '#ffffff';
+        ctx.textAlign = 'center';
+        ctx.fillText(' macOS Sequoia Keynote & Intelligence', 400, 245);
+        ctx.font = '13px -apple-system, sans-serif';
+        ctx.fillStyle = '#a1a1aa';
+        ctx.fillText('Apple ProRes Cinema • 4K HDR High Quality Render', 400, 275);
+      }, 40);
+    });
+
+    playBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        videoEl.pause();
+        playBtn.innerText = '▶';
+      } else {
+        videoEl.play();
+        playBtn.innerText = '⏸';
+      }
+      isPlaying = !isPlaying;
+    });
+
+    rewindBtn.addEventListener('click', () => {
+      videoEl.currentTime = Math.max(0, videoEl.currentTime - 10);
+    });
+
+    forwardBtn.addEventListener('click', () => {
+      videoEl.currentTime = Math.min(videoEl.duration, videoEl.currentTime + 10);
+    });
+
+    scrubBar.addEventListener('input', () => {
+      const targetTime = (scrubBar.value / 100) * videoEl.duration;
+      videoEl.currentTime = targetTime;
+    });
+
+    volBar.addEventListener('input', () => {
+      videoEl.volume = parseFloat(volBar.value);
+    });
+
+    const speeds = [1.0, 1.25, 1.5, 2.0, 0.5];
+    let speedIdx = 0;
+    speedBtn.addEventListener('click', () => {
+      speedIdx = (speedIdx + 1) % speeds.length;
+      const s = speeds[speedIdx];
+      videoEl.playbackRate = s;
+      speedBtn.innerText = `${s}x`;
+    });
+
+    pipBtn.addEventListener('click', () => {
+      if (typeof openPiP === 'function') {
+        openPiP(currentTrack.src, currentTrack.title, videoEl.currentTime);
+        videoEl.pause();
+        playBtn.innerText = '▶';
+        isPlaying = false;
+      }
+    });
+
+    trackPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        trackPills.forEach(p => {
+          p.style.background = 'transparent';
+        });
+        pill.style.background = 'rgba(255,255,255,0.2)';
+        const idx = parseInt(pill.getAttribute('data-idx'));
+        currentTrack = mediaTracks[idx];
+        videoEl.src = currentTrack.src;
+        videoEl.play();
+        isPlaying = true;
+        playBtn.innerText = '⏸';
+      });
+    });
 
     win._onLanguageChange = () => {
-      const pipTxt = win.querySelector(`#video-pip-txt-${pid}`);
-      if (pipTxt) pipTxt.innerText = t('video_pip', 'Picture in Picture');
+      win.querySelector('.title').innerText = t('app_video', 'QuickTime Player');
     };
-
-    const videoEl = win.querySelector(`#video-player-${pid}`);
-    const pipBtn = win.querySelector(`#video-pip-${pid}`);
-    if (pipBtn && videoEl) {
-      pipBtn.addEventListener('click', () => {
-        openPiP(videoEl.currentSrc || 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', 'Big Buck Bunny', videoEl.currentTime);
-        videoEl.pause();
-      });
-    }
   }
 }
 
-// Alien Radar App
+// AirDrop Radar & Nearby Devices (macOS Sequoia Design)
 async function launchRadar() {
   const res = await window.aliceOS.pm.spawn('radar');
   if (res.success) {
     const pid = res.data.pid;
+    const nearbyDevices = [
+      { id: 'mbp', name: "John's MacBook Pro", type: 'MacBook Pro (16-inch, 2024)', icon: '💻', dist: 70, angle: 0.5, battery: '92%', signal: '-42 dBm' },
+      { id: 'iphone', name: "Alice's iPhone 16 Pro", type: 'iPhone (iOS 18.1)', icon: '📱', dist: 110, angle: 2.1, battery: '85%', signal: '-38 dBm' },
+      { id: 'ipad', name: "Studio iPad Pro", type: 'iPad Pro (M4)', icon: '📱', dist: 95, angle: 3.8, battery: '78%', signal: '-55 dBm' },
+      { id: 'airpods', name: "AirPods Max", type: 'AirPods Max (USB-C)', icon: '🎧', dist: 50, angle: 5.2, battery: '98%', signal: '-31 dBm' },
+      { id: 'watch', name: "Apple Watch Ultra 2", type: 'watchOS 11', icon: '⌚', dist: 130, angle: 4.3, battery: '64%', signal: '-62 dBm' }
+    ];
+    let selectedDevice = nearbyDevices[0];
+
     const win = createWindow(pid, t('app_radar', 'AirDrop Radar'), `
-      <div style="background:#001100;height:100%;display:flex;align-items:center;justify-content:center;position:relative;">
-        <canvas id="radar-canvas-${pid}" width="300" height="300" style="border-radius:50%;border:2px solid #0f0;box-shadow:0 0 20px #0f0;"></canvas>
+      <div class="mac-radar-app">
+        <!-- Top Toolbar -->
+        <div style="height:46px;background:rgba(25,25,28,0.85);backdrop-filter:blur(25px);border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:10;">
+          <div style="font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;">
+            <span>📡</span> <span>AirDrop & Wireless Discovery</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:11px;color:#a1a1aa;">
+            <span>Discoverable by:</span>
+            <select id="radar-vis-${pid}" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);color:white;padding:3px 8px;border-radius:6px;font-size:11px;outline:none;">
+              <option value="all">Everyone</option>
+              <option value="contacts">Contacts Only</option>
+              <option value="none">No One</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Radar Canvas & Device Overlay -->
+        <div class="mac-radar-canvas-wrap" id="radar-wrap-${pid}">
+          <canvas id="radar-canvas-${pid}" width="480" height="380"></canvas>
+          <div id="radar-devices-container-${pid}" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;"></div>
+        </div>
+
+        <!-- Selected Device Action Bar -->
+        <div style="height:64px;background:rgba(20,20,24,0.9);border-top:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;padding:0 20px;z-index:10;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div id="radar-dev-icon-${pid}" style="font-size:32px;">💻</div>
+            <div>
+              <div id="radar-dev-name-${pid}" style="font-size:13px;font-weight:700;">John's MacBook Pro</div>
+              <div id="radar-dev-info-${pid}" style="font-size:11px;color:#a1a1aa;">MacBook Pro (16-inch, 2024) • Battery 92% • Signal -42 dBm</div>
+            </div>
+          </div>
+          <button id="radar-send-btn-${pid}" style="background:#007aff;color:white;border:none;padding:7px 18px;border-radius:14px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;transition:background 0.15s;">
+            <span>📤</span> <span>Share via AirDrop</span>
+          </button>
+        </div>
       </div>
-    `, 'radar');
+    `);
+
+    win.style.width = '700px';
+    win.style.height = '520px';
 
     const canvas = win.querySelector(`#radar-canvas-${pid}`);
     const ctx = canvas.getContext('2d');
-    const width = canvas.width;
-    const height = canvas.height;
-    const cx = width / 2;
-    const cy = height / 2;
-    const radius = width / 2;
-    
-    let angle = 0;
-    const aliens = [];
-    for(let i=0; i<3; i++) {
-      aliens.push({
-        angle: Math.random() * Math.PI * 2,
-        dist: Math.random() * (radius - 20) + 10,
-        speed: (Math.random() * 0.02) - 0.01,
-        life: 0
+    const devContainer = win.querySelector(`#radar-devices-container-${pid}`);
+    const devIcon = win.querySelector(`#radar-dev-icon-${pid}`);
+    const devName = win.querySelector(`#radar-dev-name-${pid}`);
+    const devInfo = win.querySelector(`#radar-dev-info-${pid}`);
+    const sendBtn = win.querySelector(`#radar-send-btn-${pid}`);
+
+    const cx = canvas.width / 2;
+    const cy = canvas.height / 2;
+    let waveRadius = 0;
+
+    function renderDeviceElements() {
+      devContainer.innerHTML = '';
+      nearbyDevices.forEach(d => {
+        const x = cx + Math.cos(d.angle) * d.dist;
+        const y = cy + Math.sin(d.angle) * d.dist;
+
+        const devEl = document.createElement('div');
+        devEl.className = 'mac-radar-device';
+        devEl.style.left = `${x - 24}px`;
+        devEl.style.top = `${y - 24}px`;
+        devEl.style.pointerEvents = 'auto';
+        devEl.innerHTML = `
+          <div style="width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.12);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 16px rgba(0,0,0,0.5);">
+            ${d.icon}
+          </div>
+          <div style="font-size:10px;font-weight:600;color:white;margin-top:4px;text-align:center;text-shadow:0 2px 4px rgba(0,0,0,0.8);white-space:nowrap;">
+            ${d.name.split("'s")[0]}
+          </div>
+        `;
+        devEl.onclick = () => {
+          selectedDevice = d;
+          devIcon.innerText = d.icon;
+          devName.innerText = d.name;
+          devInfo.innerText = `${d.type} • Battery ${d.battery} • Signal ${d.signal}`;
+        };
+        devContainer.appendChild(devEl);
       });
     }
 
+    renderDeviceElements();
+
+    let animId;
     function drawRadar() {
-      if (!windows.has(pid)) return; // Stop drawing if killed
-      
-      // Fade out effect
-      ctx.fillStyle = 'rgba(0, 17, 0, 0.1)';
-      ctx.fillRect(0, 0, width, height);
+      if (!windows.has(pid)) {
+        cancelAnimationFrame(animId);
+        return;
+      }
 
-      // Draw grid
-      ctx.strokeStyle = 'rgba(0, 255, 0, 0.3)';
+      ctx.fillStyle = '#101014';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Radar Concentric Circles
+      ctx.strokeStyle = 'rgba(0, 122, 255, 0.15)';
       ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.arc(cx, cy, radius * 0.33, 0, Math.PI * 2);
-      ctx.arc(cx, cy, radius * 0.66, 0, Math.PI * 2);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(cx, 0); ctx.lineTo(cx, height);
-      ctx.moveTo(0, cy); ctx.lineTo(width, cy);
-      ctx.stroke();
-
-      // Sweeping line
-      const sweepX = cx + Math.cos(angle) * radius;
-      const sweepY = cy + Math.sin(angle) * radius;
-      ctx.strokeStyle = '#0f0';
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.moveTo(cx, cy);
-      ctx.lineTo(sweepX, sweepY);
-      ctx.stroke();
-
-      // Draw aliens
-      aliens.forEach(alien => {
-        alien.angle += alien.speed;
-        
-        // If sweep line hits alien
-        const angleDiff = Math.abs((angle % (Math.PI*2)) - (alien.angle % (Math.PI*2)));
-        if (angleDiff < 0.1 || angleDiff > (Math.PI*2 - 0.1)) {
-          alien.life = 1.0;
-        }
-
-        if (alien.life > 0) {
-          const ax = cx + Math.cos(alien.angle) * alien.dist;
-          const ay = cy + Math.sin(alien.angle) * alien.dist;
-          ctx.fillStyle = `rgba(255, 0, 0, ${alien.life})`;
-          ctx.beginPath();
-          ctx.arc(ax, ay, 4, 0, Math.PI * 2);
-          ctx.fill();
-          alien.life -= 0.02;
-        }
+      [40, 80, 120, 160].forEach(r => {
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.stroke();
       });
 
-      angle += 0.05;
-      requestAnimationFrame(drawRadar);
+      // Crosshairs
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
+      ctx.beginPath();
+      ctx.moveTo(cx, 20); ctx.lineTo(cx, canvas.height - 20);
+      ctx.moveTo(40, cy); ctx.lineTo(canvas.width - 40, cy);
+      ctx.stroke();
+
+      // Pulsing Sonar Ripple
+      waveRadius += 1.2;
+      if (waveRadius > 180) waveRadius = 0;
+
+      const rippleGrad = ctx.createRadialGradient(cx, cy, Math.max(0, waveRadius - 30), cx, cy, waveRadius);
+      rippleGrad.addColorStop(0, 'rgba(0, 122, 255, 0)');
+      rippleGrad.addColorStop(0.8, 'rgba(56, 189, 248, 0.3)');
+      rippleGrad.addColorStop(1, 'rgba(0, 122, 255, 0)');
+
+      ctx.strokeStyle = rippleGrad;
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.arc(cx, cy, waveRadius, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Center (This Mac)
+      ctx.fillStyle = '#007aff';
+      ctx.beginPath();
+      ctx.arc(cx, cy, 6, 0, Math.PI * 2);
+      ctx.fill();
+
+      animId = requestAnimationFrame(drawRadar);
     }
-    
+
     drawRadar();
+
+    sendBtn.addEventListener('click', () => {
+      sendBtn.innerHTML = '<span>⏳</span> <span>Sending...</span>';
+      sendBtn.style.opacity = '0.7';
+
+      setTimeout(() => {
+        sendBtn.innerHTML = '<span>✓</span> <span>Sent!</span>';
+        sendBtn.style.background = '#34c759';
+        sendBtn.style.opacity = '1';
+
+        if (typeof sendAirDrop === 'function') {
+          sendAirDrop(selectedDevice.name, selectedDevice.icon);
+        } else {
+          if (typeof showNotification === 'function') {
+            showNotification('AirDrop', `Sent file to ${selectedDevice.name}`);
+          }
+        }
+
+        setTimeout(() => {
+          sendBtn.innerHTML = '<span>📤</span> <span>Share via AirDrop</span>';
+          sendBtn.style.background = '#007aff';
+        }, 1800);
+      }, 700);
+    });
+
+    win._onLanguageChange = () => {
+      win.querySelector('.title').innerText = t('app_radar', 'AirDrop Radar');
+    };
   }
 }
 
-// Break the 4th Wall - Host Monitor App
+// Apple System Information (macOS Sequoia Design)
 async function launchHostMonitor() {
   const res = await window.aliceOS.pm.spawn('hostmonitor');
   if (res.success) {
     const pid = res.data.pid;
     const hostRes = await window.aliceOS.getHostInfo();
-    
-    if (hostRes.success) {
-      const data = hostRes.data;
-      const memGb = (data.totalmem / (1024 * 1024 * 1024)).toFixed(2);
-      const freeGb = (data.freemem / (1024 * 1024 * 1024)).toFixed(2);
-      const cpu = data.cpus[0] || 'Unknown CPU';
-      const cores = data.cpus.length;
-      
-      let ips = [];
-      Object.keys(data.network).forEach(iface => {
-        data.network[iface].forEach(conn => {
-          if (conn.family === 'IPv4' && !conn.internal) {
-            ips.push(conn.address);
-          }
-        });
-      });
-      const ipStr = ips.length > 0 ? ips.join(', ') : 'Unknown';
+    const data = (hostRes && hostRes.success) ? hostRes.data : {
+      platform: 'darwin',
+      release: '24.1.0',
+      arch: 'arm64',
+      hostname: "Alice's MacBook Pro",
+      uptime: 3600,
+      totalmem: 34359738368,
+      freemem: 17179869184,
+      cpus: [{ model: 'Apple M3 Ultra (16-core CPU, 40-core GPU)' }, {}, {}, {}],
+      network: {}
+    };
 
-      const win = createWindow(pid, t('host_title', 'Host System Monitor'), `
-        <div style="padding:20px;background:#1e1e1e;color:#0f0;font-family:monospace;height:100%;box-sizing:border-box;overflow-y:auto;">
-          <h2 style="color:white;margin-top:0;border-bottom:1px solid #333;padding-bottom:10px;" id="hm-warn-${pid}">${t('host_warning', '⚠️ 4th Wall Breach Detected')}</h2>
-          <p style="color:#aaa;" id="hm-desc-${pid}">${t('host_bridged', 'AliceOS has successfully bridged IPC into the host operating system.')}</p>
-          <div style="margin-top:20px;line-height:1.6;">
-            <div><strong style="color:#fff;" id="hm-lbl-os-${pid}">${t('host_os', 'Host OS')}:</strong> ${data.platform} ${data.release} (${data.arch})</div>
-            <div><strong style="color:#fff;" id="hm-lbl-name-${pid}">${t('host_name', 'Host Name')}:</strong> ${data.hostname}</div>
-            <div><strong style="color:#fff;" id="hm-lbl-uptime-${pid}">${t('host_uptime', 'Host Uptime')}:</strong> <span id="hm-val-uptime-${pid}">${t('host_uptime_min', '%d minutes').replace('%d', Math.floor(data.uptime / 60))}</span></div>
-            <br>
-            <div><strong style="color:#fff;" id="hm-lbl-cpu-${pid}">${t('host_cpu', 'Host CPU')}:</strong> ${cpu} (<span id="hm-val-cores-${pid}">${t('host_cores', '%d Cores').replace('%d', cores)}</span>)</div>
-            <div><strong style="color:#fff;" id="hm-lbl-ram-${pid}">${t('host_ram', 'Host RAM')}:</strong> ${freeGb} GB <span id="hm-val-free-${pid}">${t('host_free', 'Free')}</span> / ${memGb} GB <span id="hm-val-total-${pid}">${t('host_total', 'Total')}</span></div>
-            <br>
-            <div><strong style="color:#fff;" id="hm-lbl-ip-${pid}">${t('host_ip', 'Host IPv4')}:</strong> ${ipStr}</div>
+    const memGb = (data.totalmem / (1024 * 1024 * 1024)).toFixed(2);
+    const freeGb = (data.freemem / (1024 * 1024 * 1024)).toFixed(2);
+    const cpuModel = data.cpus[0]?.model || 'Apple M3 Ultra (16-core CPU)';
+    const cores = data.cpus.length || 16;
+
+    let activeCategory = 'hardware';
+
+    const win = createWindow(pid, t('host_title', 'System Information'), `
+      <div class="mac-sysinfo-app">
+        <!-- Sidebar -->
+        <div class="mac-sysinfo-sidebar">
+          <div style="font-size:11px;font-weight:700;color:#8e8e93;text-transform:uppercase;letter-spacing:0.5px;padding:4px 8px;">Hardware</div>
+          <div class="mac-sysinfo-item active" data-cat="hardware">
+            <span>💻</span> <span>Hardware Overview</span>
           </div>
-          <div style="margin-top:30px;color:red;font-weight:bold;animation: blink 1s infinite;" id="hm-lbl-power-${pid}">
-            ${t('host_do_not_power_off', '>> DO NOT POWER OFF THE HOST MACHINE <<')}
+          <div class="mac-sysinfo-item" data-cat="memory">
+            <span>🧠</span> <span>Memory & CPU</span>
+          </div>
+          <div class="mac-sysinfo-item" data-cat="graphics">
+            <span>⚡</span> <span>Graphics & Displays</span>
+          </div>
+          <div class="mac-sysinfo-item" data-cat="storage">
+            <span>💿</span> <span>Storage Volumes</span>
+          </div>
+
+          <div style="font-size:11px;font-weight:700;color:#8e8e93;text-transform:uppercase;letter-spacing:0.5px;padding:12px 8px 4px;">Network & Software</div>
+          <div class="mac-sysinfo-item" data-cat="network">
+            <span>🌐</span> <span>Network & AirPort</span>
+          </div>
+          <div class="mac-sysinfo-item" data-cat="software">
+            <span>⚙️</span> <span>Software & Kernel</span>
           </div>
         </div>
-      `, 'hostinfo');
 
-      win._onLanguageChange = () => {
-        const warn = win.querySelector(`#hm-warn-${pid}`);
-        if (warn) warn.innerText = t('host_warning', '⚠️ 4th Wall Breach Detected');
-        const desc = win.querySelector(`#hm-desc-${pid}`);
-        if (desc) desc.innerText = t('host_bridged', 'AliceOS has successfully bridged IPC into the host operating system.');
-        const os = win.querySelector(`#hm-lbl-os-${pid}`);
-        if (os) os.innerText = `${t('host_os', 'Host OS')}:`;
-        const name = win.querySelector(`#hm-lbl-name-${pid}`);
-        if (name) name.innerText = `${t('host_name', 'Host Name')}:`;
-        const uptime = win.querySelector(`#hm-lbl-uptime-${pid}`);
-        if (uptime) uptime.innerText = `${t('host_uptime', 'Host Uptime')}:`;
-        const valUptime = win.querySelector(`#hm-val-uptime-${pid}`);
-        if (valUptime) valUptime.innerText = t('host_uptime_min', '%d minutes').replace('%d', Math.floor(data.uptime / 60));
-        const cpuEl = win.querySelector(`#hm-lbl-cpu-${pid}`);
-        if (cpuEl) cpuEl.innerText = `${t('host_cpu', 'Host CPU')}:`;
-        const coresEl = win.querySelector(`#hm-val-cores-${pid}`);
-        if (coresEl) coresEl.innerText = t('host_cores', '%d Cores').replace('%d', cores);
-        const ramEl = win.querySelector(`#hm-lbl-ram-${pid}`);
-        if (ramEl) ramEl.innerText = `${t('host_ram', 'Host RAM')}:`;
-        const freeEl = win.querySelector(`#hm-val-free-${pid}`);
-        if (freeEl) freeEl.innerText = t('host_free', 'Free');
-        const totalEl = win.querySelector(`#hm-val-total-${pid}`);
-        if (totalEl) totalEl.innerText = t('host_total', 'Total');
-        const ipEl = win.querySelector(`#hm-lbl-ip-${pid}`);
-        if (ipEl) ipEl.innerText = `${t('host_ip', 'Host IPv4')}:`;
-        const powerEl = win.querySelector(`#hm-lbl-power-${pid}`);
-        if (powerEl) powerEl.innerText = t('host_do_not_power_off', '>> DO NOT POWER OFF THE HOST MACHINE <<');
-      };
-    } else {
-      createWindow(pid, t('host_title', 'Host System Monitor'), `<div style="padding:20px;color:red;">Error bridging to host: ${hostRes.error}</div>`, 'hostinfo');
+        <!-- Detail Table Content Area -->
+        <div class="mac-sysinfo-content" id="sysinfo-content-${pid}">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    `);
+
+    win.style.width = '840px';
+    win.style.height = '540px';
+
+    const contentEl = win.querySelector(`#sysinfo-content-${pid}`);
+    const navItems = win.querySelectorAll('.mac-sysinfo-item');
+
+    function renderCategory(cat) {
+      if (cat === 'hardware') {
+        contentEl.innerHTML = `
+          <div>
+            <h2 style="margin:0 0 4px;font-size:18px;">Hardware Overview</h2>
+            <div style="font-size:12px;color:#6e6e73;margin-bottom:16px;">Detailed architecture specifications for this Apple Silicon system.</div>
+            <table class="mac-sysinfo-table">
+              <tr><td class="mac-sysinfo-label">Model Name:</td><td>MacBook Pro</td></tr>
+              <tr><td class="mac-sysinfo-label">Model Identifier:</td><td>MacBookPro18,2 (Alice Edition)</td></tr>
+              <tr><td class="mac-sysinfo-label">Model Number:</td><td>Z15G000EG/A</td></tr>
+              <tr><td class="mac-sysinfo-label">Chip:</td><td>${cpuModel}</td></tr>
+              <tr><td class="mac-sysinfo-label">Total Number of Cores:</td><td>${cores} (${Math.floor(cores * 0.75)} performance and ${Math.ceil(cores * 0.25)} efficiency)</td></tr>
+              <tr><td class="mac-sysinfo-label">Memory:</td><td>${memGb} GB Unified Memory</td></tr>
+              <tr><td class="mac-sysinfo-label">System Firmware Version:</td><td>10151.41.12</td></tr>
+              <tr><td class="mac-sysinfo-label">OS Loader Version:</td><td>10151.41.12</td></tr>
+              <tr><td class="mac-sysinfo-label">Serial Number (system):</td><td>C02G80X0MD6R</td></tr>
+              <tr><td class="mac-sysinfo-label">Hardware UUID:</td><td>4A8E9B12-9F1C-4B7C-A5A2-F9D8A2B93012</td></tr>
+              <tr><td class="mac-sysinfo-label">Activation Lock Status:</td><td><span style="color:#34c759;font-weight:600;">● Enabled</span></td></tr>
+            </table>
+          </div>
+        `;
+      } else if (cat === 'memory') {
+        contentEl.innerHTML = `
+          <div>
+            <h2 style="margin:0 0 4px;font-size:18px;">Memory & Processor Telemetry</h2>
+            <div style="font-size:12px;color:#6e6e73;margin-bottom:16px;">Real-time host physical RAM and CPU core status.</div>
+            <table class="mac-sysinfo-table">
+              <tr><td class="mac-sysinfo-label">Installed RAM:</td><td>${memGb} GB Unified LPDDR5X</td></tr>
+              <tr><td class="mac-sysinfo-label">Available Free RAM:</td><td>${freeGb} GB</td></tr>
+              <tr><td class="mac-sysinfo-label">Memory Speed:</td><td>6400 MT/s Dual-Channel</td></tr>
+              <tr><td class="mac-sysinfo-label">Host CPU Architecture:</td><td>${data.arch} (${data.platform})</td></tr>
+              <tr><td class="mac-sysinfo-label">System Uptime:</td><td>${Math.floor(data.uptime / 60)} minutes</td></tr>
+            </table>
+          </div>
+        `;
+      } else if (cat === 'graphics') {
+        contentEl.innerHTML = `
+          <div>
+            <h2 style="margin:0 0 4px;font-size:18px;">Graphics & Built-in Retina Display</h2>
+            <div style="font-size:12px;color:#6e6e73;margin-bottom:16px;">Liquid Retina XDR Display with ProMotion 120Hz.</div>
+            <table class="mac-sysinfo-table">
+              <tr><td class="mac-sysinfo-label">Chipset Model:</td><td>Apple Metal 3 GPU (Hardware Ray Tracing)</td></tr>
+              <tr><td class="mac-sysinfo-label">Type:</td><td>GPU Unified Integrated</td></tr>
+              <tr><td class="mac-sysinfo-label">Resolution:</td><td>3456 x 2234 Liquid Retina XDR</td></tr>
+              <tr><td class="mac-sysinfo-label">UI Scaling:</td><td>Retina 2x (Looks like 1728 x 1117)</td></tr>
+              <tr><td class="mac-sysinfo-label">ProMotion:</td><td>Yes (Adaptive 24Hz - 120Hz)</td></tr>
+              <tr><td class="mac-sysinfo-label">Aero Compositor:</td><td>Active (WindowServer PID 1)</td></tr>
+            </table>
+          </div>
+        `;
+      } else if (cat === 'storage') {
+        contentEl.innerHTML = `
+          <div>
+            <h2 style="margin:0 0 4px;font-size:18px;">Storage Volumes</h2>
+            <div style="font-size:12px;color:#6e6e73;margin-bottom:16px;">APFS Apple Solid State Drive & Virtual File System.</div>
+            <table class="mac-sysinfo-table">
+              <tr><td class="mac-sysinfo-label">Mount Point:</td><td>Macintosh HD (/)</td></tr>
+              <tr><td class="mac-sysinfo-label">File System:</td><td>APFS (Encrypted, Case-sensitive)</td></tr>
+              <tr><td class="mac-sysinfo-label">VFS Root:</td><td>/AppData/Roaming/AliceOS/vfs.json</td></tr>
+              <tr><td class="mac-sysinfo-label">Read/Write Speed:</td><td>7,400 MB/s (PCIe 4.0 NVMe)</td></tr>
+              <tr><td class="mac-sysinfo-label">TRIM Support:</td><td>Yes</td></tr>
+            </table>
+          </div>
+        `;
+      } else if (cat === 'network') {
+        contentEl.innerHTML = `
+          <div>
+            <h2 style="margin:0 0 4px;font-size:18px;">Network & AirPort Wi-Fi 6E</h2>
+            <div style="font-size:12px;color:#6e6e73;margin-bottom:16px;">Local area network and IPC host adapter telemetry.</div>
+            <table class="mac-sysinfo-table">
+              <tr><td class="mac-sysinfo-label">Host Name:</td><td>${data.hostname}</td></tr>
+              <tr><td class="mac-sysinfo-label">Wi-Fi Card:</td><td>Broadcom AirPort Extreme Wi-Fi 6E (802.11ax)</td></tr>
+              <tr><td class="mac-sysinfo-label">Bluetooth:</td><td>Bluetooth 5.3 Core Controller</td></tr>
+              <tr><td class="mac-sysinfo-label">IPC Bridge Socket:</td><td><span style="color:#34c759;font-weight:600;">● Active (Node.js IPC)</span></td></tr>
+            </table>
+          </div>
+        `;
+      } else if (cat === 'software') {
+        contentEl.innerHTML = `
+          <div>
+            <h2 style="margin:0 0 4px;font-size:18px;">System Software Overview</h2>
+            <div style="font-size:12px;color:#6e6e73;margin-bottom:16px;">Core macOS Sequoia Operating System & Darwin Microkernel.</div>
+            <table class="mac-sysinfo-table">
+              <tr><td class="mac-sysinfo-label">System Version:</td><td>macOS Sequoia 15.1 (Build 24B83)</td></tr>
+              <tr><td class="mac-sysinfo-label">Kernel Version:</td><td>Darwin 24.1.0 (root@xnu-11215.1.30~1/RELEASE_ARM64)</td></tr>
+              <tr><td class="mac-sysinfo-label">System Integrity Protection:</td><td>Enabled</td></tr>
+              <tr><td class="mac-sysinfo-label">Secure Boot:</td><td>Full Security (Apple Silicon Secure Enclave)</td></tr>
+              <tr><td class="mac-sysinfo-label">Runtime Engine:</td><td>Electron 44.3.0 & Chromium V8</td></tr>
+            </table>
+          </div>
+        `;
+      }
     }
+
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        navItems.forEach(n => n.classList.remove('active'));
+        item.classList.add('active');
+        activeCategory = item.getAttribute('data-cat');
+        renderCategory(activeCategory);
+      });
+    });
+
+    renderCategory(activeCategory);
+
+    win._onLanguageChange = () => {
+      win.querySelector('.title').innerText = t('host_title', 'System Information');
+    };
   }
 }
 
@@ -10972,506 +11700,1548 @@ async function launchWeather() {
   }
 }
 
-// Host Screen Mirror App
+// Sidecar & Host Display Mirroring (macOS Sequoia Design)
 async function launchHostScreen() {
   const res = await window.aliceOS.pm.spawn('hostscreen');
   if (res.success) {
     const pid = res.data.pid;
-    const win = createWindow(pid, t('app_hostscreen', 'Host Screen Mirror'), `
-      <div style="background:black;height:100%;display:flex;align-items:center;justify-content:center;position:relative;">
-        <div id="hs-status-${pid}" style="position:absolute;color:red;font-weight:bold;z-index:10;top:10px;left:10px;background:rgba(0,0,0,0.5);padding:5px;">${t('host_mirror_connecting', 'CONNECTING TO PHYSICAL MONITOR...')}</div>
-        <img id="hs-img-${pid}" style="width:100%;height:100%;object-fit:contain;" />
+    let fpsInterval = 100; // 10 fps
+    let fitMode = 'contain';
+
+    const win = createWindow(pid, t('app_hostscreen', 'Display Mirroring — Sidecar'), `
+      <div class="mac-sidecar-app">
+        <!-- Sidecar Toolbar -->
+        <div class="mac-sidecar-toolbar">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:28px;height:28px;background:linear-gradient(135deg,#007aff,#5856d6);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;">🖥️</div>
+            <div>
+              <div style="font-size:13px;font-weight:600;letter-spacing:-0.2px;">Liquid Retina XDR Display</div>
+              <div style="font-size:10px;color:#a1a1aa;">Physical Host Monitor • 1920 × 1080 @ 60Hz</div>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);padding:4px 10px;border-radius:20px;font-size:11px;">
+              <div id="hs-dot-${pid}" style="width:7px;height:7px;border-radius:50%;background:#ff453a;box-shadow:0 0 6px #ff453a;"></div>
+              <span id="hs-status-${pid}" style="font-weight:600;color:#ff453a;">Connecting...</span>
+            </div>
+
+            <select id="hs-fps-${pid}" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);color:white;padding:4px 8px;border-radius:6px;font-size:11px;outline:none;cursor:pointer;">
+              <option value="66">15 FPS (Smooth)</option>
+              <option value="100" selected>10 FPS (Normal)</option>
+              <option value="200">5 FPS (Eco)</option>
+            </select>
+
+            <select id="hs-fit-${pid}" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);color:white;padding:4px 8px;border-radius:6px;font-size:11px;outline:none;cursor:pointer;">
+              <option value="contain">Fit Window</option>
+              <option value="cover">Fill Window</option>
+              <option value="none">Original 1:1</option>
+            </select>
+
+            <button id="hs-snap-${pid}" class="mac-arcade-btn" title="Capture Screenshot to Desktop" style="padding:4px 10px;">📸 Screenshot</button>
+          </div>
+        </div>
+
+        <!-- Stage Area -->
+        <div class="mac-sidecar-stage">
+          <div id="hs-frame-${pid}" style="position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;border-radius:8px;overflow:hidden;background:#050508;">
+            <img id="hs-img-${pid}" style="width:100%;height:100%;object-fit:contain;transition:object-fit 0.2s;display:none;" />
+            <div id="hs-standby-${pid}" style="display:flex;flex-direction:column;align-items:center;gap:12px;color:#71717a;">
+              <div style="font-size:48px;opacity:0.6;">🖥️</div>
+              <div style="font-size:14px;font-weight:600;color:#e4e4e7;">Connecting to Physical Host Screen...</div>
+              <div style="font-size:11px;color:#71717a;">Low latency hardware bridge active</div>
+            </div>
+          </div>
+        </div>
       </div>
     `, 'hostscreen');
 
+    win.style.width = '720px';
+    win.style.height = '500px';
+
     const img = win.querySelector(`#hs-img-${pid}`);
     const status = win.querySelector(`#hs-status-${pid}`);
+    const dot = win.querySelector(`#hs-dot-${pid}`);
+    const standby = win.querySelector(`#hs-standby-${pid}`);
+    const fpsSelect = win.querySelector(`#hs-fps-${pid}`);
+    const fitSelect = win.querySelector(`#hs-fit-${pid}`);
+    const snapBtn = win.querySelector(`#hs-snap-${pid}`);
+
     let isLive = false;
+    let timerId = null;
 
-    win._onLanguageChange = () => {
-      if (isLive) {
-        status.innerText = t('host_mirror_live', 'LIVE (10 FPS)');
-      } else {
-        status.innerText = t('host_mirror_no_signal', 'NO SIGNAL');
-      }
-    };
-
-    const intervalId = setInterval(async () => {
-      if (!windows.has(pid)) {
-        clearInterval(intervalId);
-        return;
-      }
-      if (window.aliceOS.getHostScreen) {
-        const screenRes = await window.aliceOS.getHostScreen();
-        if (screenRes.success && screenRes.data) {
-          img.src = screenRes.data;
-          isLive = true;
-          status.innerText = t('host_mirror_live', 'LIVE (10 FPS)');
-          status.style.color = "lime";
-        } else {
-          isLive = false;
-          status.innerText = t('host_mirror_no_signal', 'NO SIGNAL');
-          status.style.color = "red";
+    function runLoop() {
+      if (timerId) clearInterval(timerId);
+      timerId = setInterval(async () => {
+        if (!windows.has(pid)) {
+          clearInterval(timerId);
+          return;
         }
+        if (window.aliceOS && window.aliceOS.getHostScreen) {
+          try {
+            const screenRes = await window.aliceOS.getHostScreen();
+            if (screenRes.success && screenRes.data) {
+              img.src = screenRes.data;
+              if (!isLive) {
+                isLive = true;
+                img.style.display = 'block';
+                standby.style.display = 'none';
+                status.innerText = 'Live Feed';
+                status.style.color = '#34c759';
+                dot.style.background = '#34c759';
+                dot.style.boxShadow = '0 0 8px #34c759';
+              }
+            } else {
+              if (isLive) {
+                isLive = false;
+                status.innerText = 'No Signal';
+                status.style.color = '#ff9f0a';
+                dot.style.background = '#ff9f0a';
+                dot.style.boxShadow = '0 0 8px #ff9f0a';
+              }
+            }
+          } catch (e) {
+            isLive = false;
+          }
+        }
+      }, fpsInterval);
+    }
+
+    fpsSelect.addEventListener('change', () => {
+      fpsInterval = parseInt(fpsSelect.value, 10);
+      runLoop();
+    });
+
+    fitSelect.addEventListener('change', () => {
+      fitMode = fitSelect.value;
+      img.style.objectFit = fitMode;
+    });
+
+    snapBtn.addEventListener('click', async () => {
+      if (img.src && isLive) {
+        try {
+          const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+          const fileName = `Screenshot_${timestamp}.png`;
+          const filePath = `/Users/alice/Desktop/${fileName}`;
+          if (window.aliceOS && window.aliceOS.fs && window.aliceOS.fs.writeFile) {
+            await window.aliceOS.fs.writeFile(filePath, img.src);
+            if (typeof renderDesktopIcons === 'function') renderDesktopIcons();
+            if (typeof showNotification === 'function') {
+              showNotification('Screen Capture', `Saved ${fileName} to Desktop`);
+            }
+          }
+        } catch (err) {}
       }
-    }, 100); // ~10 fps
+    });
+
+    runLoop();
   }
 }
 
-// Web Host LAN Server App
+// Personal Web Server & File Sharing (macOS Sequoia Design)
 async function launchWebHost() {
   const res = await window.aliceOS.pm.spawn('webhost');
   if (res.success) {
     const pid = res.data.pid;
-    const win = createWindow(pid, t('webhost_title', 'LAN Web Server'), `
-      <div style="padding:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;background:#2b2b2b;color:white;">
-        <h2 style="margin-bottom:10px;">AliceOS VFS Bridge</h2>
-        <p id="wh-sub-${pid}" style="margin-bottom:20px;font-size:12px;color:#aaa;">${t('webhost_subtitle', 'Expose your virtual file system to the physical LAN.')}</p>
-        <button id="wh-btn-${pid}" style="background:#4CAF50;color:white;border:none;padding:10px 20px;border-radius:20px;cursor:pointer;font-weight:bold;font-size:16px;">${t('webhost_start', 'Start Server (Port 8080)')}</button>
-        <div id="wh-status-${pid}" style="margin-top:20px;font-family:monospace;color:#0f0;"></div>
+    let running = false;
+    let port = 8080;
+    let requestsCount = 0;
+    let bytesServed = 0;
+    let uptimeSeconds = 0;
+    let uptimeTimer = null;
+    let logInterval = null;
+
+    const win = createWindow(pid, t('webhost_title', 'Personal Web Sharing'), `
+      <div class="mac-webhost-app" style="padding:20px;display:flex;flex-direction:column;gap:16px;">
+        <!-- Status & Control Card -->
+        <div class="mac-webhost-card" style="display:flex;align-items:center;justify-content:space-between;gap:16px;">
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#007aff,#5856d6);display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 12px rgba(0,122,255,0.3);">🌐</div>
+            <div>
+              <div style="font-size:16px;font-weight:700;letter-spacing:-0.3px;">AliceOS Personal Web Server</div>
+              <div style="font-size:12px;color:#8e8e93;margin-top:2px;">Expose your virtual file system to the local physical network</div>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;">
+              <div id="wh-dot-${pid}" style="width:8px;height:8px;border-radius:50%;background:#8e8e93;transition:all 0.2s;"></div>
+              <span id="wh-status-text-${pid}" style="color:#8e8e93;">Inactive</span>
+            </div>
+            <button id="wh-toggle-btn-${pid}" style="background:#007aff;color:white;border:none;padding:7px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.15s;">Start Server</button>
+          </div>
+        </div>
+
+        <!-- Connection Endpoints Card -->
+        <div class="mac-webhost-card" style="display:flex;flex-direction:column;gap:12px;">
+          <div style="font-size:13px;font-weight:600;">Network Endpoints</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div style="background:rgba(0,0,0,0.03);border:1px solid rgba(0,0,0,0.06);border-radius:8px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;">
+              <div>
+                <div style="font-size:10px;font-weight:600;color:#8e8e93;text-transform:uppercase;">Localhost Loopback</div>
+                <div id="wh-local-url-${pid}" style="font-family:ui-monospace,SF Mono,monospace;font-size:12px;font-weight:600;margin-top:2px;">http://localhost:8080/</div>
+              </div>
+              <div style="display:flex;gap:6px;">
+                <button id="wh-copy-local-${pid}" class="mac-arcade-btn" style="padding:3px 8px;font-size:11px;color:inherit;">Copy</button>
+                <button id="wh-open-local-${pid}" class="mac-arcade-btn primary" style="padding:3px 8px;font-size:11px;">Browse</button>
+              </div>
+            </div>
+
+            <div style="background:rgba(0,0,0,0.03);border:1px solid rgba(0,0,0,0.06);border-radius:8px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;">
+              <div>
+                <div style="font-size:10px;font-weight:600;color:#8e8e93;text-transform:uppercase;">LAN Wi-Fi / Ethernet</div>
+                <div id="wh-lan-url-${pid}" style="font-family:ui-monospace,SF Mono,monospace;font-size:12px;font-weight:600;margin-top:2px;">http://127.0.0.1:8080/</div>
+              </div>
+              <div style="display:flex;gap:6px;">
+                <button id="wh-copy-lan-${pid}" class="mac-arcade-btn" style="padding:3px 8px;font-size:11px;color:inherit;">Copy</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Configuration row -->
+          <div style="display:flex;align-items:center;justify-content:space-between;padding-top:6px;border-top:1px solid rgba(0,0,0,0.05);font-size:12px;">
+            <div style="display:flex;align-items:center;gap:16px;">
+              <div>
+                <span style="color:#8e8e93;">Port: </span>
+                <input id="wh-port-input-${pid}" type="number" value="8080" style="width:64px;padding:3px 6px;border-radius:6px;border:1px solid rgba(0,0,0,0.15);font-size:12px;outline:none;" />
+              </div>
+              <div>
+                <span style="color:#8e8e93;">Document Root: </span>
+                <span style="font-weight:600;">/Users/alice (VFS)</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;font-size:11px;color:#8e8e93;">
+              <span>Bonjour Broadcast: <b style="color:#34c759;">Active</b></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Telemetry Stats Grid -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+          <div class="mac-webhost-card" style="padding:12px 16px;">
+            <div style="font-size:11px;color:#8e8e93;font-weight:600;">TOTAL REQUESTS</div>
+            <div id="wh-stat-req-${pid}" style="font-size:22px;font-weight:700;margin-top:4px;">0</div>
+          </div>
+          <div class="mac-webhost-card" style="padding:12px 16px;">
+            <div style="font-size:11px;color:#8e8e93;font-weight:600;">DATA TRANSFERRED</div>
+            <div id="wh-stat-bytes-${pid}" style="font-size:22px;font-weight:700;margin-top:4px;">0 KB</div>
+          </div>
+          <div class="mac-webhost-card" style="padding:12px 16px;">
+            <div style="font-size:11px;color:#8e8e93;font-weight:600;">UPTIME</div>
+            <div id="wh-stat-uptime-${pid}" style="font-size:22px;font-weight:700;margin-top:4px;">00:00:00</div>
+          </div>
+        </div>
+
+        <!-- Live Access Log Terminal -->
+        <div class="mac-webhost-card" style="display:flex;flex-direction:column;gap:8px;flex:1;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div style="font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px;">
+              <span>📜</span> <span>Live Access & Traffic Log</span>
+            </div>
+            <button id="wh-clear-log-${pid}" class="mac-arcade-btn" style="padding:2px 8px;font-size:10px;color:inherit;">Clear Log</button>
+          </div>
+          <div id="wh-log-${pid}" class="mac-webhost-terminal">
+            <div style="color:#71717a;">[System] Web Sharing service ready on port 8080. Press 'Start Server' to bind.</div>
+          </div>
+        </div>
       </div>
     `, 'webhost');
 
-    const btn = win.querySelector(`#wh-btn-${pid}`);
-    const sub = win.querySelector(`#wh-sub-${pid}`);
-    const status = win.querySelector(`#wh-status-${pid}`);
-    let running = false;
+    win.style.width = '680px';
+    win.style.height = '540px';
 
-    win._onLanguageChange = () => {
-      if (sub) sub.innerText = t('webhost_subtitle', 'Expose your virtual file system to the physical LAN.');
-      if (btn) {
-        btn.innerText = running ? t('webhost_stop', 'Stop Server') : t('webhost_start', 'Start Server (Port 8080)');
-      }
-      if (!running && status.innerText) {
-        status.innerText = t('webhost_stopped', 'Server stopped.');
-      }
-    };
+    const toggleBtn = win.querySelector(`#wh-toggle-btn-${pid}`);
+    const dot = win.querySelector(`#wh-dot-${pid}`);
+    const statusText = win.querySelector(`#wh-status-text-${pid}`);
+    const localUrl = win.querySelector(`#wh-local-url-${pid}`);
+    const lanUrl = win.querySelector(`#wh-lan-url-${pid}`);
+    const portInput = win.querySelector(`#wh-port-input-${pid}`);
+    const copyLocalBtn = win.querySelector(`#wh-copy-local-${pid}`);
+    const openLocalBtn = win.querySelector(`#wh-open-local-${pid}`);
+    const copyLanBtn = win.querySelector(`#wh-copy-lan-${pid}`);
+    const statReq = win.querySelector(`#wh-stat-req-${pid}`);
+    const statBytes = win.querySelector(`#wh-stat-bytes-${pid}`);
+    const statUptime = win.querySelector(`#wh-stat-uptime-${pid}`);
+    const logEl = win.querySelector(`#wh-log-${pid}`);
+    const clearLogBtn = win.querySelector(`#wh-clear-log-${pid}`);
 
-    btn.addEventListener('click', async () => {
+    function appendLog(method, path, status, latency) {
+      const now = new Date().toTimeString().split(' ')[0];
+      const color = status === 200 ? '#34c759' : (status === 304 ? '#30b0c7' : '#ff453a');
+      const row = document.createElement('div');
+      row.innerHTML = `<span style="color:#71717a;">${now}</span> <span style="font-weight:700;color:${color};">[${method} ${status}]</span> <span>${path}</span> <span style="color:#71717a;float:right;">${latency}ms</span>`;
+      logEl.appendChild(row);
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    function formatUptime(sec) {
+      const h = String(Math.floor(sec / 3600)).padStart(2, '0');
+      const m = String(Math.floor((sec % 3600) / 60)).padStart(2, '0');
+      const s = String(sec % 60).padStart(2, '0');
+      return `${h}:${m}:${s}`;
+    }
+
+    function formatBytes(bytes) {
+      if (bytes < 1024) return `${bytes} B`;
+      if (bytes < 1048576) return `${(bytes / 1024).toFixed(1)} KB`;
+      return `${(bytes / 1048576).toFixed(2)} MB`;
+    }
+
+    toggleBtn.addEventListener('click', async () => {
       if (!running) {
-        if (window.aliceOS.startHostServer) {
-          const sRes = await window.aliceOS.startHostServer(8080);
+        port = parseInt(portInput.value, 10) || 8080;
+        if (window.aliceOS && window.aliceOS.startHostServer) {
+          const sRes = await window.aliceOS.startHostServer(port);
           if (sRes.success) {
             running = true;
-            btn.innerText = t('webhost_stop', 'Stop Server');
-            btn.style.background = "#f44336";
-            status.innerText = sRes.data;
+            toggleBtn.innerText = 'Stop Server';
+            toggleBtn.style.background = '#ff3b30';
+            dot.style.background = '#34c759';
+            dot.style.boxShadow = '0 0 8px #34c759';
+            statusText.innerText = 'Active (Online)';
+            statusText.style.color = '#34c759';
+            portInput.disabled = true;
+
+            const baseLocal = `http://localhost:${port}/`;
+            localUrl.innerText = baseLocal;
+            if (sRes.data && sRes.data.includes('http')) {
+              lanUrl.innerText = sRes.data;
+            } else {
+              lanUrl.innerText = `http://127.0.0.1:${port}/`;
+            }
+
+            appendLog('SERVER', `Service started on port ${port}`, 200, 0);
+
+            // Uptime timer
+            uptimeSeconds = 0;
+            uptimeTimer = setInterval(() => {
+              if (!windows.has(pid)) {
+                clearInterval(uptimeTimer);
+                clearInterval(logInterval);
+                return;
+              }
+              uptimeSeconds++;
+              statUptime.innerText = formatUptime(uptimeSeconds);
+            }, 1000);
+
+            // Simulate periodic traffic from local subnet
+            logInterval = setInterval(() => {
+              if (!windows.has(pid) || !running) return;
+              if (Math.random() < 0.4) {
+                const samplePaths = ['/index.html', '/style.css', '/Desktop/quick_note.txt', '/api/status', '/favicon.ico'];
+                const sampleP = samplePaths[Math.floor(Math.random() * samplePaths.length)];
+                requestsCount++;
+                bytesServed += Math.floor(Math.random() * 4500 + 400);
+                statReq.innerText = requestsCount;
+                statBytes.innerText = formatBytes(bytesServed);
+                appendLog('GET', sampleP, 200, (Math.random() * 2 + 0.5).toFixed(1));
+              }
+            }, 3000);
           } else {
-            status.innerText = "Error: " + sRes.error;
-            status.style.color = "red";
+            appendLog('ERROR', sRes.error || 'Failed to start server', 500, 0);
           }
         }
       } else {
-        if (window.aliceOS.stopHostServer) {
+        if (window.aliceOS && window.aliceOS.stopHostServer) {
           await window.aliceOS.stopHostServer();
           running = false;
-          btn.innerText = t('webhost_start', 'Start Server (Port 8080)');
-          btn.style.background = "#4CAF50";
-          status.innerText = t('webhost_stopped', 'Server stopped.');
-          status.style.color = "#0f0";
+          toggleBtn.innerText = 'Start Server';
+          toggleBtn.style.background = '#007aff';
+          dot.style.background = '#8e8e93';
+          dot.style.boxShadow = 'none';
+          statusText.innerText = 'Inactive';
+          statusText.style.color = '#8e8e93';
+          portInput.disabled = false;
+          clearInterval(uptimeTimer);
+          clearInterval(logInterval);
+          appendLog('SERVER', 'Service stopped gracefully.', 200, 0);
         }
       }
+    });
+
+    copyLocalBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(localUrl.innerText);
+      copyLocalBtn.innerText = 'Copied!';
+      setTimeout(() => copyLocalBtn.innerText = 'Copy', 1500);
+    });
+
+    copyLanBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(lanUrl.innerText);
+      copyLanBtn.innerText = 'Copied!';
+      setTimeout(() => copyLanBtn.innerText = 'Copy', 1500);
+    });
+
+    openLocalBtn.addEventListener('click', () => {
+      if (typeof launchBrowser === 'function') {
+        launchBrowser();
+      }
+    });
+
+    clearLogBtn.addEventListener('click', () => {
+      logEl.innerHTML = '';
     });
   }
 }
 
-// Flappy Alice Game
+// Flappy Alice (Apple Arcade Edition)
 async function launchFlappy() {
   const res = await window.aliceOS.pm.spawn('flappy');
   if (res.success) {
     const pid = res.data.pid;
-    const win = createWindow(pid, t('app_flappy', 'Flappy Alice'), `
-      <div style="background:#70c5ce;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;">
-        <canvas id="flappy-canvas-${pid}" width="320" height="480" style="background:#70c5ce;border:2px solid #543847;border-radius:8px;box-shadow:0 4px 10px rgba(0,0,0,0.5);cursor:pointer;"></canvas>
-        <div id="flappy-score-${pid}" style="position:absolute;top:20px;font-size:32px;font-weight:bold;color:white;text-shadow:2px 2px 0 #000;">0</div>
-        <div id="flappy-msg-${pid}" style="position:absolute;font-size:24px;font-weight:bold;color:white;text-shadow:2px 2px 0 #000;pointer-events:none;">${t('flappy_click_start', 'CLICK TO START')}</div>
+    let highScore = parseInt(localStorage.getItem('alice_flappy_highscore') || '0', 10);
+    let score = 0;
+    let currentState = 0; // 0: Ready, 1: Playing, 2: GameOver
+    let currentMode = 'day'; // 'day', 'sunset', 'night'
+    let frames = 0;
+
+    const win = createWindow(pid, t('app_flappy', 'Flappy Alice — Apple Arcade'), `
+      <div class="mac-arcade-app">
+        <!-- Arcade Header -->
+        <div class="mac-arcade-header">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:28px;height:28px;background:linear-gradient(135deg,#34c759,#30b0c7);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 2px 6px rgba(52,199,89,0.4);">🐥</div>
+            <div>
+              <div style="font-size:13px;font-weight:700;letter-spacing:-0.2px;">Flappy Alice</div>
+              <div style="font-size:10px;color:#a1a1aa;">Apple Arcade • Game Center</div>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div class="mac-arcade-pill">
+              <span style="color:#a1a1aa;">Score:</span>
+              <span id="flappy-score-${pid}" style="font-family:ui-monospace,SF Mono,monospace;font-weight:700;color:#34c759;">0</span>
+            </div>
+            <div class="mac-arcade-pill">
+              <span style="color:#fbbf24;">🏆</span>
+              <span id="flappy-high-${pid}" style="font-family:ui-monospace,SF Mono,monospace;font-weight:700;color:#fbbf24;">${highScore}</span>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;">
+            <select id="flappy-mode-${pid}" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);color:white;padding:3px 8px;border-radius:6px;font-size:11px;outline:none;cursor:pointer;">
+              <option value="day" selected>Cupertino Day</option>
+              <option value="sunset">Sonoma Sunset</option>
+              <option value="night">Sequoia Night</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Canvas Area -->
+        <div style="flex:1;position:relative;display:flex;align-items:center;justify-content:center;background:#0d0e12;overflow:hidden;" id="flappy-container-${pid}">
+          <canvas id="flappy-canvas-${pid}" width="360" height="480" style="border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.08);cursor:pointer;"></canvas>
+
+          <!-- Ready / Click to Start Overlay -->
+          <div id="flappy-ready-overlay-${pid}" class="mac-arcade-overlay" style="cursor:pointer;">
+            <div style="background:rgba(28,28,32,0.85);border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:24px 32px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,0.8);max-width:280px;pointer-events:none;">
+              <div style="font-size:42px;margin-bottom:8px;">🐥</div>
+              <h2 style="margin:0 0 6px 0;font-size:18px;font-weight:700;">Get Ready!</h2>
+              <div style="font-size:12px;color:#a1a1aa;margin-bottom:12px;">Click or press Space to flap</div>
+              <div class="mac-arcade-btn primary" style="padding:6px 18px;font-size:12px;">Start Flight</div>
+            </div>
+          </div>
+
+          <!-- Game Over Modal -->
+          <div id="flappy-over-overlay-${pid}" class="mac-arcade-overlay" style="display:none;">
+            <div style="background:rgba(28,28,32,0.95);border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:24px 32px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,0.8);max-width:320px;width:100%;">
+              <div id="flappy-medal-icon-${pid}" style="font-size:40px;margin-bottom:8px;">🥉</div>
+              <h2 style="margin:0 0 6px 0;font-size:20px;font-weight:700;">Flight Ended</h2>
+              <div id="flappy-medal-name-${pid}" style="font-size:12px;color:#fbbf24;font-weight:600;margin-bottom:16px;">Game Center Bronze Medal</div>
+
+              <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:12px;margin-bottom:20px;display:flex;justify-content:space-around;">
+                <div>
+                  <div style="font-size:11px;color:#a1a1aa;">FINAL SCORE</div>
+                  <div id="flappy-final-score-${pid}" style="font-size:22px;font-weight:700;color:#34c759;">0</div>
+                </div>
+                <div style="width:1px;background:rgba(255,255,255,0.1);"></div>
+                <div>
+                  <div style="font-size:11px;color:#a1a1aa;">BEST RECORD</div>
+                  <div id="flappy-best-score-${pid}" style="font-size:22px;font-weight:700;color:#fbbf24;">${highScore}</div>
+                </div>
+              </div>
+
+              <button id="flappy-restart-btn-${pid}" class="mac-arcade-btn primary" style="padding:8px 24px;font-size:13px;">Fly Again</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="height:28px;background:rgba(20,20,24,0.9);border-top:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:space-between;padding:0 16px;font-size:11px;color:#71717a;">
+          <span>Press <b>Space</b> or <b>Left Click</b> to flap wings</span>
+          <span>Game Center Rankings Active</span>
+        </div>
       </div>
     `, 'flappy');
+
+    win.style.width = '460px';
+    win.style.height = '600px';
 
     const canvas = win.querySelector(`#flappy-canvas-${pid}`);
     const ctx = canvas.getContext('2d');
     const scoreEl = win.querySelector(`#flappy-score-${pid}`);
-    const msgEl = win.querySelector(`#flappy-msg-${pid}`);
-    
-    let frames = 0;
-    let score = 0;
-    let currentState = 0; // 0: get ready, 1: game, 2: game over
+    const highEl = win.querySelector(`#flappy-high-${pid}`);
+    const modeSelect = win.querySelector(`#flappy-mode-${pid}`);
+    const readyOverlay = win.querySelector(`#flappy-ready-overlay-${pid}`);
+    const overOverlay = win.querySelector(`#flappy-over-overlay-${pid}`);
+    const medalIcon = win.querySelector(`#flappy-medal-icon-${pid}`);
+    const medalName = win.querySelector(`#flappy-medal-name-${pid}`);
+    const finalScoreEl = win.querySelector(`#flappy-final-score-${pid}`);
+    const bestScoreEl = win.querySelector(`#flappy-best-score-${pid}`);
+    const restartBtn = win.querySelector(`#flappy-restart-btn-${pid}`);
 
-    win._onLanguageChange = () => {
-      if (currentState === 0) {
-        msgEl.innerText = t('flappy_click_start', 'CLICK TO START');
-      } else if (currentState === 2) {
-        msgEl.innerText = t('flappy_game_over', 'GAME OVER');
+    // Web Audio Sound Synth
+    let audioCtx = null;
+    function playAudio(type) {
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        const t = audioCtx.currentTime;
+
+        if (type === 'flap') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(300, t);
+          osc.frequency.exponentialRampToValueAtTime(550, t + 0.08);
+          gain.gain.setValueAtTime(0.15, t);
+          gain.gain.exponentialRampToValueAtTime(0.01, t + 0.08);
+          osc.start(t);
+          osc.stop(t + 0.08);
+        } else if (type === 'point') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(659.25, t); // E5
+          osc.frequency.setValueAtTime(880, t + 0.08); // A5
+          gain.gain.setValueAtTime(0.2, t);
+          gain.gain.exponentialRampToValueAtTime(0.01, t + 0.2);
+          osc.start(t);
+          osc.stop(t + 0.2);
+        } else if (type === 'crash') {
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(140, t);
+          osc.frequency.exponentialRampToValueAtTime(30, t + 0.25);
+          gain.gain.setValueAtTime(0.25, t);
+          gain.gain.exponentialRampToValueAtTime(0.01, t + 0.25);
+          osc.start(t);
+          osc.stop(t + 0.25);
+        }
+      } catch (e) {}
+    }
+
+    // Bird state
+    const bird = {
+      x: 70,
+      y: 200,
+      radius: 14,
+      velocity: 0,
+      gravity: 0.26,
+      jump: 4.8,
+      rotation: 0,
+      wingCycle: 0,
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+
+        // Body
+        ctx.shadowColor = 'rgba(0,0,0,0.2)';
+        ctx.shadowBlur = 6;
+        ctx.fillStyle = '#ffcc00';
+        ctx.beginPath();
+        ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Belly
+        ctx.fillStyle = '#ffe066';
+        ctx.beginPath();
+        ctx.arc(-2, 3, this.radius * 0.7, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Eye
+        ctx.shadowBlur = 0;
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(5, -4, 5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#000000';
+        ctx.beginPath();
+        ctx.arc(6, -4, 2.2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(5.5, -5, 1, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Beak
+        ctx.fillStyle = '#ff6b35';
+        ctx.beginPath();
+        ctx.moveTo(10, -2);
+        ctx.lineTo(20, 2);
+        ctx.lineTo(10, 6);
+        ctx.closePath();
+        ctx.fill();
+
+        // Wing flapping
+        const wingOffset = Math.sin(this.wingCycle) * 6;
+        ctx.fillStyle = '#f7b731';
+        ctx.beginPath();
+        ctx.ellipse(-6, 2, 7, 4 + wingOffset * 0.5, -0.2, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.restore();
+      },
+      update() {
+        this.wingCycle += 0.2;
+        this.velocity += this.gravity;
+        this.y += this.velocity;
+
+        // Target rotation
+        if (this.velocity < 0) {
+          this.rotation = -0.35;
+        } else {
+          this.rotation = Math.min(Math.PI / 2.2, this.rotation + 0.05);
+        }
+
+        // Ground hit
+        if (this.y + this.radius >= canvas.height - 40) {
+          this.y = canvas.height - 40 - this.radius;
+          endGame();
+        }
+        // Ceiling hit
+        if (this.y - this.radius <= 0) {
+          this.y = this.radius;
+          this.velocity = 0;
+        }
+      },
+      flap() {
+        this.velocity = -this.jump;
+        this.rotation = -0.4;
+        playAudio('flap');
       }
     };
-    
-    const alice = {
-       x: 50, y: 150, width: 34, height: 26,
-       gravity: 0.25, jump: 4.6, speed: 0,
-       draw() {
-          ctx.fillStyle = '#ffcc00';
-          ctx.beginPath();
-          ctx.arc(this.x + this.width/2, this.y + this.height/2, 12, 0, Math.PI*2);
-          ctx.fill();
-          ctx.fillStyle = 'white';
-          ctx.beginPath();
-          ctx.arc(this.x + this.width/2 + 4, this.y + this.height/2 - 2, 4, 0, Math.PI*2);
-          ctx.fill();
-          ctx.fillStyle = 'black';
-          ctx.beginPath();
-          ctx.arc(this.x + this.width/2 + 5, this.y + this.height/2 - 2, 2, 0, Math.PI*2);
-          ctx.fill();
-       },
-       update() {
-          this.speed += this.gravity;
-          this.y += this.speed;
-          if (this.y + this.height/2 >= canvas.height - 50) {
-             this.y = canvas.height - 50 - this.height/2;
-             currentState = 2; // Game Over
-          }
-       },
-       flap() { this.speed = -this.jump; }
-    };
 
+    // Pipes manager
     const pipes = {
-       position: [],
-       width: 53, height: 400, gap: 120, dx: 2,
-       draw() {
-          for(let i=0; i<this.position.length; i++) {
-             let p = this.position[i];
-             let topYPos = p.y;
-             let bottomYPos = p.y + this.height + this.gap;
-             
-             ctx.fillStyle = '#73bf2e';
-             ctx.fillRect(p.x, topYPos, this.width, this.height);
-             ctx.strokeRect(p.x, topYPos, this.width, this.height);
-             
-             ctx.fillRect(p.x, bottomYPos, this.width, this.height);
-             ctx.strokeRect(p.x, bottomYPos, this.width, this.height);
+      items: [],
+      width: 52,
+      gap: 130,
+      speed: 2,
+      reset() {
+        this.items = [];
+      },
+      draw() {
+        this.items.forEach(p => {
+          // Top Pipe
+          const gradTop = ctx.createLinearGradient(p.x, 0, p.x + this.width, 0);
+          gradTop.addColorStop(0, '#55a630');
+          gradTop.addColorStop(0.3, '#80b918');
+          gradTop.addColorStop(0.7, '#55a630');
+          gradTop.addColorStop(1, '#2b9348');
+
+          ctx.fillStyle = gradTop;
+          ctx.fillRect(p.x, 0, this.width, p.top);
+          // Top Pipe Cap
+          ctx.fillRect(p.x - 3, p.top - 18, this.width + 6, 18);
+          ctx.strokeStyle = '#2d6a4f';
+          ctx.strokeRect(p.x - 3, p.top - 18, this.width + 6, 18);
+
+          // Bottom Pipe
+          const bottomY = p.top + this.gap;
+          const bottomH = canvas.height - 40 - bottomY;
+          ctx.fillRect(p.x, bottomY, this.width, bottomH);
+          // Bottom Pipe Cap
+          ctx.fillRect(p.x - 3, bottomY, this.width + 6, 18);
+          ctx.strokeRect(p.x - 3, bottomY, this.width + 6, 18);
+        });
+      },
+      update() {
+        if (frames % 110 === 0) {
+          const minTop = 50;
+          const maxTop = canvas.height - 40 - this.gap - 60;
+          const topH = Math.floor(Math.random() * (maxTop - minTop)) + minTop;
+          this.items.push({ x: canvas.width, top: topH, passed: false });
+        }
+
+        for (let i = this.items.length - 1; i >= 0; i--) {
+          const p = this.items[i];
+          p.x -= this.speed;
+
+          // Check collision with bird
+          const bx = bird.x, by = bird.y, br = bird.radius - 2;
+          const inX = bx + br > p.x - 3 && bx - br < p.x + this.width + 3;
+          const inTop = by - br < p.top;
+          const inBottom = by + br > p.top + this.gap;
+
+          if (inX && (inTop || inBottom)) {
+            endGame();
+            return;
           }
-       },
-       update() {
-          if(frames % 100 === 0) {
-             this.position.push({ x: canvas.width, y: -150 * (Math.random() + 1) });
+
+          // Check score
+          if (!p.passed && p.x + this.width < bird.x) {
+            p.passed = true;
+            score++;
+            scoreEl.innerText = score;
+            playAudio('point');
+            if (score > highScore) {
+              highScore = score;
+              highEl.innerText = highScore;
+              localStorage.setItem('alice_flappy_highscore', highScore.toString());
+            }
           }
-          for(let i=0; i<this.position.length; i++) {
-             let p = this.position[i];
-             p.x -= this.dx;
-             
-             // Collision
-             let bottomPipeY = p.y + this.height + this.gap;
-             if(alice.x + alice.width/2 > p.x && alice.x - alice.width/2 < p.x + this.width &&
-               (alice.y - alice.height/2 < p.y + this.height || alice.y + alice.height/2 > bottomPipeY)) {
-                currentState = 2;
-             }
-             
-             if(p.x + this.width <= 0) {
-                this.position.shift();
-                score++;
-                scoreEl.innerText = score;
-             }
+
+          if (p.x + this.width < -10) {
+            this.items.splice(i, 1);
           }
-       },
-       reset() { this.position = []; }
+        }
+      }
     };
 
-    function draw() {
-       ctx.clearRect(0, 0, canvas.width, canvas.height);
-       ctx.fillStyle = '#ded895';
-       ctx.fillRect(0, canvas.height - 50, canvas.width, 50); // ground
-       pipes.draw();
-       alice.draw();
+    // Parallax background scenery
+    function drawBackground() {
+      // Sky
+      if (currentMode === 'day') {
+        const skyGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+        skyGrad.addColorStop(0, '#4ea8de');
+        skyGrad.addColorStop(0.7, '#90e0ef');
+        skyGrad.addColorStop(1, '#caf0f8');
+        ctx.fillStyle = skyGrad;
+      } else if (currentMode === 'sunset') {
+        const skyGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+        skyGrad.addColorStop(0, '#581845');
+        skyGrad.addColorStop(0.4, '#c70039');
+        skyGrad.addColorStop(0.7, '#ff5733');
+        skyGrad.addColorStop(1, '#ffc300');
+        ctx.fillStyle = skyGrad;
+      } else {
+        const skyGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+        skyGrad.addColorStop(0, '#03045e');
+        skyGrad.addColorStop(0.7, '#023e8a');
+        skyGrad.addColorStop(1, '#0077b6');
+        ctx.fillStyle = skyGrad;
+      }
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Clouds
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+      const cloudX = ((frames * 0.4) % (canvas.width + 120)) - 60;
+      ctx.beginPath();
+      ctx.arc(cloudX, 80, 24, 0, Math.PI * 2);
+      ctx.arc(cloudX + 22, 70, 30, 0, Math.PI * 2);
+      ctx.arc(cloudX + 48, 80, 22, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Rolling Hills
+      ctx.fillStyle = currentMode === 'night' ? '#143628' : '#70b263';
+      ctx.beginPath();
+      ctx.moveTo(0, canvas.height - 40);
+      for (let x = 0; x <= canvas.width; x += 40) {
+        ctx.lineTo(x, canvas.height - 55 - Math.sin((x + frames * 0.5) * 0.02) * 12);
+      }
+      ctx.lineTo(canvas.width, canvas.height - 40);
+      ctx.closePath();
+      ctx.fill();
+
+      // Ground
+      ctx.fillStyle = '#ded895';
+      ctx.fillRect(0, canvas.height - 40, canvas.width, 40);
+      ctx.fillStyle = '#73bf2e';
+      ctx.fillRect(0, canvas.height - 40, canvas.width, 8);
     }
 
-    function update() {
-       alice.update();
-       pipes.update();
-    }
-
-    let loopId;
+    let loopId = null;
     function loop() {
-       if (!windows.has(pid)) return; // Stop if closed
-       update();
-       draw();
-       frames++;
-       if(currentState === 1) {
-          loopId = requestAnimationFrame(loop);
-       } else if (currentState === 2) {
-          msgEl.innerText = t('flappy_game_over', 'GAME OVER');
-          msgEl.style.display = 'block';
-       }
+      if (!windows.has(pid)) return;
+      frames++;
+
+      drawBackground();
+      pipes.draw();
+      bird.draw();
+
+      if (currentState === 1) {
+        bird.update();
+        pipes.update();
+        loopId = requestAnimationFrame(loop);
+      }
     }
 
-    canvas.addEventListener('click', () => {
-       if(currentState === 0) {
-          currentState = 1;
-          msgEl.style.display = 'none';
-          loop();
-       } else if(currentState === 1) {
-          alice.flap();
-       } else if(currentState === 2) {
-          currentState = 0;
-          alice.y = 150;
-          alice.speed = 0;
-          pipes.reset();
-          score = 0;
-          scoreEl.innerText = score;
-          msgEl.innerText = t('flappy_click_start', 'CLICK TO START');
-          draw();
-       }
+    function startGame() {
+      currentState = 1;
+      readyOverlay.style.display = 'none';
+      overOverlay.style.display = 'none';
+      bird.y = 200;
+      bird.velocity = 0;
+      pipes.reset();
+      score = 0;
+      scoreEl.innerText = '0';
+      bird.flap();
+      loop();
+    }
+
+    function endGame() {
+      currentState = 2;
+      cancelAnimationFrame(loopId);
+      playAudio('crash');
+      finalScoreEl.innerText = score;
+      bestScoreEl.innerText = highScore;
+
+      // Award Game Center Medals
+      if (score >= 50) {
+        medalIcon.innerText = '💎';
+        medalName.innerText = 'Game Center Platinum Diamond Medal';
+      } else if (score >= 30) {
+        medalIcon.innerText = '🥇';
+        medalName.innerText = 'Game Center Gold Medal';
+      } else if (score >= 15) {
+        medalIcon.innerText = '🥈';
+        medalName.innerText = 'Game Center Silver Medal';
+      } else if (score >= 5) {
+        medalIcon.innerText = '🥉';
+        medalName.innerText = 'Game Center Bronze Medal';
+      } else {
+        medalIcon.innerText = '🎖️';
+        medalName.innerText = 'Flight Completed';
+      }
+
+      overOverlay.style.display = 'flex';
+    }
+
+    // Input hooks
+    function handleFlap() {
+      if (currentState === 0) {
+        startGame();
+      } else if (currentState === 1) {
+        bird.flap();
+      }
+    }
+
+    canvas.addEventListener('mousedown', handleFlap);
+    readyOverlay.addEventListener('click', handleFlap);
+
+    win.setAttribute('tabindex', '0');
+    win.focus();
+    win.addEventListener('keydown', (e) => {
+      if (e.key === ' ' || e.code === 'Space' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (currentState === 2) {
+          startGame();
+        } else {
+          handleFlap();
+        }
+      }
     });
 
-    draw(); // init draw
+    restartBtn.addEventListener('click', startGame);
+
+    modeSelect.addEventListener('change', () => {
+      currentMode = modeSelect.value;
+      if (currentState !== 1) {
+        drawBackground();
+        bird.draw();
+      }
+    });
+
+    // Initial render
+    drawBackground();
+    bird.draw();
   }
 }
 
-// AliceSynth Audio Synthesizer App
+// GarageBand / AliceSynth Studio Pro (macOS Sequoia Design)
 async function launchSynth() {
   const res = await window.aliceOS.pm.spawn('synth');
   if (res.success) {
     const pid = res.data.pid;
-    const win = createWindow(pid, t('app_synth', 'AliceSynth'), `
-      <div style="background:#222;height:100%;display:flex;flex-direction:column;align-items:center;padding:20px;color:white;box-sizing:border-box;">
-        <h2 style="margin:0 0 20px 0;text-shadow:0 0 10px #00f2fe;">AliceSynth 🎹</h2>
-        
-        <div style="display:flex;gap:20px;margin-bottom:20px;">
-          <div>
-            <label id="synth-lbl-wave-${pid}">${t('synth_waveform', 'Waveform')}: </label>
-            <select id="synth-wave-${pid}" style="background:#333;color:white;border:1px solid #555;padding:5px;">
-              <option value="sine">${t('synth_sine', 'Sine (Smooth)')}</option>
-              <option value="square">${t('synth_square', 'Square (8-bit)')}</option>
-              <option value="sawtooth">${t('synth_sawtooth', 'Sawtooth (Harsh)')}</option>
-              <option value="triangle">${t('synth_triangle', 'Triangle (Soft)')}</option>
+    let octaveOffset = 0; // -1, 0, +1
+    let activePreset = 'piano';
+    let currentWave = 'sine';
+    let filterCutoff = 2500;
+    let attackTime = 0.02;
+    let releaseTime = 0.4;
+    let masterVolume = 0.35;
+    let isMuted = false;
+
+    const win = createWindow(pid, t('app_synth', 'AliceSynth — Audio Studio'), `
+      <div class="mac-synth-app">
+        <!-- Top Toolbar -->
+        <div class="mac-synth-header">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:28px;height:28px;background:linear-gradient(135deg,#ff9500,#ff2d55);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 2px 6px rgba(255,149,0,0.4);">🎹</div>
+            <div>
+              <div style="font-size:13px;font-weight:700;letter-spacing:-0.2px;">AliceSynth Studio Pro</div>
+              <div style="font-size:10px;color:#a1a1aa;">Logic Pro Synthesizer Engine • Polyphonic</div>
+            </div>
+          </div>
+
+          <!-- Presets -->
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="font-size:11px;color:#a1a1aa;">Preset:</span>
+            <select id="synth-preset-${pid}" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);color:white;padding:4px 10px;border-radius:6px;font-size:11px;outline:none;cursor:pointer;">
+              <option value="piano" selected>Concert Grand Piano</option>
+              <option value="rhodes">Vintage Rhodes EP</option>
+              <option value="lead">80s Jupiter Lead</option>
+              <option value="moog">Moog Deep Bass</option>
+              <option value="pad">Ethereal Ambient Pad</option>
+              <option value="chiptune">8-Bit Retro Chiptune</option>
             </select>
           </div>
-          <div>
-            <label id="synth-lbl-vol-${pid}">${t('synth_volume', 'Master Volume')}: </label>
-            <input type="range" id="synth-vol-${pid}" min="0" max="100" value="30">
+
+          <!-- Octave & Volume Controls -->
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="display:flex;align-items:center;gap:4px;background:rgba(255,255,255,0.08);border-radius:6px;padding:2px 6px;">
+              <span style="font-size:10px;color:#a1a1aa;">OCTAVE</span>
+              <button id="synth-oct-down-${pid}" class="mac-arcade-btn" style="padding:1px 6px;font-size:11px;">-</button>
+              <span id="synth-oct-val-${pid}" style="font-size:11px;font-weight:700;min-width:18px;text-align:center;">C4</span>
+              <button id="synth-oct-up-${pid}" class="mac-arcade-btn" style="padding:1px 6px;font-size:11px;">+</button>
+            </div>
+
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span style="font-size:12px;">🔊</span>
+              <input id="synth-vol-${pid}" type="range" min="0" max="100" value="35" style="width:70px;cursor:pointer;" />
+            </div>
           </div>
         </div>
 
-        <div style="display:flex;gap:5px;position:relative;height:150px;width:100%;max-width:500px;background:#111;padding:10px;border-radius:10px;box-shadow:inset 0 0 10px black;">
-          <!-- Natural Keys -->
-          <div class="synth-key" data-note="261.63" style="flex:1;background:white;color:black;border-radius:0 0 5px 5px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:10px;font-weight:bold;cursor:pointer;border:1px solid #ccc;">C</div>
-          <div class="synth-key" data-note="293.66" style="flex:1;background:white;color:black;border-radius:0 0 5px 5px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:10px;font-weight:bold;cursor:pointer;border:1px solid #ccc;">D</div>
-          <div class="synth-key" data-note="329.63" style="flex:1;background:white;color:black;border-radius:0 0 5px 5px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:10px;font-weight:bold;cursor:pointer;border:1px solid #ccc;">E</div>
-          <div class="synth-key" data-note="349.23" style="flex:1;background:white;color:black;border-radius:0 0 5px 5px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:10px;font-weight:bold;cursor:pointer;border:1px solid #ccc;">F</div>
-          <div class="synth-key" data-note="392.00" style="flex:1;background:white;color:black;border-radius:0 0 5px 5px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:10px;font-weight:bold;cursor:pointer;border:1px solid #ccc;">G</div>
-          <div class="synth-key" data-note="440.00" style="flex:1;background:white;color:black;border-radius:0 0 5px 5px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:10px;font-weight:bold;cursor:pointer;border:1px solid #ccc;">A</div>
-          <div class="synth-key" data-note="493.88" style="flex:1;background:white;color:black;border-radius:0 0 5px 5px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:10px;font-weight:bold;cursor:pointer;border:1px solid #ccc;">B</div>
-          <div class="synth-key" data-note="523.25" style="flex:1;background:white;color:black;border-radius:0 0 5px 5px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:10px;font-weight:bold;cursor:pointer;border:1px solid #ccc;">C</div>
-          
-          <!-- Sharp/Flat Keys -->
-          <div class="synth-key black-key" data-note="277.18" style="position:absolute;left:calc(12.5% - 15px);top:10px;width:30px;height:90px;background:black;border-radius:0 0 5px 5px;cursor:pointer;box-shadow:2px 2px 5px rgba(0,0,0,0.5);"></div>
-          <div class="synth-key black-key" data-note="311.13" style="position:absolute;left:calc(25% - 15px);top:10px;width:30px;height:90px;background:black;border-radius:0 0 5px 5px;cursor:pointer;box-shadow:2px 2px 5px rgba(0,0,0,0.5);"></div>
-          <div class="synth-key black-key" data-note="369.99" style="position:absolute;left:calc(50% - 15px);top:10px;width:30px;height:90px;background:black;border-radius:0 0 5px 5px;cursor:pointer;box-shadow:2px 2px 5px rgba(0,0,0,0.5);"></div>
-          <div class="synth-key black-key" data-note="415.30" style="position:absolute;left:calc(62.5% - 15px);top:10px;width:30px;height:90px;background:black;border-radius:0 0 5px 5px;cursor:pointer;box-shadow:2px 2px 5px rgba(0,0,0,0.5);"></div>
-          <div class="synth-key black-key" data-note="466.16" style="position:absolute;left:calc(75% - 15px);top:10px;width:30px;height:90px;background:black;border-radius:0 0 5px 5px;cursor:pointer;box-shadow:2px 2px 5px rgba(0,0,0,0.5);"></div>
+        <!-- Synthesizer Rack (Oscilloscope & Param Knobs) -->
+        <div class="mac-synth-rack">
+          <!-- Oscilloscope View -->
+          <div class="mac-synth-module" style="flex:1;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:11px;font-weight:600;color:#a1a1aa;text-transform:uppercase;">Realtime Waveform Oscilloscope</span>
+              <span id="synth-wave-badge-${pid}" style="font-size:10px;background:#007aff;color:white;padding:2px 6px;border-radius:4px;font-weight:700;">SINE</span>
+            </div>
+            <canvas id="synth-scope-${pid}" width="340" height="70" style="background:#090a0d;border-radius:6px;width:100%;height:70px;border:1px solid rgba(255,255,255,0.05);"></canvas>
+          </div>
+
+          <!-- Filter & Envelope Controls -->
+          <div class="mac-synth-module" style="width:260px;">
+            <div style="font-size:11px;font-weight:600;color:#a1a1aa;text-transform:uppercase;">VCF Filter & Envelope</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:11px;">
+              <div>
+                <div style="color:#71717a;margin-bottom:2px;">Filter Cutoff</div>
+                <input id="synth-cutoff-${pid}" type="range" min="300" max="8000" value="2500" style="width:100%;" />
+              </div>
+              <div>
+                <div style="color:#71717a;margin-bottom:2px;">Attack Speed</div>
+                <input id="synth-attack-${pid}" type="range" min="1" max="100" value="2" style="width:100%;" />
+              </div>
+              <div>
+                <div style="color:#71717a;margin-bottom:2px;">Release Time</div>
+                <input id="synth-release-${pid}" type="range" min="5" max="150" value="40" style="width:100%;" />
+              </div>
+              <div>
+                <div style="color:#71717a;margin-bottom:2px;">Wave Shape</div>
+                <select id="synth-wave-type-${pid}" style="width:100%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);color:white;padding:2px;border-radius:4px;font-size:10px;outline:none;">
+                  <option value="sine">Sine (Pure)</option>
+                  <option value="triangle">Triangle (Warm)</option>
+                  <option value="sawtooth">Saw (Aggressive)</option>
+                  <option value="square">Square (Chiptune)</option>
+                </select>
+              </div>
+            </div>
+          </div>
         </div>
-        <p id="synth-hint-${pid}" style="color:#888;font-size:12px;margin-top:20px;">${t('synth_hint', 'Use your mouse to click the keys and play music.')}</p>
+
+        <!-- 2-Octave Keybed -->
+        <div class="mac-synth-keybed" id="synth-keybed-${pid}">
+          <!-- Keys generated via JS -->
+        </div>
+
+        <!-- Footer Keymap Guide -->
+        <div style="height:26px;background:#111215;border-top:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between;padding:0 16px;font-size:11px;color:#71717a;">
+          <span>Keyboard: <b>A S D F G H J K L ;</b> (White Keys) &nbsp;|&nbsp; <b>W E T Y U O P</b> (Black Keys)</span>
+          <span>Polyphonic Engine Active</span>
+        </div>
       </div>
     `, 'synth');
 
-    const lblWave = win.querySelector(`#synth-lbl-wave-${pid}`);
-    const lblVol = win.querySelector(`#synth-lbl-vol-${pid}`);
-    const waveSelect = win.querySelector(`#synth-wave-${pid}`);
-    const volSelect = win.querySelector(`#synth-vol-${pid}`);
-    const hintEl = win.querySelector(`#synth-hint-${pid}`);
+    win.style.width = '740px';
+    win.style.height = '420px';
 
-    win._onLanguageChange = () => {
-      if (lblWave) lblWave.innerText = `${t('synth_waveform', 'Waveform')}: `;
-      if (lblVol) lblVol.innerText = `${t('synth_volume', 'Master Volume')}: `;
-      if (hintEl) hintEl.innerText = t('synth_hint', 'Use your mouse to click the keys and play music.');
-      if (waveSelect && waveSelect.options.length === 4) {
-        waveSelect.options[0].text = t('synth_sine', 'Sine (Smooth)');
-        waveSelect.options[1].text = t('synth_square', 'Square (8-bit)');
-        waveSelect.options[2].text = t('synth_sawtooth', 'Sawtooth (Harsh)');
-        waveSelect.options[3].text = t('synth_triangle', 'Triangle (Soft)');
-      }
-    };
+    const presetSelect = win.querySelector(`#synth-preset-${pid}`);
+    const octDownBtn = win.querySelector(`#synth-oct-down-${pid}`);
+    const octUpBtn = win.querySelector(`#synth-oct-up-${pid}`);
+    const octVal = win.querySelector(`#synth-oct-val-${pid}`);
+    const volInput = win.querySelector(`#synth-vol-${pid}`);
+    const scopeCanvas = win.querySelector(`#synth-scope-${pid}`);
+    const scopeCtx = scopeCanvas.getContext('2d');
+    const waveBadge = win.querySelector(`#synth-wave-badge-${pid}`);
+    const cutoffInput = win.querySelector(`#synth-cutoff-${pid}`);
+    const attackInput = win.querySelector(`#synth-attack-${pid}`);
+    const releaseInput = win.querySelector(`#synth-release-${pid}`);
+    const waveTypeSelect = win.querySelector(`#synth-wave-type-${pid}`);
+    const keybedEl = win.querySelector(`#synth-keybed-${pid}`);
 
+    // Web Audio Context & Polyphony Engine
     let audioCtx = null;
-    let currentOsc = null;
-    const keys = win.querySelectorAll('.synth-key');
+    let analyser = null;
+    const activeVoices = {}; // note -> { osc, gain, filter }
 
-    function playNote(freq) {
+    function getAudioCtx() {
       if (!audioCtx) {
-         const AudioContext = window.AudioContext || window.webkitAudioContext;
-         if (!AudioContext) return;
-         audioCtx = new AudioContext();
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioCtx.createAnalyser();
+        analyser.fftSize = 512;
+        analyser.connect(audioCtx.destination);
       }
-      
-      if (currentOsc) {
-         currentOsc.stop();
-         currentOsc.disconnect();
-      }
-
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-
-      osc.type = waveSelect.value;
-      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-
-      const volume = parseInt(volSelect.value) / 100;
-      gain.gain.setValueAtTime(volume, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.5); // fade out
-
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-
-      osc.start();
-      osc.stop(audioCtx.currentTime + 1.5);
-      
-      currentOsc = osc;
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      return audioCtx;
     }
 
-    keys.forEach(k => {
-       k.addEventListener('mousedown', () => {
-          k.style.background = k.classList.contains('black-key') ? '#444' : '#eee';
-          playNote(parseFloat(k.dataset.note));
-       });
-       k.addEventListener('mouseup', () => {
-          k.style.background = k.classList.contains('black-key') ? 'black' : 'white';
-       });
-       k.addEventListener('mouseleave', () => {
-          k.style.background = k.classList.contains('black-key') ? 'black' : 'white';
-       });
+    // Oscilloscope render loop
+    let animScopeId = null;
+    function renderScope() {
+      if (!windows.has(pid)) return;
+      animScopeId = requestAnimationFrame(renderScope);
+
+      scopeCtx.clearRect(0, 0, scopeCanvas.width, scopeCanvas.height);
+      scopeCtx.fillStyle = '#090a0d';
+      scopeCtx.fillRect(0, 0, scopeCanvas.width, scopeCanvas.height);
+
+      // Grid lines
+      scopeCtx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
+      scopeCtx.lineWidth = 1;
+      scopeCtx.beginPath();
+      scopeCtx.moveTo(0, scopeCanvas.height / 2);
+      scopeCtx.lineTo(scopeCanvas.width, scopeCanvas.height / 2);
+      scopeCtx.stroke();
+
+      if (!analyser) return;
+      const bufferLength = analyser.frequencyBinCount;
+      const dataArray = new Uint8Array(bufferLength);
+      analyser.getByteTimeDomainData(dataArray);
+
+      scopeCtx.lineWidth = 2;
+      scopeCtx.strokeStyle = '#00f2fe';
+      scopeCtx.shadowColor = '#00f2fe';
+      scopeCtx.shadowBlur = 8;
+      scopeCtx.beginPath();
+
+      const sliceWidth = scopeCanvas.width * 1.0 / bufferLength;
+      let x = 0;
+      for (let i = 0; i < bufferLength; i++) {
+        const v = dataArray[i] / 128.0;
+        const y = v * scopeCanvas.height / 2;
+        if (i === 0) scopeCtx.moveTo(x, y);
+        else scopeCtx.lineTo(x, y);
+        x += sliceWidth;
+      }
+      scopeCtx.stroke();
+      scopeCtx.shadowBlur = 0;
+    }
+    renderScope();
+
+    // Note frequencies table (C3 to B4)
+    const baseScale = [
+      { note: 'C3', freq: 130.81, isBlack: false, key: 'Z' },
+      { note: 'C#3', freq: 138.59, isBlack: true, key: 'S' },
+      { note: 'D3', freq: 146.83, isBlack: false, key: 'X' },
+      { note: 'D#3', freq: 155.56, isBlack: true, key: 'D' },
+      { note: 'E3', freq: 164.81, isBlack: false, key: 'C' },
+      { note: 'F3', freq: 174.61, isBlack: false, key: 'V' },
+      { note: 'F#3', freq: 185.00, isBlack: true, key: 'G' },
+      { note: 'G3', freq: 196.00, isBlack: false, key: 'B' },
+      { note: 'G#3', freq: 207.65, isBlack: true, key: 'H' },
+      { note: 'A3', freq: 220.00, isBlack: false, key: 'N' },
+      { note: 'A#3', freq: 233.08, isBlack: true, key: 'J' },
+      { note: 'B3', freq: 246.94, isBlack: false, key: 'M' },
+
+      { note: 'C4', freq: 261.63, isBlack: false, key: 'A' },
+      { note: 'C#4', freq: 277.18, isBlack: true, key: 'W' },
+      { note: 'D4', freq: 293.66, isBlack: false, key: 'S' },
+      { note: 'D#4', freq: 311.13, isBlack: true, key: 'E' },
+      { note: 'E4', freq: 329.63, isBlack: false, key: 'D' },
+      { note: 'F4', freq: 349.23, isBlack: false, key: 'F' },
+      { note: 'F#4', freq: 369.99, isBlack: true, key: 'T' },
+      { note: 'G4', freq: 392.00, isBlack: false, key: 'G' },
+      { note: 'G#4', freq: 415.30, isBlack: true, key: 'Y' },
+      { note: 'A4', freq: 440.00, isBlack: false, key: 'H' },
+      { note: 'A#4', freq: 466.16, isBlack: true, key: 'U' },
+      { note: 'B4', freq: 493.88, isBlack: false, key: 'J' },
+      { note: 'C5', freq: 523.25, isBlack: false, key: 'K' }
+    ];
+
+    // Build Keybed DOM
+    let whiteIndex = 0;
+    const whiteKeyWidth = 44;
+    keybedEl.innerHTML = '';
+    const keyElements = {};
+
+    baseScale.forEach((n) => {
+      const keyEl = document.createElement('div');
+      keyEl.dataset.note = n.note;
+      keyEl.dataset.baseFreq = n.freq;
+
+      if (!n.isBlack) {
+        keyEl.className = 'mac-white-key';
+        keyEl.innerHTML = `<span>${n.note}</span>`;
+        keyEl.style.left = `${whiteIndex * whiteKeyWidth}px`;
+        whiteIndex++;
+      } else {
+        keyEl.className = 'mac-black-key';
+        keyEl.style.left = `${(whiteIndex - 1) * whiteKeyWidth + 28}px`;
+      }
+
+      keybedEl.appendChild(keyEl);
+      keyElements[n.note] = keyEl;
+
+      // Mouse triggers
+      keyEl.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        noteOn(n.note);
+      });
+      keyEl.addEventListener('mouseup', () => noteOff(n.note));
+      keyEl.addEventListener('mouseleave', () => noteOff(n.note));
     });
+
+    function noteOn(noteName) {
+      if (activeVoices[noteName]) return; // already playing
+      const ctx = getAudioCtx();
+      const nData = baseScale.find(x => x.note === noteName);
+      if (!nData) return;
+
+      const multiplier = Math.pow(2, octaveOffset);
+      const freq = nData.freq * multiplier;
+
+      const osc = ctx.createOscillator();
+      const filter = ctx.createBiquadFilter();
+      const gain = ctx.createGain();
+
+      osc.type = currentWave;
+      osc.frequency.setValueAtTime(freq, ctx.currentTime);
+
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(filterCutoff, ctx.currentTime);
+
+      const targetVol = isMuted ? 0 : masterVolume;
+      gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(targetVol, ctx.currentTime + attackTime);
+
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(analyser);
+
+      osc.start();
+
+      activeVoices[noteName] = { osc, gain, filter };
+
+      // Highlight key
+      if (keyElements[noteName]) {
+        keyElements[noteName].classList.add('active');
+      }
+    }
+
+    function noteOff(noteName) {
+      const voice = activeVoices[noteName];
+      if (!voice) return;
+      const ctx = getAudioCtx();
+
+      voice.gain.gain.cancelScheduledValues(ctx.currentTime);
+      voice.gain.gain.setValueAtTime(voice.gain.gain.value, ctx.currentTime);
+      voice.gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + releaseTime);
+
+      setTimeout(() => {
+        try {
+          voice.osc.stop();
+          voice.osc.disconnect();
+          voice.gain.disconnect();
+        } catch (e) {}
+      }, releaseTime * 1000 + 50);
+
+      delete activeVoices[noteName];
+
+      if (keyElements[noteName]) {
+        keyElements[noteName].classList.remove('active');
+      }
+    }
+
+    // Keyboard bindings
+    const keyMap = {
+      'a': 'C4', 'w': 'C#4', 's': 'D4', 'e': 'D#4', 'd': 'E4', 'f': 'F4',
+      't': 'F#4', 'g': 'G4', 'y': 'G#4', 'h': 'A4', 'u': 'A#4', 'j': 'B4', 'k': 'C5'
+    };
+
+    win.setAttribute('tabindex', '0');
+    win.addEventListener('keydown', (e) => {
+      const letter = e.key.toLowerCase();
+      if (keyMap[letter]) {
+        noteOn(keyMap[letter]);
+      }
+    });
+
+    win.addEventListener('keyup', (e) => {
+      const letter = e.key.toLowerCase();
+      if (keyMap[letter]) {
+        noteOff(keyMap[letter]);
+      }
+    });
+
+    // Preset handler
+    function applyPreset(preset) {
+      activePreset = preset;
+      if (preset === 'piano') {
+        currentWave = 'sine';
+        attackTime = 0.01;
+        releaseTime = 0.5;
+        filterCutoff = 3500;
+      } else if (preset === 'rhodes') {
+        currentWave = 'triangle';
+        attackTime = 0.02;
+        releaseTime = 0.8;
+        filterCutoff = 2200;
+      } else if (preset === 'lead') {
+        currentWave = 'sawtooth';
+        attackTime = 0.03;
+        releaseTime = 0.3;
+        filterCutoff = 4800;
+      } else if (preset === 'moog') {
+        currentWave = 'square';
+        attackTime = 0.01;
+        releaseTime = 0.2;
+        filterCutoff = 1200;
+      } else if (preset === 'pad') {
+        currentWave = 'triangle';
+        attackTime = 0.4;
+        releaseTime = 1.2;
+        filterCutoff = 2000;
+      } else if (preset === 'chiptune') {
+        currentWave = 'square';
+        attackTime = 0.005;
+        releaseTime = 0.1;
+        filterCutoff = 7500;
+      }
+
+      waveTypeSelect.value = currentWave;
+      waveBadge.innerText = currentWave.toUpperCase();
+      cutoffInput.value = filterCutoff;
+      attackInput.value = Math.round(attackTime * 100);
+      releaseInput.value = Math.round(releaseTime * 100);
+    }
+
+    presetSelect.addEventListener('change', () => applyPreset(presetSelect.value));
+
+    waveTypeSelect.addEventListener('change', () => {
+      currentWave = waveTypeSelect.value;
+      waveBadge.innerText = currentWave.toUpperCase();
+    });
+
+    cutoffInput.addEventListener('input', () => {
+      filterCutoff = parseInt(cutoffInput.value, 10);
+    });
+
+    attackInput.addEventListener('input', () => {
+      attackTime = parseInt(attackInput.value, 10) / 100;
+    });
+
+    releaseInput.addEventListener('input', () => {
+      releaseTime = parseInt(releaseInput.value, 10) / 100;
+    });
+
+    volInput.addEventListener('input', () => {
+      masterVolume = parseInt(volInput.value, 10) / 100;
+    });
+
+    octDownBtn.addEventListener('click', () => {
+      if (octaveOffset > -2) {
+        octaveOffset--;
+        octVal.innerText = `C${4 + octaveOffset}`;
+      }
+    });
+
+    octUpBtn.addEventListener('click', () => {
+      if (octaveOffset < 2) {
+        octaveOffset++;
+        octVal.innerText = `C${4 + octaveOffset}`;
+      }
+    });
+
+    applyPreset('piano');
   }
 }
 
-// Universe Sandbox (Particle Physics Engine)
+// Apple Astronomy & Cosmic Physics Simulator (macOS Sequoia Design)
 async function launchUniverse() {
   const res = await window.aliceOS.pm.spawn('universe');
   if (res.success) {
     const pid = res.data.pid;
-    const win = createWindow(pid, t('app_universe', 'Universe Sandbox'), `
-      <div style="background:black;height:100%;width:100%;position:relative;overflow:hidden;">
-        <canvas id="universe-canvas-${pid}" style="display:block;width:100%;height:100%;cursor:crosshair;"></canvas>
-        <div style="position:absolute;top:10px;left:10px;color:rgba(255,255,255,0.7);font-family:monospace;pointer-events:none;">
-          <div id="universe-fps-${pid}">FPS: 0</div>
-          <div id="universe-particles-${pid}">${t('universe_particles', 'Particles: 3000')}</div>
-          <div id="universe-hint-${pid}" style="font-size:10px;margin-top:5px;color:#aaa;">${t('universe_hint', 'Move mouse to attract.<br>Click to repel.')}</div>
+    let currentPreset = 'galaxy';
+    let currentPalette = 'cyan';
+    let numParticles = 3000;
+    let timeScale = 1.0;
+    let gravityForce = 1.0;
+
+    const win = createWindow(pid, t('app_universe', 'Astronomy — Cosmic Physics'), `
+      <div class="mac-universe-app">
+        <!-- Top Toolbar -->
+        <div class="mac-arcade-header" style="height:46px;background:rgba(18,18,24,0.9);border-bottom:1px solid rgba(255,255,255,0.08);">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:26px;height:26px;background:linear-gradient(135deg,#5856d6,#007aff);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:15px;box-shadow:0 2px 6px rgba(88,86,214,0.4);">🌌</div>
+            <div>
+              <div style="font-size:12px;font-weight:700;letter-spacing:-0.2px;">Apple Astronomy</div>
+              <div style="font-size:9px;color:#a1a1aa;">N-Body Gravitational Physics • 60 FPS</div>
+            </div>
+          </div>
+
+          <!-- Presets -->
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="font-size:11px;color:#a1a1aa;">Preset:</span>
+            <select id="uni-preset-${pid}" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);color:white;padding:3px 8px;border-radius:6px;font-size:11px;outline:none;cursor:pointer;">
+              <option value="galaxy" selected>Milky Way Spiral</option>
+              <option value="solar">Solar Orbit & Belts</option>
+              <option value="blackhole">Black Hole Accretion</option>
+              <option value="supernova">Supernova Shockwave</option>
+              <option value="chaos">Cosmic Nebula Chaos</option>
+            </select>
+          </div>
+
+          <!-- Palette & Particle Count -->
+          <div style="display:flex;align-items:center;gap:8px;">
+            <select id="uni-palette-${pid}" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);color:white;padding:3px 8px;border-radius:6px;font-size:11px;outline:none;cursor:pointer;">
+              <option value="cyan" selected>Deep Space Cyan</option>
+              <option value="violet">Nebula Violet</option>
+              <option value="solar">Stellar Gold</option>
+              <option value="emerald">Aurora Emerald</option>
+            </select>
+
+            <select id="uni-count-${pid}" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);color:white;padding:3px 8px;border-radius:6px;font-size:11px;outline:none;cursor:pointer;">
+              <option value="1500">1,500 Stars</option>
+              <option value="3000" selected>3,000 Stars</option>
+              <option value="5000">5,000 Stars</option>
+            </select>
+
+            <button id="uni-reset-${pid}" class="mac-arcade-btn" style="padding:3px 8px;font-size:11px;">Reset</button>
+          </div>
+        </div>
+
+        <!-- Canvas Stage -->
+        <div style="flex:1;position:relative;background:#000003;overflow:hidden;" id="uni-container-${pid}">
+          <canvas id="uni-canvas-${pid}" style="display:block;width:100%;height:100%;cursor:crosshair;"></canvas>
+
+          <!-- Telemetry HUD Badge -->
+          <div style="position:absolute;top:12px;left:14px;background:rgba(18,18,22,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:8px 12px;font-size:11px;color:#a1a1aa;line-height:1.5;pointer-events:none;">
+            <div style="display:flex;align-items:center;gap:6px;color:#fff;font-weight:600;">
+              <div style="width:6px;height:6px;border-radius:50%;background:#34c759;box-shadow:0 0 6px #34c759;"></div>
+              <span id="uni-fps-${pid}">60 FPS</span>
+            </div>
+            <div id="uni-stars-lbl-${pid}">Active Bodies: 3,000</div>
+            <div style="color:#71717a;font-size:10px;margin-top:2px;">Left Click: Gravitational Sink &nbsp;|&nbsp; Right Click: Pulse Repel</div>
+          </div>
         </div>
       </div>
     `, 'universe');
 
-    const canvas = win.querySelector(`#universe-canvas-${pid}`);
-    const ctx = canvas.getContext('2d');
-    const fpsEl = win.querySelector(`#universe-fps-${pid}`);
-    const particlesEl = win.querySelector(`#universe-particles-${pid}`);
-    const universeHintEl = win.querySelector(`#universe-hint-${pid}`);
+    win.style.width = '700px';
+    win.style.height = '520px';
 
-    win._onLanguageChange = () => {
-      if (particlesEl) particlesEl.innerText = t('universe_particles', 'Particles: 3000');
-      if (universeHintEl) universeHintEl.innerHTML = t('universe_hint', 'Move mouse to attract.<br>Click to repel.');
-    };
-    
-    let width, height;
+    const canvas = win.querySelector(`#uni-canvas-${pid}`);
+    const ctx = canvas.getContext('2d');
+    const presetSelect = win.querySelector(`#uni-preset-${pid}`);
+    const paletteSelect = win.querySelector(`#uni-palette-${pid}`);
+    const countSelect = win.querySelector(`#uni-count-${pid}`);
+    const resetBtn = win.querySelector(`#uni-reset-${pid}`);
+    const fpsEl = win.querySelector(`#uni-fps-${pid}`);
+    const starsLbl = win.querySelector(`#uni-stars-lbl-${pid}`);
+
+    let width = canvas.width = 700;
+    let height = canvas.height = 470;
+
     function resize() {
-       width = canvas.width = canvas.clientWidth;
-       height = canvas.height = canvas.clientHeight;
+      if (!windows.has(pid)) return;
+      width = canvas.width = canvas.clientWidth;
+      height = canvas.height = canvas.clientHeight;
     }
-    resize();
-    
-    // Listen to resize of the window
-    const observer = new ResizeObserver(() => resize());
+    const observer = new ResizeObserver(resize);
     observer.observe(canvas.parentElement);
 
-    const particles = [];
-    const numParticles = 3000;
-    
-    for (let i = 0; i < numParticles; i++) {
-       particles.push({
-          x: Math.random() * 2000,
-          y: Math.random() * 2000,
-          vx: (Math.random() - 0.5) * 2,
-          vy: (Math.random() - 0.5) * 2,
-          radius: Math.random() * 1.5 + 0.5,
-          color: `hsl(${Math.random() * 60 + 180}, 100%, 70%)` // blues and cyans
-       });
+    let particles = [];
+    let mouse = { x: width / 2, y: height / 2, down: false, rightDown: false };
+
+    function getHue(base) {
+      if (base === 'cyan') return Math.random() * 60 + 175; // 175-235 (cyan-blue)
+      if (base === 'violet') return Math.random() * 70 + 260; // 260-330 (purple-pink)
+      if (base === 'solar') return Math.random() * 50 + 20; // 20-70 (orange-yellow)
+      if (base === 'emerald') return Math.random() * 60 + 120; // 120-180 (green-teal)
+      return 200;
     }
 
-    let mouse = { x: width/2, y: height/2, down: false };
+    function initUniverse(preset = currentPreset) {
+      particles = [];
+      const cx = width / 2;
+      const cy = height / 2;
+
+      for (let i = 0; i < numParticles; i++) {
+        let x, y, vx, vy, radius = Math.random() * 1.5 + 0.5;
+
+        if (preset === 'galaxy') {
+          // Logarithmic Spiral Galaxy
+          const arms = 2;
+          const arm = Math.floor(Math.random() * arms);
+          const dist = Math.pow(Math.random(), 2) * Math.min(cx, cy) * 0.9 + 10;
+          const angle = dist * 0.03 + (arm * (Math.PI * 2 / arms)) + (Math.random() - 0.5) * 0.4;
+          x = cx + Math.cos(angle) * dist;
+          y = cy + Math.sin(angle) * dist;
+          const orbitalSpeed = Math.sqrt(dist) * 0.16;
+          vx = -Math.sin(angle) * orbitalSpeed;
+          vy = Math.cos(angle) * orbitalSpeed;
+        } else if (preset === 'solar') {
+          // Orbital Disc around central sun
+          const dist = Math.random() * Math.min(cx, cy) * 0.85 + 20;
+          const angle = Math.random() * Math.PI * 2;
+          x = cx + Math.cos(angle) * dist;
+          y = cy + Math.sin(angle) * dist;
+          const speed = Math.sqrt(1200 / dist) * (Math.random() * 0.2 + 0.9);
+          vx = -Math.sin(angle) * speed;
+          vy = Math.cos(angle) * speed;
+        } else if (preset === 'blackhole') {
+          // Fast rotating accretion disk
+          const dist = Math.random() * 160 + 15;
+          const angle = Math.random() * Math.PI * 2;
+          x = cx + Math.cos(angle) * dist;
+          y = cy + Math.sin(angle) * dist;
+          const speed = 2.4 / Math.sqrt(dist * 0.05);
+          vx = -Math.sin(angle) * speed;
+          vy = Math.cos(angle) * speed;
+        } else if (preset === 'supernova') {
+          // Outward expanding burst
+          x = cx + (Math.random() - 0.5) * 10;
+          y = cy + (Math.random() - 0.5) * 10;
+          const angle = Math.random() * Math.PI * 2;
+          const speed = Math.random() * 4.5 + 0.5;
+          vx = Math.cos(angle) * speed;
+          vy = Math.sin(angle) * speed;
+        } else {
+          // Chaos
+          x = Math.random() * width;
+          y = Math.random() * height;
+          vx = (Math.random() - 0.5) * 1.5;
+          vy = (Math.random() - 0.5) * 1.5;
+        }
+
+        const hue = getHue(currentPalette);
+        particles.push({
+          x, y, vx, vy, radius,
+          color: `hsl(${hue}, 95%, ${Math.random() * 30 + 65}%)`
+        });
+      }
+
+      starsLbl.innerText = `Active Bodies: ${numParticles.toLocaleString()}`;
+    }
 
     canvas.addEventListener('mousemove', (e) => {
-       const rect = canvas.getBoundingClientRect();
-       mouse.x = e.clientX - rect.left;
-       mouse.y = e.clientY - rect.top;
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
     });
-    
-    canvas.addEventListener('mousedown', () => mouse.down = true);
-    canvas.addEventListener('mouseup', () => mouse.down = false);
-    canvas.addEventListener('mouseleave', () => mouse.down = false);
+
+    canvas.addEventListener('mousedown', (e) => {
+      if (e.button === 2) {
+        mouse.rightDown = true;
+      } else {
+        mouse.down = true;
+      }
+    });
+
+    canvas.addEventListener('contextmenu', (e) => e.preventDefault());
+    window.addEventListener('mouseup', () => {
+      mouse.down = false;
+      mouse.rightDown = false;
+    });
 
     let lastTime = performance.now();
-    let frames = 0;
+    let frameCount = 0;
 
-    function update() {
-       if (!windows.has(pid)) {
-          observer.disconnect();
-          return;
-       }
-       
-       const now = performance.now();
-       frames++;
-       if (now - lastTime >= 1000) {
-          fpsEl.innerText = `FPS: ${frames}`;
-          frames = 0;
-          lastTime = now;
-       }
+    function render() {
+      if (!windows.has(pid)) {
+        observer.disconnect();
+        return;
+      }
 
-       // Semi-transparent black to create trails
-       ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
-       ctx.fillRect(0, 0, width, height);
+      requestAnimationFrame(render);
+      frameCount++;
+      const now = performance.now();
+      if (now - lastTime >= 1000) {
+        fpsEl.innerText = `${frameCount} FPS`;
+        frameCount = 0;
+        lastTime = now;
+      }
 
-       const gravityStrength = mouse.down ? -1.5 : 0.2; // repulse on click
+      // Smooth cosmic trailing effect
+      ctx.fillStyle = 'rgba(0, 0, 3, 0.18)';
+      ctx.fillRect(0, 0, width, height);
 
-       for (let i = 0; i < numParticles; i++) {
-          const p = particles[i];
-          
-          const dx = mouse.x - p.x;
-          const dy = mouse.y - p.y;
-          const distSq = dx*dx + dy*dy;
-          const dist = Math.sqrt(distSq) + 1; // avoid division by zero
-          
-          const force = (1000 * gravityStrength) / distSq;
-          const ax = force * (dx / dist);
-          const ay = force * (dy / dist);
+      const targetX = mouse.down || mouse.rightDown ? mouse.x : width / 2;
+      const targetY = mouse.down || mouse.rightDown ? mouse.y : height / 2;
+      const forceMultiplier = mouse.rightDown ? -3.0 : (mouse.down ? 3.0 : 0.6);
 
-          p.vx += ax;
-          p.vy += ay;
-          
-          // Friction / drag
-          p.vx *= 0.98;
-          p.vy *= 0.98;
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
 
-          p.x += p.vx;
-          p.y += p.vy;
+        const dx = targetX - p.x;
+        const dy = targetY - p.y;
+        const distSq = dx * dx + dy * dy;
+        const dist = Math.sqrt(distSq) + 8;
 
-          // Wrap around edges softly
-          if (p.x < 0) p.x = width;
-          if (p.x > width) p.x = 0;
-          if (p.y < 0) p.y = height;
-          if (p.y > height) p.y = 0;
+        const force = (800 * forceMultiplier * gravityForce) / distSq;
+        const ax = force * (dx / dist);
+        const ay = force * (dy / dist);
 
-          // Draw
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-          ctx.fillStyle = p.color;
-          ctx.fill();
-       }
+        p.vx = (p.vx + ax * timeScale) * 0.985;
+        p.vy = (p.vy + ay * timeScale) * 0.985;
 
-       requestAnimationFrame(update);
+        p.x += p.vx * timeScale;
+        p.y += p.vy * timeScale;
+
+        // Wrap around viewport softly
+        if (p.x < 0) p.x = width;
+        else if (p.x > width) p.x = 0;
+        if (p.y < 0) p.y = height;
+        else if (p.y > height) p.y = 0;
+
+        // Draw particle
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+      }
+
+      // Draw center gravitational event horizon indicator when interacting
+      if (mouse.down || mouse.rightDown) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(targetX, targetY, mouse.down ? 16 : 30, 0, Math.PI * 2);
+        ctx.strokeStyle = mouse.down ? 'rgba(0, 242, 254, 0.6)' : 'rgba(255, 45, 85, 0.6)';
+        ctx.lineWidth = 2;
+        ctx.shadowColor = mouse.down ? '#00f2fe' : '#ff2d55';
+        ctx.shadowBlur = 15;
+        ctx.stroke();
+        ctx.restore();
+      }
     }
-    
-    // Init particles to screen center
-    particles.forEach(p => {
-       p.x = width/2 + (Math.random() - 0.5) * width;
-       p.y = height/2 + (Math.random() - 0.5) * height;
+
+    presetSelect.addEventListener('change', () => {
+      currentPreset = presetSelect.value;
+      initUniverse(currentPreset);
     });
 
-    update();
+    paletteSelect.addEventListener('change', () => {
+      currentPalette = paletteSelect.value;
+      initUniverse(currentPreset);
+    });
+
+    countSelect.addEventListener('change', () => {
+      numParticles = parseInt(countSelect.value, 10);
+      initUniverse(currentPreset);
+    });
+
+    resetBtn.addEventListener('click', () => {
+      initUniverse(currentPreset);
+    });
+
+    setTimeout(() => {
+      resize();
+      initUniverse('galaxy');
+      render();
+    }, 50);
   }
 }
 
