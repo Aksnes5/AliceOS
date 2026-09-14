@@ -243,6 +243,19 @@ const i18nDict = {
     spotlight_copied: 'Copied to clipboard!',
     spotlight_search_web: 'Search web for "%s"',
     spotlight_web_search: 'Web Search',
+    spotlight_top_hit: 'Top Hit',
+    spotlight_category_apps: 'Applications',
+    spotlight_category_calc: 'Calculator & Conversions',
+    spotlight_category_settings: 'System Settings & Controls',
+    spotlight_category_files: 'Documents & Files',
+    spotlight_category_web: 'Web Suggestions',
+    spotlight_open_app: 'Open',
+    spotlight_copy_result: 'Copy Result',
+    spotlight_run: 'Run',
+    wifi_connected: 'Connected to AliceOS-5G',
+    wifi_known_networks: 'Known Networks',
+    wifi_other_networks: 'Other Networks',
+    wifi_settings: 'Network Settings...',
 
     // Window Tile Popover
     tile_title: 'TILE & ARRANGE',
@@ -1035,6 +1048,19 @@ const i18nDict = {
     spotlight_copied: '已复制到剪贴板！',
     spotlight_search_web: '在网页中搜索“%s”',
     spotlight_web_search: '网页搜索',
+    spotlight_top_hit: '最佳匹配',
+    spotlight_category_apps: '应用程序',
+    spotlight_category_calc: '计算与换算',
+    spotlight_category_settings: '系统设置与控制',
+    spotlight_category_files: '文稿与文件',
+    spotlight_category_web: '网页搜索建议',
+    spotlight_open_app: '打开',
+    spotlight_copy_result: '拷贝结果',
+    spotlight_run: '运行',
+    wifi_connected: '已连接到 AliceOS-5G',
+    wifi_known_networks: '已知网络',
+    wifi_other_networks: '其他网络',
+    wifi_settings: '网络设置...',
 
     // Sequoia 窗口平铺排布
     tile_title: '排布与分屏',
@@ -1827,6 +1853,19 @@ const i18nDict = {
     spotlight_copied: 'クリップボードにコピーしました！',
     spotlight_search_web: 'Webで「%s」を検索',
     spotlight_web_search: 'Web 検索',
+    spotlight_top_hit: 'トップヒット',
+    spotlight_category_apps: 'アプリケーション',
+    spotlight_category_calc: '計算と換算',
+    spotlight_category_settings: 'システム設定とコントロール',
+    spotlight_category_files: '書類とファイル',
+    spotlight_category_web: 'Web検索の候補',
+    spotlight_open_app: '開く',
+    spotlight_copy_result: '結果をコピー',
+    spotlight_run: '実行',
+    wifi_connected: 'AliceOS-5G に接続済み',
+    wifi_known_networks: '既知のネットワーク',
+    wifi_other_networks: 'ほかのネットワーク',
+    wifi_settings: 'ネットワーク設定...',
 
     // Sequoia ウインドウタイル整列
     tile_title: 'タイルと整列',
@@ -10067,11 +10106,18 @@ function loginUser() {
       }, 60);
     }
     if (dock) {
-      dock.style.transform = 'translateX(-50%) translateY(30px)';
+      dock.style.transform = 'translateY(36px)';
+      dock.style.opacity = '0';
       setTimeout(() => {
-        dock.style.transition = 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-        dock.style.transform = 'translateX(-50%) translateY(0)';
-      }, 100);
+        dock.style.transition = 'transform 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease';
+        dock.style.transform = 'translateY(0)';
+        dock.style.opacity = '1';
+        setTimeout(() => {
+          dock.style.transition = '';
+          dock.style.transform = '';
+          dock.style.opacity = '';
+        }, 550);
+      }, 80);
     }
     if (widgets) {
       widgets.style.opacity = '0';
@@ -13872,32 +13918,166 @@ function startScreensaver() {
   lockScreen();
 }
 
-// Spotlight Search Logic
+// ====================================================
+// Phase 75: macOS Sequoia Dual-Pane Spotlight & Wi-Fi Engine
+// ====================================================
 const spotlight = document.getElementById('spotlight');
+const spotlightBackdrop = document.getElementById('spotlight-backdrop');
 const spotlightInput = document.getElementById('spotlight-input');
 const spotlightResults = document.getElementById('spotlight-results');
+const spotlightPreview = document.getElementById('spotlight-preview');
+const spotlightClearBtn = document.getElementById('spotlight-clear-btn');
 
-function toggleSpotlight() {
-  if (spotlight.style.display === 'none' || !spotlight.style.display) {
-    spotlight.style.display = 'flex';
-    setTimeout(() => { spotlight.style.opacity = '1'; spotlightInput.focus(); }, 10);
-  } else {
-    spotlight.style.opacity = '0';
-    setTimeout(() => { spotlight.style.display = 'none'; spotlightInput.value = ''; spotlightResults.style.display = 'none'; }, 200);
+function openSpotlight() {
+  if (!spotlight) return;
+  closeAllTopMenus();
+  if (typeof closeWifiPopover === 'function') closeWifiPopover();
+  
+  spotlight.style.display = 'flex';
+  if (spotlightBackdrop) spotlightBackdrop.style.display = 'block';
+  
+  void spotlight.offsetWidth;
+  spotlight.classList.add('open');
+  if (spotlightBackdrop) spotlightBackdrop.classList.add('open');
+  
+  if (typeof AppleAudioEngine !== 'undefined' && AppleAudioEngine.playHapticClick) {
+    AppleAudioEngine.playHapticClick('medium');
+  }
+  
+  if (spotlightInput) {
+    spotlightInput.focus();
+    if (!spotlightInput.value.trim()) {
+      if (typeof renderSpotlightSuggestions === 'function') renderSpotlightSuggestions();
+    }
   }
 }
 
+function closeSpotlight() {
+  if (!spotlight) return;
+  spotlight.classList.remove('open');
+  if (spotlightBackdrop) spotlightBackdrop.classList.remove('open');
+  
+  setTimeout(() => {
+    if (!spotlight.classList.contains('open')) {
+      spotlight.style.display = 'none';
+      if (spotlightBackdrop) spotlightBackdrop.style.display = 'none';
+      if (spotlightInput) spotlightInput.value = '';
+      if (spotlightClearBtn) spotlightClearBtn.style.display = 'none';
+      spotlight.classList.remove('has-results');
+    }
+  }, 220);
+}
+
+function toggleSpotlight() {
+  if (!spotlight) return;
+  if (spotlight.classList.contains('open') || spotlight.style.display === 'flex') {
+    closeSpotlight();
+  } else {
+    openSpotlight();
+  }
+}
+
+function clearSpotlightInput() {
+  if (!spotlightInput) return;
+  spotlightInput.value = '';
+  if (spotlightClearBtn) spotlightClearBtn.style.display = 'none';
+  if (typeof renderSpotlightSuggestions === 'function') renderSpotlightSuggestions();
+  spotlightInput.focus();
+}
+
+// macOS Wi-Fi Popover Engine
+function toggleWifiPopover() {
+  const pop = document.getElementById('wifi-popover');
+  if (!pop) return;
+  const wasOpen = pop.classList.contains('open');
+  closeAllTopMenus();
+  if (wasOpen) {
+    closeWifiPopover();
+  } else {
+    pop.style.display = 'flex';
+    void pop.offsetWidth;
+    pop.classList.add('open');
+  }
+}
+
+function closeWifiPopover() {
+  const pop = document.getElementById('wifi-popover');
+  if (!pop) return;
+  pop.classList.remove('open');
+  setTimeout(() => {
+    if (!pop.classList.contains('open')) pop.style.display = 'none';
+  }, 200);
+}
+
+function toggleWifiPower(enabled) {
+  const statusEl = document.getElementById('wifi-pop-status');
+  const dict = i18nDict[currentSystemLang] || i18nDict.zh;
+  if (enabled) {
+    if (statusEl) statusEl.innerText = dict.wifi_connected || '已连接到 AliceOS-5G';
+    showNotification(dict.cc_wifi || 'Wi-Fi', '无线局域网已开启，已连接至 AliceOS-5G (866 Mbps)');
+  } else {
+    if (statusEl) statusEl.innerText = '已关闭';
+    showNotification(dict.cc_wifi || 'Wi-Fi', '无线局域网已关闭');
+  }
+}
+
+function selectWifiNetwork(ssid) {
+  const dict = i18nDict[currentSystemLang] || i18nDict.zh;
+  const items = document.querySelectorAll('.wifi-network-item');
+  items.forEach(it => {
+    it.classList.remove('active');
+    const chk = it.querySelector('.wifi-check');
+    if (chk) chk.remove();
+  });
+  
+  const target = Array.from(items).find(it => it.innerText.includes(ssid));
+  if (target) {
+    target.classList.add('active');
+    const checkSpan = document.createElement('span');
+    checkSpan.className = 'wifi-check';
+    checkSpan.innerText = '✓';
+    target.appendChild(checkSpan);
+  }
+  
+  const statusEl = document.getElementById('wifi-pop-status');
+  if (statusEl) statusEl.innerText = `已连接到 ${ssid}`;
+  
+  showNotification(dict.cc_wifi || 'Wi-Fi', `正在接入无线网络：${ssid}... 已成功连接`);
+  if (typeof AppleAudioEngine !== 'undefined' && AppleAudioEngine.playHapticClick) {
+    AppleAudioEngine.playHapticClick('medium');
+  }
+}
+
+function openNetworkSettings() {
+  closeWifiPopover();
+  launchSettings();
+}
+
+window.toggleWifiPopover = toggleWifiPopover;
+window.closeWifiPopover = closeWifiPopover;
+window.toggleWifiPower = toggleWifiPower;
+window.selectWifiNetwork = selectWifiNetwork;
+window.openNetworkSettings = openNetworkSettings;
+window.openSpotlight = openSpotlight;
+window.closeSpotlight = closeSpotlight;
+window.toggleSpotlight = toggleSpotlight;
+window.clearSpotlightInput = clearSpotlightInput;
+
 // Global hotkey for Spotlight (Ctrl+Space or CMD+Space equivalent)
 document.addEventListener('keydown', async (e) => {
-  if (e.ctrlKey && e.code === 'Space') {
+  const isCmdOrCtrl = e.metaKey || e.ctrlKey;
+  if (isCmdOrCtrl && e.code === 'Space') {
+    e.preventDefault();
     toggleSpotlight();
+    return;
   }
-  if (e.code === 'Escape' && spotlight.style.display === 'flex') {
-    toggleSpotlight();
+  if (e.code === 'Escape' && spotlight && spotlight.classList.contains('open')) {
+    e.preventDefault();
+    closeSpotlight();
+    return;
   }
   
   // macOS Standard Window & App Hotkeys
-  const isCmdOrCtrl = e.metaKey || e.ctrlKey;
   if (isCmdOrCtrl && !e.shiftKey && !e.altKey) {
     if (e.code === 'KeyW' && !(document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')) {
       e.preventDefault();
@@ -14366,241 +14546,468 @@ function renderSwitcherHUD(hud) {
   }).join('');
 }
 
-let spotlightSelectedIndex = -1;
+let spotlightSelectedIndex = 0;
+let currentSpotlightItems = [];
 
-function updateSpotlightSelection() {
-  const items = spotlightResults.querySelectorAll('.spotlight-result-item');
-  items.forEach((item, idx) => {
-    const titleEl = item.querySelector('.spotlight-item-title');
-    const subEl = item.querySelector('.spotlight-item-sub');
-    if (idx === spotlightSelectedIndex) {
-      item.style.background = '#007aff';
-      item.style.borderRadius = '6px';
-      if (titleEl) titleEl.style.color = '#ffffff';
-      if (subEl) subEl.style.color = 'rgba(255, 255, 255, 0.85)';
-      item.scrollIntoView({ block: 'nearest' });
-    } else {
-      item.style.background = 'transparent';
-      if (titleEl) titleEl.style.color = '#333333';
-      if (subEl) subEl.style.color = '#888888';
-    }
-  });
+function getSpotlightDict() {
+  return i18nDict[currentSystemLang] || i18nDict.zh || i18nDict.en;
 }
 
-spotlightInput.addEventListener('keydown', (e) => {
-  const items = spotlightResults.querySelectorAll('.spotlight-result-item');
-  if (!items || items.length === 0) return;
-
-  if (e.key === 'ArrowDown') {
-    e.preventDefault();
-    spotlightSelectedIndex = (spotlightSelectedIndex + 1) % items.length;
-    updateSpotlightSelection();
-  } else if (e.key === 'ArrowUp') {
-    e.preventDefault();
-    spotlightSelectedIndex = (spotlightSelectedIndex - 1 + items.length) % items.length;
-    updateSpotlightSelection();
-  } else if (e.key === 'Enter') {
-    e.preventDefault();
-    if (spotlightSelectedIndex >= 0 && spotlightSelectedIndex < items.length) {
-      items[spotlightSelectedIndex].click();
-    } else if (items.length > 0) {
-      items[0].click();
-    }
-  }
-});
-
-spotlightInput.addEventListener('input', async () => {
-  const query = spotlightInput.value.trim().toLowerCase();
+function renderSpotlightItems(items) {
+  currentSpotlightItems = items || [];
+  if (!spotlightResults) return;
   spotlightResults.innerHTML = '';
-  spotlightSelectedIndex = -1;
   
-  if (!query) {
-    spotlightResults.style.display = 'none';
+  if (currentSpotlightItems.length === 0) {
+    const dict = getSpotlightDict();
+    spotlightResults.innerHTML = `<div style="padding:40px 20px;text-align:center;opacity:0.5;font-size:13px;">${dict.spotlight_no_res || '未找到结果'}</div>`;
+    if (spotlightPreview) spotlightPreview.innerHTML = '';
+    if (spotlight) spotlight.classList.add('has-results');
     return;
   }
   
-  spotlightResults.style.display = 'block';
-  let hasResults = false;
+  if (spotlight) spotlight.classList.add('has-results');
+  
+  // Group items by category
+  const categories = {};
+  currentSpotlightItems.forEach((it, idx) => {
+    it.flatIndex = idx;
+    const cat = it.category || 'other';
+    if (!categories[cat]) categories[cat] = [];
+    categories[cat].push(it);
+  });
+  
+  const dict = getSpotlightDict();
+  const categoryTitles = {
+    top_hit: dict.spotlight_top_hit || '最佳匹配',
+    app: dict.spotlight_category_apps || '应用程序',
+    calc: dict.spotlight_category_calc || '计算与换算',
+    setting: dict.spotlight_category_settings || '系统设置与控制',
+    file: dict.spotlight_category_files || '文稿与文件',
+    web: dict.spotlight_category_web || '网页搜索建议'
+  };
 
-  function addResult(icon, title, subtitle, action) {
-    hasResults = true;
-    const el = document.createElement('div');
-    el.className = 'spotlight-result-item';
-    el.style.padding = '10px 20px';
-    el.style.cursor = 'pointer';
-    el.style.display = 'flex';
-    el.style.alignItems = 'center';
-    el.style.gap = '15px';
-    el.style.borderBottom = '1px solid rgba(0,0,0,0.05)';
-    el.style.transition = 'background-color 0.12s ease';
-    el.innerHTML = `<div style="font-size:24px;">${icon}</div><div><div class="spotlight-item-title" style="font-weight:bold;color:#333;">${title}</div><div class="spotlight-item-sub" style="font-size:12px;color:#888;">${subtitle}</div></div>`;
-    el.addEventListener('click', () => { action(); toggleSpotlight(); });
-    el.addEventListener('mouseenter', () => {
-      const allItems = Array.from(spotlightResults.querySelectorAll('.spotlight-result-item'));
-      spotlightSelectedIndex = allItems.indexOf(el);
-      updateSpotlightSelection();
+  const catOrder = ['top_hit', 'app', 'calc', 'setting', 'file', 'web', 'other'];
+  catOrder.forEach(catKey => {
+    const catItems = categories[catKey];
+    if (!catItems || catItems.length === 0) return;
+
+    const header = document.createElement('div');
+    header.className = 'spotlight-category-header';
+    header.innerText = categoryTitles[catKey] || catKey.toUpperCase();
+    spotlightResults.appendChild(header);
+
+    catItems.forEach(item => {
+      const row = document.createElement('div');
+      row.className = 'spotlight-result-item';
+      row.dataset.index = item.flatIndex;
+
+      let badgeHtml = '';
+      if (item.badge) {
+        badgeHtml = `<span class="spotlight-item-badge">${item.badge}</span>`;
+      }
+
+      row.innerHTML = `
+        <div class="spotlight-item-icon">${item.iconHtml}</div>
+        <div class="spotlight-item-meta">
+          <div class="spotlight-item-title">${item.title}</div>
+          <div class="spotlight-item-sub">${item.subtitle || ''}</div>
+        </div>
+        ${badgeHtml}
+      `;
+
+      row.addEventListener('click', () => executeSpotlightItem(item));
+      row.addEventListener('mouseenter', () => {
+        spotlightSelectedIndex = item.flatIndex;
+        renderSpotlightSelection(false);
+      });
+
+      spotlightResults.appendChild(row);
     });
-    spotlightResults.appendChild(el);
+  });
+
+  if (spotlightSelectedIndex < 0 || spotlightSelectedIndex >= currentSpotlightItems.length) {
+    spotlightSelectedIndex = 0;
+  }
+  renderSpotlightSelection(false);
+}
+
+function renderSpotlightSelection(shouldScroll = true) {
+  if (!spotlightResults) return;
+  const rows = spotlightResults.querySelectorAll('.spotlight-result-item');
+  rows.forEach(r => {
+    const idx = parseInt(r.dataset.index, 10);
+    if (idx === spotlightSelectedIndex) {
+      r.classList.add('selected');
+      if (shouldScroll) r.scrollIntoView({ block: 'nearest' });
+    } else {
+      r.classList.remove('selected');
+    }
+  });
+
+  const activeItem = currentSpotlightItems[spotlightSelectedIndex];
+  renderSpotlightPreview(activeItem);
+}
+
+function renderSpotlightPreview(item) {
+  if (!spotlightPreview) return;
+  if (!item) {
+    spotlightPreview.innerHTML = '';
+    return;
   }
 
-  // 1. Check Currency Conversion (e.g., "100 usd in cny", "50 eur to usd", "1000 jpy in usd")
-  const currMatch = query.match(/^(\d+(?:\.\d+)?)\s*(usd|cny|eur|jpy|gbp|aud|cad|hkd)\s*(?:in|to|=)?\s*(usd|cny|eur|jpy|gbp|aud|cad|hkd)$/i);
-  if (currMatch) {
-    const amount = parseFloat(currMatch[1]);
-    const fromCurr = currMatch[2].toLowerCase();
-    const toCurr = currMatch[3].toLowerCase();
-    const rates = {
-      usd: 1.0,
-      cny: 7.23,
-      eur: 0.92,
-      jpy: 155.45,
-      gbp: 0.79,
-      aud: 1.52,
-      cad: 1.37,
-      hkd: 7.82
-    };
-    const symbols = {
-      usd: '$',
-      cny: '¥',
-      eur: '€',
-      jpy: '¥',
-      gbp: '£',
-      aud: 'A$',
-      cad: 'C$',
-      hkd: 'HK$'
-    };
-    if (rates[fromCurr] && rates[toCurr]) {
-      const inUSD = amount / rates[fromCurr];
-      const targetVal = (inUSD * rates[toCurr]).toFixed(2);
-      const sym = symbols[toCurr] || '';
-      addResult(
-        '💱',
-        `${sym}${targetVal} ${toCurr.toUpperCase()}`,
-        `${amount} ${fromCurr.toUpperCase()} = ${sym}${targetVal} ${toCurr.toUpperCase()} (1 ${fromCurr.toUpperCase()} ≈ ${(rates[toCurr] / rates[fromCurr]).toFixed(4)})`,
-        () => {
-          navigator.clipboard.writeText(`${targetVal}`);
-          if (typeof showNotification === 'function') showNotification(t('spotlight_curr_converter', 'Currency Converter'), t('spotlight_copied', 'Copied to clipboard!'));
+  const dict = getSpotlightDict();
+
+  if (item.type === 'calc') {
+    spotlightPreview.innerHTML = `
+      <div class="spotlight-preview-icon">${item.iconHtml}</div>
+      <div class="spotlight-preview-title">${item.title}</div>
+      <div class="spotlight-preview-category">${dict.spotlight_category_calc || '计算与换算'}</div>
+      <div class="spotlight-preview-math-box">
+        <div class="spotlight-math-expr">${item.mathExpr || ''}</div>
+        <div class="spotlight-math-result">${item.mathResult || item.title}</div>
+      </div>
+      <button class="spotlight-action-btn" onclick="executeSpotlightItemByIndex(${item.flatIndex})">
+        <span>${dict.spotlight_copy_result || '拷贝结果'}</span>
+      </button>
+    `;
+    return;
+  }
+
+  if (item.type === 'app') {
+    spotlightPreview.innerHTML = `
+      <div class="spotlight-preview-icon">${item.largeIconHtml || item.iconHtml}</div>
+      <div class="spotlight-preview-title">${item.title}</div>
+      <div class="spotlight-preview-category">${dict.spotlight_category_apps || '应用程序'} • v1.0.0</div>
+      <div class="spotlight-preview-desc">${item.desc || 'macOS 原生设计应用程序'}</div>
+      <button class="spotlight-action-btn" onclick="executeSpotlightItemByIndex(${item.flatIndex})">
+        <span>${dict.spotlight_open_app || '打开'}</span> ➜
+      </button>
+    `;
+    return;
+  }
+
+  if (item.type === 'setting') {
+    spotlightPreview.innerHTML = `
+      <div class="spotlight-preview-icon">${item.iconHtml}</div>
+      <div class="spotlight-preview-title">${item.title}</div>
+      <div class="spotlight-preview-category">${dict.spotlight_category_settings || '系统设置与控制'}</div>
+      <div class="spotlight-preview-desc">${item.desc || '快捷系统操作'}</div>
+      <button class="spotlight-action-btn" onclick="executeSpotlightItemByIndex(${item.flatIndex})">
+        <span>${dict.spotlight_run || '运行'}</span> ➜
+      </button>
+    `;
+    return;
+  }
+
+  if (item.type === 'file') {
+    spotlightPreview.innerHTML = `
+      <div class="spotlight-preview-icon">${item.iconHtml}</div>
+      <div class="spotlight-preview-title">${item.title}</div>
+      <div class="spotlight-preview-category">${dict.spotlight_category_files || '文稿与文件'}</div>
+      <div class="spotlight-preview-desc">${item.subtitle || ''}</div>
+      <button class="spotlight-action-btn" onclick="executeSpotlightItemByIndex(${item.flatIndex})">
+        <span>${dict.spotlight_open_app || '打开'}</span> ➜
+      </button>
+    `;
+    return;
+  }
+
+  // Web fallback
+  spotlightPreview.innerHTML = `
+    <div class="spotlight-preview-icon">${item.iconHtml}</div>
+    <div class="spotlight-preview-title">${item.title}</div>
+    <div class="spotlight-preview-category">${dict.spotlight_category_web || '网页搜索建议'}</div>
+    <div class="spotlight-preview-desc">在 Safari 浏览器中搜索 "${item.query || ''}"</div>
+    <button class="spotlight-action-btn" onclick="executeSpotlightItemByIndex(${item.flatIndex})">
+      <span>${dict.spotlight_open_app || '搜索'}</span> ➜
+    </button>
+  `;
+}
+
+function executeSpotlightItem(item) {
+  if (!item) return;
+  if (item.appKey && typeof startDockBounce === 'function') {
+    startDockBounce(item.appKey);
+  }
+  if (typeof item.action === 'function') {
+    item.action();
+  }
+  closeSpotlight();
+}
+
+function executeSpotlightItemByIndex(idx) {
+  if (currentSpotlightItems && currentSpotlightItems[idx]) {
+    executeSpotlightItem(currentSpotlightItems[idx]);
+  }
+}
+window.executeSpotlightItemByIndex = executeSpotlightItemByIndex;
+
+function renderSpotlightSuggestions() {
+  const dict = getSpotlightDict();
+  const suggestions = [];
+
+  // Top Hit: Finder
+  suggestions.push({
+    type: 'app',
+    category: 'top_hit',
+    appKey: 'finder',
+    title: dict.app_finder || '访达',
+    subtitle: `${dict.spotlight_category_apps || '应用程序'} • macOS 核心文件管理`,
+    badge: dict.spotlight_top_hit || '最佳匹配',
+    desc: '浏览, 整理并管理 AliceOS 中的文稿, 桌面文件与应用。',
+    iconHtml: getAppIconSvg('finder', 28),
+    largeIconHtml: getAppIconSvg('finder', 68),
+    action: () => launchFinder()
+  });
+
+  // Core macOS apps
+  const defaultApps = [
+    { id: 'browser', key: 'app_browser', name: dict.app_browser || 'Safari 浏览器', fn: () => launchBrowser(), desc: '畅游互联网络, 原生 WebKit 极速浏览。' },
+    { id: 'terminal', key: 'app_terminal', name: dict.app_terminal || '终端', fn: () => launchTerminal(), desc: 'zsh 命令行终端与系统底层内核控制。' },
+    { id: 'notes', key: 'app_notes', name: dict.app_notes || '备忘录', fn: () => launchNotes(), desc: '随心记录灵感、待办清单与富文本笔记。' },
+    { id: 'calculator', key: 'app_calculator', name: dict.app_calculator || '计算器', fn: () => launchCalculator(), desc: '精准基础与科学计算工具。' },
+    { id: 'settings', key: 'app_settings', name: dict.app_settings || '系统设置', fn: () => launchSettings(), desc: '定制外观、语言、网络与屏幕显示偏好。' },
+    { id: 'music', key: 'app_music', name: dict.app_music || '音乐', fn: () => launchMusic(), desc: '高保真音频流与动态旋律视觉播放。' },
+    { id: 'store', key: 'app_store', name: dict.app_store || 'App Store', fn: () => launchStore(), desc: '探索并体验 AliceOS 原生应用生态。' }
+  ];
+
+  defaultApps.forEach(a => {
+    suggestions.push({
+      type: 'app',
+      category: 'app',
+      appKey: a.id,
+      title: a.name,
+      subtitle: dict.spotlight_category_apps || '应用程序',
+      desc: a.desc,
+      iconHtml: getAppIconSvg(a.id, 28),
+      largeIconHtml: getAppIconSvg(a.id, 68),
+      action: a.fn
+    });
+  });
+
+  // Quick system settings
+  suggestions.push({
+    type: 'setting',
+    category: 'setting',
+    title: '外观：切换深色 / 浅色模式',
+    subtitle: '系统控制 • 快速切换界面色彩风格',
+    desc: '在深色质感与明亮通透的 macOS 毛玻璃材质之间无缝切换。',
+    iconHtml: getSFSymbol('moon.fill', 22, '#a855f7'),
+    action: () => toggleDarkMode()
+  });
+
+  suggestions.push({
+    type: 'setting',
+    category: 'setting',
+    title: '锁定屏幕',
+    subtitle: '系统控制 • 保护隐私与会话安全',
+    desc: '即刻锁定工作区并呈现 Sonoma 原生壁纸模糊与触控 ID 解锁。',
+    iconHtml: getSFSymbol('lock.fill', 22, '#ff9500'),
+    action: () => lockScreen()
+  });
+
+  renderSpotlightItems(suggestions);
+}
+window.renderSpotlightSuggestions = renderSpotlightSuggestions;
+
+// Spotlight input keyboard navigation
+if (spotlightInput) {
+  spotlightInput.addEventListener('keydown', (e) => {
+    if (!currentSpotlightItems || currentSpotlightItems.length === 0) return;
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      spotlightSelectedIndex = (spotlightSelectedIndex + 1) % currentSpotlightItems.length;
+      renderSpotlightSelection(true);
+      if (typeof AppleAudioEngine !== 'undefined' && AppleAudioEngine.playHapticClick) {
+        AppleAudioEngine.playHapticClick('light');
+      }
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      spotlightSelectedIndex = (spotlightSelectedIndex - 1 + currentSpotlightItems.length) % currentSpotlightItems.length;
+      renderSpotlightSelection(true);
+      if (typeof AppleAudioEngine !== 'undefined' && AppleAudioEngine.playHapticClick) {
+        AppleAudioEngine.playHapticClick('light');
+      }
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (spotlightSelectedIndex >= 0 && spotlightSelectedIndex < currentSpotlightItems.length) {
+        executeSpotlightItem(currentSpotlightItems[spotlightSelectedIndex]);
+      }
+    }
+  });
+
+  // Spotlight input live search query listener
+  spotlightInput.addEventListener('input', async () => {
+    const query = spotlightInput.value.trim().toLowerCase();
+    if (spotlightClearBtn) {
+      spotlightClearBtn.style.display = query ? 'flex' : 'none';
+    }
+
+    if (!query) {
+      renderSpotlightSuggestions();
+      return;
+    }
+
+    const dict = getSpotlightDict();
+    const results = [];
+
+    // 1. Math calculation & expressions
+    try {
+      let mathExpr = query.replace(/\s+of\s+/g, '*0.01*');
+      mathExpr = mathExpr.replace(/(\d+)%/g, '($1/100)');
+      mathExpr = mathExpr.replace(/\^/g, '**');
+      mathExpr = mathExpr.replace(/\bsqrt\b/g, 'Math.sqrt');
+      mathExpr = mathExpr.replace(/\bpow\b/g, 'Math.pow');
+      mathExpr = mathExpr.replace(/\bsin\b/g, 'Math.sin');
+      mathExpr = mathExpr.replace(/\bcos\b/g, 'Math.cos');
+      mathExpr = mathExpr.replace(/\btan\b/g, 'Math.tan');
+      mathExpr = mathExpr.replace(/\babs\b/g, 'Math.abs');
+      mathExpr = mathExpr.replace(/\bpi\b/g, 'Math.PI');
+      mathExpr = mathExpr.replace(/\be\b/g, 'Math.E');
+
+      if (/^[0-9+\-*/().\s,*MathPIEsqrtpowabscosinetan]+$/.test(mathExpr)) {
+        const mathResult = Function('"use strict";return (' + mathExpr + ')')();
+        if (mathResult !== undefined && !isNaN(mathResult) && typeof mathResult === 'number') {
+          const formatted = Number.isInteger(mathResult) ? mathResult.toString() : mathResult.toFixed(4).replace(/\.?0+$/, '');
+          results.push({
+            type: 'calc',
+            category: 'calc',
+            title: `= ${formatted}`,
+            subtitle: `${query} = ${formatted} (${dict.spotlight_click_to_copy || '点击复制'})`,
+            mathExpr: query,
+            mathResult: formatted,
+            iconHtml: getSFSymbol('plus.slash.minus', 22, '#ff9500'),
+            action: () => {
+              navigator.clipboard.writeText(formatted);
+              if (typeof showNotification === 'function') {
+                showNotification(dict.app_calculator || '聚焦搜索计算器', dict.spotlight_copied || '已复制到剪贴板！');
+              }
+            }
+          });
         }
-      );
-    }
-  }
+      }
+    } catch(e) {}
 
-  // 2. Check Unit Conversions (e.g., "100 km in miles", "37 c in f", "10 kg in lbs", "16 gb in mb")
-  const unitMatch = query.match(/^(\d+(?:\.\d+)?)\s*(km|miles?|mi|m|ft|cm|in|inch|kg|lbs?|pound|g|oz|c|f|gb|mb|tb)\s*(?:in|to|=)?\s*(km|miles?|mi|m|ft|cm|in|inch|kg|lbs?|pound|g|oz|c|f|gb|mb|tb)$/i);
-  if (unitMatch) {
-    const val = parseFloat(unitMatch[1]);
-    const fromUnit = unitMatch[2].toLowerCase();
-    const toUnit = unitMatch[3].toLowerCase();
-    let resVal = null;
-    let label = '';
-
-    if (fromUnit === 'km' && (toUnit === 'miles' || toUnit === 'mi' || toUnit === 'mile')) {
-      resVal = (val * 0.621371).toFixed(2);
-      label = 'Miles';
-    } else if ((fromUnit === 'miles' || fromUnit === 'mi' || fromUnit === 'mile') && toUnit === 'km') {
-      resVal = (val / 0.621371).toFixed(2);
-      label = 'Kilometers';
-    } else if (fromUnit === 'c' && toUnit === 'f') {
-      resVal = ((val * 9 / 5) + 32).toFixed(1);
-      label = '°F';
-    } else if (fromUnit === 'f' && toUnit === 'c') {
-      resVal = ((val - 32) * 5 / 9).toFixed(1);
-      label = '°C';
-    } else if (fromUnit === 'kg' && (toUnit === 'lbs' || toUnit === 'lb' || toUnit === 'pound')) {
-      resVal = (val * 2.20462).toFixed(2);
-      label = 'Pounds (lbs)';
-    } else if ((fromUnit === 'lbs' || fromUnit === 'lb' || fromUnit === 'pound') && toUnit === 'kg') {
-      resVal = (val / 2.20462).toFixed(2);
-      label = 'Kilograms (kg)';
-    } else if (fromUnit === 'gb' && toUnit === 'mb') {
-      resVal = (val * 1024).toLocaleString();
-      label = 'Megabytes (MB)';
-    } else if (fromUnit === 'mb' && toUnit === 'gb') {
-      resVal = (val / 1024).toFixed(2);
-      label = 'Gigabytes (GB)';
-    } else if (fromUnit === 'tb' && toUnit === 'gb') {
-      resVal = (val * 1024).toLocaleString();
-      label = 'Gigabytes (GB)';
-    }
-
-    if (resVal !== null) {
-      addResult(
-        '📐',
-        `${resVal} ${label}`,
-        `${val} ${fromUnit.toUpperCase()} = ${resVal} ${label} (${t('spotlight_click_to_copy', 'Click to copy')})`,
-        () => {
-          navigator.clipboard.writeText(`${resVal}`);
-          if (typeof showNotification === 'function') showNotification(t('spotlight_unit_converter', 'Unit Converter'), t('spotlight_copied', 'Copied to clipboard!'));
-        }
-      );
-    }
-  }
-
-  // 3. Advanced Math calculation (e.g. sqrt(144) + 6, 25% of 800, 2^8)
-  try {
-    let mathExpr = query.replace(/\s+of\s+/g, '*0.01*');
-    mathExpr = mathExpr.replace(/(\d+)%/g, '($1/100)');
-    mathExpr = mathExpr.replace(/\^/g, '**');
-    mathExpr = mathExpr.replace(/\bsqrt\b/g, 'Math.sqrt');
-    mathExpr = mathExpr.replace(/\bpow\b/g, 'Math.pow');
-    mathExpr = mathExpr.replace(/\bsin\b/g, 'Math.sin');
-    mathExpr = mathExpr.replace(/\bcos\b/g, 'Math.cos');
-    mathExpr = mathExpr.replace(/\btan\b/g, 'Math.tan');
-    mathExpr = mathExpr.replace(/\babs\b/g, 'Math.abs');
-    mathExpr = mathExpr.replace(/\bpi\b/g, 'Math.PI');
-    mathExpr = mathExpr.replace(/\be\b/g, 'Math.E');
-
-    if (/^[0-9+\-*/().\s,*MathPIEsqrtpowabscosinetan]+$/.test(mathExpr)) {
-      const mathResult = Function('"use strict";return (' + mathExpr + ')')();
-      if (mathResult !== undefined && !isNaN(mathResult) && typeof mathResult === 'number') {
-        const formatted = Number.isInteger(mathResult) ? mathResult.toString() : mathResult.toFixed(4).replace(/\.?0+$/, '');
-        const calcDict = i18nDict[currentSystemLang] || i18nDict.en;
-        addResult(getSFSymbol('plus.slash.minus', 22, '#ff9500'), formatted, `${calcDict.spotlight_calc_res || 'Calculation Result'} for "${query}" (${t('spotlight_click_to_copy', 'Click to copy')})`, () => {
-          navigator.clipboard.writeText(formatted);
-          if (typeof showNotification === 'function') showNotification(t('app_calculator', 'Spotlight Calculator'), t('spotlight_copied', 'Copied to clipboard!'));
+    // 2. Currency conversion
+    const currMatch = query.match(/^(\d+(?:\.\d+)?)\s*(usd|cny|eur|jpy|gbp|aud|cad|hkd)\s*(?:in|to|=)?\s*(usd|cny|eur|jpy|gbp|aud|cad|hkd)$/i);
+    if (currMatch) {
+      const amount = parseFloat(currMatch[1]);
+      const fromCurr = currMatch[2].toLowerCase();
+      const toCurr = currMatch[3].toLowerCase();
+      const rates = { usd: 1.0, cny: 7.23, eur: 0.92, jpy: 155.45, gbp: 0.79, aud: 1.52, cad: 1.37, hkd: 7.82 };
+      const symbols = { usd: '$', cny: '¥', eur: '€', jpy: '¥', gbp: '£', aud: 'A$', cad: 'C$', hkd: 'HK$' };
+      if (rates[fromCurr] && rates[toCurr]) {
+        const inUSD = amount / rates[fromCurr];
+        const targetVal = (inUSD * rates[toCurr]).toFixed(2);
+        const sym = symbols[toCurr] || '';
+        results.push({
+          type: 'calc',
+          category: 'calc',
+          title: `${sym}${targetVal} ${toCurr.toUpperCase()}`,
+          subtitle: `${amount} ${fromCurr.toUpperCase()} = ${sym}${targetVal} ${toCurr.toUpperCase()}`,
+          mathExpr: `${amount} ${fromCurr.toUpperCase()} ➔ ${toCurr.toUpperCase()}`,
+          mathResult: `${sym}${targetVal}`,
+          iconHtml: getSFSymbol('arrow.left.arrow.right', 22, '#34c759'),
+          action: () => {
+            navigator.clipboard.writeText(targetVal);
+            if (typeof showNotification === 'function') {
+              showNotification(dict.spotlight_curr_converter || '汇率换算', dict.spotlight_copied || '已复制到剪贴板！');
+            }
+          }
         });
       }
     }
-  } catch(e) {}
 
-  const spotDict = i18nDict[currentSystemLang] || i18nDict.en;
-
-  // 2. Search Launchpad Apps
-  apps.forEach(app => {
-    if (app.name.toLowerCase().includes(query)) {
-      addResult(getAppIconSvg(app.id, 28), app.name, spotDict.spotlight_app || 'Application', () => eval(app.action));
-    }
-  });
-
-  // 3. Simple VFS Search (Search Alice Home)
-  const dirRes = await window.aliceOS.vfs.readDir('/Users/alice');
-  if (dirRes.success) {
-    dirRes.data.forEach(item => {
-       if (item.name.toLowerCase().includes(query)) {
-         let icon = item.type === 'dir' ? getSFSymbol('folder', 20, '#007aff') : (item.name.endsWith('.png') ? getSFSymbol('doc-image', 20, '#007aff') : getSFSymbol('doc-text', 20, '#007aff'));
-         addResult(icon, item.name, '/Users/alice/' + item.name, () => {
-            if (item.type !== 'dir') {
-               if (item.name.endsWith('.png')) launchGallery('/Users/alice/' + item.name);
-               else launchNotes('/Users/alice/' + item.name);
-            } else {
-               launchFinder(); // Launch finder for dirs for now
-            }
-         });
-       }
+    // 3. Search Installed Apps
+    apps.forEach(app => {
+      const name = (app.name || '').toLowerCase();
+      const id = (app.id || '').toLowerCase();
+      if (name.includes(query) || id.includes(query)) {
+        results.push({
+          type: 'app',
+          category: results.length === 0 ? 'top_hit' : 'app',
+          appKey: app.id,
+          title: app.name,
+          subtitle: dict.spotlight_category_apps || '应用程序',
+          badge: results.length === 0 ? (dict.spotlight_top_hit || '最佳匹配') : null,
+          desc: `启动 AliceOS 原生应用：${app.name}。`,
+          iconHtml: getAppIconSvg(app.id, 28),
+          largeIconHtml: getAppIconSvg(app.id, 68),
+          action: () => eval(app.action)
+        });
+      }
     });
-  }
-  
-  // 4. Web Search Fallback
-  addResult(getSFSymbol('globe', 22, '#007aff'), (spotDict.spotlight_search_web || 'Search web for "%s"').replace('%s', query), spotDict.spotlight_web_search || 'Web Search', () => {
-    // We can't open external browser easily, but we can launch AliceOS browser
-    // Assuming launchBrowser accepts a URL, or we just launch it
-    launchBrowser();
-  });
 
-  if (!hasResults) {
-    spotlightResults.innerHTML = `<div style="padding:20px;text-align:center;color:#888;">${spotDict.spotlight_no_res || 'No results found'}</div>`;
-  }
-});
+    // 4. Quick System Settings Search
+    const sysSettings = [
+      { q: ['深色', '浅色', 'dark', 'light', '外观', 'theme'], title: '外观：切换深色 / 浅色模式', action: () => toggleDarkMode(), icon: getSFSymbol('moon.fill', 22, '#a855f7'), desc: '切换全局色彩模式与毛玻璃光影效果。' },
+      { q: ['锁屏', '锁定', 'lock'], title: '锁定屏幕', action: () => lockScreen(), icon: getSFSymbol('lock.fill', 22, '#ff9500'), desc: '立即锁定当前系统并开启锁屏壁纸。' },
+      { q: ['wifi', '无线', '网络', '网络设置', 'net'], title: '无线局域网 (Wi-Fi)', action: () => toggleWifiPopover(), icon: getSFSymbol('wifi', 22, '#007aff'), desc: '查看已知网络并连接 Wi-Fi。' },
+      { q: ['隔空投送', 'airdrop'], title: '隔空投送 (AirDrop)', action: () => launchAirDrop(), icon: getSFSymbol('airdrop', 22, '#007aff'), desc: '在附近苹果与 AliceOS 设备间传输文件。' },
+      { q: ['关于', 'about', 'mac'], title: '关于本机', action: () => launchHostMonitor(), icon: getSFSymbol('info.circle', 22, '#38bdf8'), desc: '查看系统规格、硬件状态与系统版本。' }
+    ];
+
+    sysSettings.forEach(s => {
+      if (s.q.some(keyword => keyword.includes(query) || query.includes(keyword))) {
+        results.push({
+          type: 'setting',
+          category: 'setting',
+          title: s.title,
+          subtitle: dict.spotlight_category_settings || '系统设置与控制',
+          desc: s.desc,
+          iconHtml: s.icon,
+          action: s.action
+        });
+      }
+    });
+
+    // 5. Search AliceOS Virtual Filesystem
+    try {
+      if (window.aliceOS && window.aliceOS.vfs) {
+        const dirRes = await window.aliceOS.vfs.readDir('/Users/alice');
+        if (dirRes && dirRes.success && Array.isArray(dirRes.data)) {
+          dirRes.data.forEach(item => {
+            if (item.name.toLowerCase().includes(query)) {
+              let icon = item.type === 'dir'
+                ? getSFSymbol('folder', 20, '#007aff')
+                : (item.name.endsWith('.png') ? getSFSymbol('photo', 20, '#34c759') : getSFSymbol('doc.text', 20, '#007aff'));
+              results.push({
+                type: 'file',
+                category: 'file',
+                title: item.name,
+                subtitle: `/Users/alice/${item.name}`,
+                iconHtml: icon,
+                action: () => {
+                  if (item.type !== 'dir') {
+                    if (item.name.endsWith('.png')) launchGallery('/Users/alice/' + item.name);
+                    else launchNotes('/Users/alice/' + item.name);
+                  } else {
+                    launchFinder();
+                  }
+                }
+              });
+            }
+          });
+        }
+      }
+    } catch(e) {}
+
+    // 6. Web Search Fallback
+    results.push({
+      type: 'web',
+      category: 'web',
+      query: query,
+      title: (dict.spotlight_search_web || '在网页中搜索“%s”').replace('%s', query),
+      subtitle: dict.spotlight_category_web || '网页搜索建议',
+      iconHtml: getSFSymbol('globe', 22, '#007aff'),
+      action: () => launchBrowser()
+    });
+
+    renderSpotlightItems(results);
+  });
+}
 
 
 function resetIdleTimer() {
@@ -19833,15 +20240,15 @@ function updateIslandLiveMusic(isPlaying, track) {
     if (label) label.innerText = curTrack.title || 'Playing';
     if (eqBars) eqBars.style.display = 'flex';
     if (!islandExpanded && !island.classList.contains('notch-hud-active')) {
-      island.style.width = '210px';
-      island.style.height = '28px';
+      island.style.width = '224px';
+      island.style.height = '';
     }
   } else {
     islandLiveActive = false;
     if (label) label.innerText = 'Alice';
     if (!islandExpanded && !island.classList.contains('notch-hud-active')) {
-      island.style.width = '190px';
-      island.style.height = '28px';
+      island.style.width = '';
+      island.style.height = '';
     }
   }
 }
@@ -19877,8 +20284,8 @@ function collapseNotch(force = false) {
   islandExpanded = false;
   notchIsPinned = false;
   island.classList.remove('expanded');
-  island.style.width = islandLiveActive ? '210px' : '190px';
-  island.style.height = '28px';
+  island.style.width = islandLiveActive ? '224px' : '';
+  island.style.height = '';
 
   if (expContainer) {
     expContainer.style.opacity = '0';

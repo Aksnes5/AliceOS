@@ -3508,22 +3508,27 @@ body.dark-mode .finder-sidebar-tag:hover {
   opacity: 0;
 }
 
-/* 2. macOS MacBook Pro Notch & NotchNook Dynamic Island */
+/* 2. macOS MacBook Pro Notch & NotchNook Dynamic Island (极度拟真刘海与大圆角重构) */
 .dynamic-island-capsule {
+  --notch-bg: #000000;
   position: fixed;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 190px;
-  height: 28px;
-  background: #000000;
-  border-radius: 0 0 10px 10px;
+  width: 204px;
+  height: 34px;
+  background: var(--notch-bg);
+  border-radius: 0 0 18px 18px;
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: none;
   z-index: 9999;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  overflow: visible; /* Required so top concave fillet ears can display */
   transition: width 0.36s cubic-bezier(0.16, 1, 0.3, 1),
               height 0.36s cubic-bezier(0.16, 1, 0.3, 1),
               border-radius 0.36s cubic-bezier(0.16, 1, 0.3, 1),
@@ -3536,9 +3541,37 @@ body.dark-mode .finder-sidebar-tag:hover {
   user-select: none;
 }
 
-.dynamic-island-capsule:not(.expanded):hover {
-  background: #09090c;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.65);
+/* Authentic macOS Notch Concave Fillet Ears (顶部左右几何外倒角过渡) */
+.dynamic-island-capsule::before,
+.dynamic-island-capsule::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+  transition: background 0.3s ease;
+  z-index: 10000;
+}
+
+/* Left Concave Ear: Smooth inward curve from top screen edge down to notch left edge */
+.dynamic-island-capsule::before {
+  left: -14px;
+  background: radial-gradient(circle at 0% 100%, transparent 13px, rgba(255, 255, 255, 0.12) 13px, rgba(255, 255, 255, 0.12) 14px, var(--notch-bg, #000000) 14.5px);
+}
+
+/* Right Concave Ear: Smooth inward curve from top screen edge down to notch right edge */
+.dynamic-island-capsule::after {
+  right: -14px;
+  background: radial-gradient(circle at 100% 100%, transparent 13px, rgba(255, 255, 255, 0.12) 13px, rgba(255, 255, 255, 0.12) 14px, var(--notch-bg, #000000) 14.5px);
+}
+
+/* Notch Hover State: Subtle responsive expansion with Apple spring feel */
+.dynamic-island-capsule:not(.expanded):not(.notch-hud-active):hover {
+  width: 216px;
+  height: 37px;
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.75), 0 3px 8px rgba(0, 0, 0, 0.5);
 }
 
 /* Compact Notch Bar Interior */
@@ -3548,7 +3581,7 @@ body.dark-mode .finder-sidebar-tag:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 10px;
+  padding: 0 12px;
   box-sizing: border-box;
 }
 
@@ -3557,7 +3590,7 @@ body.dark-mode .finder-sidebar-tag:hover {
   display: flex;
   align-items: center;
   gap: 6px;
-  min-width: 50px;
+  min-width: 54px;
 }
 
 .notch-slot-left {
@@ -3575,33 +3608,35 @@ body.dark-mode .finder-sidebar-tag:hover {
 }
 
 .notch-mini-label {
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 600;
-  max-width: 65px;
+  max-width: 70px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  opacity: 0.9;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  opacity: 0.92;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", sans-serif;
+  letter-spacing: -0.1px;
 }
 
-/* MacBook Hardware Camera Lens in Notch */
+/* MacBook Hardware Camera Module in Notch */
 .notch-center-hardware {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
+  margin-top: 1px;
 }
 
 .notch-camera-lens {
-  width: 9px;
-  height: 9px;
+  width: 11px;
+  height: 11px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #1c2738 0%, #080c14 60%, #000000 100%);
-  border: 0.5px solid rgba(255, 255, 255, 0.12);
-  box-shadow: inset 0 0.5px 1px rgba(255, 255, 255, 0.2), 0 0 2px rgba(0, 0, 0, 0.9);
+  background: radial-gradient(circle at 35% 35%, #2a3b52 0%, #101622 50%, #04060a 100%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.25), inset 0 -1px 2px rgba(0, 0, 0, 0.8), 0 1px 3px rgba(0, 0, 0, 0.8);
   position: relative;
 }
 
@@ -3609,22 +3644,34 @@ body.dark-mode .finder-sidebar-tag:hover {
   position: absolute;
   top: 2px;
   left: 2px;
-  width: 2.5px;
-  height: 2.5px;
+  width: 3px;
+  height: 3px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.45);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(160, 200, 255, 0.4) 60%, transparent 100%);
 }
 
-.notch-privacy-led {
+.notch-ambient-sensor {
   position: absolute;
-  right: -5px;
+  left: -7px;
   top: 50%;
   transform: translateY(-50%);
   width: 3.5px;
   height: 3.5px;
   border-radius: 50%;
-  background: #34c759;
-  box-shadow: 0 0 4px #34c759;
+  background: radial-gradient(circle, #121620 0%, #06080d 100%);
+  border: 0.5px solid rgba(255, 255, 255, 0.08);
+}
+
+.notch-privacy-led {
+  position: absolute;
+  right: -7px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #30d158;
+  box-shadow: 0 0 6px #30d158, 0 0 10px rgba(48, 209, 88, 0.6);
   opacity: 0;
   transition: opacity 0.2s ease;
 }
@@ -3635,15 +3682,16 @@ body.dark-mode .finder-sidebar-tag:hover {
 
 /* HUD State (e.g. Volume/Brightness adjust) */
 .dynamic-island-capsule.notch-hud-active {
-  width: 300px !important;
-  height: 42px !important;
-  border-radius: 0 0 14px 14px !important;
-  background: rgba(16, 16, 20, 0.94) !important;
+  --notch-bg: rgba(16, 16, 20, 0.96);
+  width: 320px !important;
+  height: 48px !important;
+  border-radius: 0 0 24px 24px !important;
+  background: var(--notch-bg) !important;
   backdrop-filter: blur(40px) saturate(190%) !important;
   -webkit-backdrop-filter: blur(40px) saturate(190%) !important;
   border: 1px solid rgba(255, 255, 255, 0.14) !important;
   border-top: none !important;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75) !important;
 }
 
 .notch-hud-wrap {
@@ -3651,8 +3699,8 @@ body.dark-mode .finder-sidebar-tag:hover {
   height: 100%;
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 0 16px;
+  gap: 14px;
+  padding: 0 18px;
   box-sizing: border-box;
 }
 
@@ -3667,21 +3715,21 @@ body.dark-mode .finder-sidebar-tag:hover {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 5px;
 }
 
 .notch-hud-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 600;
-  opacity: 0.85;
+  opacity: 0.88;
 }
 
 .notch-hud-track {
   width: 100%;
-  height: 5px;
+  height: 6px;
   background: rgba(255, 255, 255, 0.18);
   border-radius: 3px;
   overflow: hidden;
@@ -3694,19 +3742,20 @@ body.dark-mode .finder-sidebar-tag:hover {
   transition: width 0.1s ease-out;
 }
 
-/* Expanded Dropdown State: macOS Notch Shelf / NotchNook */
+/* Expanded Dropdown State: macOS Notch Shelf / NotchNook (大圆角与精致工作区) */
 .dynamic-island-capsule.expanded {
+  --notch-bg: rgba(14, 14, 18, 0.96);
   top: 0 !important;
-  width: 480px !important;
-  height: 175px !important;
-  border-radius: 0 0 20px 20px !important;
-  background: rgba(14, 14, 18, 0.94) !important;
-  backdrop-filter: blur(45px) saturate(200%) !important;
-  -webkit-backdrop-filter: blur(45px) saturate(200%) !important;
+  width: 540px !important;
+  height: 195px !important;
+  border-radius: 0 0 32px 32px !important;
+  background: var(--notch-bg) !important;
+  backdrop-filter: blur(50px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(50px) saturate(200%) !important;
   border: 1px solid rgba(255, 255, 255, 0.14) !important;
   border-top: none !important;
-  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
-  padding: 10px 18px 14px 18px !important;
+  box-shadow: 0 32px 85px rgba(0, 0, 0, 0.82), 0 8px 24px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  padding: 12px 20px 16px 20px !important;
   cursor: default !important;
   flex-direction: column !important;
 }
@@ -3723,9 +3772,9 @@ body.dark-mode .finder-sidebar-tag:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   border-bottom: 0.5px solid rgba(255, 255, 255, 0.08);
-  padding-bottom: 6px;
+  padding-bottom: 8px;
 }
 
 .notch-shelf-tabs {
@@ -3746,8 +3795,8 @@ body.dark-mode .finder-sidebar-tag:hover {
 .island-act-tab {
   font-size: 11px;
   font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 12px;
+  padding: 4px 12px;
+  border-radius: 14px;
   background: rgba(255, 255, 255, 0.08);
   color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
@@ -3798,14 +3847,14 @@ body.dark-mode .finder-sidebar-tag:hover {
 }
 
 .island-album-art {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
   background: linear-gradient(135deg, #ff2d55, #ff375f, #af52de);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6px 20px rgba(255, 45, 85, 0.45);
+  box-shadow: 0 8px 24px rgba(255, 45, 85, 0.45);
   flex-shrink: 0;
 }
 
@@ -3882,8 +3931,8 @@ body.dark-mode .finder-sidebar-tag:hover {
   background: rgba(255, 255, 255, 0.12);
   border: none;
   color: white;
-  border-radius: 12px;
-  padding: 4px 10px;
+  border-radius: 16px;
+  padding: 5px 12px;
   font-size: 11px;
   font-weight: 600;
   cursor: pointer;
@@ -3894,13 +3943,13 @@ body.dark-mode .finder-sidebar-tag:hover {
   background: rgba(255, 255, 255, 0.22);
 }
 
-/* NotchNook File Tray & Drop Zone */
+/* NotchNook File Tray & Drop Zone (大圆角与柔和微光) */
 .notch-tray-dropzone {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 12px 16px;
-  border-radius: 12px;
+  padding: 14px 18px;
+  border-radius: 18px;
   border: 1.5px dashed rgba(255, 255, 255, 0.24);
   background: rgba(255, 255, 255, 0.04);
   transition: all 0.2s ease;
@@ -8798,5 +8847,473 @@ body.dark-mode .finder-status-bar {
   color: rgba(255, 255, 255, 0.9);
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
   letter-spacing: 0.1px;
+}
+
+/* ==========================================================================
+   macOS Sequoia / Sonoma Dual-Pane Spotlight Search (聚焦搜索)
+   ========================================================================== */
+.spotlight-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 24990;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.spotlight-backdrop.open {
+  display: block !important;
+  opacity: 1 !important;
+}
+
+.spotlight-window {
+  position: fixed;
+  top: 16vh;
+  left: 50%;
+  transform: translateX(-50%) scale(0.96);
+  width: 680px;
+  max-width: 92vw;
+  background: rgba(30, 30, 34, 0.82);
+  backdrop-filter: blur(50px) saturate(190%);
+  -webkit-backdrop-filter: blur(50px) saturate(190%);
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  z-index: 25000;
+  display: none;
+  flex-direction: column;
+  opacity: 0;
+  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  user-select: none;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Segoe UI", sans-serif;
+}
+
+body:not(.dark-mode) .spotlight-window {
+  background: rgba(246, 246, 248, 0.86);
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  color: #1d1d1f;
+}
+
+.spotlight-window.open {
+  display: flex !important;
+  opacity: 1 !important;
+  transform: translateX(-50%) scale(1) !important;
+}
+
+.spotlight-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 18px;
+  height: 58px;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.spotlight-window.has-results .spotlight-header {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+body:not(.dark-mode) .spotlight-window.has-results .spotlight-header {
+  border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+.spotlight-search-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #007aff;
+  filter: drop-shadow(0 0 6px rgba(0, 122, 255, 0.4));
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+#spotlight-input {
+  flex: 1;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 22px;
+  font-weight: 300;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+  color: inherit;
+  letter-spacing: -0.3px;
+}
+
+#spotlight-input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+  font-weight: 300;
+}
+
+body:not(.dark-mode) #spotlight-input::placeholder {
+  color: rgba(0, 0, 0, 0.35);
+}
+
+.spotlight-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.spotlight-clear-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  font-size: 10px;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+}
+
+.spotlight-clear-btn:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+body:not(.dark-mode) .spotlight-clear-btn {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.spotlight-esc-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+body:not(.dark-mode) .spotlight-esc-badge {
+  background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.1);
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.spotlight-body {
+  display: none;
+  max-height: 420px;
+  min-height: 260px;
+  overflow: hidden;
+}
+
+.spotlight-window.has-results .spotlight-body {
+  display: flex;
+}
+
+.spotlight-results-column {
+  flex: 1 1 56%;
+  overflow-y: auto;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.spotlight-category-header {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: rgba(255, 255, 255, 0.45);
+  padding: 8px 10px 4px 10px;
+}
+
+body:not(.dark-mode) .spotlight-category-header {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.spotlight-result-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: background-color 0.12s ease;
+  user-select: none;
+}
+
+.spotlight-result-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+body:not(.dark-mode) .spotlight-result-item:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.spotlight-result-item.selected {
+  background: #007aff !important;
+  color: #ffffff !important;
+}
+
+.spotlight-item-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.spotlight-item-meta {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.spotlight-item-title {
+  font-weight: 600;
+  font-size: 13.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: inherit;
+}
+
+.spotlight-item-sub {
+  font-size: 11px;
+  opacity: 0.65;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: inherit;
+}
+
+.spotlight-result-item.selected .spotlight-item-sub {
+  opacity: 0.88;
+}
+
+.spotlight-item-badge {
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.85);
+  flex-shrink: 0;
+  letter-spacing: 0.2px;
+}
+
+.spotlight-result-item.selected .spotlight-item-badge {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+body:not(.dark-mode) .spotlight-item-badge {
+  background: rgba(0, 0, 0, 0.06);
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.spotlight-preview-column {
+  flex: 1 1 44%;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+body:not(.dark-mode) .spotlight-preview-column {
+  border-left-color: rgba(0, 0, 0, 0.08);
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.spotlight-preview-icon {
+  width: 72px;
+  height: 72px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.3));
+}
+
+.spotlight-preview-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: inherit;
+}
+
+.spotlight-preview-category {
+  font-size: 11px;
+  font-weight: 600;
+  opacity: 0.6;
+  margin-bottom: 12px;
+  letter-spacing: 0.2px;
+}
+
+.spotlight-preview-desc {
+  font-size: 11.5px;
+  opacity: 0.75;
+  line-height: 1.4;
+  margin-bottom: 16px;
+  max-width: 220px;
+}
+
+.spotlight-preview-math-box {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin-bottom: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+body:not(.dark-mode) .spotlight-preview-math-box {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.spotlight-math-expr {
+  font-size: 13px;
+  opacity: 0.65;
+  margin-bottom: 4px;
+}
+
+.spotlight-math-result {
+  font-size: 28px;
+  font-weight: 300;
+  color: #007aff;
+  letter-spacing: -0.5px;
+}
+
+.spotlight-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  background: #007aff;
+  color: white;
+  border: none;
+  border-radius: 14px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.35);
+  transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.spotlight-action-btn:hover {
+  background: #006ae6;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 122, 255, 0.5);
+}
+
+.spotlight-action-btn:active {
+  transform: scale(0.96);
+}
+
+/* ==========================================================================
+   macOS Wi-Fi Popover Menu
+   ========================================================================== */
+.wifi-popover {
+  position: fixed;
+  top: 35px;
+  right: 175px;
+  width: 280px;
+  background: rgba(32, 32, 36, 0.88);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  padding: 16px;
+  box-sizing: border-box;
+  color: white;
+  z-index: 9100;
+  display: none;
+  flex-direction: column;
+  user-select: none;
+  opacity: 0;
+  transform: translateY(-8px) scale(0.96);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body:not(.dark-mode) .wifi-popover {
+  background: rgba(246, 246, 248, 0.92);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  color: #1d1d1f;
+}
+
+.wifi-popover.open {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.wifi-network-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 3px;
+  transition: background 0.15s ease;
+}
+
+.wifi-network-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+body:not(.dark-mode) .wifi-network-item:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.wifi-network-item.active {
+  background: rgba(0, 122, 255, 0.2);
+  border: 1px solid rgba(0, 122, 255, 0.3);
+}
+
+.wifi-check {
+  font-weight: bold;
+  color: #007aff;
+  font-size: 13px;
+}
+
+.wifi-popover-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0.8;
+  transition: background 0.15s ease, opacity 0.15s ease;
+}
+
+.wifi-popover-footer:hover {
+  background: rgba(255, 255, 255, 0.08);
+  opacity: 1;
+}
+
+body:not(.dark-mode) .wifi-popover-footer:hover {
+  background: rgba(0, 0, 0, 0.05);
 }
 
