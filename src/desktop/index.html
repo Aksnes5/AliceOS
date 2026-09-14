@@ -148,10 +148,10 @@
     <div class="context-menu-item" onclick="createNewFolder()" data-i18n="ctx_new_folder">新建文件夹</div>
     <div class="context-menu-item" onclick="createNewTextFile()" data-i18n="ctx_new_file">新建文本文件</div>
     <div class="context-menu-item" onclick="createStickyNote()" data-i18n="ctx_new_sticky">新建便签</div>
-    <div class="context-menu-item" id="ctx-stacks-toggle" onclick="toggleDesktopStacks()" data-i18n="ctx_use_stacks">🥞 使用叠放</div>
-    <div class="context-menu-item" onclick="openWidgetGallery()" data-i18n="ctx_edit_widgets">🧩 编辑小组件...</div>
-    <div class="context-menu-item" onclick="toggleDesktopWidgets()"><span id="ctx-toggle-widgets-label" data-i18n="ctx_toggle_widgets">👁️ 隐藏桌面小组件</span></div>
-    <div class="context-menu-item" onclick="openAirDrop()" data-i18n="ctx_airdrop">📡 隔空投送...</div>
+    <div class="context-menu-item" id="ctx-stacks-toggle" onclick="toggleDesktopStacks()" data-i18n="ctx_use_stacks">使用叠放</div>
+    <div class="context-menu-item" onclick="openWidgetGallery()" data-i18n="ctx_edit_widgets">编辑小组件...</div>
+    <div class="context-menu-item" onclick="toggleDesktopWidgets()"><span id="ctx-toggle-widgets-label" data-i18n="ctx_toggle_widgets">隐藏桌面小组件</span></div>
+    <div class="context-menu-item" onclick="openAirDrop()" data-i18n="ctx_airdrop">隔空投送...</div>
     <div class="context-separator"></div>
     <div class="context-menu-item" onclick="launchSettings()" data-i18n="ctx_wallpaper">更改壁纸...</div>
     <div class="context-separator"></div>
@@ -161,34 +161,34 @@
   <!-- Widget Context Menu -->
   <div id="widget-context-menu" class="context-menu" style="display:none;z-index:9999;">
     <div class="context-menu-item" id="w-ctx-remove-btn" onclick="removeActiveWidget()">
-      <span>🗑️</span> <span data-i18n="w_ctx_remove">移除小组件</span>
+      <span data-i18n="w_ctx_remove">移除小组件</span>
     </div>
     <div class="context-separator"></div>
     <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.45);padding:4px 14px 2px 14px;text-transform:uppercase;" data-i18n="w_ctx_replace_title">更换为...</div>
     <div class="context-menu-item" onclick="replaceActiveWidget('clock')">
-      <span>🕒</span> <span data-i18n="w_type_clock">世界时钟</span>
+      <span data-i18n="w_type_clock">世界时钟</span>
     </div>
     <div class="context-menu-item" onclick="replaceActiveWidget('weather')">
-      <span>⛅</span> <span data-i18n="w_type_weather">天气预报</span>
+      <span data-i18n="w_type_weather">天气预报</span>
     </div>
     <div class="context-menu-item" onclick="replaceActiveWidget('sys')">
-      <span>📈</span> <span data-i18n="w_type_sys">系统性能</span>
+      <span data-i18n="w_type_sys">系统性能</span>
     </div>
     <div class="context-menu-item" onclick="replaceActiveWidget('battery')">
-      <span>🔋</span> <span data-i18n="w_type_battery">电池电量</span>
+      <span data-i18n="w_type_battery">电池电量</span>
     </div>
     <div class="context-menu-item" onclick="replaceActiveWidget('calendar')">
-      <span>📅</span> <span data-i18n="w_type_calendar">日历日程</span>
+      <span data-i18n="w_type_calendar">日历日程</span>
     </div>
     <div class="context-menu-item" onclick="replaceActiveWidget('music')">
-      <span>🎵</span> <span data-i18n="w_type_music">音乐播放</span>
+      <span data-i18n="w_type_music">音乐播放</span>
     </div>
     <div class="context-separator"></div>
     <div class="context-menu-item" onclick="openWidgetGallery()">
-      <span>🧩</span> <span data-i18n="ctx_edit_widgets">编辑小组件...</span>
+      <span data-i18n="ctx_edit_widgets">编辑小组件...</span>
     </div>
     <div class="context-menu-item" onclick="toggleDesktopWidgets()">
-      <span>👁️</span> <span id="w-ctx-toggle-label" data-i18n="w_ctx_toggle_hide">隐藏桌面小组件</span>
+      <span id="w-ctx-toggle-label" data-i18n="w_ctx_toggle_hide">隐藏桌面小组件</span>
     </div>
   </div>
 
@@ -201,7 +201,9 @@
     <!-- Lock Header Group: Glyph, Typographic Clock & Widgets -->
     <div id="lock-header-group" style="position:absolute;top:6%;display:flex;flex-direction:column;align-items:center;z-index:1;transition:all 0.55s cubic-bezier(0.16, 1, 0.3, 1);">
       <!-- Lock Glyph Status -->
-      <div id="lock-glyph" style="font-size:24px;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.4));transition:transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);margin-bottom:6px;">🔒</div>
+      <div id="lock-glyph" style="display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.4));transition:transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);margin-bottom:6px;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M19 11h-1V7a6 6 0 0 0-12 0v4H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2zm-7 7a2 2 0 1 1 2-2 2 2 0 0 1-2 2zm3.1-7H8.9V7a3.1 3.1 0 0 1 6.2 0z"/></svg>
+      </div>
       
       <!-- Big Typographic Sonoma Clock -->
       <div id="lock-time" style="font-size:96px;font-weight:200;text-shadow:0 4px 20px rgba(0,0,0,0.4);font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;letter-spacing:-2px;line-height:1;">12:00</div>
@@ -210,20 +212,22 @@
       <!-- Lock Screen Widgets Row -->
       <div id="lock-widgets" style="display:flex;gap:12px;opacity:0.85;margin-top:14px;">
         <div style="background:rgba(255,255,255,0.14);backdrop-filter:blur(10px);padding:6px 14px;border-radius:20px;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;border:1px solid rgba(255,255,255,0.2);">
-          <span>🔋</span><span>100%</span>
+          <svg width="16" height="10" viewBox="0 0 26 13" fill="none"><rect x="0.5" y="0.5" width="22" height="12" rx="3.5" stroke="currentColor" stroke-width="1.2" opacity="0.8"/><rect x="2" y="2" width="16" height="8" rx="2" fill="currentColor"/><path d="M 23.5 4.5 C 24.3 4.5 25 5.2 25 6 L 25 7 C 25 7.8 24.3 8.5 23.5 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/></svg><span>100%</span>
         </div>
         <div style="background:rgba(255,255,255,0.14);backdrop-filter:blur(10px);padding:6px 14px;border-radius:20px;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;border:1px solid rgba(255,255,255,0.2);">
-          <span>📅</span><span data-i18n="lock_no_events">今天无日程</span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span data-i18n="lock_no_events">今天无日程</span>
         </div>
         <div style="background:rgba(255,255,255,0.14);backdrop-filter:blur(10px);padding:6px 14px;border-radius:20px;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;border:1px solid rgba(255,255,255,0.2);">
-          <span>⭕</span><span>740/500 CAL</span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fa2d48" stroke-width="3" stroke-linecap="round"><circle cx="12" cy="12" r="9"/></svg><span>740/500 CAL</span>
         </div>
       </div>
     </div>
 
     <!-- Center User Avatar & Password Box -->
     <div id="login-box" style="display:flex;flex-direction:column;align-items:center;margin-top:130px;z-index:1;transition:all 0.45s cubic-bezier(0.16, 1, 0.3, 1);">
-      <div style="width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:55px;margin-bottom:15px;box-shadow:0 10px 30px rgba(0,0,0,0.35);border:2px solid rgba(255,255,255,0.2);cursor:pointer;" id="login-avatar" onclick="triggerFaceID()" title="Click to unlock with Face ID">👩‍💻</div>
+      <div style="width:110px;height:110px;border-radius:50%;background:linear-gradient(135deg, rgba(255,255,255,0.25), rgba(255,255,255,0.1));display:flex;align-items:center;justify-content:center;margin-bottom:15px;box-shadow:0 10px 30px rgba(0,0,0,0.35);border:2px solid rgba(255,255,255,0.25);cursor:pointer;" id="login-avatar" onclick="triggerFaceID()" title="Click to unlock with Face ID">
+        <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
       
       <select id="login-user-select" style="font-size:22px;margin-bottom:20px;font-weight:600;background:transparent;border:none;color:white;outline:none;cursor:pointer;text-align:center;text-shadow:0 2px 8px rgba(0,0,0,0.5);appearance:none;-webkit-appearance:none;">
         <option value="alice" style="color:black;">Alice</option>
@@ -235,7 +239,8 @@
         <button onclick="loginUser()" style="width:34px;height:34px;border-radius:50%;border:none;background:rgba(255,255,255,0.35);color:white;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-right:2px;transition:all 0.2s;font-size:14px;">➜</button>
       </div>
       <div onclick="triggerFaceID()" style="cursor:pointer;display:flex;align-items:center;gap:6px;margin-top:14px;font-size:12px;opacity:0.85;background:rgba(255,255,255,0.12);padding:6px 14px;border-radius:16px;border:1px solid rgba(255,255,255,0.2);transition:all 0.2s;" onmouseenter="this.style.opacity='1';this.style.background='rgba(255,255,255,0.2)'" onmouseleave="this.style.opacity='0.85';this.style.background='rgba(255,255,255,0.12)'">
-        <span>🙂</span> <span id="faceid-prompt-text" data-i18n="lock_faceid_btn">面容 ID 或输入密码</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="9" cy="9" r="1" fill="currentColor"/><circle cx="15" cy="9" r="1" fill="currentColor"/><path d="M10 14c.5.5 1.5.5 2 0"/></svg>
+        <span id="faceid-prompt-text" data-i18n="lock_faceid_btn">面容 ID 或输入密码</span>
       </div>
     </div>
 
@@ -246,17 +251,27 @@
         <div class="faceid-corner faceid-tr"></div>
         <div class="faceid-corner faceid-bl"></div>
         <div class="faceid-corner faceid-br"></div>
-        <span id="faceid-glyph-icon" style="font-size:26px;transition:transform 0.2s ease;">🙂</span>
+        <span id="faceid-glyph-icon" style="display:flex;align-items:center;justify-content:center;transition:transform 0.2s ease;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/>
+            <line x1="9" y1="9" x2="9.01" y2="9" stroke-width="3"/><line x1="15" y1="9" x2="15.01" y2="9" stroke-width="3"/>
+            <path d="M10 13c.5.5 1.5.5 2 0"/><path d="M12 11v2"/>
+          </svg>
+        </span>
       </div>
       <div id="faceid-status-text" data-i18n="lock_faceid_title" style="font-size:12px;margin-top:10px;font-weight:600;letter-spacing:0.5px;">面容 ID</div>
     </div>
 
     <!-- Bottom Quick Action Buttons (iOS Flashlight & Camera) -->
-    <div style="position:absolute;bottom:40px;left:50px;width:50px;height:50px;border-radius:50%;background:rgba(0,0,0,0.35);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,0.3);transition:transform 0.15s ease;" onmousedown="this.style.transform='scale(0.92)'" onmouseup="this.style.transform='scale(1)'" onclick="toggleFlashlight()" title="手电筒" data-i18n-title="lock_flashlight">
-      🔦
+    <div style="position:absolute;bottom:40px;left:50px;width:50px;height:50px;border-radius:50%;background:rgba(0,0,0,0.35);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;color:white;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,0.3);transition:transform 0.15s ease;" onmousedown="this.style.transform='scale(0.92)'" onmouseup="this.style.transform='scale(1)'" onclick="toggleFlashlight()" title="手电筒" data-i18n-title="lock_flashlight">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M6 2h12v3l-2 3v12a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V8L6 5V2zm2 2v1.5l2 3V20h4V8.5l2-3V4H8zm3 6h2v3h-2v-3z"/>
+      </svg>
     </div>
-    <div style="position:absolute;bottom:40px;right:50px;width:50px;height:50px;border-radius:50%;background:rgba(0,0,0,0.35);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,0.3);transition:transform 0.15s ease;" onmousedown="this.style.transform='scale(0.92)'" onmouseup="this.style.transform='scale(1)'" onclick="launchCamera()" title="相机" data-i18n-title="lock_camera">
-      📷
+    <div style="position:absolute;bottom:40px;right:50px;width:50px;height:50px;border-radius:50%;background:rgba(0,0,0,0.35);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;color:white;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,0.3);transition:transform 0.15s ease;" onmousedown="this.style.transform='scale(0.92)'" onmouseup="this.style.transform='scale(1)'" onclick="launchCamera()" title="相机" data-i18n-title="lock_camera">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>
+      </svg>
     </div>
   </div>
 
@@ -293,8 +308,9 @@
   <div id="airdrop-modal" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.35);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);z-index:8600;display:none;align-items:center;justify-content:center;opacity:0;transition:opacity 0.25s ease;">
     <div style="width:480px;background:rgba(255,255,255,0.88);backdrop-filter:blur(30px);border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.4);overflow:hidden;font-family:-apple-system, sans-serif;color:#1d1d1f;display:flex;flex-direction:column;">
       <div style="padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(0,0,0,0.08);">
-        <div style="font-weight:700;font-size:16px;display:flex;align-items:center;gap:8px;">
-          <span style="font-size:20px;">📡</span> <span data-i18n="ctx_airdrop">📡 隔空投送...</span>
+        <div style="font-weight:700;font-size:16px;display:flex;align-items:center;gap:8px;color:#007aff;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#007aff" stroke-width="2" stroke-linecap="round"><path d="M4.93 19.07a10 10 0 0 1 0-14.14"/><path d="M7.76 16.24a6 6 0 0 1 0-8.48"/><circle cx="12" cy="12" r="2" fill="#007aff"/><path d="M16.24 7.76a6 6 0 0 1 0 8.48"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+          <span style="color:#1d1d1f;" data-i18n="ctx_airdrop">隔空投送...</span>
         </div>
         <button onclick="closeAirDrop()" style="background:rgba(0,0,0,0.06);border:none;border-radius:50%;width:26px;height:26px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;color:#666;">✕</button>
       </div>
@@ -304,8 +320,8 @@
         <div class="airdrop-ripple" style="animation-delay: 1s;"></div>
         <div class="airdrop-ripple" style="animation-delay: 2s;"></div>
 
-        <div style="width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#007aff,#5856d6);display:flex;align-items:center;justify-content:center;font-size:28px;color:white;box-shadow:0 4px 15px rgba(0,122,255,0.4);z-index:2;">
-          👩‍💻
+        <div style="width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#007aff,#5856d6);display:flex;align-items:center;justify-content:center;color:white;box-shadow:0 4px 15px rgba(0,122,255,0.4);z-index:2;">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         </div>
         <div style="margin-top:10px;font-size:13px;font-weight:600;z-index:2;" data-i18n="airdrop_this_mac">Alice（这台 Mac）</div>
         <div style="font-size:11px;opacity:0.6;z-index:2;" data-i18n="airdrop_scanning">正在扫描附近的设备...</div>
@@ -314,18 +330,24 @@
       <div style="padding:16px 20px;border-top:1px solid rgba(0,0,0,0.08);background:rgba(255,255,255,0.5);">
         <div style="font-size:12px;font-weight:600;opacity:0.6;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px;" data-i18n="airdrop_devices">附近的 Apple 设备</div>
         <div style="display:flex;gap:16px;justify-content:center;">
-          <div class="airdrop-target" onclick="sendAirDrop('Alice\'s iPhone 16 Pro', '📱')" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;padding:10px 14px;border-radius:12px;transition:background 0.2s;">
-            <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#34c759,#30b0c7);display:flex;align-items:center;justify-content:center;font-size:24px;color:white;box-shadow:0 3px 10px rgba(0,0,0,0.15);">📱</div>
+          <div class="airdrop-target" onclick="sendAirDrop('Alice\'s iPhone 16 Pro', 'iphone')" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;padding:10px 14px;border-radius:12px;transition:background 0.2s;">
+            <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#34c759,#30b0c7);display:flex;align-items:center;justify-content:center;color:white;box-shadow:0 3px 10px rgba(0,0,0,0.15);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="3"/><line x1="12" y1="18" x2="12.01" y2="18" stroke-width="2.5"/><line x1="10" y1="5" x2="14" y2="5"/></svg>
+            </div>
             <div style="font-size:11px;font-weight:600;text-align:center;max-width:80px;">iPhone 16 Pro</div>
             <div style="font-size:10px;color:#34c759;font-weight:500;" data-i18n="airdrop_ready">就绪</div>
           </div>
-          <div class="airdrop-target" onclick="sendAirDrop('MacBook Pro M3 Max', '💻')" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;padding:10px 14px;border-radius:12px;transition:background 0.2s;">
-            <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#af52de,#ff2d55);display:flex;align-items:center;justify-content:center;font-size:24px;color:white;box-shadow:0 3px 10px rgba(0,0,0,0.15);">💻</div>
+          <div class="airdrop-target" onclick="sendAirDrop('MacBook Pro M3 Max', 'macbook')" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;padding:10px 14px;border-radius:12px;transition:background 0.2s;">
+            <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#af52de,#ff2d55);display:flex;align-items:center;justify-content:center;color:white;box-shadow:0 3px 10px rgba(0,0,0,0.15);">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><line x1="1" y1="20" x2="23" y2="20"/><line x1="8" y1="20" x2="16" y2="20"/></svg>
+            </div>
             <div style="font-size:11px;font-weight:600;text-align:center;max-width:80px;">MacBook Pro</div>
             <div style="font-size:10px;color:#34c759;font-weight:500;" data-i18n="airdrop_ready">就绪</div>
           </div>
-          <div class="airdrop-target" onclick="sendAirDrop('Alice\'s iPad Pro M4', '📲')" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;padding:10px 14px;border-radius:12px;transition:background 0.2s;">
-            <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#ff9500,#ffcc00);display:flex;align-items:center;justify-content:center;font-size:24px;color:white;box-shadow:0 3px 10px rgba(0,0,0,0.15);">📲</div>
+          <div class="airdrop-target" onclick="sendAirDrop('Alice\'s iPad Pro M4', 'ipad')" style="display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;padding:10px 14px;border-radius:12px;transition:background 0.2s;">
+            <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#ff9500,#ffcc00);display:flex;align-items:center;justify-content:center;color:white;box-shadow:0 3px 10px rgba(0,0,0,0.15);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2.5"/><circle cx="12" cy="18" r="1"/></svg>
+            </div>
             <div style="font-size:11px;font-weight:600;text-align:center;max-width:80px;">iPad Pro M4</div>
             <div style="font-size:10px;color:#34c759;font-weight:500;" data-i18n="airdrop_ready">就绪</div>
           </div>
@@ -351,17 +373,44 @@
     <div class="menubar-drag-spacer" id="menubar-drag-spacer"></div>
     <div class="menubar-right">
       <!-- Language Switcher Item -->
-      <div class="menu-item" id="lang-btn" onclick="toggleLanguagePopover(event)" style="cursor:pointer;font-size:12px;font-weight:600;display:flex;align-items:center;gap:4px;" title="Language / 语言 / 言語">
-        <span>🌐</span> <span id="current-lang-label">中</span>
+      <div class="menu-item" id="lang-btn" onclick="toggleLanguagePopover(event)" style="cursor:pointer;font-size:12px;font-weight:600;display:flex;align-items:center;gap:5px;" title="Language / 语言 / 言語">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <span id="current-lang-label">中</span>
       </div>
       <!-- macOS Sound Output Item -->
-      <div class="menu-item" id="sound-btn" onclick="toggleSoundPopover()" style="cursor:pointer;font-size:13px;" title="Sound Output">🔊</div>
-      <!-- macOS Battery Status -->
-      <div class="menu-item" id="battery-btn" onclick="toggleBatteryPopover()" style="display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer;">
-        <span id="battery-level-icon">🔋</span><span id="battery-level-pct">98%</span>
+      <div class="menu-item" id="sound-btn" onclick="toggleSoundPopover()" style="cursor:pointer;display:flex;align-items:center;" title="Sound Output">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
       </div>
-      <div class="menu-item" id="ai-btn" onclick="toggleAssistant()">✨</div>
-      <div class="menu-item" id="cc-btn">🎛️</div>
+      <!-- macOS Battery Status -->
+      <div class="menu-item" id="battery-btn" onclick="toggleBatteryPopover()" style="display:flex;align-items:center;gap:5px;font-size:12px;cursor:pointer;">
+        <span id="battery-level-icon" style="display:flex;align-items:center;">
+          <svg viewBox="0 0 26 13" width="22" height="12" fill="none" style="display:inline-block;">
+            <rect x="0.5" y="0.5" width="22" height="12" rx="3.5" stroke="currentColor" stroke-width="1.2" opacity="0.8"/>
+            <rect x="2" y="2" width="16" height="8" rx="2" fill="currentColor"/>
+            <path d="M 23.5 4.5 C 24.3 4.5 25 5.2 25 6 L 25 7 C 25 7.8 24.3 8.5 23.5 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+          </svg>
+        </span>
+        <span id="battery-level-pct">98%</span>
+      </div>
+      <div class="menu-item" id="ai-btn" onclick="toggleAssistant()" title="Apple Intelligence / Siri" style="display:flex;align-items:center;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2L14.4 7.6L20 10L14.4 12.4L12 18L9.6 12.4L4 10L9.6 7.6L12 2Z" fill="url(#ai-grad-bar)"/>
+          <path d="M19 16L20.2 18.8L23 20L20.2 21.2L19 24L17.8 21.2L15 20L17.8 18.8L19 16Z" fill="url(#ai-grad-bar)"/>
+          <defs>
+            <linearGradient id="ai-grad-bar" x1="2" y1="2" x2="23" y2="24" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#38bdf8"/><stop offset="0.5" stop-color="#a855f7"/><stop offset="1" stop-color="#ec4899"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="menu-item" id="cc-btn" title="Control Center" style="display:flex;align-items:center;">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor">
+          <rect x="1" y="3" width="14" height="4" rx="2" fill-opacity="0.3"/>
+          <circle cx="5" cy="5" r="3" fill="currentColor"/>
+          <rect x="1" y="9" width="14" height="4" rx="2" fill-opacity="0.3"/>
+          <circle cx="11" cy="11" r="3" fill="currentColor"/>
+        </svg>
+      </div>
       <div class="menu-item" id="time-display" onclick="toggleNotificationCenter()" style="cursor:pointer;padding:0 15px;">00:00</div>
     </div>
   </div>
@@ -401,7 +450,8 @@
     </div>
     <div style="height:1px;background:rgba(255,255,255,0.1);margin:8px 0;"></div>
     <div class="lang-popover-footer" onclick="openLanguageSettings()">
-      <span data-i18n="lang_open_settings">语言与地区设置...</span> <span>⚙️</span>
+      <span data-i18n="lang_open_settings">语言与地区设置...</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
     </div>
   </div>
 
@@ -410,16 +460,18 @@
     <div style="font-weight:700;font-size:13px;margin-bottom:8px;color:inherit;" data-i18n="cc_sound">声音</div>
     <!-- Volume Slider Row -->
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;background:rgba(255,255,255,0.06);padding:8px 12px;border-radius:12px;">
-      <span id="sound-pop-icon" style="font-size:16px;">🔊</span>
+      <span id="sound-pop-icon" style="display:flex;align-items:center;">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </span>
       <input type="range" id="sound-pop-slider" min="0" max="100" value="75" style="flex:1;cursor:pointer;">
       <span id="sound-pop-pct" style="font-size:12px;font-weight:600;min-width:32px;text-align:right;">75%</span>
     </div>
 
     <!-- Output Section -->
     <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.5);margin-bottom:6px;letter-spacing:0.5px;" data-i18n="cc_output">输出</div>
-    <div class="sound-device-item active" onclick="selectSoundDevice(this, 'MacBook Pro Speakers', '💻')">
+    <div class="sound-device-item active" onclick="selectSoundDevice(this, 'MacBook Pro Speakers', 'macbook')">
       <div style="display:flex;align-items:center;gap:8px;">
-        <span style="font-size:16px;">💻</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><line x1="1" y1="20" x2="23" y2="20"/><line x1="8" y1="20" x2="16" y2="20"/></svg>
         <div>
           <div style="font-size:12px;font-weight:600;" data-i18n="cc_macbook_speakers">MacBook Pro 扬声器</div>
           <div style="font-size:10px;opacity:0.6;" data-i18n="cc_builtin_audio">内置音频</div>
@@ -427,9 +479,9 @@
       </div>
       <span class="sound-check">✓</span>
     </div>
-    <div class="sound-device-item" onclick="selectSoundDevice(this, 'Alice\\'s AirPods Pro', '🎧')">
+    <div class="sound-device-item" onclick="selectSoundDevice(this, 'Alice\\'s AirPods Pro', 'airpods')">
       <div style="display:flex;align-items:center;gap:8px;">
-        <span style="font-size:16px;">🎧</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></svg>
         <div>
           <div style="font-size:12px;font-weight:600;" data-i18n="cc_airpods_pro">Alice 的 AirPods Pro</div>
           <div style="font-size:10px;opacity:0.6;" data-i18n="cc_anc_active">降噪模式已开启</div>
@@ -437,9 +489,9 @@
       </div>
       <span class="sound-check" style="display:none;">✓</span>
     </div>
-    <div class="sound-device-item" onclick="selectSoundDevice(this, 'Living Room HomePod', '📻')">
+    <div class="sound-device-item" onclick="selectSoundDevice(this, 'Living Room HomePod', 'homepod')">
       <div style="display:flex;align-items:center;gap:8px;">
-        <span style="font-size:16px;">📻</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="3" width="14" height="18" rx="6"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="10" y1="16" x2="14" y2="16"/></svg>
         <div>
           <div style="font-size:12px;font-weight:600;" data-i18n="cc_homepod">客厅 HomePod</div>
           <div style="font-size:10px;opacity:0.6;" data-i18n="cc_airplay_audio">隔空播放音频</div>
@@ -503,7 +555,9 @@
     <!-- Compact Pill Mode (Default) -->
     <div id="island-compact-wrap" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
       <div id="island-content" style="opacity:0;transition:opacity 0.2s;display:flex;align-items:center;gap:15px;width:100%;padding:0 20px;box-sizing:border-box;">
-        <div id="island-icon" style="font-size:24px;">☀️</div>
+        <div id="island-icon" style="display:flex;align-items:center;justify-content:center;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41m14.14-14.14l-1.41 1.41"/></svg>
+        </div>
         <div style="flex:1;">
           <div id="island-title" style="font-weight:bold;font-size:14px;" data-i18n="island_brightness">屏幕亮度</div>
           <div id="island-value" style="width:100%;height:6px;background:rgba(255,255,255,0.2);border-radius:3px;margin-top:5px;overflow:hidden;">
@@ -514,7 +568,9 @@
       <!-- Mini Live Activity Indicators (Compact state) -->
       <div id="island-live-activity" style="display:none;align-items:center;justify-content:space-between;width:100%;padding:0 14px;box-sizing:border-box;">
         <div style="display:flex;align-items:center;gap:6px;font-size:12px;">
-          <span id="island-live-icon">🎵</span>
+          <span id="island-live-icon" style="display:flex;align-items:center;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+          </span>
           <span id="island-live-label" style="font-size:11px;font-weight:600;max-width:70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Alice</span>
         </div>
         <div class="eq-container" id="island-live-eq" style="height:12px;gap:2px;">
@@ -530,17 +586,23 @@
     <div id="island-expanded-container" style="display:none;width:100%;height:100%;flex-direction:column;opacity:0;transition:opacity 0.25s ease;" onclick="event.stopPropagation()">
       <!-- Activity Switcher Header -->
       <div class="island-activity-tabs">
-        <div class="island-act-tab active" id="act-tab-music" onclick="switchIslandTab('music')" data-i18n="island_music">🎵 音乐</div>
-        <div class="island-act-tab" id="act-tab-timer" onclick="switchIslandTab('timer')" data-i18n="island_timer">⏱️ 计时器</div>
-        <div class="island-act-tab" id="act-tab-airdrop" onclick="switchIslandTab('airdrop')" data-i18n="island_airdrop">📡 隔空投送</div>
+        <div class="island-act-tab active" id="act-tab-music" onclick="switchIslandTab('music')" data-i18n="island_music" style="display:flex;align-items:center;gap:5px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg> <span>音乐</span>
+        </div>
+        <div class="island-act-tab" id="act-tab-timer" onclick="switchIslandTab('timer')" data-i18n="island_timer" style="display:flex;align-items:center;gap:5px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="14" r="8"/><line x1="10" y1="2" x2="14" y2="2"/><line x1="12" y1="14" x2="15" y2="11"/></svg> <span>计时器</span>
+        </div>
+        <div class="island-act-tab" id="act-tab-airdrop" onclick="switchIslandTab('airdrop')" data-i18n="island_airdrop" style="display:flex;align-items:center;gap:5px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.93 19.07a10 10 0 0 1 0-14.14"/><path d="M7.76 16.24a6 6 0 0 1 0-8.48"/><circle cx="12" cy="12" r="2" fill="currentColor"/><path d="M16.24 7.76a6 6 0 0 1 0 8.48"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg> <span>隔空投送</span>
+        </div>
         <div class="island-close-btn" onclick="toggleIslandClick(event)" title="Collapse">✕</div>
       </div>
 
       <!-- 1. Music Live Activity -->
       <div id="island-pane-music" class="island-pane active">
         <div style="display:flex;align-items:center;gap:14px;width:100%;">
-          <div class="island-album-art" id="island-music-art">
-            <span style="font-size:26px;">💿</span>
+          <div class="island-album-art" id="island-music-art" style="display:flex;align-items:center;justify-content:center;">
+            <svg width="24" height="24" viewBox="0 0 100 100"><path d="M 68 22 L 42 28 C 39 29 37 31 37 34 L 37 66 C 35 64 32 63 28 63 C 21 63 16 67 16 73 C 16 79 21 83 28 83 C 35 83 40 78 40 72 L 40 42 L 65 37 L 65 60 C 63 58 60 57 56 57 C 49 57 44 61 44 67 C 44 73 49 77 56 77 C 63 77 68 72 68 66 Z" fill="#ffffff"/></svg>
           </div>
           <div style="flex:1;overflow:hidden;">
             <div style="display:flex;align-items:center;justify-content:space-between;">
@@ -566,13 +628,20 @@
         </div>
         <!-- Playback Controls & AirPlay Route -->
         <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding:0 6px;">
-          <div class="island-airplay-badge">
-            <span>🎧</span> <span data-i18n="cc_airpods_pro">Alice 的 AirPods Pro</span>
+          <div class="island-airplay-badge" style="display:flex;align-items:center;gap:6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></svg>
+            <span data-i18n="cc_airpods_pro">Alice 的 AirPods Pro</span>
           </div>
           <div style="display:flex;gap:18px;font-size:16px;align-items:center;">
-            <span class="island-ctrl-btn" onclick="skipTrack(-1)">⏮</span>
-            <span class="island-ctrl-btn play-btn" id="island-play-toggle" onclick="toggleIslandPlayback()">▶</span>
-            <span class="island-ctrl-btn" onclick="skipTrack(1)">⏭</span>
+            <span class="island-ctrl-btn" onclick="skipTrack(-1)" style="display:inline-flex;align-items:center;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="4" x2="5" y2="20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+            </span>
+            <span class="island-ctrl-btn play-btn" id="island-play-toggle" onclick="toggleIslandPlayback()" style="display:inline-flex;align-items:center;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </span>
+            <span class="island-ctrl-btn" onclick="skipTrack(1)" style="display:inline-flex;align-items:center;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="4" x2="19" y2="20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+            </span>
           </div>
         </div>
       </div>
@@ -586,7 +655,9 @@
               <circle cx="34" cy="34" r="28" stroke="rgba(255,255,255,0.15)" stroke-width="5" fill="none"/>
               <circle id="island-timer-ring" cx="34" cy="34" r="28" stroke="#ff9f0a" stroke-width="5" fill="none" stroke-linecap="round" stroke-dasharray="175.9" stroke-dashoffset="40" style="transform:rotate(-90deg);transform-origin:50% 50%;transition:stroke-dashoffset 0.8s ease;"/>
             </svg>
-            <span style="position:absolute;font-size:22px;">⏱️</span>
+            <span style="position:absolute;display:flex;align-items:center;justify-content:center;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ff9f0a" stroke-width="2"><circle cx="12" cy="14" r="8"/><line x1="10" y1="2" x2="14" y2="2"/><line x1="12" y1="14" x2="15" y2="11"/></svg>
+            </span>
           </div>
           <div style="flex:1;">
             <div style="font-size:11px;opacity:0.6;text-transform:uppercase;letter-spacing:0.5px;" data-i18n="island_focus_timer">专注计时器</div>
@@ -696,7 +767,7 @@
       <span style="opacity:0.5;font-size:11px;">⌃S</span>
     </div>
     <div class="menu-dropdown-item" onclick="closeAllTopMenus(); toggleDesktopStacks();" style="display:flex;justify-content:space-between;align-items:center;">
-      <span data-i18n="ctx_use_stacks">🥞 使用叠放</span>
+      <span data-i18n="ctx_use_stacks">使用叠放</span>
     </div>
     <div class="menu-dropdown-separator"></div>
     <div class="menu-dropdown-item" onclick="closeAllTopMenus(); toggleFullScreen();" style="display:flex;justify-content:space-between;align-items:center;">
@@ -710,7 +781,7 @@
     <div class="menu-dropdown-item" onclick="closeAllTopMenus(); launchSystemInfo();" data-i18n="menu_help_title">AliceOS 帮助</div>
     <div class="menu-dropdown-separator"></div>
     <div class="menu-dropdown-item" onclick="closeAllTopMenus(); toggleAssistant();" style="display:flex;justify-content:space-between;align-items:center;">
-      <span data-i18n="ai_title">✨ Alice 智能助理</span>
+      <span data-i18n="ai_title" style="display:inline-flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L14.4 7.6L20 10L14.4 12.4L12 18L9.6 12.4L4 10L9.6 7.6L12 2Z" fill="url(#ai-grad-menu)"/><defs><linearGradient id="ai-grad-menu" x1="2" y1="2" x2="20" y2="18"><stop stop-color="#38bdf8"/><stop offset="0.5" stop-color="#a855f7"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs></svg> Alice 智能助理</span>
       <span style="opacity:0.5;font-size:11px;">⌃␣</span>
     </div>
   </div>
@@ -723,7 +794,9 @@
       <div style="flex:1;background:rgba(0,0,0,0.2);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:10px;position:relative;">
         <div id="cc-wifi-toggle" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:2px 4px;border-radius:8px;transition:background 0.2s;" onclick="toggleCCWifi()">
           <div style="display:flex;align-items:center;gap:10px;">
-            <div style="width:30px;height:30px;border-radius:50%;background:#007aff;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 5px rgba(0,0,0,0.2);font-size:16px;">📡</div>
+            <div style="width:30px;height:30px;border-radius:50%;background:#007aff;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 5px rgba(0,0,0,0.2);">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1" fill="white"/></svg>
+            </div>
             <div><div style="font-weight:600;font-size:13px;" data-i18n="cc_wifi">无线局域网</div><div id="cc-wifi-name" style="font-size:11px;opacity:0.7;">Alice-5G</div></div>
           </div>
           <div style="font-size:14px;opacity:0.6;">›</div>
@@ -732,7 +805,7 @@
         <!-- Wi-Fi Popover -->
         <div id="cc-wifi-popover" class="cc-popover">
           <div style="font-size:11px;font-weight:700;opacity:0.5;padding:2px 6px;text-transform:uppercase;" data-i18n="cc_wifi_preferred">首选网络</div>
-          <div class="cc-popover-item active" onclick="selectWifi('Alice-5G')"><span>✓ Alice-5G</span><span>📶 5 GHz</span></div>
+          <div class="cc-popover-item active" onclick="selectWifi('Alice-5G')"><span>✓ Alice-5G</span><span>5 GHz</span></div>
           <div style="font-size:11px;font-weight:700;opacity:0.5;padding:6px 6px 2px 6px;text-transform:uppercase;" data-i18n="cc_wifi_other">其他网络</div>
           <div class="cc-popover-item" onclick="selectWifi('Apple Park Guest')"><span>Apple Park Guest</span><span>🔒</span></div>
           <div class="cc-popover-item" onclick="selectWifi('Alice\'s iPhone 16 Pro')"><span>Alice\'s iPhone 16 Pro</span><span>📱</span></div>
@@ -741,7 +814,9 @@
 
         <div id="cc-bt-toggle" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:2px 4px;border-radius:8px;transition:background 0.2s;" onclick="toggleCCBluetooth()">
           <div style="display:flex;align-items:center;gap:10px;">
-            <div style="width:30px;height:30px;border-radius:50%;background:#007aff;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 5px rgba(0,0,0,0.2);font-size:16px;">📶</div>
+            <div style="width:30px;height:30px;border-radius:50%;background:#007aff;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 5px rgba(0,0,0,0.2);">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6.5 6.5 17.5 17.5 12 23 12 1 17.5 6.5 6.5 17.5"/></svg>
+            </div>
             <div><div style="font-weight:600;font-size:13px;" data-i18n="cc_bluetooth">蓝牙</div><div id="cc-bt-status" style="font-size:11px;opacity:0.7;">3 Devices</div></div>
           </div>
           <div style="font-size:14px;opacity:0.6;">›</div>
@@ -750,19 +825,19 @@
         <!-- Bluetooth Popover -->
         <div id="cc-bluetooth-popover" class="cc-popover">
           <div style="font-size:11px;font-weight:700;opacity:0.5;padding:2px 6px;text-transform:uppercase;" data-i18n="cc_bt_devices">已连接设备</div>
-          <div class="cc-popover-item active" onclick="toggleBTDevice(this, 'AirPods Pro 2')"><span>🎧 AirPods Pro 2</span><span style="color:#34c759;font-weight:600;">89%</span></div>
-          <div class="cc-popover-item active" onclick="toggleBTDevice(this, 'Magic Keyboard')"><span>⌨️ Magic Keyboard</span><span style="color:#34c759;font-weight:600;">92%</span></div>
-          <div class="cc-popover-item active" onclick="toggleBTDevice(this, 'Magic Trackpad')"><span>🖱️ Magic Trackpad</span><span style="color:#34c759;font-weight:600;">85%</span></div>
+          <div class="cc-popover-item active" onclick="toggleBTDevice(this, 'AirPods Pro 2')"><span>AirPods Pro 2</span><span style="color:#34c759;font-weight:600;">89%</span></div>
+          <div class="cc-popover-item active" onclick="toggleBTDevice(this, 'Magic Keyboard')"><span>Magic Keyboard</span><span style="color:#34c759;font-weight:600;">92%</span></div>
+          <div class="cc-popover-item active" onclick="toggleBTDevice(this, 'Magic Trackpad')"><span>Magic Trackpad</span><span style="color:#34c759;font-weight:600;">85%</span></div>
         </div>
       </div>
       <!-- DND & AirDrop -->
       <div style="flex:1;display:flex;flex-direction:column;gap:12px;">
         <div style="flex:1;background:rgba(0,0,0,0.2);border-radius:14px;display:flex;align-items:center;padding:0 12px;gap:10px;cursor:pointer;" onclick="this.style.background = this.style.background.includes('0.2') ? 'rgba(255,255,255,0.9)' : 'rgba(0,0,0,0.2)'; this.style.color = this.style.color === 'black' ? 'white' : 'black';">
-          <div style="font-size:18px;">🌙</div>
+          <div style="display:flex;align-items:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></div>
           <div style="font-weight:600;font-size:14px;" data-i18n="cc_dnd">勿扰模式</div>
         </div>
         <div id="cc-stage-manager-btn" style="flex:1;background:rgba(0,0,0,0.2);border-radius:14px;display:flex;align-items:center;padding:0 12px;gap:10px;cursor:pointer;transition:all 0.2s ease;" onclick="toggleStageManager()">
-          <div style="font-size:18px;">🪟</div>
+          <div style="display:flex;align-items:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="4" width="14" height="16" rx="2"/><rect x="3" y="7" width="2" height="10" rx="1" fill="currentColor"/><rect x="1" y="9" width="1" height="6" rx="0.5" fill="currentColor"/></svg></div>
           <div style="font-weight:600;font-size:14px;" data-i18n="cc_stage_manager">台前调度</div>
         </div>
       </div>
@@ -771,12 +846,16 @@
     <!-- Brightness & Volume Sliders with iOS 17 3D Expanders -->
     <div style="background:rgba(0,0,0,0.2);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:12px;">
       <div style="display:flex;align-items:center;gap:10px;">
-        <span style="font-size:14px;width:20px;text-align:center;cursor:pointer;" onclick="openCCExpandedSlider('brightness')" title="Expand 3D Brightness Capsule">☀️</span>
+        <span style="width:20px;text-align:center;cursor:pointer;display:flex;align-items:center;justify-content:center;" onclick="openCCExpandedSlider('brightness')" title="Expand 3D Brightness Capsule">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41m14.14-14.14l-1.41 1.41"/></svg>
+        </span>
         <input type="range" id="cc-brightness" min="0" max="100" value="100" style="flex:1;appearance:none;height:24px;border-radius:12px;background:rgba(255,255,255,0.2);outline:none;overflow:hidden;">
         <span class="cc-slider-expand-btn" onclick="openCCExpandedSlider('brightness')" title="Expand 3D Slider">⤢</span>
       </div>
       <div style="display:flex;align-items:center;gap:10px;">
-        <span id="cc-volume-icon" style="font-size:14px;width:20px;text-align:center;cursor:pointer;" onclick="openCCExpandedSlider('volume')" title="Expand 3D Volume Capsule">🔊</span>
+        <span id="cc-volume-icon" style="width:20px;text-align:center;cursor:pointer;display:flex;align-items:center;justify-content:center;" onclick="openCCExpandedSlider('volume')" title="Expand 3D Volume Capsule">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </span>
         <input type="range" id="cc-volume" min="0" max="100" value="50" style="flex:1;appearance:none;height:24px;border-radius:12px;background:rgba(255,255,255,0.2);outline:none;overflow:hidden;">
         <span class="cc-slider-expand-btn" onclick="openCCExpandedSlider('volume')" title="Expand 3D Slider">⤢</span>
       </div>
@@ -784,7 +863,9 @@
 
     <!-- Music Player with Live Equalizer -->
     <div style="background:rgba(0,0,0,0.2);border-radius:14px;padding:14px;display:flex;align-items:center;gap:14px;">
-      <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg, #FF2D55 0%, #FECFEF 100%);box-shadow:0 4px 12px rgba(255,45,85,0.3);display:flex;align-items:center;justify-content:center;font-size:22px;">🎵</div>
+      <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg, #FF2D55 0%, #FECFEF 100%);box-shadow:0 4px 12px rgba(255,45,85,0.3);display:flex;align-items:center;justify-content:center;color:white;">
+        <svg width="24" height="24" viewBox="0 0 100 100"><path d="M 68 22 L 42 28 C 39 29 37 31 37 34 L 37 66 C 35 64 32 63 28 63 C 21 63 16 67 16 73 C 16 79 21 83 28 83 C 35 83 40 78 40 72 L 40 42 L 65 37 L 65 60 C 63 58 60 57 56 57 C 49 57 44 61 44 67 C 44 73 49 77 56 77 C 63 77 68 72 68 66 Z" fill="#ffffff"/></svg>
+      </div>
       <div style="flex:1;">
         <div style="display:flex;align-items:center;justify-content:space-between;">
           <div style="font-weight:bold;font-size:14px;">Alice Symphony</div>
@@ -798,9 +879,15 @@
         </div>
         <div style="font-size:12px;opacity:0.7;">Cupertino Soundscape</div>
         <div style="display:flex;gap:16px;margin-top:6px;font-size:15px;align-items:center;">
-          <span style="cursor:pointer;opacity:0.8;" onclick="skipTrack(-1)">⏮</span>
-          <span id="cc-music-play-btn" style="cursor:pointer;font-size:18px;" onclick="toggleCCMusic()">▶️</span>
-          <span style="cursor:pointer;opacity:0.8;" onclick="skipTrack(1)">⏭</span>
+          <span style="cursor:pointer;opacity:0.8;display:inline-flex;align-items:center;" onclick="skipTrack(-1)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="4" x2="5" y2="20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+          </span>
+          <span id="cc-music-play-btn" style="cursor:pointer;display:inline-flex;align-items:center;" onclick="toggleCCMusic()">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </span>
+          <span style="cursor:pointer;opacity:0.8;display:inline-flex;align-items:center;" onclick="skipTrack(1)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="4" x2="19" y2="20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+          </span>
         </div>
       </div>
     </div>
@@ -810,7 +897,9 @@
   <div id="cc-slider-modal" class="cc-slider-modal-overlay" onclick="closeCCSliderModal(event)">
     <div class="cc-slider-modal-card" id="cc-slider-modal-card" onclick="event.stopPropagation()">
       <div class="cc-modal-header">
-        <span id="cc-modal-icon" style="font-size:24px;">🔊</span>
+        <span id="cc-modal-icon" style="display:flex;align-items:center;justify-content:center;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </span>
         <div style="flex:1;text-align:center;">
           <div style="font-weight:600;font-size:16px;" id="cc-modal-title" data-i18n="cc_sound">声音</div>
           <div style="font-size:11px;opacity:0.75;margin-top:2px;" id="cc-modal-subtitle" data-i18n="cc_macbook_speakers">MacBook Pro 扬声器</div>
@@ -822,7 +911,9 @@
       <div class="cc-vertical-track-container" id="cc-vertical-track-container">
         <div class="cc-vertical-track" id="cc-vertical-track">
           <div class="cc-vertical-fill" id="cc-vertical-fill" style="height: 50%;"></div>
-          <div class="cc-vertical-thumb-glyph" id="cc-vertical-thumb-glyph">🔊</div>
+          <div class="cc-vertical-thumb-glyph" id="cc-vertical-thumb-glyph" style="display:flex;align-items:center;justify-content:center;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
         </div>
       </div>
 
@@ -836,12 +927,16 @@
 
   <!-- AI Assistant Panel -->
   <div id="ai-panel" style="position:absolute;top:32px;right:45px;width:300px;background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);border-radius:12px;padding:15px;box-shadow:0 5px 20px rgba(0,0,0,0.3);display:none;flex-direction:column;z-index:2000;">
-    <div style="font-weight:bold;margin-bottom:10px;display:flex;align-items:center;gap:5px;" data-i18n="ai_title">✨ Alice 智能助理</div>
+    <div style="font-weight:bold;margin-bottom:10px;display:flex;align-items:center;gap:6px;" data-i18n="ai_title">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2L14.4 7.6L20 10L14.4 12.4L12 18L9.6 12.4L4 10L9.6 7.6L12 2Z" fill="url(#ai-grad-menu)"/></svg> Alice 智能助理
+    </div>
     <div id="ai-chat" style="flex-grow:1;height:150px;overflow-y:auto;background:rgba(0,0,0,0.05);border-radius:8px;padding:10px;margin-bottom:10px;font-size:12px;display:flex;flex-direction:column;gap:8px;">
       <div><em data-i18n="ai_help_prompt">我能帮您做什么？试着说“打开音乐”或“现在几点了”。</em></div>
     </div>
     <div style="display:flex;gap:5px;">
-      <button id="ai-mic-btn" onclick="startVoiceRecognition()" style="background:#ff3b30;color:white;border:none;border-radius:15px;padding:6px 10px;cursor:pointer;" title="Voice Command">🎤</button>
+      <button id="ai-mic-btn" onclick="startVoiceRecognition()" style="background:#ff3b30;color:white;border:none;border-radius:15px;padding:6px 10px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;" title="Voice Command">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
+      </button>
       <input type="text" id="ai-input" placeholder="咨询 Alice..." data-i18n-placeholder="ai_placeholder" style="flex-grow:1;padding:6px;border:1px solid #ccc;border-radius:15px;outline:none;">
       <button onclick="handleAIInput()" style="background:#007aff;color:white;border:none;border-radius:15px;padding:6px 12px;cursor:pointer;" data-i18n="ai_ask">发送</button>
     </div>
@@ -1337,7 +1432,9 @@
   <div id="window-snap-preview"></div>
 
   <!-- macOS Quick Note Peek Dog-Ear & Floating Card -->
-  <div id="quick-note-peek" onclick="openQuickNote()" title="快速备忘" data-i18n-title="qn_title">📝</div>
+  <div id="quick-note-peek" onclick="openQuickNote()" title="快速备忘" data-i18n-title="qn_title" style="display:flex;align-items:center;justify-content:center;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ca8a04" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+  </div>
   <div id="quick-note-card">
     <div class="quick-note-header">
       <div style="display:flex;align-items:center;gap:8px;">
@@ -1352,7 +1449,9 @@
 
   <!-- Floating Volume HUD -->
   <div id="volume-hud">
-    <span id="volume-hud-icon">🔊</span>
+    <span id="volume-hud-icon" style="display:flex;align-items:center;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </span>
     <div style="width:100px;height:5px;background:rgba(255,255,255,0.25);border-radius:3px;overflow:hidden;">
       <div id="volume-hud-bar" style="width:50%;height:100%;background:white;border-radius:3px;transition:width 0.12s cubic-bezier(0.16, 1, 0.3, 1);"></div>
     </div>
@@ -1530,9 +1629,15 @@
   <div id="screenshot-floating-card" class="screenshot-floating-card" style="display:none;" onclick="openScreenshotMarkup()">
     <img id="screenshot-thumb-img" class="screenshot-floating-preview" src="" alt="Screenshot" />
     <div class="screenshot-floating-actions" onclick="event.stopPropagation()">
-      <button class="screenshot-thumb-btn primary" onclick="copyScreenshotThumb()" title="拷贝到剪贴板">📋 拷贝</button>
-      <button class="screenshot-thumb-btn" onclick="saveScreenshotThumb()" title="存入桌面">💾 存储</button>
-      <button class="screenshot-thumb-btn" onclick="openScreenshotMarkup()" title="标记">✏️ 标注</button>
+      <button class="screenshot-thumb-btn primary" onclick="copyScreenshotThumb()" title="拷贝到剪贴板" style="display:inline-flex;align-items:center;gap:4px;">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg> 拷贝
+      </button>
+      <button class="screenshot-thumb-btn" onclick="saveScreenshotThumb()" title="存入桌面" style="display:inline-flex;align-items:center;gap:4px;">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> 存储
+      </button>
+      <button class="screenshot-thumb-btn" onclick="openScreenshotMarkup()" title="标记" style="display:inline-flex;align-items:center;gap:4px;">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> 标注
+      </button>
       <button class="screenshot-thumb-btn" onclick="dismissScreenshotThumb()" title="关闭">✕</button>
     </div>
   </div>
@@ -1542,7 +1647,9 @@
     <div class="markup-window">
       <div class="markup-toolbar">
         <div style="display:flex;align-items:center;gap:10px;">
-          <span style="font-weight:600;font-size:14px;color:#1d1d1f;">✏️ 截屏标注</span>
+          <span style="font-weight:600;font-size:14px;color:#1d1d1f;display:inline-flex;align-items:center;gap:6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> 截屏标注
+          </span>
           <button class="screenshot-thumb-btn" onclick="setMarkupColor('#ff3b30')" style="background:#ff3b30;color:white;border-radius:50%;width:22px;height:22px;padding:0;display:inline-block;"></button>
           <button class="screenshot-thumb-btn" onclick="setMarkupColor('#007aff')" style="background:#007aff;color:white;border-radius:50%;width:22px;height:22px;padding:0;display:inline-block;"></button>
           <button class="screenshot-thumb-btn" onclick="setMarkupColor('#ffcc00')" style="background:#ffcc00;color:white;border-radius:50%;width:22px;height:22px;padding:0;display:inline-block;"></button>

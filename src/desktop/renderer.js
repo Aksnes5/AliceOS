@@ -422,7 +422,7 @@ const i18nDict = {
     app_browser: 'Safari',
     app_music: 'Music',
     app_camera: 'Camera',
-    app_paint: 'Paint',
+    app_paint: 'Photos',
     app_snake: 'Snake',
     app_maps: 'Maps',
     app_video: 'QuickTime Player',
@@ -591,7 +591,12 @@ const i18nDict = {
     assistant_listening: 'Listening...',
     assistant_thinking: 'Thinking...',
     assistant_reply: 'I heard: %s. I am Alice.',
-    assistant_error: 'Error parsing audio.'
+    assistant_error: 'Error parsing audio.',
+    calc_mode_basic: 'Basic',
+    calc_mode_sci: 'Scientific',
+    calc_history: 'History',
+    calc_history_tape: 'History Tape',
+    calc_no_history: 'No History'
   },
   zh: {
     // 菜单
@@ -1013,7 +1018,7 @@ const i18nDict = {
     app_browser: 'Safari 浏览器',
     app_music: '音乐',
     app_camera: '相机',
-    app_paint: '画板',
+    app_paint: '照片',
     app_snake: '贪吃蛇',
     app_maps: '地图',
     app_video: 'QuickTime Player',
@@ -1182,7 +1187,12 @@ const i18nDict = {
     assistant_listening: '正在聆听...',
     assistant_thinking: '正在思考...',
     assistant_reply: '我听到的是：%s。我是 Alice。',
-    assistant_error: '音频解析错误。'
+    assistant_error: '音频解析错误。',
+    calc_mode_basic: '基本',
+    calc_mode_sci: '科学',
+    calc_history: '历史',
+    calc_history_tape: '历史纸带',
+    calc_no_history: '暂无历史'
   },
   ja: {
     // メニュー
@@ -1576,7 +1586,7 @@ const i18nDict = {
     app_browser: 'Safari',
     app_music: 'ミュージック',
     app_camera: 'カメラ',
-    app_paint: 'ペイント',
+    app_paint: '写真',
     app_snake: 'スネークゲーム',
     app_maps: 'マップ',
     app_video: 'QuickTime Player',
@@ -1745,7 +1755,12 @@ const i18nDict = {
     assistant_listening: '聞き取り中...',
     assistant_thinking: '考え中...',
     assistant_reply: '「%s」と聞こえました。Alice です。',
-    assistant_error: '音声の解析エラー。'
+    assistant_error: '音声の解析エラー。',
+    calc_mode_basic: '基本',
+    calc_mode_sci: '科学計算',
+    calc_history: '履歴',
+    calc_history_tape: '計算履歴',
+    calc_no_history: '履歴なし'
   }
 };
 
@@ -2574,6 +2589,37 @@ function getSFSymbol(name, size = 16, color = 'currentColor') {
   return `<span class="sf-icon" style="width:${size}px;height:${size}px;">${svg}</span>`;
 }
 
+// macOS Sequoia System Vector Glyphs Helpers
+function getVolumeSvg(val, size = 16) {
+  val = Math.max(0, Math.min(100, Math.round(Number(val) || 0)));
+  if (val === 0) {
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor" style="display:inline-block;vertical-align:middle;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
+  } else if (val < 35) {
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor" style="display:inline-block;vertical-align:middle;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
+  } else if (val < 70) {
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor" style="display:inline-block;vertical-align:middle;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M18.5 5.5a9 9 0 0 1 0 13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
+  } else {
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor" style="display:inline-block;vertical-align:middle;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
+  }
+}
+window.getVolumeSvg = getVolumeSvg;
+
+function getBrightnessSvg(val, size = 16) {
+  return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="display:inline-block;vertical-align:middle;"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41m14.14-14.14l-1.41 1.41"/></svg>`;
+}
+window.getBrightnessSvg = getBrightnessSvg;
+
+function getBatterySvg(isLowPower = false, pct = 98) {
+  const fillColor = isLowPower ? '#FFCC00' : (pct <= 20 ? '#FF3B30' : 'currentColor');
+  const barWidth = Math.max(2, Math.min(16, Math.round(16 * (pct / 100))));
+  return `<svg viewBox="0 0 26 13" width="22" height="12" fill="none" style="display:inline-block;vertical-align:middle;">
+    <rect x="0.5" y="0.5" width="22" height="12" rx="3.5" stroke="currentColor" stroke-width="1.2" opacity="0.8"/>
+    <rect x="2" y="2" width="${barWidth}" height="8" rx="2" fill="${fillColor}"/>
+    <path d="M 23.5 4.5 C 24.3 4.5 25 5.2 25 6 L 25 7 C 25 7.8 24.3 8.5 23.5 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+  </svg>`;
+}
+window.getBatterySvg = getBatterySvg;
+
 // Universal Horizontal Drag-to-Scroll & Mouse Wheel Handler
 function enableHorizontalDragScroll(el) {
   if (!el || el._hScrollInit) return;
@@ -2598,38 +2644,36 @@ function enableHorizontalDragScroll(el) {
   let hasMoved = false;
 
   el.style.cursor = 'grab';
+  el.style.scrollBehavior = 'auto';
 
   el.addEventListener('mousedown', (e) => {
     if (e.button !== 0) return;
     isDown = true;
     hasMoved = false;
-    startX = e.pageX - el.getBoundingClientRect().left;
+    startX = e.pageX;
     startScrollLeft = el.scrollLeft;
     el.style.cursor = 'grabbing';
-    el.style.userSelect = 'none';
+    document.body.style.userSelect = 'none';
   });
 
-  const onMouseMove = (e) => {
+  window.addEventListener('mousemove', (e) => {
     if (!isDown) return;
-    const currentX = e.pageX - el.getBoundingClientRect().left;
-    const dist = currentX - startX;
-    if (Math.abs(dist) > 2) {
+    const dist = e.pageX - startX;
+    if (Math.abs(dist) > 1) {
       hasMoved = true;
       e.preventDefault();
       el.scrollLeft = startScrollLeft - dist;
     }
-  };
+  });
 
-  const onMouseUp = () => {
+  const stopDrag = () => {
     if (!isDown) return;
     isDown = false;
     el.style.cursor = 'grab';
-    el.style.removeProperty('user-select');
+    document.body.style.removeProperty('user-select');
   };
 
-  el.addEventListener('mousemove', onMouseMove);
-  el.addEventListener('mouseleave', onMouseUp);
-  window.addEventListener('mouseup', onMouseUp);
+  window.addEventListener('mouseup', stopDrag);
 
   el.addEventListener('click', (e) => {
     if (hasMoved) {
@@ -5529,27 +5573,59 @@ async function launchBrowser() {
             <div style="display:flex;gap:20px;font-size:12px;color:#a1a1a6;">
               <span>Store</span><span>Mac</span><span>iPad</span><span>iPhone</span><span>Watch</span><span>Vision</span><span>AirPods</span>
             </div>
-            <span style="font-size:14px;cursor:pointer;">🔍</span>
+            <span style="display:flex;align-items:center;cursor:pointer;opacity:0.85;">${getSFSymbol('magnifyingglass', 14, '#a1a1a6')}</span>
           </div>
-          <div style="text-align:center;padding:60px 20px 40px;background:radial-gradient(circle at 50% 20%, #1e1e24 0%, #000000 80%);">
-            <div style="font-size:48px;font-weight:700;letter-spacing:-1px;margin-bottom:8px;">iPhone 16 Pro</div>
-            <div style="font-size:22px;color:#86868b;margin-bottom:16px;">Hello, Apple Intelligence.</div>
-            <div style="display:flex;justify-content:center;gap:14px;margin-bottom:30px;">
+          <div style="text-align:center;padding:50px 20px 30px;background:radial-gradient(circle at 50% 20%, #1e1e24 0%, #000000 80%);">
+            <div style="font-size:44px;font-weight:700;letter-spacing:-1px;margin-bottom:6px;">iPhone 16 Pro</div>
+            <div style="font-size:20px;color:#86868b;margin-bottom:16px;">Hello, Apple Intelligence.</div>
+            <div style="display:flex;justify-content:center;gap:14px;margin-bottom:24px;">
               <button style="background:#0071e3;color:white;border:none;padding:8px 20px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;">Learn more</button>
               <button style="background:transparent;color:#2997ff;border:1px solid #2997ff;padding:8px 20px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;">Buy</button>
             </div>
-            <div style="font-size:72px;margin:20px 0;">📱✨</div>
+            <div style="margin:20px auto;display:flex;justify-content:center;">
+              <svg width="100" height="180" viewBox="0 0 100 180" fill="none">
+                <rect x="3" y="3" width="94" height="174" rx="22" fill="#18181b" stroke="#71717a" stroke-width="2.5"/>
+                <rect x="36" y="8" width="28" height="7" rx="3.5" fill="#000000"/>
+                <rect x="7" y="7" width="86" height="166" rx="18" fill="url(#p-screen-grad)"/>
+                <defs>
+                  <linearGradient id="p-screen-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#1e1b4b"/><stop offset="50%" stop-color="#0f172a"/><stop offset="100%" stop-color="#312e81"/>
+                  </linearGradient>
+                  <radialGradient id="p-ai-glow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#38bdf8"/><stop offset="60%" stop-color="#a855f7"/><stop offset="100%" stop-color="#ec4899" stop-opacity="0"/>
+                  </radialGradient>
+                </defs>
+                <circle cx="50" cy="95" r="22" fill="url(#p-ai-glow)" opacity="0.8"/>
+              </svg>
+            </div>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:24px;max-width:960px;margin:0 auto;">
-            <div style="background:#161617;border-radius:18px;padding:32px;text-align:center;">
-              <div style="font-size:28px;font-weight:700;margin-bottom:6px;">MacBook Pro</div>
-              <div style="font-size:15px;color:#86868b;margin-bottom:16px;">Mind-blowing. Head-turning.</div>
-              <div style="font-size:48px;">💻</div>
+            <div style="background:#161617;border-radius:18px;padding:28px;text-align:center;">
+              <div style="font-size:26px;font-weight:700;margin-bottom:6px;">MacBook Pro</div>
+              <div style="font-size:14px;color:#86868b;margin-bottom:16px;">Mind-blowing. Head-turning.</div>
+              <div style="margin:12px auto;display:flex;justify-content:center;">
+                <svg width="90" height="58" viewBox="0 0 100 64" fill="none">
+                  <rect x="14" y="6" width="72" height="46" rx="4" fill="#09090b" stroke="#52525b" stroke-width="2"/>
+                  <rect x="18" y="10" width="64" height="38" rx="2" fill="#18181b"/>
+                  <path d="M 4 54 L 96 54 C 98 54 99 56 97 58 L 92 62 C 91 63 89 64 87 64 L 13 64 C 11 64 9 63 8 62 L 3 58 C 1 56 2 54 4 54 Z" fill="#71717a"/>
+                  <rect x="42" y="55" width="16" height="3" rx="1.5" fill="#3f3f46"/>
+                </svg>
+              </div>
             </div>
-            <div style="background:#161617;border-radius:18px;padding:32px;text-align:center;">
-              <div style="font-size:28px;font-weight:700;margin-bottom:6px;">Apple Watch Series 10</div>
-              <div style="font-size:15px;color:#86868b;margin-bottom:16px;">Thinscredible.</div>
-              <div style="font-size:48px;">⌚</div>
+            <div style="background:#161617;border-radius:18px;padding:28px;text-align:center;">
+              <div style="font-size:26px;font-weight:700;margin-bottom:6px;">Apple Watch Series 10</div>
+              <div style="font-size:14px;color:#86868b;margin-bottom:16px;">Thinscredible.</div>
+              <div style="margin:12px auto;display:flex;justify-content:center;">
+                <svg width="60" height="60" viewBox="0 0 80 80" fill="none">
+                  <rect x="28" y="2" width="24" height="14" rx="3" fill="#3f3f46"/>
+                  <rect x="28" y="64" width="24" height="14" rx="3" fill="#3f3f46"/>
+                  <rect x="18" y="14" width="44" height="52" rx="14" fill="#18181b" stroke="#71717a" stroke-width="2"/>
+                  <rect x="63" y="26" width="4" height="12" rx="2" fill="#71717a"/>
+                  <circle cx="40" cy="40" r="14" stroke="#ff3b30" stroke-width="3" fill="none"/>
+                  <circle cx="40" cy="40" r="10" stroke="#34c759" stroke-width="3" fill="none"/>
+                  <circle cx="40" cy="40" r="6" stroke="#007aff" stroke-width="3" fill="none"/>
+                </svg>
+              </div>
             </div>
           </div>
         </div>
@@ -5559,8 +5635,10 @@ async function launchBrowser() {
     function getAliceDocsHtml() {
       return `
         <div style="height:100%;overflow-y:auto;background:#ffffff;color:#1d1d1f;padding:40px 60px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.6;">
-          <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;border-bottom:1px solid #eee;padding-bottom:16px;">
-            <span style="font-size:32px;">💻</span>
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:24px;border-bottom:1px solid #eee;padding-bottom:16px;">
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(0,122,255,0.1);border-radius:10px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#007aff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </span>
             <div>
               <h1 style="margin:0;font-size:24px;font-weight:700;">AliceOS Developer Documentation</h1>
               <div style="font-size:12px;color:#6e6e73;">Release 1.0.0 • Microkernel Architecture & Electron Engine</div>
@@ -5962,10 +6040,10 @@ async function launchCalculator() {
     <div class="calc-mac-container" id="calc-container-${pid}">
       <div class="calc-mac-topbar">
         <div class="calc-mode-seg">
-          <button class="calc-seg-btn active" id="calc-mode-basic-${pid}">基本</button>
-          <button class="calc-seg-btn" id="calc-mode-sci-${pid}">科学</button>
+          <button class="calc-seg-btn active" id="calc-mode-basic-${pid}">${t('calc_mode_basic', '基本')}</button>
+          <button class="calc-seg-btn" id="calc-mode-sci-${pid}">${t('calc_mode_sci', '科学')}</button>
         </div>
-        <button class="calc-tape-btn" id="calc-tape-toggle-${pid}">${getSFSymbol('clock', 13, 'currentColor')} 历史</button>
+        <button class="calc-tape-btn" id="calc-tape-toggle-${pid}">${getSFSymbol('clock', 13, 'currentColor')} ${t('calc_history', '历史')}</button>
       </div>
 
       <div style="display:flex;flex:1;overflow:hidden;position:relative;">
@@ -6018,9 +6096,9 @@ async function launchCalculator() {
         </div>
 
         <div class="calc-tape-drawer" id="calc-tape-drawer-${pid}" style="display:none;">
-          <div style="font-weight:700;font-size:11px;opacity:0.6;margin-bottom:8px;text-transform:uppercase;">历史纸带</div>
+          <div style="font-weight:700;font-size:11px;opacity:0.6;margin-bottom:8px;text-transform:uppercase;" id="calc-tape-hdr-${pid}">${t('calc_history_tape', '历史纸带')}</div>
           <div class="calc-tape-list" id="calc-tape-list-${pid}">
-            <div style="opacity:0.4;font-size:11px;text-align:center;margin-top:20px;">暂无历史</div>
+            <div style="opacity:0.4;font-size:11px;text-align:center;margin-top:20px;">${t('calc_no_history', '暂无历史')}</div>
           </div>
         </div>
       </div>
@@ -6048,6 +6126,17 @@ async function launchCalculator() {
   let justEvaluated = false;
   let historyTape = [];
 
+  win._onLanguageChange = () => {
+    if (modeBasicBtn) modeBasicBtn.innerText = t('calc_mode_basic', '基本');
+    if (modeSciBtn) modeSciBtn.innerText = t('calc_mode_sci', '科学');
+    if (tapeToggleBtn) tapeToggleBtn.innerHTML = `${getSFSymbol('clock', 13, 'currentColor')} ${t('calc_history', '历史')}`;
+    const hdrEl = win.querySelector(`#calc-tape-hdr-${pid}`);
+    if (hdrEl) hdrEl.innerText = t('calc_history_tape', '历史纸带');
+    if (historyTape.length === 0) {
+      tapeList.innerHTML = `<div style="opacity:0.4;font-size:11px;text-align:center;margin-top:20px;">${t('calc_no_history', '暂无历史')}</div>`;
+    }
+  };
+
   function clearActiveOps() {
     opBtns.forEach(b => b.classList.remove('active'));
   }
@@ -6055,7 +6144,6 @@ async function launchCalculator() {
   function updateDisplay() {
     display.textContent = current;
     if (acBtn) acBtn.textContent = (current !== '0' && !justEvaluated) ? 'C' : 'AC';
-    // Auto shrink long numbers
     if (current.length > 12) display.style.fontSize = '22px';
     else if (current.length > 8) display.style.fontSize = '28px';
     else display.style.fontSize = '40px';
@@ -6063,12 +6151,16 @@ async function launchCalculator() {
 
   function addHistory(expr, resVal) {
     historyTape.unshift({ expr, resVal });
-    tapeList.innerHTML = historyTape.slice(0, 20).map(item => `
-      <div class="calc-tape-item">
-        <div style="color:rgba(255,255,255,0.5);">${item.expr} =</div>
-        <div style="font-weight:700;color:#ff9f0a;text-align:right;">${item.resVal}</div>
-      </div>
-    `).join('');
+    if (historyTape.length === 0) {
+      tapeList.innerHTML = `<div style="opacity:0.4;font-size:11px;text-align:center;margin-top:20px;">${t('calc_no_history', '暂无历史')}</div>`;
+    } else {
+      tapeList.innerHTML = historyTape.slice(0, 20).map(item => `
+        <div class="calc-tape-item">
+          <div style="color:rgba(255,255,255,0.5);">${item.expr} =</div>
+          <div style="font-weight:700;color:#ff9f0a;text-align:right;">${item.resVal}</div>
+        </div>
+      `).join('');
+    }
   }
 
   function handleInput(val) {
@@ -7773,58 +7865,44 @@ function updateLocalizedApps() {
   }));
 
   launchpadItems = [
+    { type: 'app', id: 'finder', name: dict.app_finder || 'Finder', action: 'launchFinder()' },
+    { type: 'app', id: 'browser', name: dict.app_browser || 'Safari', action: 'launchBrowser()' },
     { type: 'app', id: 'calendar', name: dict.app_calendar || 'Calendar', action: 'launchCalendar()' },
-    { type: 'app', id: 'browser', name: dict.app_browser, action: 'launchBrowser()' },
+    { type: 'app', id: 'reminders', name: dict.app_reminders || 'Reminders', action: 'launchReminders()' },
+    { type: 'app', id: 'notes', name: dict.app_notes || 'Notes', action: 'launchNotes()' },
+    { type: 'app', id: 'textedit', name: dict.app_textedit || 'TextEdit', action: 'launchTextEdit()' },
+    { type: 'app', id: 'paint', name: dict.app_paint || 'Photos', action: 'launchPaint()' },
+    { type: 'app', id: 'music', name: dict.app_music || 'Music', action: 'launchMusic()' },
+    { type: 'app', id: 'video', name: dict.app_video || 'QuickTime Player', action: 'launchVideo()' },
+    { type: 'app', id: 'maps', name: dict.app_maps || 'Maps', action: 'launchMaps()' },
+    { type: 'app', id: 'weather', name: dict.app_weather || 'Weather', action: 'launchWeather()' },
+    { type: 'app', id: 'clock', name: dict.app_clock || 'Clock', action: 'launchClock()' },
+    { type: 'app', id: 'calculator', name: dict.app_calculator || 'Calculator', action: 'launchCalculator()' },
+    { type: 'app', id: 'camera', name: dict.app_camera || 'Camera', action: 'launchCamera()' },
     { type: 'app', id: 'iphonemirror', name: dict.app_iphonemirror || 'iPhone Mirroring', action: 'launchIPhoneMirroring()' },
-    { type: 'app', id: 'maps', name: dict.app_maps, action: 'launchMaps()' },
-    { type: 'app', id: 'weather', name: dict.app_weather, action: 'launchWeather()' },
-    { type: 'app', id: 'settings', name: dict.app_settings, action: 'launchSettings()' },
+    { type: 'app', id: 'store', name: dict.app_store || 'App Store', action: 'launchStore()' },
+    { type: 'app', id: 'settings', name: dict.app_settings || 'System Settings', action: 'launchSettings()' },
+    { type: 'app', id: 'terminal', name: dict.app_terminal || 'Terminal', action: 'launchTerminal()' },
+    { type: 'app', id: 'ide', name: dict.app_ide || 'Xcode', action: 'launchIDE()' },
     {
       type: 'folder',
-      name: dict.folder_productivity,
+      name: dict.folder_utilities || 'Utilities',
       apps: [
-        { id: 'calendar', name: dict.app_calendar || 'Calendar', action: 'launchCalendar()' },
-        { id: 'reminders', name: dict.app_reminders || 'Reminders', action: 'launchReminders()' },
-        { id: 'notes', name: dict.app_notes, action: 'launchNotes()' },
-        { id: 'textedit', name: dict.app_textedit || 'TextEdit', action: 'launchTextEdit()' },
-        { id: 'clock', name: dict.app_clock || 'Clock', action: 'launchClock()' },
-        { id: 'finder', name: dict.app_finder, action: 'launchFinder()' },
-        { id: 'terminal', name: dict.app_terminal, action: 'launchTerminal()' },
-        { id: 'calculator', name: dict.app_calculator, action: 'launchCalculator()' },
-        { id: 'iphonemirror', name: dict.app_iphonemirror || 'iPhone Mirroring', action: 'launchIPhoneMirroring()' },
-        { id: 'ide', name: dict.app_ide, action: 'launchIDE()' }
+        { id: 'activity', name: dict.app_activity || 'Activity Monitor', action: 'launchActivityMonitor()' },
+        { id: 'hostinfo', name: dict.app_hostinfo || 'System Activity', action: 'launchHostMonitor()' },
+        { id: 'hostscreen', name: dict.app_hostscreen || 'Screen Mirror', action: 'launchHostScreen()' },
+        { id: 'webhost', name: dict.app_webhost || 'Network Portal', action: 'launchWebHost()' }
       ]
     },
     {
       type: 'folder',
-      name: dict.folder_media,
+      name: dict.folder_games || 'Games',
       apps: [
-        { id: 'paint', name: dict.app_paint, action: 'launchPaint()' },
-        { id: 'camera', name: dict.app_camera, action: 'launchCamera()' },
-        { id: 'music', name: dict.app_music, action: 'launchMusic()' },
-        { id: 'video', name: dict.app_video, action: 'launchVideo()' },
-        { id: 'synth', name: dict.app_synth, action: 'launchSynth()' }
-      ]
-    },
-    {
-      type: 'folder',
-      name: dict.folder_games,
-      apps: [
-        { id: 'snake', name: dict.app_snake, action: 'launchSnake()' },
-        { id: 'flappy', name: dict.app_flappy, action: 'launchFlappy()' },
-        { id: 'universe', name: dict.app_universe, action: 'launchUniverse()' },
-        { id: 'radar', name: dict.app_radar, action: 'launchRadar()' }
-      ]
-    },
-    {
-      type: 'folder',
-      name: dict.folder_utilities,
-      apps: [
-        { id: 'activity', name: dict.app_activity, action: 'launchActivityMonitor()' },
-        { id: 'hostinfo', name: dict.app_hostinfo, action: 'launchHostMonitor()' },
-        { id: 'hostscreen', name: dict.app_hostscreen, action: 'launchHostScreen()' },
-        { id: 'webhost', name: dict.app_webhost, action: 'launchWebHost()' },
-        { id: 'store', name: dict.app_store, action: 'launchStore()' }
+        { id: 'snake', name: dict.app_snake || 'Snake', action: 'launchSnake()' },
+        { id: 'flappy', name: dict.app_flappy || 'Flappy Bird', action: 'launchFlappy()' },
+        { id: 'synth', name: dict.app_synth || 'Synth Audio', action: 'launchSynth()' },
+        { id: 'universe', name: dict.app_universe || 'Universe 3D', action: 'launchUniverse()' },
+        { id: 'radar', name: dict.app_radar || 'AirDrop Radar', action: 'launchRadar()' }
       ]
     }
   ];
@@ -16031,18 +16109,26 @@ async function launchStore() {
     let activeTab = 'discover';
 
     const storeApps = [
-      { id: 'xcode', name: 'Xcode 16 Studio', category: 'develop', desc: 'Powerful IDE with Swift syntax, LLDB console & live build.', badge: 'Apple Silicon Ready', action: 'launchIDE()', installed: true },
-      { id: 'maps', name: 'Apple Maps 3D', category: 'discover', desc: 'Explore world landmarks with Look Around and live transit.', badge: 'Sequoia Edition', action: 'launchMaps()', installed: true },
-      { id: 'camera', name: 'Photo Booth HD', category: 'create', desc: 'Take studio photos with 8 live filter effects & 3-2-1 timer.', badge: 'Popular', action: 'launchCamera()', installed: true },
-      { id: 'paint', name: 'Photos & Markup', category: 'create', desc: 'macOS Sequoia Photos library with EXIF info & Apple Pencil studio.', badge: 'Creative Choice', action: 'launchPaint()', installed: true },
-      { id: 'tictactoe', name: 'TicTacToe Pro', category: 'play', desc: 'Sleek glass board puzzle game with intelligent AI opponent.', badge: 'Arcade Classic', action: 'launchTicTacToe()', installed: false },
-      { id: 'snake', name: 'Snake Arcade 2', category: 'play', desc: 'Retro arcade classic with high-score tracking & smooth physics.', badge: 'Game of the Day', action: 'launchSnake()', installed: true },
-      { id: 'synth', name: 'Logic Synth Audio', category: 'create', desc: 'WebAudio polyphonic synthesizer with real-time waveform filters.', badge: 'Pro Audio', action: 'launchSynth()', installed: true },
-      { id: 'universe', name: 'Cosmic Gravity 3D', category: 'play', desc: 'Orbital physics and cosmic particle simulation sandbox.', badge: 'Simulation', action: 'launchUniverse()', installed: true },
+      { id: 'calendar', name: 'Apple Calendar', category: 'work', desc: 'Manage events, iCloud layers, and schedules with month & micro views.', badge: 'Essential Productivity', action: 'launchCalendar()', installed: true },
+      { id: 'reminders', name: 'Apple Reminders', category: 'work', desc: 'Smart lists for Today, Scheduled, and Flagged tasks with haptic feedback.', badge: 'Apple Intelligence', action: 'launchReminders()', installed: true },
+      { id: 'clock', name: 'World Clock & Alarms', category: 'work', desc: 'Precision world clocks with live analog dials, alarms, lap stopwatch & countdown timer.', badge: 'Sequoia Edition', action: 'launchClock()', installed: true },
+      { id: 'textedit', name: 'TextEdit Pro', category: 'work', desc: 'macOS rich text editor with format bar, live word counter & VFS document saving.', badge: 'Writing Utility', action: 'launchTextEdit()', installed: true },
       { id: 'notes', name: 'Apple Notes', category: 'work', desc: 'Rich 3-column notes organizer with VFS persistence and Math Notes.', badge: 'Essential', action: 'launchNotes()', installed: true },
       { id: 'activity', name: 'Activity Monitor', category: 'work', desc: 'Real-time CPU, RAM and hardware thread telemetry.', badge: 'System Tool', action: 'launchActivityMonitor()', installed: true },
+      { id: 'video', name: 'QuickTime Player', category: 'create', desc: 'Smooth media player with Picture-in-Picture float mode and scrubbing controls.', badge: 'Media Hub', action: 'launchVideo()', installed: true },
+      { id: 'music', name: 'Apple Music', category: 'create', desc: 'Stream curated playlists with synchronized dynamic equalizer and Dynamic Island feedback.', badge: 'Spatial Audio', action: 'launchMusic()', installed: true },
+      { id: 'camera', name: 'Photo Booth HD', category: 'create', desc: 'Take studio photos with 8 live filter effects & 3-2-1 timer.', badge: 'Popular', action: 'launchCamera()', installed: true },
+      { id: 'paint', name: 'Photos & Markup', category: 'create', desc: 'macOS Sequoia Photos library with EXIF info & Apple Pencil studio.', badge: 'Creative Choice', action: 'launchPaint()', installed: true },
+      { id: 'synth', name: 'Logic Synth Audio', category: 'create', desc: 'WebAudio polyphonic synthesizer with real-time waveform filters.', badge: 'Pro Audio', action: 'launchSynth()', installed: true },
+      { id: 'maps', name: 'Apple Maps 3D', category: 'discover', desc: 'Explore world landmarks with Look Around and live transit.', badge: 'Sequoia Edition', action: 'launchMaps()', installed: true },
+      { id: 'weather', name: 'Apple Weather', category: 'discover', desc: 'Hourly forecasts, UV index, air quality, wind telemetry and dynamic meteorological backdrop.', badge: 'Radar Live', action: 'launchWeather()', installed: true },
+      { id: 'safari', name: 'Safari 18', category: 'discover', desc: 'Ultra-fast private browsing with tabbed navigation and intelligent tracking prevention.', badge: 'Default Browser', action: 'launchBrowser()', installed: true },
+      { id: 'xcode', name: 'Xcode 16 Studio', category: 'develop', desc: 'Powerful IDE with Swift syntax, LLDB console & live build.', badge: 'Apple Silicon Ready', action: 'launchIDE()', installed: true },
       { id: 'terminal', name: 'Zsh Terminal', category: 'develop', desc: 'Advanced microkernel command terminal with APT bridge & history.', badge: 'Developer Tool', action: 'launchTerminal()', installed: true },
-      { id: 'syslogs', name: 'Console & Kernel Logs', category: 'develop', desc: 'Real-time IPC bridge telemetry and microkernel audit trace.', badge: 'Diagnostics', action: 'launchSysLogs()', installed: false }
+      { id: 'syslogs', name: 'Console & Kernel Logs', category: 'develop', desc: 'Real-time IPC bridge telemetry and microkernel audit trace.', badge: 'Diagnostics', action: 'launchSysLogs()', installed: false },
+      { id: 'tictactoe', name: 'TicTacToe Pro', category: 'play', desc: 'Sleek glass board puzzle game with intelligent AI opponent.', badge: 'Arcade Classic', action: 'launchTicTacToe()', installed: false },
+      { id: 'snake', name: 'Snake Arcade 2', category: 'play', desc: 'Retro arcade classic with high-score tracking & smooth physics.', badge: 'Game of the Day', action: 'launchSnake()', installed: true },
+      { id: 'universe', name: 'Cosmic Gravity 3D', category: 'play', desc: 'Orbital physics and cosmic particle simulation sandbox.', badge: 'Simulation', action: 'launchUniverse()', installed: true }
     ];
 
     const win = createWindow(pid, t('app_store', 'App Store'), `
@@ -16815,9 +16901,9 @@ function openPiP(src, title = 'Picture-in-Picture', startTime = 0) {
   }, 10);
 
   video.play().then(() => {
-    if (playBtn) playBtn.innerText = '⏸';
+    if (playBtn) playBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>';
   }).catch(() => {
-    if (playBtn) playBtn.innerText = '▶️';
+    if (playBtn) playBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
   });
   if (typeof showNotification === 'function') {
     showNotification(t('video_pip', 'Picture in Picture'), t('notif_pip_active', 'Now playing "%s" in floating window').replace('%s', title));
@@ -16843,10 +16929,10 @@ function togglePiPPlay() {
   if (!video) return;
   if (video.paused) {
     video.play();
-    if (playBtn) playBtn.innerText = '⏸';
+    if (playBtn) playBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>';
   } else {
     video.pause();
-    if (playBtn) playBtn.innerText = '▶️';
+    if (playBtn) playBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
   }
 }
 
@@ -16930,7 +17016,11 @@ function toggleCCMusic() {
   ccMusicPlaying = !ccMusicPlaying;
   const btn = document.getElementById('cc-music-play-btn');
   const wave = document.getElementById('cc-eq-wave');
-  if (btn) btn.innerText = ccMusicPlaying ? '⏸' : '▶️';
+  if (btn) {
+    btn.innerHTML = ccMusicPlaying
+      ? '<svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>'
+      : '<svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
+  }
   if (wave) wave.style.display = ccMusicPlaying ? 'flex' : 'none';
   
   if (typeof updateIslandLiveMusic === 'function') {
@@ -16938,7 +17028,7 @@ function toggleCCMusic() {
   }
 
   if (ccMusicPlaying && typeof showNotification === 'function') {
-    showNotification(t('notif_now_playing', 'Now Playing'), `${musicTracks[currentTrackIdx].title} - ${musicTracks[currentTrackIdx].artist}`, 'Music', '🎵');
+    showNotification(t('notif_now_playing', 'Now Playing'), `${musicTracks[currentTrackIdx].title} - ${musicTracks[currentTrackIdx].artist}`, 'Music');
   }
 }
 
@@ -16952,7 +17042,7 @@ function skipTrack(dir) {
   if (ccMusicPlaying) {
     if (typeof updateIslandLiveMusic === 'function') updateIslandLiveMusic(true, track);
     if (typeof showNotification === 'function') {
-      showNotification(t('notif_now_playing', 'Now Playing'), `${track.title} - ${track.artist}`, 'Music', '🎵');
+      showNotification(t('notif_now_playing', 'Now Playing'), `${track.title} - ${track.artist}`, 'Music');
     }
   }
 }
@@ -17104,15 +17194,7 @@ function initCCSliderHaptics() {
   if (volSlider && volIcon) {
     volSlider.addEventListener('input', (e) => {
       const val = parseInt(e.target.value);
-      if (val === 0) {
-        volIcon.innerText = '🔇';
-      } else if (val < 33) {
-        volIcon.innerText = '🔈';
-      } else if (val < 67) {
-        volIcon.innerText = '🔉';
-      } else {
-        volIcon.innerText = '🔊';
-      }
+      volIcon.innerHTML = getVolumeSvg(val, 15);
       if (typeof showVolumeHUD === 'function') {
         showVolumeHUD(val);
       }
@@ -17175,7 +17257,7 @@ function selectSoundDevice(el, deviceName, icon) {
     playVolumeFeedbackBeep();
   }
   if (typeof showNotification === 'function') {
-    showNotification(t('sound_output', 'Sound Output'), t('notif_sound_output', 'Switched audio output to %s').replace('%s', deviceName), 'Sound', icon || '🔊');
+    showNotification(t('sound_output', 'Sound Output'), t('notif_sound_output', 'Switched audio output to %s').replace('%s', deviceName), 'Sound');
   }
 }
 
@@ -17190,17 +17272,17 @@ function initSoundPopover() {
       const val = parseInt(e.target.value);
       if (pct) pct.innerText = `${val}%`;
       
-      let soundIco = '🔊';
-      if (val === 0) soundIco = '🔇';
-      else if (val < 40) soundIco = '🔉';
-
-      if (icon) icon.innerText = soundIco;
-      if (menubarBtn) menubarBtn.innerText = soundIco;
+      const soundSvg = getVolumeSvg(val, 16);
+      if (icon) icon.innerHTML = soundSvg;
+      if (menubarBtn) menubarBtn.innerHTML = getVolumeSvg(val, 15);
 
       const ccVol = document.getElementById('cc-volume');
       if (ccVol && ccVol !== e.target) {
         ccVol.value = val;
       }
+      const ccVolIcon = document.getElementById('cc-volume-icon');
+      if (ccVolIcon) ccVolIcon.innerHTML = getVolumeSvg(val, 15);
+
       if (window.AppleAudioEngine) {
         window.AppleAudioEngine.playThrottledVolumePop(Math.max(0.2, val / 100));
       }
@@ -17248,13 +17330,13 @@ function toggleLowPowerMode(enabled) {
   const overlay = document.getElementById('brightness-overlay');
   
   if (enabled) {
-    if (icon) icon.innerText = '🪫';
+    if (icon) icon.innerHTML = getBatterySvg(true, 98);
     if (overlay) overlay.style.opacity = '0.15';
     if (typeof showNotification === 'function') {
       showNotification(t('battery_lpm', 'Low Power Mode'), t('notif_lpm_on', 'Battery saver activated. Display slightly dimmed.'));
     }
   } else {
-    if (icon) icon.innerText = '🔋';
+    if (icon) icon.innerHTML = getBatterySvg(false, 98);
     const brightSlider = document.getElementById('cc-brightness');
     const val = brightSlider ? parseInt(brightSlider.value) : 100;
     if (overlay) overlay.style.opacity = ((100 - val) * 0.008).toFixed(2);
@@ -17541,10 +17623,7 @@ function showVolumeHUD(val) {
   bar.style.width = `${val}%`;
 
   if (icon) {
-    if (val === 0) icon.innerText = '🔇';
-    else if (val < 33) icon.innerText = '🔈';
-    else if (val < 67) icon.innerText = '🔉';
-    else icon.innerText = '🔊';
+    icon.innerHTML = getVolumeSvg(val, 20);
   }
 
   hud.style.display = 'flex';
@@ -18139,23 +18218,23 @@ function openCCExpandedSlider(type) {
   if (type === 'volume') {
     title.innerText = t('cc_sound_volume', 'Sound & Volume');
     subtitle.innerText = t('cc_sound_sub', 'MacBook Pro High-Fidelity Audio');
-    icon.innerText = '🔊';
-    thumbGlyph.innerText = '🔊';
+    icon.innerHTML = getVolumeSvg(currentVal, 22);
+    thumbGlyph.innerHTML = getVolumeSvg(currentVal, 18);
     presetsContainer.innerHTML = `
-      <div class="cc-preset-pill ${currentVal == 0 ? 'active' : ''}" onclick="setCCExpandedSliderVal(0)"><span>🔇</span><span>${t('cc_mute', 'Mute')}</span></div>
-      <div class="cc-preset-pill ${currentVal == 50 ? 'active' : ''}" onclick="setCCExpandedSliderVal(50)"><span>🔉</span><span>50%</span></div>
-      <div class="cc-preset-pill ${currentVal == 100 ? 'active' : ''}" onclick="setCCExpandedSliderVal(100)"><span>🔊</span><span>100%</span></div>
-      <div class="cc-preset-pill ${isSpatialAudioActive ? 'active' : ''}" onclick="toggleSpatialAudio(this)"><span>🎧</span><span>${t('cc_spatial_audio', 'Spatial Audio')}</span></div>
+      <div class="cc-preset-pill ${currentVal == 0 ? 'active' : ''}" onclick="setCCExpandedSliderVal(0)"><span style="display:flex;align-items:center;">${getVolumeSvg(0, 16)}</span><span>${t('cc_mute', 'Mute')}</span></div>
+      <div class="cc-preset-pill ${currentVal == 50 ? 'active' : ''}" onclick="setCCExpandedSliderVal(50)"><span style="display:flex;align-items:center;">${getVolumeSvg(50, 16)}</span><span>50%</span></div>
+      <div class="cc-preset-pill ${currentVal == 100 ? 'active' : ''}" onclick="setCCExpandedSliderVal(100)"><span style="display:flex;align-items:center;">${getVolumeSvg(100, 16)}</span><span>100%</span></div>
+      <div class="cc-preset-pill ${isSpatialAudioActive ? 'active' : ''}" onclick="toggleSpatialAudio(this)"><span style="display:flex;align-items:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></span><span>${t('cc_spatial_audio', 'Spatial Audio')}</span></div>
     `;
   } else {
     title.innerText = t('cc_display_brightness', 'Display & Brightness');
     subtitle.innerText = t('cc_liquid_retina', 'Liquid Retina XDR Display');
-    icon.innerText = '☀️';
-    thumbGlyph.innerText = '☀️';
+    icon.innerHTML = getBrightnessSvg(currentVal, 22);
+    thumbGlyph.innerHTML = getBrightnessSvg(currentVal, 18);
     presetsContainer.innerHTML = `
-      <div class="cc-preset-pill ${document.body.classList.contains('dark-mode') ? 'active' : ''}" onclick="toggleSystemDarkMode(this)"><span>🌙</span><span>${t('cc_dark_mode', 'Dark Mode')}</span></div>
-      <div class="cc-preset-pill ${isNightShiftActive ? 'active' : ''}" onclick="toggleNightShift(this)"><span>🌅</span><span>${t('cc_night_shift', 'Night Shift')}</span></div>
-      <div class="cc-preset-pill active" onclick="toggleTrueTone(this)"><span>👁️</span><span>${t('cc_true_tone', 'True Tone')}</span></div>
+      <div class="cc-preset-pill ${document.body.classList.contains('dark-mode') ? 'active' : ''}" onclick="toggleSystemDarkMode(this)"><span style="display:flex;align-items:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span><span>${t('cc_dark_mode', 'Dark Mode')}</span></div>
+      <div class="cc-preset-pill ${isNightShiftActive ? 'active' : ''}" onclick="toggleNightShift(this)"><span style="display:flex;align-items:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></span><span>${t('cc_night_shift', 'Night Shift')}</span></div>
+      <div class="cc-preset-pill active" onclick="toggleTrueTone(this)"><span style="display:flex;align-items:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span><span>${t('cc_true_tone', 'True Tone')}</span></div>
     `;
   }
 
@@ -18192,6 +18271,7 @@ function updateCCExpandedSliderVal(percent) {
   const fill = document.getElementById('cc-vertical-fill');
   const percentEl = document.getElementById('cc-modal-percent');
   const thumbGlyph = document.getElementById('cc-vertical-thumb-glyph');
+  const modalIcon = document.getElementById('cc-modal-icon');
   if (fill) fill.style.height = `${percent}%`;
   if (percentEl) percentEl.innerText = `${percent}%`;
 
@@ -18202,7 +18282,10 @@ function updateCCExpandedSliderVal(percent) {
       volInput.dispatchEvent(new Event('input'));
     }
     if (thumbGlyph) {
-      thumbGlyph.innerText = percent === 0 ? '🔇' : (percent < 35 ? '🔈' : (percent < 70 ? '🔉' : '🔊'));
+      thumbGlyph.innerHTML = getVolumeSvg(percent, 18);
+    }
+    if (modalIcon) {
+      modalIcon.innerHTML = getVolumeSvg(percent, 22);
     }
     if (typeof showVolumeHUD === 'function') showVolumeHUD(percent);
   } else {
@@ -18210,6 +18293,12 @@ function updateCCExpandedSliderVal(percent) {
     if (briInput) {
       briInput.value = percent;
       briInput.dispatchEvent(new Event('input'));
+    }
+    if (thumbGlyph) {
+      thumbGlyph.innerHTML = getBrightnessSvg(percent, 18);
+    }
+    if (modalIcon) {
+      modalIcon.innerHTML = getBrightnessSvg(percent, 22);
     }
   }
 }
