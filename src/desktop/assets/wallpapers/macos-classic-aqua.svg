@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2560 1440" width="100%" height="100%">
+  <defs>
+    <linearGradient id="aqua-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#001833" />
+      <stop offset="50%" stop-color="#002b5c" />
+      <stop offset="100%" stop-color="#001024" />
+    </linearGradient>
+    <linearGradient id="aqua-wave1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0077b6" />
+      <stop offset="50%" stop-color="#0096c7" />
+      <stop offset="100%" stop-color="#03045e" />
+    </linearGradient>
+    <linearGradient id="aqua-wave2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#48cae4" />
+      <stop offset="40%" stop-color="#00b4d8" />
+      <stop offset="100%" stop-color="#0077b6" />
+    </linearGradient>
+    <linearGradient id="aqua-highlight" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ade8f4" stop-opacity="0" />
+      <stop offset="50%" stop-color="#ffffff" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#ade8f4" stop-opacity="0" />
+    </linearGradient>
+    <filter id="aqua-blur">
+      <feGaussianBlur stdDeviation="18" />
+    </filter>
+  </defs>
+  <rect width="2560" height="1440" fill="url(#aqua-bg)" />
+  
+  <!-- Ribbon 1 -->
+  <path d="M -100 1200 C 400 800, 900 1300, 1500 800 C 2000 400, 2300 700, 2660 300 L 2660 1500 L -100 1500 Z" fill="url(#aqua-wave1)" opacity="0.85" />
+
+  <!-- Ribbon 2 (Main Aqua Swell) -->
+  <path d="M -100 950 C 450 550, 950 1100, 1600 650 C 2100 280, 2400 550, 2660 200 L 2660 1500 L -100 1500 Z" fill="url(#aqua-wave2)" opacity="0.9" />
+
+  <!-- Gloss Specular Highlight Ribbon -->
+  <path d="M -50 930 C 460 540, 960 1080, 1610 640 C 2110 270, 2410 540, 2660 190" fill="none" stroke="url(#aqua-highlight)" stroke-width="12" filter="url(#aqua-blur)" />
+</svg>

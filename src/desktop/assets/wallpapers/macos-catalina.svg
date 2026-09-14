@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2560 1440" width="100%" height="100%">
+  <defs>
+    <linearGradient id="cat-sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0a0e27" />
+      <stop offset="40%" stop-color="#181a4a" />
+      <stop offset="70%" stop-color="#3b2d71" />
+      <stop offset="85%" stop-color="#7e3b79" />
+      <stop offset="95%" stop-color="#d97757" />
+      <stop offset="100%" stop-color="#fca311" />
+    </linearGradient>
+    <linearGradient id="cat-sea" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0e1738" />
+      <stop offset="40%" stop-color="#080d22" />
+      <stop offset="100%" stop-color="#02040d" />
+    </linearGradient>
+    <linearGradient id="cat-island" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#181d3b" />
+      <stop offset="50%" stop-color="#0f1329" />
+      <stop offset="100%" stop-color="#070914" />
+    </linearGradient>
+    <linearGradient id="cat-glow" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#fca311" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#0e1738" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+
+  <rect width="2560" height="920" fill="url(#cat-sky)" />
+  <rect y="920" width="2560" height="520" fill="url(#cat-sea)" />
+
+  <!-- Stars in upper sky -->
+  <g fill="#ffffff" opacity="0.6">
+    <circle cx="240" cy="180" r="1.5" /><circle cx="580" cy="120" r="1.2" />
+    <circle cx="920" cy="220" r="1.8" /><circle cx="1340" cy="90" r="1.4" />
+    <circle cx="1780" cy="160" r="1.6" /><circle cx="2120" cy="240" r="1.2" />
+    <circle cx="2380" cy="110" r="1.5" /><circle cx="780" cy="310" r="1.3" />
+    <circle cx="1620" cy="280" r="1.5" />
+  </g>
+
+  <!-- Santa Catalina Island Silhouette -->
+  <path d="M 120 920 C 350 820, 520 860, 780 740 C 950 670, 1150 710, 1380 620 C 1580 540, 1780 640, 2050 730 C 2280 810, 2450 870, 2560 920 L 2560 960 L 0 960 Z" fill="url(#cat-island)" />
+  
+  <!-- Subtle Sea Reflection -->
+  <rect y="920" width="2560" height="240" fill="url(#cat-glow)" />
+</svg>

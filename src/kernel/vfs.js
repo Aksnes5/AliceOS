@@ -90,7 +90,7 @@ let fileSystem = {
               type: 'file',
               name: 'settings.json',
               content: JSON.stringify({
-                wallpaper: "url('https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?w=1920&q=80')",
+                wallpaper: "dynamic-solar",
                 theme: 'light',
                 isometric: 'off',
                 island: 'on',

@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2560 1440" width="100%" height="100%">
+  <defs>
+    <linearGradient id="sonoma-sky" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#1d4ed8" />
+      <stop offset="35%" stop-color="#3b82f6" />
+      <stop offset="60%" stop-color="#93c5fd" />
+      <stop offset="85%" stop-color="#fef08a" />
+      <stop offset="100%" stop-color="#f97316" />
+    </linearGradient>
+    <linearGradient id="sonoma-amber" x1="0%" y1="0%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#f59e0b" />
+      <stop offset="60%" stop-color="#d97706" />
+      <stop offset="100%" stop-color="#b45309" />
+    </linearGradient>
+    <linearGradient id="sonoma-green1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4ade80" />
+      <stop offset="50%" stop-color="#16a34a" />
+      <stop offset="100%" stop-color="#14532d" />
+    </linearGradient>
+    <linearGradient id="sonoma-green2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#22c55e" />
+      <stop offset="60%" stop-color="#15803d" />
+      <stop offset="100%" stop-color="#052e16" />
+    </linearGradient>
+    <linearGradient id="sonoma-coastal-blue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="70%" stop-color="#0369a1" />
+      <stop offset="100%" stop-color="#0c4a6e" />
+    </linearGradient>
+    <filter id="sonoma-glow">
+      <feGaussianBlur stdDeviation="40" result="b" />
+      <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Radiant Sky -->
+  <rect width="2560" height="1440" fill="url(#sonoma-sky)" />
+
+  <!-- Horizon Sun Atmosphere -->
+  <circle cx="1600" cy="740" r="480" fill="#fef08a" opacity="0.45" filter="url(#sonoma-glow)" />
+
+  <!-- Rolling Sonoma Coastal Ridges -->
+  <!-- Layer 1: Distant Ocean / Ridge -->
+  <path d="M 0 850 C 400 830, 900 870, 1400 810 C 1900 750, 2200 780, 2560 720 L 2560 1440 L 0 1440 Z" fill="url(#sonoma-coastal-blue)" opacity="0.8" />
+
+  <!-- Layer 2: Golden Ridge -->
+  <path d="M 0 940 C 500 860, 1100 970, 1600 870 C 2050 780, 2350 820, 2560 760 L 2560 1440 L 0 1440 Z" fill="url(#sonoma-amber)" opacity="0.9" />
+
+  <!-- Layer 3: Vibrant Emerald Slope -->
+  <path d="M 0 1040 C 450 990, 950 910, 1500 980 C 1950 1040, 2300 920, 2560 880 L 2560 1440 L 0 1440 Z" fill="url(#sonoma-green1)" opacity="0.95" />
+
+  <!-- Layer 4: Deep Fore slope -->
+  <path d="M 0 1200 C 600 1100, 1200 1250, 1800 1100 C 2200 1000, 2450 1040, 2560 1020 L 2560 1440 L 0 1440 Z" fill="url(#sonoma-green2)" />
+</svg>

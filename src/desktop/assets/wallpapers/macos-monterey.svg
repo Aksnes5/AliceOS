@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2560 1440" width="100%" height="100%">
+  <defs>
+    <linearGradient id="monterey-base" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#170326" />
+      <stop offset="50%" stop-color="#2a0845" />
+      <stop offset="100%" stop-color="#0b0114" />
+    </linearGradient>
+    <linearGradient id="m-pink" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f43f5e" />
+      <stop offset="50%" stop-color="#e11d48" />
+      <stop offset="100%" stop-color="#881337" />
+    </linearGradient>
+    <linearGradient id="m-purple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7" />
+      <stop offset="60%" stop-color="#7c3aed" />
+      <stop offset="100%" stop-color="#4c1d95" />
+    </linearGradient>
+    <linearGradient id="m-indigo" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1" />
+      <stop offset="50%" stop-color="#4338ca" />
+      <stop offset="100%" stop-color="#1e1b4b" />
+    </linearGradient>
+    <linearGradient id="m-cyan" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06b6d4" />
+      <stop offset="50%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#1e3a8a" />
+    </linearGradient>
+    <filter id="m-shadow">
+      <feDropShadow dx="0" dy="16" stdDeviation="22" flood-color="rgba(0,0,0,0.55)" />
+    </filter>
+  </defs>
+
+  <rect width="2560" height="1440" fill="url(#monterey-base)" />
+
+  <!-- Canyon Contour Band 1 -->
+  <path d="M -100 1440 C 300 1100, 700 1300, 1100 1000 C 1500 700, 1900 850, 2660 500 L 2660 1500 L -100 1500 Z" fill="url(#m-indigo)" filter="url(#m-shadow)" />
+
+  <!-- Canyon Contour Band 2 -->
+  <path d="M -100 1200 C 400 800, 800 1050, 1300 750 C 1800 450, 2100 650, 2660 350 L 2660 1500 L -100 1500 Z" fill="url(#m-purple)" filter="url(#m-shadow)" />
+
+  <!-- Canyon Contour Band 3 (Electric Magenta Pink) -->
+  <path d="M -100 950 C 350 600, 850 850, 1400 550 C 1900 280, 2250 480, 2660 200 L 2660 1500 L -100 1500 Z" fill="url(#m-pink)" filter="url(#m-shadow)" />
+
+  <!-- Monterey Wave Highlights -->
+  <path d="M 200 1440 C 700 900, 1200 1100, 1650 800 C 2100 520, 2400 680, 2660 550 L 2660 700 C 2350 850, 2050 680, 1600 960 C 1150 1250, 650 1050, 150 1440 Z" fill="url(#m-cyan)" opacity="0.6" filter="url(#m-shadow)" />
+</svg>

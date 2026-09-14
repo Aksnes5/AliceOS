@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2560 1440" width="100%" height="100%">
+  <defs>
+    <linearGradient id="chroma-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f19" />
+      <stop offset="50%" stop-color="#111827" />
+      <stop offset="100%" stop-color="#030712" />
+    </linearGradient>
+    <radialGradient id="c-blob1" cx="30%" cy="30%" r="50%">
+      <stop offset="0%" stop-color="#ec4899" />
+      <stop offset="50%" stop-color="#8b5cf6" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#030712" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="c-blob2" cx="70%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#06b6d4" />
+      <stop offset="50%" stop-color="#3b82f6" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#030712" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="c-blob3" cx="50%" cy="75%" r="50%">
+      <stop offset="0%" stop-color="#f59e0b" />
+      <stop offset="50%" stop-color="#ef4444" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="#030712" stop-opacity="0" />
+    </radialGradient>
+    <filter id="chroma-diffuse">
+      <feGaussianBlur stdDeviation="80" />
+    </filter>
+  </defs>
+  <rect width="2560" height="1440" fill="url(#chroma-bg)" />
+  <g filter="url(#chroma-diffuse)" opacity="0.85">
+    <circle cx="700" cy="500" r="600" fill="url(#c-blob1)" />
+    <circle cx="1800" cy="550" r="650" fill="url(#c-blob2)" />
+    <circle cx="1300" cy="1050" r="700" fill="url(#c-blob3)" />
+  </g>
+</svg>

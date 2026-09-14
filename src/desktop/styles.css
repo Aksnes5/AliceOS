@@ -77,7 +77,7 @@ body {
     radial-gradient(at 50% 95%, rgba(14, 165, 233, 0.4) 0px, transparent 55%),
     radial-gradient(at 85% 85%, rgba(251, 146, 60, 0.3) 0px, transparent 50%),
     linear-gradient(135deg, #181824 0%, #2e2842 50%, #111424 100%),
-    url('https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?w=1920&q=80');
+    url('assets/wallpapers/macos-sequoia.svg');
   background-size: cover;
   background-position: center;
   color: white;
@@ -3450,7 +3450,7 @@ body.dark-mode .finder-sidebar-tag:hover {
     radial-gradient(at 50% 95%, rgba(14, 165, 233, 0.4) 0px, transparent 55%),
     radial-gradient(at 85% 85%, rgba(251, 146, 60, 0.3) 0px, transparent 50%),
     linear-gradient(135deg, #181824 0%, #2e2842 50%, #111424 100%),
-    url('https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?w=1920&q=80');
+    url('assets/wallpapers/macos-sequoia.svg');
 }
 .dynamic-wallpaper-overlay {
   z-index: 0;

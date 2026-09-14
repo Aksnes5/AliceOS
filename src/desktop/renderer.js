@@ -4910,23 +4910,23 @@ async function launchIPhoneMirroring() {
         <div class="iphone-app-body">
           <div style="font-size:11px;color:#8e8e93;margin-bottom:8px;font-weight:600;" id="photos-today-${pid}">${t('iphone_today', 'Today')}</div>
           <div class="photos-grid" id="photos-grid-${pid}">
-            <div class="photo-thumb" data-src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80">
-              <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300&q=70" alt="Wallpaper">
+            <div class="photo-thumb" data-src="assets/wallpapers/macos-sequoia.svg">
+              <img src="assets/wallpapers/macos-sequoia.svg" alt="macOS Sequoia">
             </div>
-            <div class="photo-thumb" data-src="https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?w=800&q=80">
-              <img src="https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?w=300&q=70" alt="Wallpaper">
+            <div class="photo-thumb" data-src="assets/wallpapers/macos-sonoma.svg">
+              <img src="assets/wallpapers/macos-sonoma.svg" alt="macOS Sonoma">
             </div>
-            <div class="photo-thumb" data-src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=800&q=80">
-              <img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=300&q=70" alt="Wallpaper">
+            <div class="photo-thumb" data-src="assets/wallpapers/macos-ventura.svg">
+              <img src="assets/wallpapers/macos-ventura.svg" alt="macOS Ventura">
             </div>
-            <div class="photo-thumb" data-src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80">
-              <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=300&q=70" alt="Beach">
+            <div class="photo-thumb" data-src="assets/wallpapers/macos-monterey.svg">
+              <img src="assets/wallpapers/macos-monterey.svg" alt="macOS Monterey">
             </div>
-            <div class="photo-thumb" data-src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&q=80">
-              <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=300&q=70" alt="Mountains">
+            <div class="photo-thumb" data-src="assets/wallpapers/macos-big-sur.svg">
+              <img src="assets/wallpapers/macos-big-sur.svg" alt="macOS Big Sur">
             </div>
-            <div class="photo-thumb" data-src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80">
-              <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=300&q=70" alt="Lake">
+            <div class="photo-thumb" data-src="assets/wallpapers/macos-mojave-day.svg">
+              <img src="assets/wallpapers/macos-mojave-day.svg" alt="macOS Mojave">
             </div>
           </div>
           <div id="photo-modal-${pid}" style="display:none;position:absolute;top:0;left:0;right:0;bottom:0;background:#000;z-index:100;align-items:center;justify-content:center;cursor:pointer;">
@@ -8170,7 +8170,7 @@ async function launchSettings() {
 
     // Load existing settings
     let currentSettings = { 
-      wallpaper: "url('https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?w=1920&q=80')", 
+      wallpaper: 'dynamic-solar', 
       theme: 'dark', 
       isometric: 'off', 
       island: 'on',
@@ -8240,13 +8240,20 @@ async function launchSettings() {
       }
       else if (tab === 'wallpaper') {
         const wallpapers = [
-          { name: 'Dynamic Solar (Sonoma)', val: 'dynamic-solar', preview: 'https://images.unsplash.com/photo-1506744626753-eda8151a1571?w=400&q=80', badge: 'Solar Cycle' },
-          { name: 'Dynamic Time (Mojave)', val: 'dynamic-mojave', preview: 'https://images.unsplash.com/photo-1506744626753-eda8151a1571?w=400&q=80', badge: 'Auto Clock' },
-          { name: 'macOS Monterey', val: "url('https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?w=1920&q=80')", preview: 'https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?w=400&q=80' },
-          { name: 'macOS Big Sur', val: "url('https://images.unsplash.com/photo-1623869947849-c0ea88bf371f?w=1920&q=80')", preview: 'https://images.unsplash.com/photo-1623869947849-c0ea88bf371f?w=400&q=80' },
-          { name: 'Fluid Gradient', val: "url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=1920&q=80')", preview: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=400&q=80' },
-          { name: 'Orange Sunrise', val: "linear-gradient(120deg, #f6d365 0%, #fda085 100%)", preview: '', bg: 'linear-gradient(120deg, #f6d365 0%, #fda085 100%)' },
-          { name: 'Dark Purple', val: "linear-gradient(135deg, #1a1a1a 0%, #4a2b5c 100%)", preview: '', bg: 'linear-gradient(135deg, #1a1a1a 0%, #4a2b5c 100%)' }
+          { name: 'Dynamic Solar (Sonoma)', val: 'dynamic-solar', preview: 'assets/wallpapers/macos-solar-day.svg', badge: 'Solar Cycle' },
+          { name: 'Dynamic Time (Mojave)', val: 'dynamic-mojave', preview: 'assets/wallpapers/macos-mojave-day.svg', badge: 'Auto Clock' },
+          { name: 'macOS Sequoia', val: 'assets/wallpapers/macos-sequoia.svg', preview: 'assets/wallpapers/macos-sequoia.svg', badge: 'macOS 15' },
+          { name: 'macOS Sonoma', val: 'assets/wallpapers/macos-sonoma.svg', preview: 'assets/wallpapers/macos-sonoma.svg', badge: 'macOS 14' },
+          { name: 'macOS Ventura', val: 'assets/wallpapers/macos-ventura.svg', preview: 'assets/wallpapers/macos-ventura.svg', badge: 'macOS 13' },
+          { name: 'macOS Monterey', val: 'assets/wallpapers/macos-monterey.svg', preview: 'assets/wallpapers/macos-monterey.svg', badge: 'macOS 12' },
+          { name: 'macOS Big Sur', val: 'assets/wallpapers/macos-big-sur.svg', preview: 'assets/wallpapers/macos-big-sur.svg', badge: 'macOS 11' },
+          { name: 'macOS Catalina', val: 'assets/wallpapers/macos-catalina.svg', preview: 'assets/wallpapers/macos-catalina.svg', badge: 'macOS 10.15' },
+          { name: 'macOS Mojave (Day)', val: 'assets/wallpapers/macos-mojave-day.svg', preview: 'assets/wallpapers/macos-mojave-day.svg', badge: 'macOS 10.14' },
+          { name: 'macOS Mojave (Night)', val: 'assets/wallpapers/macos-mojave-night.svg', preview: 'assets/wallpapers/macos-mojave-night.svg', badge: 'macOS 10.14' },
+          { name: 'Mac OS X Aqua', val: 'assets/wallpapers/macos-classic-aqua.svg', preview: 'assets/wallpapers/macos-classic-aqua.svg', badge: 'Classic' },
+          { name: 'Apple Chroma', val: 'assets/wallpapers/macos-chroma.svg', preview: 'assets/wallpapers/macos-chroma.svg', badge: 'Chroma' },
+          { name: 'Orange Sunrise', val: "linear-gradient(120deg, #f6d365 0%, #fda085 100%)", preview: '', bg: 'linear-gradient(120deg, #f6d365 0%, #fda085 100%)', badge: 'Gradient' },
+          { name: 'Dark Purple', val: "linear-gradient(135deg, #1a1a1a 0%, #4a2b5c 100%)", preview: '', bg: 'linear-gradient(135deg, #1a1a1a 0%, #4a2b5c 100%)', badge: 'Gradient' }
         ];
 
         const now = new Date();
@@ -8258,7 +8265,7 @@ async function launchSettings() {
 
         contentArea.innerHTML = `
           <h2 style="font-size:20px;margin:0 0 16px 0;font-weight:600;">${t('settings_wallpaper', 'Wallpaper')}</h2>
-          <div style="display:grid;grid-template-columns:repeat(2, 1fr);gap:16px;">
+          <div style="display:grid;grid-template-columns:repeat(auto-fill, minmax(170px, 1fr));gap:14px;max-height:360px;overflow-y:auto;padding:4px 4px 12px 2px;">
             ${wallpapers.map(wp => {
               const curWp = typeof window.getWallpaperSetting === 'function' ? window.getWallpaperSetting() : 'dynamic-solar';
               const isActive = (curWp === wp.val) || (currentSettings.wallpaper === wp.val);
@@ -8841,7 +8848,7 @@ function toggleMissionControl() {
       spacesBar.id = 'mc-spaces-bar';
       spacesBar.className = 'mc-spaces-bar';
       spacesBar.innerHTML = `
-        <div class="mc-space-thumb active" style="background-image:url('https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?w=300&q=80');">
+        <div class="mc-space-thumb active" style="background-image:url('assets/wallpapers/macos-sequoia.svg');">
           <span class="mc-space-label">Desktop 1</span>
         </div>
         <div class="mc-space-thumb" style="background-image:linear-gradient(135deg, #181824, #3a2b5a);">
@@ -9788,12 +9795,15 @@ function loginUser() {
 
   currentUser = userSelect ? userSelect.value : 'alice';
 
-  // Password verification with iOS Spring Shake
+  // Password verification with iOS Spring Shake & Basso sound
   if (passwordInput && passwordInput.value && passwordInput.value !== '1234' && passwordInput.value !== 'alice' && currentUser !== 'guest') {
     if (loginBox) {
       loginBox.classList.remove('lock-shake');
       void loginBox.offsetWidth;
       loginBox.classList.add('lock-shake');
+    }
+    if (window.AppleAudioEngine && window.AppleAudioEngine.playBasso) {
+      window.AppleAudioEngine.playBasso();
     }
     passwordInput.value = '';
     return;
@@ -9804,14 +9814,16 @@ function loginUser() {
     refreshDesktop();
   });
 
-  // Animate Lock Glyph to unlocked
+  // Animate Lock Glyph to unlocked with vector SF Symbol
   if (lockGlyph) {
-    lockGlyph.innerText = '🔓';
-    lockGlyph.style.transform = 'scale(1.4)';
+    lockGlyph.innerHTML = getSFSymbol('lock.open.fill', 22, '#34c759');
+    lockGlyph.style.transform = 'scale(1.3)';
   }
 
-  // Play unlock chime
-  if (typeof playSystemBeep === 'function') {
+  // Play authentic macOS unlock chime
+  if (window.AppleAudioEngine && window.AppleAudioEngine.playUnlockChime) {
+    window.AppleAudioEngine.playUnlockChime();
+  } else if (typeof playSystemBeep === 'function') {
     playSystemBeep(1200, 0.05);
     setTimeout(() => playSystemBeep(1600, 0.08), 60);
   }
@@ -9834,8 +9846,8 @@ function loginUser() {
     loginScreen.style.filter = 'blur(20px)';
     
     // Staggered desktop elements entrance
-    const menubar = document.getElementById('menu-bar');
-    const dock = document.getElementById('dock');
+    const menubar = document.getElementById('top-menubar') || document.querySelector('.menubar');
+    const dock = document.getElementById('dock-ui') || document.querySelector('.dock-container');
     const widgets = document.getElementById('desktop-widgets');
     if (menubar) {
       menubar.style.transform = 'translateY(-100%)';
@@ -9888,8 +9900,11 @@ function lockScreen() {
   
   if (passwordInput) passwordInput.value = '';
   if (lockGlyph) {
-    lockGlyph.innerText = '🔒';
+    lockGlyph.innerHTML = getSFSymbol('lock.fill', 22, '#ffffff');
     lockGlyph.style.transform = 'scale(1)';
+  }
+  if (window.AppleAudioEngine && window.AppleAudioEngine.playLockClick) {
+    window.AppleAudioEngine.playLockClick();
   }
   if (lockHeader) {
     lockHeader.style.transform = 'translateY(0)';
@@ -10166,25 +10181,81 @@ window.cycleWidgetSysMode = cycleWidgetSysMode;
 // ==========================================
 // macOS Sonoma / Sequoia Solar Dynamic Wallpaper Engine
 // ==========================================
+// ==========================================
+// macOS Unified Wallpaper Engine & Crossfade Transition
+// ==========================================
+function applySystemWallpaper(val) {
+  if (!val) return;
+  if (typeof window.setWallpaperSetting === 'function') {
+    window.setWallpaperSetting(val);
+  }
+  if (window.aliceOS) {
+    window.aliceOS.wallpaperSetting = val;
+  }
+  
+  const layer = document.getElementById('dynamic-wallpaper-layer');
+  const overlay = document.getElementById('dynamic-wallpaper-overlay');
+  
+  // Format background string
+  let bgValue = val;
+  if (!val.startsWith('url(') && !val.startsWith('linear-gradient') && !val.startsWith('radial-gradient')) {
+    bgValue = `url('${val}')`;
+  }
+
+  if (layer && overlay) {
+    layer.style.display = 'block';
+    overlay.style.display = 'block';
+    overlay.style.backgroundImage = bgValue;
+    overlay.style.backgroundSize = 'cover';
+    overlay.style.backgroundPosition = 'center';
+    overlay.style.opacity = '1';
+    setTimeout(() => {
+      layer.style.backgroundImage = bgValue;
+      layer.style.backgroundSize = 'cover';
+      layer.style.backgroundPosition = 'center';
+      overlay.style.opacity = '0';
+    }, 450);
+  } else if (layer) {
+    layer.style.display = 'block';
+    layer.style.backgroundImage = bgValue;
+    layer.style.backgroundSize = 'cover';
+    layer.style.backgroundPosition = 'center';
+  } else {
+    document.body.style.backgroundImage = bgValue;
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundPosition = 'center';
+  }
+
+  // Update active Mission Control space thumbnail
+  const mcActiveSpace = document.querySelector('.mc-space-thumb.active');
+  if (mcActiveSpace) {
+    mcActiveSpace.style.backgroundImage = bgValue;
+  }
+}
+window.applySystemWallpaper = applySystemWallpaper;
+
+// ==========================================
+// macOS Sonoma / Sequoia Solar Dynamic Wallpaper Engine
+// ==========================================
 const SOLAR_PHASES = {
   dawn: {
     name: 'Dawn / Sunrise (晨曦金光)',
-    bg: "url('https://images.unsplash.com/photo-1506744626753-eda8151a1571?w=1920&q=80')",
+    bg: "url('assets/wallpapers/macos-solar-dawn.svg')",
     desc: '05:30 - 08:30 Warm golden hour'
   },
   day: {
     name: 'Midday (盛夏白昼)',
-    bg: "url('https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=1920&q=80')",
+    bg: "url('assets/wallpapers/macos-solar-day.svg')",
     desc: '08:30 - 17:00 Vivid daylight'
   },
   sunset: {
     name: 'Sunset / Dusk (暮色紫霞)',
-    bg: "url('https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1920&q=80')",
+    bg: "url('assets/wallpapers/macos-solar-sunset.svg')",
     desc: '17:00 - 19:30 Amber & violet twilight'
   },
   night: {
     name: 'Midnight / Cosmic (深邃星夜)',
-    bg: "url('https://images.unsplash.com/photo-1505322022379-7c3353ee6291?w=1920&q=80')",
+    bg: "url('assets/wallpapers/macos-solar-night.svg')",
     desc: '19:30 - 05:30 Celestial indigo & starlight'
   }
 };
@@ -10222,15 +10293,24 @@ function updateSolarDynamicWallpaper(forceHour = null) {
   if (targetPhase === currentSolarPhase && forceHour === null) return;
   currentSolarPhase = targetPhase;
 
-  const targetBg = SOLAR_PHASES[targetPhase].bg;
+  let targetBg = SOLAR_PHASES[targetPhase].bg;
+  if (curWpSetting === 'dynamic-mojave') {
+    targetBg = (targetPhase === 'day' || targetPhase === 'dawn') 
+      ? "url('assets/wallpapers/macos-mojave-day.svg')" 
+      : "url('assets/wallpapers/macos-mojave-night.svg')";
+  }
 
   if (layer && overlay) {
     overlay.style.backgroundImage = targetBg;
+    overlay.style.backgroundSize = 'cover';
+    overlay.style.backgroundPosition = 'center';
     overlay.style.opacity = '1';
     setTimeout(() => {
       layer.style.backgroundImage = targetBg;
+      layer.style.backgroundSize = 'cover';
+      layer.style.backgroundPosition = 'center';
       overlay.style.opacity = '0';
-    }, 1800);
+    }, 450);
   } else {
     document.body.style.backgroundImage = targetBg;
     document.body.style.backgroundSize = 'cover';
@@ -11552,7 +11632,7 @@ async function launchPaint(initialFilePath = null) {
     {
       id: 'p1',
       name: 'macOS_Sequoia_Sunrise.heic',
-      url: 'https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?w=1600&q=85',
+      url: 'assets/wallpapers/macos-sequoia.svg',
       date: '2026年9月14日 上午 09:41',
       album: 'wallpapers',
       camera: 'Apple iPhone 16 Pro Max',
@@ -11564,7 +11644,7 @@ async function launchPaint(initialFilePath = null) {
     {
       id: 'p2',
       name: 'Sonoma_Horizon_Coastline.heic',
-      url: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1600&q=85',
+      url: 'assets/wallpapers/macos-sonoma.svg',
       date: '2026年9月13日 下午 05:22',
       album: 'nature',
       camera: 'Hasselblad X2D 100C',
@@ -11576,7 +11656,7 @@ async function launchPaint(initialFilePath = null) {
     {
       id: 'p3',
       name: 'Apple_Park_Ring_Sunset.jpg',
-      url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&q=85',
+      url: 'assets/wallpapers/macos-catalina.svg',
       date: '2026年9月12日 下午 06:45',
       album: 'architecture',
       camera: 'Apple iPhone 16 Pro',
@@ -11588,7 +11668,7 @@ async function launchPaint(initialFilePath = null) {
     {
       id: 'p4',
       name: 'Yosemite_El_Capitan_Mist.jpg',
-      url: 'https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=1600&q=85',
+      url: 'assets/wallpapers/macos-big-sur.svg',
       date: '2026年9月10日 上午 10:15',
       album: 'nature',
       camera: 'Sony α7R V · FE 24-70mm GM II',
@@ -11600,7 +11680,7 @@ async function launchPaint(initialFilePath = null) {
     {
       id: 'p5',
       name: 'Tokyo_Shibuya_Night_Rain.jpg',
-      url: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=1600&q=85',
+      url: 'assets/wallpapers/macos-monterey.svg',
       date: '2026年9月08日 晚上 08:30',
       album: 'architecture',
       camera: 'Leica Q3 · Summilux 28mm',
@@ -11612,7 +11692,7 @@ async function launchPaint(initialFilePath = null) {
     {
       id: 'p6',
       name: 'Ventura_Fluid_Stage.heic',
-      url: 'https://images.unsplash.com/photo-1557683316-973673baf926?w=1600&q=85',
+      url: 'assets/wallpapers/macos-ventura.svg',
       date: '2026年9月01日 下午 03:10',
       album: 'wallpapers',
       camera: 'Digital Art · Rendered Engine',
@@ -13072,7 +13152,7 @@ async function handleAIInput() {
       else if (val.includes('ide') || val.includes('code')) { launchIDE(); response = 'Opening AliceScript IDE.'; }
       else { response = "I don't know that app."; }
     } else if (val.includes('wallpaper') || val.includes('background')) {
-      document.body.style.backgroundImage = "url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=1000')";
+      applySystemWallpaper('assets/wallpapers/macos-sequoia.svg');
       response = 'I have changed your wallpaper to something fresh!';
     } else if (val.includes('hello') || val.includes('hi')) {
       response = 'Hello! I am Alice, your personal OS assistant. Try asking me to open an app!';
@@ -13430,6 +13510,72 @@ const AppleAudioEngine = {
   // 8. Official macOS Glass Chime (Bell)
   playGlassChime() {
     this.playTink();
+  },
+
+  // 9. Official iOS / macOS Screen Lock Sound
+  playLockClick() {
+    if (!this.settings.soundEffectsEnabled) return;
+    try {
+      this.ensureCtx();
+      const t = audioCtx.currentTime;
+      this._playMicroImpulse(t, 2400, 0.28);
+      this._playMicroImpulse(t + 0.008, 980, 0.35);
+    } catch(e) {}
+  },
+
+  // 10. Official macOS Basso / Error Horn
+  playBasso() {
+    if (!this.settings.soundEffectsEnabled) return;
+    try {
+      this.ensureCtx();
+      const t = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      const filter = audioCtx.createBiquadFilter();
+
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(105, t);
+      osc.frequency.exponentialRampToValueAtTime(75, t + 0.25);
+
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(320, t);
+      filter.frequency.exponentialRampToValueAtTime(140, t + 0.25);
+      filter.Q.setValueAtTime(4.0, t);
+
+      gain.gain.setValueAtTime(0.35 * this.settings.masterVolume, t);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.26);
+
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc.start(t);
+      osc.stop(t + 0.27);
+    } catch(e) {}
+  },
+
+  // 11. Official macOS Unlock Chime
+  playUnlockChime() {
+    if (!this.settings.soundEffectsEnabled) return;
+    try {
+      this.ensureCtx();
+      const t = audioCtx.currentTime;
+      [
+        { freq: 1046.50, start: 0, dur: 0.12, vol: 0.2 },      // C6
+        { freq: 1567.98, start: 0.07, dur: 0.22, vol: 0.25 }   // G6
+      ].forEach(note => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(note.freq, t + note.start);
+        gain.gain.setValueAtTime(note.vol * this.settings.masterVolume, t + note.start);
+        gain.gain.exponentialRampToValueAtTime(0.0001, t + note.start + note.dur);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(t + note.start);
+        osc.stop(t + note.start + note.dur + 0.01);
+      });
+    } catch(e) {}
   }
 };
 

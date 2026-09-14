@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2560 1440" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bs-sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a8a" />
+      <stop offset="40%" stop-color="#3b82f6" />
+      <stop offset="70%" stop-color="#93c5fd" />
+      <stop offset="100%" stop-color="#fdba74" />
+    </linearGradient>
+    <linearGradient id="bs-coral" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fb7185" />
+      <stop offset="50%" stop-color="#f43f5e" />
+      <stop offset="100%" stop-color="#be123c" />
+    </linearGradient>
+    <linearGradient id="bs-orange" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fdba74" />
+      <stop offset="50%" stop-color="#fb923c" />
+      <stop offset="100%" stop-color="#ea580c" />
+    </linearGradient>
+    <linearGradient id="bs-teal" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22d3ee" />
+      <stop offset="50%" stop-color="#06b6d4" />
+      <stop offset="100%" stop-color="#0891b2" />
+    </linearGradient>
+    <linearGradient id="bs-navy" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e40af" />
+      <stop offset="50%" stop-color="#1e3a8a" />
+      <stop offset="100%" stop-color="#172554" />
+    </linearGradient>
+    <filter id="bs-shadow">
+      <feDropShadow dx="0" dy="14" stdDeviation="20" flood-color="rgba(0,0,0,0.4)" />
+    </filter>
+  </defs>
+
+  <rect width="2560" height="1440" fill="url(#bs-sky)" />
+
+  <!-- Big Sur Curving Mountains -->
+  <path d="M 0 650 C 600 550, 1100 750, 1600 600 C 2100 480, 2350 540, 2560 480 L 2560 1440 L 0 1440 Z" fill="url(#bs-navy)" opacity="0.85" />
+
+  <path d="M 0 780 C 500 700, 1000 850, 1500 720 C 2000 580, 2300 660, 2560 580 L 2560 1440 L 0 1440 Z" fill="url(#bs-teal)" filter="url(#bs-shadow)" />
+
+  <path d="M 0 940 C 600 860, 1100 1020, 1700 850 C 2150 720, 2400 800, 2560 720 L 2560 1440 L 0 1440 Z" fill="url(#bs-coral)" filter="url(#bs-shadow)" />
+
+  <path d="M 0 1120 C 500 1020, 1050 1180, 1600 1000 C 2100 850, 2350 940, 2560 880 L 2560 1440 L 0 1440 Z" fill="url(#bs-orange)" filter="url(#bs-shadow)" />
+</svg>

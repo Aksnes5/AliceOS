@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2560 1440" width="100%" height="100%">
+  <defs>
+    <linearGradient id="ventura-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="40%" stop-color="#1e1b4b" />
+      <stop offset="100%" stop-color="#090d16" />
+    </linearGradient>
+    <linearGradient id="poppy-orange" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffedd5" />
+      <stop offset="20%" stop-color="#fbbf24" />
+      <stop offset="50%" stop-color="#ea580c" />
+      <stop offset="85%" stop-color="#c2410c" />
+      <stop offset="100%" stop-color="#7c2d12" />
+    </linearGradient>
+    <linearGradient id="poppy-red" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fda4af" />
+      <stop offset="30%" stop-color="#f43f5e" />
+      <stop offset="70%" stop-color="#be123c" />
+      <stop offset="100%" stop-color="#4c0519" />
+    </linearGradient>
+    <linearGradient id="poppy-magenta" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#831843" />
+      <stop offset="40%" stop-color="#db2777" />
+      <stop offset="80%" stop-color="#f472b6" />
+      <stop offset="100%" stop-color="#fbcfe8" />
+    </linearGradient>
+    <linearGradient id="poppy-yellow" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="25%" stop-color="#fef08a" />
+      <stop offset="60%" stop-color="#eab308" />
+      <stop offset="100%" stop-color="#ca8a04" />
+    </linearGradient>
+    <filter id="petal-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="-10" dy="18" stdDeviation="25" flood-color="rgba(0,0,0,0.6)" />
+    </filter>
+  </defs>
+
+  <rect width="2560" height="1440" fill="url(#ventura-bg)" />
+
+  <!-- California Poppy Organic Petal Flow -->
+  <g transform="translate(1280, 720) rotate(-12) translate(-1280, -720)">
+    <!-- Back Deep Petal 1 -->
+    <path d="M 600 1440 C 500 900, 800 400, 1350 350 C 1900 300, 2100 800, 1950 1440 Z" fill="url(#poppy-red)" filter="url(#petal-shadow)" opacity="0.9" />
+
+    <!-- Magenta Petal 2 (Left Swirl) -->
+    <path d="M 200 1200 C 350 650, 750 300, 1200 480 C 1600 640, 1450 1100, 950 1440 Z" fill="url(#poppy-magenta)" filter="url(#petal-shadow)" opacity="0.92" />
+
+    <!-- Vibrant Tangerine Petal 3 (Main Crest) -->
+    <path d="M 700 1440 C 850 750, 1200 250, 1750 400 C 2200 520, 2250 1050, 1600 1440 Z" fill="url(#poppy-orange)" filter="url(#petal-shadow)" />
+
+    <!-- Foreground Radiant Yellow/Orange Petal 4 -->
+    <path d="M 900 1440 C 1050 950, 1300 500, 1680 620 C 1980 720, 1850 1200, 1400 1440 Z" fill="url(#poppy-yellow)" filter="url(#petal-shadow)" />
+    
+    <!-- Central Specular Highlight Core -->
+    <ellipse cx="1450" cy="680" rx="140" ry="240" fill="#ffffff" opacity="0.25" transform="rotate(25 1450 680)" filter="url(#petal-shadow)" />
+  </g>
+</svg>
