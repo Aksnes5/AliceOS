@@ -325,14 +325,18 @@ body.dark-mode .dock {
 }
 
 img.macos-app-icon {
-  width: var(--dock-icon-size);
-  height: var(--dock-icon-size);
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
+  width: var(--dock-icon-size) !important;
+  height: var(--dock-icon-size) !important;
+  min-width: var(--dock-icon-size);
+  min-height: var(--dock-icon-size);
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: fill;
   image-rendering: -webkit-optimize-contrast;
   filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.28));
   border-radius: 22.5%;
+  display: block;
+  flex-shrink: 0;
 }
 
 /* Launchpad PNG icons */
@@ -9753,4 +9757,19 @@ body:not(.dark-mode) .wifi-popover-footer:hover {
 /* Traffic light green button hover triggers tiling */
 .macos-traffic-light.btn-maximize:hover .tiling-trigger-hint {
   display: flex;
+}
+
+/* Force PNG dock icons to fill dock-icon container exactly like SVGs */
+.dock-icon > img {
+  width: var(--dock-icon-size) !important;
+  height: var(--dock-icon-size) !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: fill;
+  border-radius: 22.5%;
+  display: block;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.28));
+  pointer-events: none;
+  user-select: none;
+  flex-shrink: 0;
 }
