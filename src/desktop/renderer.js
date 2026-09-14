@@ -2414,12 +2414,185 @@ function getSFSymbol(name, size = 16, color = 'currentColor') {
     case 'applelogo':
       svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="${color}"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>`;
       break;
+    case 'camera':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>`;
+      break;
+    case 'photo':
+    case 'photos':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5" fill="${color}"/><polyline points="21 15 16 10 5 21"/></svg>`;
+      break;
+    case 'photo-stack':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="15" height="15" rx="2"/><path d="M3 7v13a2 2 0 0 0 2 2h13"/><circle cx="12" cy="7" r="1.5" fill="${color}"/><polyline points="21 13 17 9 10 16"/></svg>`;
+      break;
+    case 'calendar':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`;
+      break;
+    case 'location':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="${color}"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>`;
+      break;
+    case 'wind':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>`;
+      break;
+    case 'humidity':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>`;
+      break;
+    case 'eye':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
+      break;
+    case 'gauge':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"><path d="M12 2a10 10 0 0 0-7.07 17.07L12 12l4.95-4.95"/><path d="M21.18 10.5a10 10 0 0 0-16.36 0"/><circle cx="12" cy="12" r="1.5" fill="${color}"/></svg>`;
+      break;
+    case 'sunset':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"><path d="M17 18a5 5 0 0 0-10 0"/><line x1="12" y1="2" x2="12" y2="9"/><line x1="4.22" y1="10.22" x2="5.64" y2="11.64"/><line x1="1" y1="18" x2="3" y2="18"/><line x1="21" y1="18" x2="23" y2="18"/><line x1="18.36" y1="11.64" x2="19.78" y2="10.22"/><line x1="23" y1="22" x2="1" y2="22"/></svg>`;
+      break;
+    case 'cloud':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>`;
+      break;
+    case 'cloud-rain':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"><line x1="16" y1="13" x2="16" y2="21"/><line x1="8" y1="13" x2="8" y2="21"/><line x1="12" y1="15" x2="12" y2="23"/><path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"/></svg>`;
+      break;
+    case 'rotate':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>`;
+      break;
+    case 'crop':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"><path d="M6.13 1L6 16a2 2 0 0 0 2 2h15"/><path d="M1 6.13L16 6a2 2 0 0 1 2 2v15"/></svg>`;
+      break;
+    case 'info':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>`;
+      break;
+    case 'slider':
+    case 'adjust':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>`;
+      break;
+    case 'lyrics':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="13" y2="13"/></svg>`;
+      break;
+    case 'cpu':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="15" x2="23" y2="15"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="15" x2="4" y2="15"/></svg>`;
+      break;
+    case 'memory':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="6" y1="10" x2="6" y2="14"/><line x1="10" y1="10" x2="10" y2="14"/><line x1="14" y1="10" x2="14" y2="14"/><line x1="18" y1="10" x2="18" y2="14"/><line x1="4" y1="18" x2="4" y2="21"/><line x1="8" y1="18" x2="8" y2="21"/><line x1="12" y1="18" x2="12" y2="21"/><line x1="16" y1="18" x2="16" y2="21"/><line x1="20" y1="18" x2="20" y2="21"/></svg>`;
+      break;
+    case 'message':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="${color}"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>`;
+      break;
+    case 'effects':
+    case 'sparkles':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="${color}"><path d="M12 2L14.4 7.6L20 10L14.4 12.4L12 18L9.6 12.4L4 10L9.6 7.6L12 2Z"/><path d="M19 16L20.2 18.8L23 20L20.2 21.2L19 24L17.8 21.2L15 20L17.8 18.8L19 16Z"/><path d="M5 16L5.9 18.1L8 19L5.9 19.9L5 22L4.1 19.9L2 19L4.1 18.1L5 16Z"/></svg>`;
+      break;
+    case 'minus':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>`;
+      break;
+    case 'binoculars':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 10h4"/><path d="M19 7V4a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v3"/><path d="M9 7V4a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1v3"/><circle cx="7" cy="15" r="5"/><circle cx="17" cy="15" r="5"/></svg>`;
+      break;
+    case 'building':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="9" y1="22" x2="9" y2="18"/><line x1="15" y1="22" x2="15" y2="18"/><line x1="9" y1="18" x2="15" y2="18"/><line x1="8" y1="6" x2="8.01" y2="6"/><line x1="16" y1="6" x2="16.01" y2="6"/><line x1="8" y1="10" x2="8.01" y2="10"/><line x1="16" y1="10" x2="16.01" y2="10"/><line x1="8" y1="14" x2="8.01" y2="14"/><line x1="16" y1="14" x2="16.01" y2="14"/></svg>`;
+      break;
+    case 'cube':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>`;
+      break;
     default:
       svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>`;
   }
 
   return `<span class="sf-icon" style="width:${size}px;height:${size}px;">${svg}</span>`;
 }
+
+// Universal Horizontal Drag-to-Scroll & Mouse Wheel Handler
+function enableHorizontalDragScroll(el) {
+  if (!el || el._hScrollInit) return;
+  el._hScrollInit = true;
+
+  // 1. Convert Vertical Wheel to Horizontal Scroll
+  el.addEventListener('wheel', (e) => {
+    if (el.scrollWidth > el.clientWidth) {
+      const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+      if (delta !== 0) {
+        e.preventDefault();
+        e.stopPropagation();
+        el.scrollLeft += delta;
+      }
+    }
+  }, { passive: false });
+
+  // 2. Mouse Grab-and-Swipe (Drag to Scroll)
+  let isDown = false;
+  let startX = 0;
+  let startScrollLeft = 0;
+  let hasMoved = false;
+
+  el.style.cursor = 'grab';
+
+  el.addEventListener('mousedown', (e) => {
+    if (e.button !== 0) return;
+    isDown = true;
+    hasMoved = false;
+    startX = e.pageX - el.getBoundingClientRect().left;
+    startScrollLeft = el.scrollLeft;
+    el.style.cursor = 'grabbing';
+    el.style.userSelect = 'none';
+  });
+
+  const onMouseMove = (e) => {
+    if (!isDown) return;
+    const currentX = e.pageX - el.getBoundingClientRect().left;
+    const dist = currentX - startX;
+    if (Math.abs(dist) > 2) {
+      hasMoved = true;
+      e.preventDefault();
+      el.scrollLeft = startScrollLeft - dist;
+    }
+  };
+
+  const onMouseUp = () => {
+    if (!isDown) return;
+    isDown = false;
+    el.style.cursor = 'grab';
+    el.style.removeProperty('user-select');
+  };
+
+  el.addEventListener('mousemove', onMouseMove);
+  el.addEventListener('mouseleave', onMouseUp);
+  window.addEventListener('mouseup', onMouseUp);
+
+  el.addEventListener('click', (e) => {
+    if (hasMoved) {
+      e.stopImmediatePropagation();
+      e.preventDefault();
+      hasMoved = false;
+    }
+  }, true);
+}
+
+// Global Horizontal Wheel Scroll Delegator for all horizontal scroll areas
+window.addEventListener('wheel', (e) => {
+  let el = e.target;
+  while (el && el !== document.body && el !== document.documentElement) {
+    const isHorizTarget = el.classList && (
+      el.classList.contains('weather-hourly-row') ||
+      el.classList.contains('weather-city-bar') ||
+      el.classList.contains('safari-tab-bar') ||
+      el.classList.contains('photos-filter-pills') ||
+      el.classList.contains('wallpaper-gallery-grid') ||
+      el.classList.contains('finder-columns-container')
+    );
+
+    const style = window.getComputedStyle(el);
+    const hasHoriz = el.scrollWidth > el.clientWidth + 2 && (style.overflowX === 'auto' || style.overflowX === 'scroll');
+    const hasVert = el.scrollHeight > el.clientHeight + 2 && (style.overflowY === 'auto' || style.overflowY === 'scroll');
+
+    if (hasHoriz && (!hasVert || isHorizTarget)) {
+      const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+      if (delta !== 0) {
+        e.preventDefault();
+        el.scrollLeft += delta;
+        return;
+      }
+    }
+    el = el.parentElement;
+  }
+}, { passive: false });
 
 function createWindow(pid, title, contentHtml, explicitAppKey = null) {
   const desktop = document.getElementById('desktop');
@@ -2891,7 +3064,7 @@ async function launchIPhoneMirroring() {
       <!-- Dynamic Island Floating Capsule -->
       <div class="iphone-dynamic-island" id="iphone-island-${pid}" title="Dynamic Island">
         <div class="island-compact-left">
-          <span style="font-size:11px;">🎵</span>
+          <span style="display:flex;align-items:center;">${getSFSymbol('waveform', 11, '#ff2d55')}</span>
           <span style="font-size:10px;opacity:0.9;" id="island-compact-title-${pid}">Alice Radio</span>
         </div>
         <div class="island-compact-right">
@@ -2904,7 +3077,7 @@ async function launchIPhoneMirroring() {
         <!-- Expanded Island View -->
         <div class="island-expanded-view" id="island-expanded-${pid}">
           <div style="display:flex;align-items:center;gap:10px;">
-            <div style="width:36px;height:36px;background:linear-gradient(135deg,#ff2d55,#ff9500);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;">🎵</div>
+            <div style="width:36px;height:36px;background:linear-gradient(135deg,#ff2d55,#ff9500);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;">${getSFSymbol('waveform', 18, '#ffffff')}</div>
             <div>
               <div style="font-size:12px;font-weight:700;color:#fff;" id="island-exp-song-${pid}">Daylight</div>
               <div style="font-size:10px;color:rgba(255,255,255,0.7);">Alice — iOS 18 Audio Engine</div>
@@ -2919,7 +3092,7 @@ async function launchIPhoneMirroring() {
         <div class="iphone-status-time" id="iphone-clock-${pid}">09:41</div>
         <div class="iphone-status-icons">
           <span>5G</span>
-          <span>📶</span>
+          <span style="display:flex;align-items:center;">${getSFSymbol('wifi', 11, '#ffffff')}</span>
           <div class="iphone-battery-pill">
             <div class="iphone-battery-fill"></div>
           </div>
@@ -2939,64 +3112,64 @@ async function launchIPhoneMirroring() {
         <div class="iphone-app-grid">
           <!-- Messages -->
           <div class="iphone-app-item" id="iphone-icon-messages-${pid}">
-            <div class="iphone-app-icon" style="background: linear-gradient(180deg, #34c759, #28a745);">
-              <span>💬</span>
+            <div class="iphone-app-icon" style="background: linear-gradient(180deg, #34c759, #28a745);display:flex;align-items:center;justify-content:center;">
+              ${getSFSymbol('message', 24, '#ffffff')}
             </div>
             <div class="iphone-app-name">信息</div>
           </div>
 
           <!-- Photos -->
           <div class="iphone-app-item" id="iphone-icon-photos-${pid}">
-            <div class="iphone-app-icon" style="background: linear-gradient(180deg, #ffffff, #e5e5ea); color:#ff2d55;">
-              <span>🖼️</span>
+            <div class="iphone-app-icon" style="background: linear-gradient(180deg, #ffffff, #e5e5ea);display:flex;align-items:center;justify-content:center;">
+              ${getSFSymbol('photos', 24, '#ff2d55')}
             </div>
             <div class="iphone-app-name">照片</div>
           </div>
 
           <!-- Stopwatch / Clock -->
           <div class="iphone-app-item" id="iphone-icon-clock-${pid}">
-            <div class="iphone-app-icon" style="background: #000; border: 1px solid rgba(255,255,255,0.2);">
-              <span>⏱️</span>
+            <div class="iphone-app-icon" style="background: #000; border: 1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;">
+              ${getSFSymbol('clock', 24, '#ff9500')}
             </div>
             <div class="iphone-app-name">时钟</div>
           </div>
 
           <!-- Settings -->
           <div class="iphone-app-item" id="iphone-icon-settings-${pid}">
-            <div class="iphone-app-icon" style="background: linear-gradient(180deg, #8e8e93, #636366);">
-              <span>⚙️</span>
+            <div class="iphone-app-icon" style="background: linear-gradient(180deg, #8e8e93, #636366);display:flex;align-items:center;justify-content:center;">
+              ${getSFSymbol('gear', 24, '#ffffff')}
             </div>
             <div class="iphone-app-name">设置</div>
           </div>
 
           <!-- Music -->
           <div class="iphone-app-item" id="iphone-icon-music-${pid}">
-            <div class="iphone-app-icon" style="background: linear-gradient(180deg, #fc3d39, #e02420);">
-              <span>🎵</span>
+            <div class="iphone-app-icon" style="background: linear-gradient(180deg, #fc3d39, #e02420);display:flex;align-items:center;justify-content:center;">
+              ${getSFSymbol('waveform', 24, '#ffffff')}
             </div>
             <div class="iphone-app-name">音乐</div>
           </div>
 
           <!-- Safari -->
           <div class="iphone-app-item" id="iphone-icon-safari-${pid}">
-            <div class="iphone-app-icon" style="background: linear-gradient(180deg, #ffffff, #e5e5ea);">
-              <span>🧭</span>
+            <div class="iphone-app-icon" style="background: linear-gradient(180deg, #ffffff, #e5e5ea);display:flex;align-items:center;justify-content:center;">
+              ${getSFSymbol('safari', 24, '#007aff')}
             </div>
             <div class="iphone-app-name">Safari</div>
           </div>
 
           <!-- Notes -->
           <div class="iphone-app-item" id="iphone-icon-notes-${pid}">
-            <div class="iphone-app-icon" style="background: linear-gradient(180deg, #ffd60a, #ffb300);">
-              <span>📝</span>
+            <div class="iphone-app-icon" style="background: linear-gradient(180deg, #ffd60a, #ffb300);display:flex;align-items:center;justify-content:center;">
+              ${getSFSymbol('doc-text', 24, '#ffffff')}
             </div>
             <div class="iphone-app-name">备忘录</div>
           </div>
 
           <!-- Camera -->
           <div class="iphone-app-item" id="iphone-icon-camera-${pid}">
-            <div class="iphone-app-icon" style="background: linear-gradient(180deg, #8e8e93, #48484a);">
-              <span>📷</span>
+            <div class="iphone-app-icon" style="background: linear-gradient(180deg, #8e8e93, #48484a);display:flex;align-items:center;justify-content:center;">
+              ${getSFSymbol('camera', 24, '#ffffff')}
             </div>
             <div class="iphone-app-name">相机</div>
           </div>
@@ -3005,16 +3178,16 @@ async function launchIPhoneMirroring() {
         <!-- Bottom iOS Dock -->
         <div class="iphone-bottom-dock">
           <div class="iphone-app-item" id="iphone-dock-phone-${pid}">
-            <div class="iphone-app-icon" style="width:48px;height:48px;background:linear-gradient(180deg,#34c759,#248a3d);font-size:22px;">📞</div>
+            <div class="iphone-app-icon" style="width:48px;height:48px;background:linear-gradient(180deg,#34c759,#248a3d);display:flex;align-items:center;justify-content:center;">${getSFSymbol('phone', 22, '#ffffff')}</div>
           </div>
           <div class="iphone-app-item" id="iphone-dock-messages-${pid}">
-            <div class="iphone-app-icon" style="width:48px;height:48px;background:linear-gradient(180deg,#34c759,#28a745);font-size:22px;">💬</div>
+            <div class="iphone-app-icon" style="width:48px;height:48px;background:linear-gradient(180deg,#34c759,#28a745);display:flex;align-items:center;justify-content:center;">${getSFSymbol('message', 22, '#ffffff')}</div>
           </div>
           <div class="iphone-app-item" id="iphone-dock-safari-${pid}">
-            <div class="iphone-app-icon" style="width:48px;height:48px;background:linear-gradient(180deg,#ffffff,#e5e5ea);font-size:22px;">🧭</div>
+            <div class="iphone-app-icon" style="width:48px;height:48px;background:linear-gradient(180deg,#ffffff,#e5e5ea);display:flex;align-items:center;justify-content:center;">${getSFSymbol('safari', 22, '#007aff')}</div>
           </div>
           <div class="iphone-app-item" id="iphone-dock-music-${pid}">
-            <div class="iphone-app-icon" style="width:48px;height:48px;background:linear-gradient(180deg,#fc3d39,#e02420);font-size:22px;">🎵</div>
+            <div class="iphone-app-icon" style="width:48px;height:48px;background:linear-gradient(180deg,#fc3d39,#e02420);display:flex;align-items:center;justify-content:center;">${getSFSymbol('waveform', 22, '#ffffff')}</div>
           </div>
         </div>
       </div>
@@ -3394,6 +3567,15 @@ async function launchTerminal() {
   const promptSpan = win.querySelector(`#term-prompt-${pid}`);
 
   let currentDir = `/Users/${currentUser}`;
+  const cmdHistory = [];
+  let historyIdx = -1;
+  let tempInput = '';
+
+  const knownCommands = [
+    'ls', 'cd', 'cat', 'mkdir', 'rm', 'echo', 'clear', 'whoami', 'free', 'ps',
+    'uname', 'sw_vers', 'date', 'uptime', 'say', 'macfetch', 'neofetch',
+    'apt', 'cmatrix', 'cowsay', 'figlet', 'sl', 'fortune', 'help', 'history'
+  ];
 
   function updatePrompt() {
     const dirDisplay = (currentDir === `/Users/${currentUser}`) ? '~' : currentDir;
@@ -3406,11 +3588,81 @@ async function launchTerminal() {
   updatePrompt();
 
   input.addEventListener('keydown', async (e) => {
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (cmdHistory.length === 0) return;
+      if (historyIdx === -1) tempInput = input.value;
+      if (historyIdx < cmdHistory.length - 1) {
+        historyIdx++;
+        input.value = cmdHistory[cmdHistory.length - 1 - historyIdx];
+        setTimeout(() => input.setSelectionRange(input.value.length, input.value.length), 0);
+      }
+      return;
+    }
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (cmdHistory.length === 0) return;
+      if (historyIdx > 0) {
+        historyIdx--;
+        input.value = cmdHistory[cmdHistory.length - 1 - historyIdx];
+        setTimeout(() => input.setSelectionRange(input.value.length, input.value.length), 0);
+      } else if (historyIdx === 0) {
+        historyIdx = -1;
+        input.value = tempInput;
+        setTimeout(() => input.setSelectionRange(input.value.length, input.value.length), 0);
+      }
+      return;
+    }
+
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      const val = input.value;
+      const parts = val.trimStart().split(/\s+/);
+      if (parts.length <= 1) {
+        const prefix = parts[0] || '';
+        const matches = knownCommands.filter(c => c.startsWith(prefix));
+        if (matches.length === 1) {
+          input.value = matches[0] + ' ';
+        } else if (matches.length > 1) {
+          const currentPrompt = updatePrompt();
+          output.innerHTML += `${currentPrompt}<span style="color:#fff;">${val}</span><br>`;
+          output.innerHTML += `<div style="color:#007aff;margin:4px 0;display:flex;flex-wrap:wrap;gap:12px;">${matches.map(m => `<span>${m}</span>`).join('')}</div>`;
+          output.parentElement.scrollTop = output.parentElement.scrollHeight;
+        }
+      } else {
+        const lastPart = parts[parts.length - 1];
+        try {
+          const dirRes = await window.aliceOS.vfs.readDir(currentDir);
+          if (dirRes.success) {
+            const matches = dirRes.data
+              .map(i => i.name)
+              .filter(n => n.toLowerCase().startsWith(lastPart.toLowerCase()));
+            if (matches.length === 1) {
+              parts[parts.length - 1] = matches[0];
+              input.value = parts.join(' ');
+            } else if (matches.length > 1) {
+              const currentPrompt = updatePrompt();
+              output.innerHTML += `${currentPrompt}<span style="color:#fff;">${val}</span><br>`;
+              output.innerHTML += `<div style="color:#34c759;margin:4px 0;display:flex;flex-wrap:wrap;gap:12px;">${matches.map(m => `<span>${m}</span>`).join('')}</div>`;
+              output.parentElement.scrollTop = output.parentElement.scrollHeight;
+            }
+          }
+        } catch (err) {}
+      }
+      return;
+    }
+
     if (e.key === 'Enter') {
       const cmd = input.value.trim();
       const currentPrompt = updatePrompt();
       output.innerHTML += `${currentPrompt}<span style="color:#fff;">${cmd}</span><br>`;
       input.value = '';
+      if (cmd && (cmdHistory.length === 0 || cmdHistory[cmdHistory.length - 1] !== cmd)) {
+        cmdHistory.push(cmd);
+      }
+      historyIdx = -1;
+      tempInput = '';
 
       const args = cmd.split(' ');
       const baseCmd = args[0];
@@ -3847,6 +4099,28 @@ async function launchTerminal() {
           ];
           const pick = quotes[Math.floor(Math.random() * quotes.length)];
           output.innerHTML += `<div style="margin:6px 0;padding:8px 12px;background:rgba(255,255,255,0.06);border-left:3px solid #ff9500;border-radius:4px;font-style:italic;color:#e5e5ea;">${pick}</div>`;
+        }
+      } else if (baseCmd === 'help') {
+        output.innerHTML += `
+<div style="margin:6px 0;font-size:12px;line-height:1.45;">
+  <span style="color:#ff9500;font-weight:700;">macOS Sequoia Terminal (zsh) — Built-in Command Reference</span><br>
+  <table style="margin-top:6px;border-collapse:collapse;color:#ccc;font-size:11px;">
+    <tr><td style="color:#34c759;padding-right:12px;font-weight:600;">ls, cd, cat</td><td>Browse, navigate &amp; read virtual file system</td></tr>
+    <tr><td style="color:#34c759;padding-right:12px;font-weight:600;">mkdir, rm, echo</td><td>Create directories, delete items, write file contents</td></tr>
+    <tr><td style="color:#64b5f6;padding-right:12px;font-weight:600;">macfetch, neofetch</td><td>Display Apple Silicon hardware &amp; OS summary</td></tr>
+    <tr><td style="color:#64b5f6;padding-right:12px;font-weight:600;">sw_vers, uname</td><td>Check macOS version &amp; Darwin kernel details</td></tr>
+    <tr><td style="color:#64b5f6;padding-right:12px;font-weight:600;">ps, free, uptime</td><td>Inspect active processes, memory &amp; uptime</td></tr>
+    <tr><td style="color:#af52de;padding-right:12px;font-weight:600;">apt [list|install]</td><td>Package manager (cmatrix, cowsay, figlet, sl, fortune)</td></tr>
+    <tr><td style="color:#ffcc00;padding-right:12px;font-weight:600;">say [words]</td><td>Text-to-speech voice synthesizer</td></tr>
+    <tr><td style="color:#ffcc00;padding-right:12px;font-weight:600;">clear, history</td><td>Clear display / view previous commands</td></tr>
+  </table>
+  <div style="margin-top:6px;color:#888;font-size:11px;">Tip: Press <span style="color:#fff;">[Tab]</span> for auto-completion, <span style="color:#fff;">[↑ / ↓]</span> for command history.</div>
+</div>`;
+      } else if (baseCmd === 'history') {
+        if (cmdHistory.length === 0) {
+          output.innerHTML += `No command history.<br>`;
+        } else {
+          output.innerHTML += cmdHistory.map((c, i) => `<span style="color:#888;">${String(i + 1).padStart(4, ' ')}</span>  ${c}`).join('<br>') + '<br>';
         }
       } else if (baseCmd !== '') {
         output.innerHTML += `zsh: command not found: ${baseCmd}<br>`;
@@ -6993,7 +7267,7 @@ function getAppIconSvg(id, size = 64) {
     </svg>`;
   }
 
-  if (normId === 'ide') {
+  if (normId === 'ide' || normId === 'xcode') {
     return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
       <defs>
         <linearGradient id="ide-bg-${uid}" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -7012,6 +7286,43 @@ function getAppIconSvg(id, size = 64) {
         <rect x="-14" y="-18" width="28" height="14" rx="3" fill="#cbd5e1"/>
       </g>
       <text x="50" y="80" font-family="-apple-system, monospace" font-size="18" font-weight="800" fill="#ffffff" text-anchor="middle">&lt; /&gt;</text>
+    </svg>`;
+  }
+
+  if (normId === 'tictactoe') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="tt-bg-${uid}" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#4f46e5"/><stop offset="100%" stop-color="#312e81"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#tt-bg-${uid})"/>
+      <line x1="38" y1="20" x2="38" y2="80" stroke="rgba(255,255,255,0.3)" stroke-width="3" stroke-linecap="round"/>
+      <line x1="62" y1="20" x2="62" y2="80" stroke="rgba(255,255,255,0.3)" stroke-width="3" stroke-linecap="round"/>
+      <line x1="20" y1="38" x2="80" y2="38" stroke="rgba(255,255,255,0.3)" stroke-width="3" stroke-linecap="round"/>
+      <line x1="20" y1="62" x2="80" y2="62" stroke="rgba(255,255,255,0.3)" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="28" cy="28" r="8" stroke="#38bdf8" stroke-width="3" fill="none"/>
+      <line x1="45" y1="45" x2="55" y2="55" stroke="#f87171" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="55" y1="45" x2="45" y2="55" stroke="#f87171" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="72" cy="72" r="8" stroke="#38bdf8" stroke-width="3" fill="none"/>
+    </svg>`;
+  }
+
+  if (normId === 'syslogs') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="sl-bg-${uid}" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#1f2937"/><stop offset="100%" stop-color="#111827"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#sl-bg-${uid})"/>
+      <rect x="20" y="24" width="60" height="52" rx="6" fill="#030712" stroke="#374151" stroke-width="2"/>
+      <circle cx="28" cy="32" r="2.5" fill="#ef4444"/>
+      <circle cx="36" cy="32" r="2.5" fill="#f59e0b"/>
+      <circle cx="44" cy="32" r="2.5" fill="#10b981"/>
+      <line x1="28" y1="44" x2="58" y2="44" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="28" y1="52" x2="68" y2="52" stroke="#60a5fa" stroke-width="2" stroke-linecap="round"/>
+      <line x1="28" y1="60" x2="48" y2="60" stroke="#9ca3af" stroke-width="2" stroke-linecap="round"/>
     </svg>`;
   }
 
@@ -8046,6 +8357,19 @@ async function launchMusic() {
           <span style="display:flex;align-items:center;opacity:0.6;">${getSFSymbol('speaker', 14, 'currentColor')}</span>
           <input type="range" class="music-vol-slider" id="music-vol-${pid}" min="0" max="100" value="75">
           <span style="display:flex;align-items:center;opacity:0.6;margin-left:8px;cursor:pointer;" title="隔空播放">${getSFSymbol('airdrop', 14, 'currentColor')}</span>
+          <button class="music-ctrl-btn" id="music-lyrics-btn-${pid}" title="实时歌词" style="display:flex;align-items:center;margin-left:8px;background:none;border:none;cursor:pointer;color:inherit;opacity:0.75;">${getSFSymbol('lyrics', 14, 'currentColor')}</button>
+        </div>
+      </div>
+
+      <!-- Live Lyrics Slide-out Drawer -->
+      <div class="music-lyrics-drawer" id="music-lyrics-drawer-${pid}" style="display:none;position:absolute;top:0;right:0;width:320px;bottom:64px;background:rgba(20,20,24,0.92);backdrop-filter:blur(30px);border-left:1px solid rgba(255,255,255,0.1);padding:24px 20px;overflow-y:auto;z-index:20;box-sizing:border-box;">
+        <div style="font-size:11px;font-weight:700;color:#ff2d55;letter-spacing:1px;margin-bottom:16px;">LIVE LYRICS · 实时动效歌词</div>
+        <div class="music-lyrics-content" id="music-lyrics-content-${pid}" style="display:flex;flex-direction:column;gap:18px;font-size:15px;font-weight:600;line-height:1.4;color:rgba(255,255,255,0.45);">
+          <div style="color:#ffffff;font-size:18px;font-weight:700;text-shadow:0 2px 10px rgba(255,45,85,0.3);">♪ 柔和的黑胶底噪与温暖电钢琴</div>
+          <div>♪ 库比蒂诺午夜的微风穿过无限环路</div>
+          <div>♪ 神经引擎静谧推演，代码如诗律动</div>
+          <div>♪ 柔和爵士七和弦层叠铺展</div>
+          <div>♪ 灵感在黑暗中闪烁微光</div>
         </div>
       </div>
     </div>
@@ -8202,6 +8526,17 @@ async function launchMusic() {
     }
   });
 
+  const lyricsBtn = win.querySelector(`#music-lyrics-btn-${pid}`);
+  const lyricsDrawer = win.querySelector(`#music-lyrics-drawer-${pid}`);
+  if (lyricsBtn && lyricsDrawer) {
+    lyricsBtn.addEventListener('click', () => {
+      const isShowing = lyricsDrawer.style.display === 'block';
+      lyricsDrawer.style.display = isShowing ? 'none' : 'block';
+      lyricsBtn.style.opacity = isShowing ? '0.75' : '1.0';
+      lyricsBtn.style.color = isShowing ? 'inherit' : '#ff2d55';
+    });
+  }
+
   scrubBar.addEventListener('click', (e) => {
     const rect = scrubBar.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
@@ -8251,24 +8586,35 @@ async function launchCamera() {
 
         <!-- Bottom Controls Bar -->
         <div class="pb-bottom-bar">
-          <!-- Effects Tray -->
-          <div class="pb-effects-tray" id="pb-effects-${pid}">
-            <div class="pb-effect-chip active" data-filter="none">Normal</div>
-            <div class="pb-effect-chip" data-filter="sepia(0.85) contrast(1.1)">Sepia</div>
-            <div class="pb-effect-chip" data-filter="grayscale(1) contrast(1.2)">Noir</div>
-            <div class="pb-effect-chip" data-filter="invert(1) hue-rotate(180deg) saturate(3)">Thermal</div>
-            <div class="pb-effect-chip" data-filter="contrast(2) saturate(2.5)">Pop Art</div>
-            <div class="pb-effect-chip" data-filter="hue-rotate(90deg) contrast(1.3)">Cyber</div>
-            <div class="pb-effect-chip" data-filter="invert(1)">Invert</div>
+          <!-- Modes -->
+          <div style="display:flex;align-items:center;gap:6px;">
+            <button class="pb-mode-btn active" id="pb-mode-single-${pid}" title="单张照片" style="background:rgba(255,255,255,0.2);border:none;color:white;padding:5px 10px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;">单张</button>
+            <button class="pb-mode-btn" id="pb-mode-burst-${pid}" title="四格快照" style="background:transparent;border:none;color:#8e8e93;padding:5px 10px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;">四格</button>
           </div>
 
           <!-- Shutter Button -->
           <button class="pb-shutter-btn" id="pb-shutter-${pid}" title="${t('pb_take_photo', 'Take Photo')}"></button>
 
-          <!-- Timer Mode Toggle -->
-          <div style="display:flex;align-items:center;gap:6px;">
-            <button id="pb-timer-toggle-${pid}" style="background:rgba(255,255,255,0.12);border:none;color:white;padding:6px 14px;border-radius:14px;font-size:11px;font-weight:600;cursor:pointer;">⏱ 3s Timer: ON</button>
+          <!-- Timer & Effects -->
+          <div style="display:flex;align-items:center;gap:8px;">
+            <button id="pb-timer-toggle-${pid}" style="background:rgba(255,255,255,0.15);border:none;color:white;padding:6px 12px;border-radius:12px;font-size:11px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:4px;">
+              ${getSFSymbol('clock', 12, '#ffffff')} <span id="pb-timer-txt-${pid}">3秒倒计时: 开</span>
+            </button>
+            <button id="pb-effects-toggle-${pid}" style="background:rgba(255,255,255,0.15);border:none;color:white;padding:6px 12px;border-radius:12px;font-size:11px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:4px;">
+              ${getSFSymbol('effects', 12, '#ff9500')} <span>效果</span>
+            </button>
           </div>
+        </div>
+
+        <!-- 3x3 Effects Grid Tray -->
+        <div class="pb-effects-tray" id="pb-effects-${pid}">
+          <div class="pb-effect-chip active" data-filter="none">原色 Normal</div>
+          <div class="pb-effect-chip" data-filter="sepia(0.85) contrast(1.1)">复古 Sepia</div>
+          <div class="pb-effect-chip" data-filter="grayscale(1) contrast(1.2)">黑白 Noir</div>
+          <div class="pb-effect-chip" data-filter="invert(1) hue-rotate(180deg) saturate(3)">热感 Thermal</div>
+          <div class="pb-effect-chip" data-filter="contrast(2) saturate(2.5)">波普 Pop Art</div>
+          <div class="pb-effect-chip" data-filter="hue-rotate(90deg) contrast(1.3)">赛博 Cyber</div>
+          <div class="pb-effect-chip" data-filter="invert(1)">反相 Invert</div>
         </div>
       </div>
     `);
@@ -8282,6 +8628,9 @@ async function launchCamera() {
     const countdownEl = win.querySelector(`#pb-countdown-${pid}`);
     const flashEl = win.querySelector(`#pb-flash-${pid}`);
     const timerToggle = win.querySelector(`#pb-timer-toggle-${pid}`);
+    const timerTxt = win.querySelector(`#pb-timer-txt-${pid}`);
+    const effectsToggle = win.querySelector(`#pb-effects-toggle-${pid}`);
+    const effectsTray = win.querySelector(`#pb-effects-${pid}`);
     const filmstripItems = win.querySelector(`#pb-filmstrip-items-${pid}`);
     const effectChips = win.querySelectorAll('.pb-effect-chip');
 
@@ -8316,22 +8665,39 @@ async function launchCamera() {
           ctx.fillStyle = grad;
           ctx.fillRect(0, 0, 640, 480);
 
-          // Studio circles
-          ctx.strokeStyle = 'rgba(56, 189, 248, 0.4)';
+          // Center Stage reticle
+          ctx.strokeStyle = 'rgba(56, 189, 248, 0.5)';
           ctx.lineWidth = 2;
           ctx.beginPath();
-          ctx.arc(320, 240, 100 + Math.sin(t) * 10, 0, Math.PI * 2);
+          ctx.arc(320, 240, 100 + Math.sin(t) * 8, 0, Math.PI * 2);
           ctx.stroke();
 
-          // Face silhouette
-          ctx.fillStyle = '#38bdf8';
-          ctx.font = '72px sans-serif';
-          ctx.textAlign = 'center';
-          ctx.fillText('👤', 320, 250);
+          // Camera corners
+          const size = 60;
+          ctx.strokeStyle = '#38bdf8';
+          ctx.lineWidth = 2.5;
+          // Top-left
+          ctx.beginPath(); ctx.moveTo(220, 170); ctx.lineTo(220, 150); ctx.lineTo(240, 150); ctx.stroke();
+          // Top-right
+          ctx.beginPath(); ctx.moveTo(420, 170); ctx.lineTo(420, 150); ctx.lineTo(400, 150); ctx.stroke();
+          // Bottom-left
+          ctx.beginPath(); ctx.moveTo(220, 310); ctx.lineTo(220, 330); ctx.lineTo(240, 330); ctx.stroke();
+          // Bottom-right
+          ctx.beginPath(); ctx.moveTo(420, 310); ctx.lineTo(420, 330); ctx.lineTo(400, 330); ctx.stroke();
 
-          ctx.font = '16px -apple-system, sans-serif';
+          // Face vector silhouette
+          ctx.fillStyle = 'rgba(56, 189, 248, 0.75)';
+          ctx.beginPath();
+          ctx.arc(320, 220, 36, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.beginPath();
+          ctx.ellipse(320, 290, 54, 30, 0, 0, Math.PI, true);
+          ctx.fill();
+
+          ctx.font = '600 13px -apple-system, sans-serif';
           ctx.fillStyle = '#94a3b8';
-          ctx.fillText('Apple Studio Display • 12MP Center Stage', 320, 310);
+          ctx.textAlign = 'center';
+          ctx.fillText('Apple Studio Display • 12MP Center Stage', 320, 365);
         }, 50);
       });
 
@@ -8346,9 +8712,13 @@ async function launchCamera() {
       });
     });
 
+    effectsToggle.addEventListener('click', () => {
+      effectsTray.classList.toggle('visible');
+    });
+
     timerToggle.addEventListener('click', () => {
       useTimer = !useTimer;
-      timerToggle.innerText = useTimer ? '⏱ 3s Timer: ON' : '⏱ 3s Timer: OFF';
+      timerTxt.innerText = useTimer ? '3秒倒计时: 开' : '3秒倒计时: 关';
       timerToggle.style.background = useTimer ? 'rgba(0,122,255,0.4)' : 'rgba(255,255,255,0.12)';
     });
 
@@ -9033,250 +9403,552 @@ loginUser = async function() {
   }, 1000);
 }
 
-// Photos & Markup Studio (macOS Sequoia Design)
-async function launchPaint() {
+// macOS Sequoia 15.x — Photos (照片) & Markup Studio
+async function launchPaint(initialFilePath = null) {
   const res = await window.aliceOS.pm.spawn('paint');
-  if (res.success) {
-    const pid = res.data.pid;
-    let currentTool = 'pen'; // pen, brush, highlighter, eraser, rect, circle
-    let currentColor = '#007aff';
-    let currentWidth = 5;
-    let artworkCount = 1;
-    let history = [];
+  if (!res.success) return;
+  const pid = res.data.pid;
 
-    const win = createWindow(pid, t('app_paint', 'Photos & Markup'), `
-      <div class="mac-markup-app">
-        <!-- Floating Frosted Glass Toolbar -->
-        <div class="mac-markup-toolbar">
-          <!-- Tools Group -->
-          <div class="mac-markup-toolgroup">
-            <button class="mac-markup-tool-btn active" data-tool="pen" title="Pencil">✏️</button>
-            <button class="mac-markup-tool-btn" data-tool="brush" title="Artist Brush">🖌️</button>
-            <button class="mac-markup-tool-btn" data-tool="highlighter" title="Highlighter">🖍️</button>
-            <button class="mac-markup-tool-btn" data-tool="eraser" title="Eraser">🧹</button>
-            <button class="mac-markup-tool-btn" data-tool="rect" title="Rectangle">⬜</button>
-            <button class="mac-markup-tool-btn" data-tool="circle" title="Circle">⭕</button>
-          </div>
+  let photos = [
+    {
+      id: 'p1',
+      name: 'macOS_Sequoia_Sunrise.heic',
+      url: 'https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?w=1600&q=85',
+      date: '2026年9月14日 上午 09:41',
+      album: 'wallpapers',
+      camera: 'Apple iPhone 16 Pro Max',
+      lens: '24mm ƒ/1.78 · 48MP ProRAW',
+      iso: 'ISO 50 · 1/250s',
+      dim: '3840 × 2160 · 8.4 MB',
+      fav: true
+    },
+    {
+      id: 'p2',
+      name: 'Sonoma_Horizon_Coastline.heic',
+      url: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1600&q=85',
+      date: '2026年9月13日 下午 05:22',
+      album: 'nature',
+      camera: 'Hasselblad X2D 100C',
+      lens: '38mm ƒ/2.5 · 100MP',
+      iso: 'ISO 64 · 1/160s',
+      dim: '4096 × 2304 · 12.1 MB',
+      fav: true
+    },
+    {
+      id: 'p3',
+      name: 'Apple_Park_Ring_Sunset.jpg',
+      url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&q=85',
+      date: '2026年9月12日 下午 06:45',
+      album: 'architecture',
+      camera: 'Apple iPhone 16 Pro',
+      lens: '120mm ƒ/2.8 · 5x Optical',
+      iso: 'ISO 125 · 1/80s',
+      dim: '3024 × 4032 · 5.8 MB',
+      fav: false
+    },
+    {
+      id: 'p4',
+      name: 'Yosemite_El_Capitan_Mist.jpg',
+      url: 'https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=1600&q=85',
+      date: '2026年9月10日 上午 10:15',
+      album: 'nature',
+      camera: 'Sony α7R V · FE 24-70mm GM II',
+      lens: '50mm ƒ/4.0',
+      iso: 'ISO 100 · 1/400s',
+      dim: '3840 × 2560 · 9.2 MB',
+      fav: false
+    },
+    {
+      id: 'p5',
+      name: 'Tokyo_Shibuya_Night_Rain.jpg',
+      url: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=1600&q=85',
+      date: '2026年9月08日 晚上 08:30',
+      album: 'architecture',
+      camera: 'Leica Q3 · Summilux 28mm',
+      lens: '28mm ƒ/1.7',
+      iso: 'ISO 800 · 1/60s',
+      dim: '3840 × 2160 · 7.9 MB',
+      fav: false
+    },
+    {
+      id: 'p6',
+      name: 'Ventura_Fluid_Stage.heic',
+      url: 'https://images.unsplash.com/photo-1557683316-973673baf926?w=1600&q=85',
+      date: '2026年9月01日 下午 03:10',
+      album: 'wallpapers',
+      camera: 'Digital Art · Rendered Engine',
+      lens: 'Metal 3 Graphic Acceleration',
+      iso: 'Native sRGB · 60fps',
+      dim: '5120 × 2880 · 14.5 MB',
+      fav: true
+    }
+  ];
 
-          <!-- Stroke Width Selector -->
-          <div class="mac-markup-toolgroup">
-            <button class="mac-markup-width-btn" data-width="2" style="background:transparent;border:none;color:#aaa;padding:4px 8px;font-size:11px;cursor:pointer;">Thin</button>
-            <button class="mac-markup-width-btn active" data-width="5" style="background:#007aff;color:white;border:none;padding:4px 8px;border-radius:4px;font-size:11px;cursor:pointer;">Mid</button>
-            <button class="mac-markup-width-btn" data-width="12" style="background:transparent;border:none;color:#aaa;padding:4px 8px;font-size:11px;cursor:pointer;">Bold</button>
-            <button class="mac-markup-width-btn" data-width="24" style="background:transparent;border:none;color:#aaa;padding:4px 8px;font-size:11px;cursor:pointer;">Heavy</button>
-          </div>
+  let currentCategory = 'all'; // all, favorites, recents, wallpapers, nature, architecture, markup
+  let selectedPhoto = photos[0];
+  let isViewingDetail = false;
+  let isEditing = false;
+  let rotationDeg = 0;
+  let activeFilter = 'none';
 
-          <!-- Color Swatches -->
-          <div class="mac-markup-colors">
-            <div class="mac-markup-color-dot" data-color="#1d1d1f" style="background:#1d1d1f;"></div>
-            <div class="mac-markup-color-dot" data-color="#8e8e93" style="background:#8e8e93;"></div>
-            <div class="mac-markup-color-dot active" data-color="#007aff" style="background:#007aff;"></div>
-            <div class="mac-markup-color-dot" data-color="#5856d6" style="background:#5856d6;"></div>
-            <div class="mac-markup-color-dot" data-color="#af52de" style="background:#af52de;"></div>
-            <div class="mac-markup-color-dot" data-color="#ff2d55" style="background:#ff2d55;"></div>
-            <div class="mac-markup-color-dot" data-color="#ff9500" style="background:#ff9500;"></div>
-            <div class="mac-markup-color-dot" data-color="#34c759" style="background:#34c759;"></div>
-            <input type="color" id="paint-custom-color-${pid}" value="#007aff" style="width:20px;height:20px;padding:0;border:none;background:none;cursor:pointer;">
-          </div>
+  // Load user files from desktop/pictures
+  try {
+    const desktopFiles = await window.aliceOS.vfs.readDir(`/Users/${currentUser}/Desktop`);
+    if (desktopFiles.success && Array.isArray(desktopFiles.data)) {
+      for (const item of desktopFiles.data) {
+        const fname = typeof item === 'string' ? item : item.name;
+        if (fname && (fname.endsWith('.png') || fname.endsWith('.jpg') || fname.endsWith('.webp'))) {
+          const contentRes = await window.aliceOS.vfs.readFile(`/Users/${currentUser}/Desktop/${fname}`);
+          if (contentRes.success) {
+            photos.unshift({
+              id: `user_${fname}`,
+              name: fname,
+              url: contentRes.data,
+              date: '刚刚 · 本机桌面',
+              album: fname.toLowerCase().includes('artwork') ? 'markup' : 'recents',
+              camera: 'AliceOS Snapshot',
+              lens: 'Virtual Framebuffer Capture',
+              iso: 'Lossless PNG',
+              dim: 'HD Capture',
+              fav: false
+            });
+          }
+        }
+      }
+    }
+  } catch (e) {}
 
-          <!-- Actions -->
-          <div style="display:flex;align-items:center;gap:6px;">
-            <button id="paint-undo-${pid}" title="Undo" style="background:rgba(255,255,255,0.1);border:none;color:white;padding:5px 10px;border-radius:6px;font-size:12px;cursor:pointer;">↩️</button>
-            <button id="paint-clear-${pid}" title="${t('paint_clear', 'Clear')}" style="background:rgba(255,255,255,0.1);border:none;color:white;padding:5px 10px;border-radius:6px;font-size:12px;cursor:pointer;">🗑</button>
-            <button id="paint-save-${pid}" style="background:#007aff;color:white;border:none;padding:5px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;">💾 ${t('notes_save', 'Save')}</button>
-          </div>
+  const win = createWindow(pid, t('app_paint', 'Photos'), `
+    <div class="mac-photos-app" id="photos-app-${pid}">
+      <!-- Left Sidebar -->
+      <div class="mac-photos-sidebar">
+        <div class="photos-sidebar-group-title">图库 (LIBRARY)</div>
+        <div class="photos-nav-item active" data-cat="all">
+          <span style="display:flex;align-items:center;">${getSFSymbol('photos', 14, '#007aff')}</span>
+          <span>全部照片</span>
+          <span class="photos-nav-badge" id="photos-cnt-all-${pid}">${photos.length}</span>
+        </div>
+        <div class="photos-nav-item" data-cat="favorites">
+          <span style="display:flex;align-items:center;">${getSFSymbol('heart', 14, '#ff2d55')}</span>
+          <span>个人收藏</span>
+          <span class="photos-nav-badge" id="photos-cnt-fav-${pid}">${photos.filter(p => p.fav).length}</span>
+        </div>
+        <div class="photos-nav-item" data-cat="recents">
+          <span style="display:flex;align-items:center;">${getSFSymbol('clock', 14, '#ff9500')}</span>
+          <span>最近项目</span>
         </div>
 
-        <!-- Canvas Container -->
-        <div class="mac-markup-canvas-wrap">
-          <canvas id="paint-canvas-${pid}" width="800" height="520"></canvas>
+        <div class="photos-sidebar-group-title" style="margin-top:14px;">相册 (ALBUMS)</div>
+        <div class="photos-nav-item" data-cat="wallpapers">
+          <span style="display:flex;align-items:center;">${getSFSymbol('desktop', 14, '#5856d6')}</span>
+          <span>精选壁纸</span>
+        </div>
+        <div class="photos-nav-item" data-cat="nature">
+          <span style="display:flex;align-items:center;">${getSFSymbol('photo', 14, '#34c759')}</span>
+          <span>自然风光</span>
+        </div>
+        <div class="photos-nav-item" data-cat="architecture">
+          <span style="display:flex;align-items:center;">${getSFSymbol('internaldrive', 14, '#ff9500')}</span>
+          <span>建筑与城市</span>
+        </div>
+        <div class="photos-nav-item" data-cat="markup">
+          <span style="display:flex;align-items:center;">${getSFSymbol('palette', 14, '#af52de')}</span>
+          <span>标注与画作</span>
         </div>
       </div>
-    `);
 
-    win.style.width = '840px';
-    win.style.height = '600px';
+      <!-- Main Content Area -->
+      <div class="mac-photos-main">
+        <!-- Top Toolbar -->
+        <div class="mac-photos-topbar">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <button class="photos-tb-btn" id="photos-back-${pid}" style="display:none;align-items:center;gap:4px;">
+              ${getSFSymbol('chevron-left', 12, 'currentColor')} <span>图库</span>
+            </button>
+            <div class="photos-title-label" id="photos-title-${pid}">全部照片</div>
+            <span style="font-size:11px;color:#8e8e93;margin-left:4px;" id="photos-subhead-${pid}">(${photos.length} 张照片)</span>
+          </div>
 
-    const canvas = win.querySelector(`#paint-canvas-${pid}`);
-    const ctx = canvas.getContext('2d');
-    const toolBtns = win.querySelectorAll('.mac-markup-tool-btn');
-    const widthBtns = win.querySelectorAll('.mac-markup-width-btn');
-    const colorDots = win.querySelectorAll('.mac-markup-color-dot');
-    const customColor = win.querySelector(`#paint-custom-color-${pid}`);
-    const clearBtn = win.querySelector(`#paint-clear-${pid}`);
-    const undoBtn = win.querySelector(`#paint-undo-${pid}`);
-    const saveBtn = win.querySelector(`#paint-save-${pid}`);
+          <div style="display:flex;align-items:center;gap:8px;">
+            <button class="photos-tb-btn" id="photos-new-blank-${pid}" title="新建空白画布标注" style="display:flex;align-items:center;gap:4px;">
+              ${getSFSymbol('plus', 12, 'currentColor')} <span>新建画布</span>
+            </button>
+            <button class="photos-tb-btn" id="photos-rotate-${pid}" title="逆时针旋转 90°" style="display:none;">
+              ${getSFSymbol('rotate', 13, 'currentColor')}
+            </button>
+            <button class="photos-tb-btn" id="photos-fav-${pid}" title="收藏照片" style="display:none;">
+              ${getSFSymbol('heart', 13, 'currentColor')}
+            </button>
+            <button class="photos-tb-btn" id="photos-info-${pid}" title="照片详细信息" style="display:none;">
+              ${getSFSymbol('info', 13, 'currentColor')}
+            </button>
+            <button class="photos-tb-btn active-blue" id="photos-edit-${pid}" title="调色滤镜与标记标注" style="display:none;align-items:center;gap:4px;">
+              ${getSFSymbol('adjust', 12, '#ffffff')} <span>编辑</span>
+            </button>
+            <button class="photos-tb-btn" id="photos-export-${pid}" title="导出照片到桌面" style="display:none;align-items:center;gap:4px;">
+              ${getSFSymbol('share', 12, 'currentColor')} <span>导出</span>
+            </button>
+          </div>
+        </div>
 
-    // Fill initial canvas with clean white
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    saveState();
+        <!-- Grid View -->
+        <div class="photos-grid-scroll" id="photos-grid-scroll-${pid}">
+          <div class="photos-grid-container" id="photos-grid-${pid}"></div>
+        </div>
 
-    function saveState() {
-      if (history.length > 15) history.shift();
-      history.push(canvas.toDataURL());
-    }
+        <!-- Lightbox Single Photo View -->
+        <div class="photos-lightbox-view" id="photos-lightbox-${pid}">
+          <div class="photos-lightbox-stage" id="photos-stage-${pid}">
+            <img class="photos-lightbox-img" id="photos-lightbox-img-${pid}" alt="Photo" />
+            <canvas class="photos-markup-canvas" id="photos-markup-canvas-${pid}" style="display:none;"></canvas>
+          </div>
 
-    // Tool switching
-    toolBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        toolBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentTool = btn.getAttribute('data-tool');
+          <!-- EXIF Info Card Drawer -->
+          <div class="photos-info-drawer" id="photos-info-drawer-${pid}">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+              <div style="font-weight:700;font-size:13px;">照片详细信息</div>
+              <button id="photos-info-close-${pid}" style="background:none;border:none;color:#888;cursor:pointer;font-size:16px;">✕</button>
+            </div>
+            <div class="photos-info-row"><span class="info-lbl">文件名</span><span class="info-val" id="info-name-${pid}">--</span></div>
+            <div class="photos-info-row"><span class="info-lbl">拍摄时间</span><span class="info-val" id="info-date-${pid}">--</span></div>
+            <div class="photos-info-row"><span class="info-lbl">设备相机</span><span class="info-val" id="info-cam-${pid}">--</span></div>
+            <div class="photos-info-row"><span class="info-lbl">镜头光圈</span><span class="info-val" id="info-lens-${pid}">--</span></div>
+            <div class="photos-info-row"><span class="info-lbl">感光曝光</span><span class="info-val" id="info-iso-${pid}">--</span></div>
+            <div class="photos-info-row"><span class="info-lbl">分辨率规格</span><span class="info-val" id="info-dim-${pid}">--</span></div>
+          </div>
+
+          <!-- Edit & Markup Drawer -->
+          <div class="photos-edit-drawer" id="photos-edit-drawer-${pid}">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.1);">
+              <div style="font-weight:700;font-size:13px;color:#fff;">调色与涂鸦标记</div>
+              <div style="display:flex;gap:6px;">
+                <button class="photos-btn-small" id="photos-revert-${pid}">复原</button>
+                <button class="photos-btn-small primary" id="photos-save-edit-${pid}">完成</button>
+              </div>
+            </div>
+
+            <!-- Filters Selection -->
+            <div style="font-size:11px;color:#8e8e93;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px;">滤镜风格 (FILTERS)</div>
+            <div class="photos-filters-row">
+              <div class="photo-filter-chip active" data-filter="none">原图</div>
+              <div class="photo-filter-chip" data-filter="saturate(1.4) contrast(1.1)">鲜明</div>
+              <div class="photo-filter-chip" data-filter="sepia(0.3) saturate(1.2)">暖色</div>
+              <div class="photo-filter-chip" data-filter="hue-rotate(180deg) saturate(0.8)">冷色</div>
+              <div class="photo-filter-chip" data-filter="contrast(1.4) brightness(0.9)">戏剧</div>
+              <div class="photo-filter-chip" data-filter="grayscale(1) contrast(1.3)">黑白 Noir</div>
+            </div>
+
+            <!-- Drawing Markup Tools -->
+            <div style="font-size:11px;color:#8e8e93;margin:12px 0 6px;text-transform:uppercase;letter-spacing:0.5px;">标记涂鸦 (MARKUP TOOLS)</div>
+            <div class="photos-markup-tools">
+              <button class="markup-tool-btn active" data-tool="pen" title="画笔">${getSFSymbol('pencil', 12)} 钢笔</button>
+              <button class="markup-tool-btn" data-tool="brush" title="毛笔">${getSFSymbol('palette', 12)} 画刷</button>
+              <button class="markup-tool-btn" data-tool="highlighter" title="荧光笔">荧光</button>
+              <button class="markup-tool-btn" data-tool="eraser" title="橡皮擦">${getSFSymbol('trash', 12)} 擦除</button>
+              <input type="color" id="markup-color-${pid}" value="#ff3b30" style="width:24px;height:24px;border:none;background:none;cursor:pointer;border-radius:50%;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `, 'paint');
+
+  win.style.width = '880px';
+  win.style.height = '580px';
+
+  const gridContainer = win.querySelector(`#photos-grid-${pid}`);
+  const gridScroll = win.querySelector(`#photos-grid-scroll-${pid}`);
+  const lightbox = win.querySelector(`#photos-lightbox-${pid}`);
+  const lightboxImg = win.querySelector(`#photos-lightbox-img-${pid}`);
+  const markupCanvas = win.querySelector(`#photos-markup-canvas-${pid}`);
+  const stage = win.querySelector(`#photos-stage-${pid}`);
+  const backBtn = win.querySelector(`#photos-back-${pid}`);
+  const titleLbl = win.querySelector(`#photos-title-${pid}`);
+  const subheadLbl = win.querySelector(`#photos-subhead-${pid}`);
+  const rotateBtn = win.querySelector(`#photos-rotate-${pid}`);
+  const favBtn = win.querySelector(`#photos-fav-${pid}`);
+  const infoBtn = win.querySelector(`#photos-info-${pid}`);
+  const editBtn = win.querySelector(`#photos-edit-${pid}`);
+  const exportBtn = win.querySelector(`#photos-export-${pid}`);
+  const newBlankBtn = win.querySelector(`#photos-new-blank-${pid}`);
+  const infoDrawer = win.querySelector(`#photos-info-drawer-${pid}`);
+  const infoClose = win.querySelector(`#photos-info-close-${pid}`);
+  const editDrawer = win.querySelector(`#photos-edit-drawer-${pid}`);
+  const revertBtn = win.querySelector(`#photos-revert-${pid}`);
+  const saveEditBtn = win.querySelector(`#photos-save-edit-${pid}`);
+  const colorPicker = win.querySelector(`#markup-color-${pid}`);
+
+  let currentTool = 'pen';
+  let currentColor = '#ff3b30';
+  let mCtx = markupCanvas.getContext('2d');
+  let isDrawing = false;
+
+  function renderGrid() {
+    let filtered = photos;
+    if (currentCategory === 'favorites') filtered = photos.filter(p => p.fav);
+    else if (currentCategory === 'recents') filtered = photos.slice(0, 4);
+    else if (currentCategory !== 'all') filtered = photos.filter(p => p.album === currentCategory);
+
+    subheadLbl.innerText = `(${filtered.length} 张照片)`;
+    gridContainer.innerHTML = filtered.map(p => `
+      <div class="photos-thumb-card" data-id="${p.id}">
+        <img src="${p.url}" alt="${p.name}" loading="lazy" />
+        <div class="photos-thumb-overlay">
+          <div class="thumb-name">${p.name}</div>
+          ${p.fav ? `<span style="color:#ff2d55;">${getSFSymbol('heart-fill', 13, '#ff2d55')}</span>` : ''}
+        </div>
+      </div>
+    `).join('');
+
+    gridContainer.querySelectorAll('.photos-thumb-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const p = photos.find(item => item.id === card.dataset.id);
+        if (p) openLightbox(p);
       });
     });
+  }
 
-    // Width switching
-    widthBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        widthBtns.forEach(b => {
-          b.classList.remove('active');
-          b.style.background = 'transparent';
-          b.style.color = '#aaa';
-        });
-        btn.classList.add('active');
-        btn.style.background = '#007aff';
-        btn.style.color = 'white';
-        currentWidth = parseInt(btn.getAttribute('data-width'));
-      });
-    });
+  function openLightbox(p) {
+    selectedPhoto = p;
+    isViewingDetail = true;
+    rotationDeg = 0;
+    activeFilter = 'none';
+    isEditing = false;
 
-    // Color switching
-    colorDots.forEach(dot => {
-      dot.addEventListener('click', () => {
-        colorDots.forEach(d => d.classList.remove('active'));
-        dot.classList.add('active');
-        currentColor = dot.getAttribute('data-color');
-      });
-    });
+    gridScroll.style.display = 'none';
+    lightbox.style.display = 'flex';
+    backBtn.style.display = 'flex';
+    rotateBtn.style.display = 'flex';
+    favBtn.style.display = 'flex';
+    infoBtn.style.display = 'flex';
+    editBtn.style.display = 'flex';
+    exportBtn.style.display = 'flex';
+    newBlankBtn.style.display = 'none';
 
-    if (customColor) {
-      customColor.addEventListener('input', (e) => {
-        currentColor = e.target.value;
-        colorDots.forEach(d => d.classList.remove('active'));
-      });
+    titleLbl.innerText = p.name;
+    subheadLbl.innerText = p.date;
+    favBtn.innerHTML = p.fav ? getSFSymbol('heart-fill', 14, '#ff2d55') : getSFSymbol('heart', 14, 'currentColor');
+
+    lightboxImg.src = p.url;
+    lightboxImg.style.transform = `rotate(0deg)`;
+    lightboxImg.style.filter = 'none';
+    markupCanvas.style.display = 'none';
+    infoDrawer.style.display = 'none';
+    editDrawer.style.display = 'none';
+
+    // Populate EXIF details
+    win.querySelector(`#info-name-${pid}`).innerText = p.name;
+    win.querySelector(`#info-date-${pid}`).innerText = p.date;
+    win.querySelector(`#info-cam-${pid}`).innerText = p.camera || 'Apple iPhone 16 Pro';
+    win.querySelector(`#info-lens-${pid}`).innerText = p.lens || '24mm ƒ/1.78';
+    win.querySelector(`#info-iso-${pid}`).innerText = p.iso || 'ISO 64 · 1/120s';
+    win.querySelector(`#info-dim-${pid}`).innerText = p.dim || '3840 × 2160 · 4K ProRAW';
+  }
+
+  function closeLightbox() {
+    isViewingDetail = false;
+    isEditing = false;
+    gridScroll.style.display = 'block';
+    lightbox.style.display = 'none';
+    backBtn.style.display = 'none';
+    rotateBtn.style.display = 'none';
+    favBtn.style.display = 'none';
+    infoBtn.style.display = 'none';
+    editBtn.style.display = 'none';
+    exportBtn.style.display = 'none';
+    newBlankBtn.style.display = 'flex';
+    infoDrawer.style.display = 'none';
+    editDrawer.style.display = 'none';
+
+    titleLbl.innerText = currentCategory === 'all' ? '全部照片' : currentCategory.toUpperCase();
+    renderGrid();
+  }
+
+  backBtn.addEventListener('click', closeLightbox);
+
+  // Rotate button
+  rotateBtn.addEventListener('click', () => {
+    rotationDeg = (rotationDeg + 90) % 360;
+    lightboxImg.style.transform = `rotate(${rotationDeg}deg)`;
+  });
+
+  // Favorite toggle
+  favBtn.addEventListener('click', () => {
+    if (!selectedPhoto) return;
+    selectedPhoto.fav = !selectedPhoto.fav;
+    favBtn.innerHTML = selectedPhoto.fav ? getSFSymbol('heart-fill', 14, '#ff2d55') : getSFSymbol('heart', 14, 'currentColor');
+    const cntFav = win.querySelector(`#photos-cnt-fav-${pid}`);
+    if (cntFav) cntFav.innerText = photos.filter(p => p.fav).length;
+  });
+
+  // Info drawer toggle
+  infoBtn.addEventListener('click', () => {
+    const isShowing = infoDrawer.style.display === 'block';
+    infoDrawer.style.display = isShowing ? 'none' : 'block';
+  });
+  infoClose.addEventListener('click', () => {
+    infoDrawer.style.display = 'none';
+  });
+
+  // Edit & Markup drawer toggle
+  editBtn.addEventListener('click', () => {
+    isEditing = !isEditing;
+    editDrawer.style.display = isEditing ? 'block' : 'none';
+    if (isEditing) {
+      initMarkupCanvas();
+    } else {
+      markupCanvas.style.display = 'none';
     }
+  });
 
-    let isDrawing = false;
-    let startX = 0, startY = 0;
-    let snapshot = null;
+  function initMarkupCanvas() {
+    markupCanvas.style.display = 'block';
+    markupCanvas.width = lightboxImg.naturalWidth || 1200;
+    markupCanvas.height = lightboxImg.naturalHeight || 800;
+    markupCanvas.style.width = `${lightboxImg.clientWidth}px`;
+    markupCanvas.style.height = `${lightboxImg.clientHeight}px`;
+    mCtx.clearRect(0, 0, markupCanvas.width, markupCanvas.height);
+  }
 
-    function getCoords(e) {
-      const rect = canvas.getBoundingClientRect();
-      const scaleX = canvas.width / rect.width;
-      const scaleY = canvas.height / rect.height;
-      return {
-        x: (e.clientX - rect.left) * scaleX,
-        y: (e.clientY - rect.top) * scaleY
-      };
+  // Filter chips
+  win.querySelectorAll('.photo-filter-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      win.querySelectorAll('.photo-filter-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      activeFilter = chip.dataset.filter;
+      lightboxImg.style.filter = activeFilter;
+    });
+  });
+
+  // Markup tools
+  win.querySelectorAll('.markup-tool-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      win.querySelectorAll('.markup-tool-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentTool = btn.dataset.tool;
+    });
+  });
+
+  if (colorPicker) {
+    colorPicker.addEventListener('input', (e) => {
+      currentColor = e.target.value;
+    });
+  }
+
+  markupCanvas.addEventListener('mousedown', (e) => {
+    isDrawing = true;
+    const rect = markupCanvas.getBoundingClientRect();
+    const scaleX = markupCanvas.width / rect.width;
+    const scaleY = markupCanvas.height / rect.height;
+    mCtx.beginPath();
+    mCtx.moveTo((e.clientX - rect.left) * scaleX, (e.clientY - rect.top) * scaleY);
+  });
+
+  markupCanvas.addEventListener('mousemove', (e) => {
+    if (!isDrawing) return;
+    const rect = markupCanvas.getBoundingClientRect();
+    const scaleX = markupCanvas.width / rect.width;
+    const scaleY = markupCanvas.height / rect.height;
+    const x = (e.clientX - rect.left) * scaleX;
+    const y = (e.clientY - rect.top) * scaleY;
+
+    if (currentTool === 'eraser') {
+      mCtx.clearRect(x - 20, y - 20, 40, 40);
+    } else if (currentTool === 'highlighter') {
+      mCtx.strokeStyle = currentColor;
+      mCtx.lineWidth = 24;
+      mCtx.globalAlpha = 0.35;
+      mCtx.lineCap = 'square';
+      mCtx.lineTo(x, y);
+      mCtx.stroke();
+      mCtx.globalAlpha = 1.0;
+    } else {
+      mCtx.strokeStyle = currentColor;
+      mCtx.lineWidth = currentTool === 'brush' ? 10 : 4;
+      mCtx.lineCap = 'round';
+      mCtx.lineJoin = 'round';
+      mCtx.lineTo(x, y);
+      mCtx.stroke();
     }
+  });
 
-    canvas.addEventListener('mousedown', (e) => {
-      isDrawing = true;
-      const pt = getCoords(e);
-      startX = pt.x;
-      startY = pt.y;
+  const stopDraw = () => { isDrawing = false; mCtx.closePath(); };
+  markupCanvas.addEventListener('mouseup', stopDraw);
+  markupCanvas.addEventListener('mouseleave', stopDraw);
 
-      if (currentTool === 'rect' || currentTool === 'circle') {
-        snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      } else {
-        ctx.beginPath();
-        ctx.moveTo(startX, startY);
-      }
-    });
+  revertBtn.addEventListener('click', () => {
+    mCtx.clearRect(0, 0, markupCanvas.width, markupCanvas.height);
+    activeFilter = 'none';
+    lightboxImg.style.filter = 'none';
+    win.querySelectorAll('.photo-filter-chip').forEach(c => c.classList.remove('active'));
+    win.querySelector('.photo-filter-chip[data-filter="none"]')?.classList.add('active');
+  });
 
-    canvas.addEventListener('mousemove', (e) => {
-      if (!isDrawing) return;
-      const pt = getCoords(e);
+  saveEditBtn.addEventListener('click', async () => {
+    editDrawer.style.display = 'none';
+    isEditing = false;
+    showNotification(t('app_paint', 'Photos'), `已保存照片“${selectedPhoto.name}”修改副本。`);
+  });
 
-      if (currentTool === 'rect') {
-        ctx.putImageData(snapshot, 0, 0);
-        ctx.strokeStyle = currentColor;
-        ctx.lineWidth = currentWidth;
-        ctx.strokeRect(startX, startY, pt.x - startX, pt.y - startY);
-      } else if (currentTool === 'circle') {
-        ctx.putImageData(snapshot, 0, 0);
-        ctx.strokeStyle = currentColor;
-        ctx.lineWidth = currentWidth;
-        const rx = Math.abs(pt.x - startX) / 2;
-        const ry = Math.abs(pt.y - startY) / 2;
-        const cx = Math.min(startX, pt.x) + rx;
-        const cy = Math.min(startY, pt.y) + ry;
-        ctx.beginPath();
-        ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
-        ctx.stroke();
-      } else if (currentTool === 'eraser') {
-        ctx.strokeStyle = '#ffffff';
-        ctx.lineWidth = currentWidth * 3;
-        ctx.lineCap = 'round';
-        ctx.lineJoin = 'round';
-        ctx.lineTo(pt.x, pt.y);
-        ctx.stroke();
-      } else if (currentTool === 'highlighter') {
-        ctx.strokeStyle = currentColor;
-        ctx.globalAlpha = 0.35;
-        ctx.lineWidth = currentWidth * 2.5;
-        ctx.lineCap = 'square';
-        ctx.lineTo(pt.x, pt.y);
-        ctx.stroke();
-        ctx.globalAlpha = 1.0;
-      } else {
-        // Pen / Brush with smooth curves
-        ctx.strokeStyle = currentColor;
-        ctx.lineWidth = currentTool === 'brush' ? currentWidth * 1.6 : currentWidth;
-        ctx.lineCap = 'round';
-        ctx.lineJoin = 'round';
-        ctx.lineTo(pt.x, pt.y);
-        ctx.stroke();
-      }
-    });
+  // Export to desktop
+  exportBtn.addEventListener('click', async () => {
+    if (!selectedPhoto) return;
+    try {
+      await window.aliceOS.vfs.mkdir(`/Users/${currentUser}/Desktop`);
+      await window.aliceOS.vfs.writeFile(`/Users/${currentUser}/Desktop/${selectedPhoto.name}`, selectedPhoto.url);
+      if (typeof refreshDesktop === 'function') refreshDesktop();
+      showNotification(t('app_paint', 'Photos'), `已将“${selectedPhoto.name}”成功导出至桌面。`);
+    } catch (e) {}
+  });
 
-    function endDrawing() {
-      if (!isDrawing) return;
-      isDrawing = false;
-      ctx.closePath();
-      saveState();
-    }
-
-    canvas.addEventListener('mouseup', endDrawing);
-    canvas.addEventListener('mouseleave', endDrawing);
-
-    undoBtn.addEventListener('click', () => {
-      if (history.length > 1) {
-        history.pop(); // remove current state
-        const prevState = history[history.length - 1];
-        const img = new Image();
-        img.src = prevState;
-        img.onload = () => {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          ctx.drawImage(img, 0, 0);
-        };
-      }
-    });
-
-    clearBtn.addEventListener('click', () => {
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      saveState();
-    });
-
-    saveBtn.addEventListener('click', async () => {
-      const dataUrl = canvas.toDataURL('image/png');
-      const fileName = `Artwork_${artworkCount++}.png`;
-      try {
-        await window.aliceOS.vfs.mkdir(`/Users/${currentUser}/Desktop`);
-        await window.aliceOS.vfs.writeFile(`/Users/${currentUser}/Desktop/${fileName}`, dataUrl);
-        if (typeof refreshDesktop === 'function') refreshDesktop();
-        if (typeof showNotification === 'function') {
-          showNotification(t('app_paint', 'Photos & Markup'), `Saved "${fileName}" to Desktop`);
-        }
-      } catch (e) {}
-    });
-
-    win._onLanguageChange = () => {
-      if (clearBtn) clearBtn.title = t('paint_clear', 'Clear');
-      if (saveBtn) saveBtn.innerText = `💾 ${t('notes_save', 'Save')}`;
+  // New Blank Canvas
+  newBlankBtn.addEventListener('click', () => {
+    const blankPhoto = {
+      id: `canvas_${Date.now()}`,
+      name: `新建绘画_${photos.length + 1}.png`,
+      url: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800"><rect width="100%" height="100%" fill="%23ffffff"/></svg>',
+      date: '刚刚 · 艺术画板',
+      album: 'markup',
+      camera: 'AliceOS Markup Studio',
+      lens: 'Apple Pencil 压感绘画',
+      iso: 'Canvas 2D Engine',
+      dim: '1200 × 800 · PNG',
+      fav: false
     };
+    photos.unshift(blankPhoto);
+    openLightbox(blankPhoto);
+    setTimeout(() => {
+      editBtn.click();
+    }, 100);
+  });
+
+  // Sidebar navigation
+  win.querySelectorAll('.photos-nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+      win.querySelectorAll('.photos-nav-item').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+      currentCategory = item.dataset.cat;
+      if (isViewingDetail) closeLightbox();
+      else renderGrid();
+    });
+  });
+
+  // Open initial file if specified
+  if (initialFilePath) {
+    const matched = photos.find(p => p.name === initialFilePath.split('/').pop());
+    if (matched) openLightbox(matched);
+    else {
+      openLightbox({
+        id: 'initial_file',
+        name: initialFilePath.split('/').pop(),
+        url: initialFilePath,
+        date: '刚刚打开',
+        album: 'recents',
+        fav: false
+      });
+    }
+  } else {
+    renderGrid();
   }
 }
 
@@ -11243,13 +11915,17 @@ async function launchMaps() {
     let currentMode = 'explore';
     let zoomLevel = 0.04;
 
+    function getMapPOIBadge(symbol, bg, sz = 32, iconSz = 16) {
+      return `<div style="width:${sz}px;height:${sz}px;border-radius:${Math.round(sz*0.3)}px;background:${bg};display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.18);flex-shrink:0;">${getSFSymbol(symbol, iconSz, '#ffffff')}</div>`;
+    }
+
     const landmarks = [
-      { id: 'applepark', name: 'Apple Park', city: 'Cupertino, California', lat: 37.3346, lon: -122.0090, icon: '🏢', rating: '4.9 ★ (28.4K)', desc: 'Iconic ring-shaped headquarters of Apple Inc., featuring the Steve Jobs Theater and lush central park.', hours: 'Open today • Closes 6 PM' },
-      { id: 'forbiddencity', name: 'Forbidden City', city: 'Beijing, China', lat: 39.9163, lon: 116.3972, icon: '🏮', rating: '4.9 ★ (42.1K)', desc: 'Imperial palace complex from the Ming to the Qing dynasties, the heart of historical Beijing.', hours: 'Open today • Closes 5 PM' },
-      { id: 'orientalpearl', name: 'Oriental Pearl Tower', city: 'Shanghai, China', lat: 31.2397, lon: 121.4998, icon: '🗼', rating: '4.8 ★ (19.8K)', desc: 'Futuristic 468m television tower dominating the Lujiazui skyline with panoramic glass skywalks.', hours: 'Open today • Closes 9:30 PM' },
-      { id: 'eiffel', name: 'Eiffel Tower', city: 'Paris, France', lat: 48.8584, lon: 2.2945, icon: '🗼', rating: '4.8 ★ (85.2K)', desc: 'Wrought-iron lattice tower on the Champ de Mars, the world-renowned symbol of Paris.', hours: 'Open today • Closes 11:45 PM' },
-      { id: 'shibuya', name: 'Shibuya Crossing', city: 'Tokyo, Japan', lat: 35.6595, lon: 139.7005, icon: '🏙️', rating: '4.7 ★ (31.5K)', desc: 'Famous scramble intersection outside Shibuya Station surrounded by neon billboards and vibrant culture.', hours: 'Open 24 hours' },
-      { id: 'bigben', name: 'Big Ben & Westminster', city: 'London, UK', lat: 51.5007, lon: -0.1246, icon: '🕰️', rating: '4.8 ★ (39.0K)', desc: 'The Great Bell and clock tower at the north end of the Houses of Parliament on the River Thames.', hours: 'Open today • Tours available' }
+      { id: 'applepark', name: 'Apple Park', city: 'Cupertino, California', lat: 37.3346, lon: -122.0090, symbol: 'apple', bg: 'linear-gradient(135deg, #1d1d1f, #434344)', rating: '4.9 ★ (28.4K)', desc: 'Iconic ring-shaped headquarters of Apple Inc., featuring the Steve Jobs Theater and lush central park.', hours: 'Open today • Closes 6 PM' },
+      { id: 'forbiddencity', name: 'Forbidden City', city: 'Beijing, China', lat: 39.9163, lon: 116.3972, symbol: 'building', bg: 'linear-gradient(135deg, #ff3b30, #ff9500)', rating: '4.9 ★ (42.1K)', desc: 'Imperial palace complex from the Ming to the Qing dynasties, the heart of historical Beijing.', hours: 'Open today • Closes 5 PM' },
+      { id: 'orientalpearl', name: 'Oriental Pearl Tower', city: 'Shanghai, China', lat: 31.2397, lon: 121.4998, symbol: 'location', bg: 'linear-gradient(135deg, #ff2d55, #af52de)', rating: '4.8 ★ (19.8K)', desc: 'Futuristic 468m television tower dominating the Lujiazui skyline with panoramic glass skywalks.', hours: 'Open today • Closes 9:30 PM' },
+      { id: 'eiffel', name: 'Eiffel Tower', city: 'Paris, France', lat: 48.8584, lon: 2.2945, symbol: 'building', bg: 'linear-gradient(135deg, #007aff, #5856d6)', rating: '4.8 ★ (85.2K)', desc: 'Wrought-iron lattice tower on the Champ de Mars, the world-renowned symbol of Paris.', hours: 'Open today • Closes 11:45 PM' },
+      { id: 'shibuya', name: 'Shibuya Crossing', city: 'Tokyo, Japan', lat: 35.6595, lon: 139.7005, symbol: 'building', bg: 'linear-gradient(135deg, #ff9500, #ffcc00)', rating: '4.7 ★ (31.5K)', desc: 'Famous scramble intersection outside Shibuya Station surrounded by neon billboards and vibrant culture.', hours: 'Open 24 hours' },
+      { id: 'bigben', name: 'Big Ben & Westminster', city: 'London, UK', lat: 51.5007, lon: -0.1246, symbol: 'clock', bg: 'linear-gradient(135deg, #34c759, #30b0c7)', rating: '4.8 ★ (39.0K)', desc: 'The Great Bell and clock tower at the north end of the Houses of Parliament on the River Thames.', hours: 'Open today • Tours available' }
     ];
 
     let currentLat = landmarks[0].lat;
@@ -11261,7 +11937,7 @@ async function launchMaps() {
         <!-- Floating Glass Sidebar -->
         <div class="mac-maps-floating-sidebar" id="maps-sidebar-${pid}">
           <div class="mac-maps-search-box">
-            <span style="font-size:13px;opacity:0.6;">🔍</span>
+            <span style="display:flex;align-items:center;">${getSFSymbol('magnifyingglass', 13, '#8e8e93')}</span>
             <input type="text" id="maps-search-${pid}" placeholder="${t('maps_search_placeholder', 'Search Maps or enter address')}" style="flex:1;border:none;background:transparent;outline:none;font-size:12px;color:inherit;">
           </div>
 
@@ -11276,7 +11952,7 @@ async function launchMaps() {
           <!-- Active Landmark Detail Card -->
           <div id="maps-landmark-card-${pid}" style="background:white;padding:12px;border-radius:12px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 4px 12px rgba(0,0,0,0.05);">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-              <div id="maps-card-icon-${pid}" style="font-size:28px;">🏢</div>
+              <div id="maps-card-icon-${pid}">${getMapPOIBadge(landmarks[0].symbol, landmarks[0].bg, 36, 18)}</div>
               <div style="flex:1;min-width:0;">
                 <div id="maps-card-title-${pid}" style="font-size:14px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Apple Park</div>
                 <div id="maps-card-city-${pid}" style="font-size:11px;color:#6e6e73;">Cupertino, California</div>
@@ -11287,7 +11963,7 @@ async function launchMaps() {
             <div id="maps-card-desc-${pid}" style="font-size:11px;color:#3a3a3c;line-height:1.4;margin-bottom:10px;">Iconic ring-shaped headquarters of Apple Inc., featuring the Steve Jobs Theater and lush central park.</div>
             <div style="display:flex;gap:6px;">
               <button id="maps-btn-directions-${pid}" style="flex:1;background:#007aff;color:white;border:none;padding:6px 0;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;">${t('maps_directions', 'Directions')}</button>
-              <button id="maps-btn-lookaround-${pid}" style="background:rgba(0,122,255,0.1);color:#007aff;border:none;padding:6px 12px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;">👓 Look Around</button>
+              <button id="maps-btn-lookaround-${pid}" style="display:flex;align-items:center;justify-content:center;gap:4px;background:rgba(0,122,255,0.1);color:#007aff;border:none;padding:6px 12px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;">${getSFSymbol('binoculars', 12, '#007aff')} Look Around</button>
             </div>
           </div>
 
@@ -11295,8 +11971,8 @@ async function launchMaps() {
           <div style="font-size:11px;font-weight:700;color:#8e8e93;text-transform:uppercase;letter-spacing:0.5px;margin-top:4px;">${t('maps_featured_places', 'World Landmarks')}</div>
           <div id="maps-landmarks-list-${pid}" style="display:flex;flex-direction:column;gap:4px;">
             ${landmarks.map(lm => `
-              <div class="mac-maps-landmark-item" data-id="${lm.id}">
-                <span style="font-size:20px;">${lm.icon}</span>
+              <div class="mac-maps-landmark-item" data-id="${lm.id}" style="display:flex;align-items:center;gap:10px;padding:6px 8px;border-radius:8px;cursor:pointer;transition:background 0.15s;">
+                ${getMapPOIBadge(lm.symbol, lm.bg, 28, 14)}
                 <div style="flex:1;min-width:0;">
                   <div style="font-size:12px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${lm.name}</div>
                   <div style="font-size:10px;color:#8e8e93;">${lm.city}</div>
@@ -11308,10 +11984,10 @@ async function launchMaps() {
 
         <!-- Floating Map Controls -->
         <div class="mac-maps-controls">
-          <button class="mac-maps-ctrl-btn" id="maps-ctrl-compass-${pid}" title="${t('maps_compass', 'Compass')}">🧭</button>
-          <button class="mac-maps-ctrl-btn" id="maps-ctrl-zoomin-${pid}" title="${t('maps_zoomin', 'Zoom In')}">＋</button>
-          <button class="mac-maps-ctrl-btn" id="maps-ctrl-zoomout-${pid}" title="${t('maps_zoomout', 'Zoom Out')}">－</button>
-          <button class="mac-maps-ctrl-btn" id="maps-ctrl-loc-${pid}" title="${t('maps_my_location', 'Current Location')}">📍</button>
+          <button class="mac-maps-ctrl-btn" id="maps-ctrl-compass-${pid}" title="${t('maps_compass', 'Compass')}">${getSFSymbol('compass', 16, '#007aff')}</button>
+          <button class="mac-maps-ctrl-btn" id="maps-ctrl-zoomin-${pid}" title="${t('maps_zoomin', 'Zoom In')}">${getSFSymbol('plus', 13, '#1d1d1f')}</button>
+          <button class="mac-maps-ctrl-btn" id="maps-ctrl-zoomout-${pid}" title="${t('maps_zoomout', 'Zoom Out')}">${getSFSymbol('minus', 13, '#1d1d1f')}</button>
+          <button class="mac-maps-ctrl-btn" id="maps-ctrl-loc-${pid}" title="${t('maps_my_location', 'Current Location')}">${getSFSymbol('location', 14, '#007aff')}</button>
         </div>
 
         <!-- Interactive Map Frame -->
@@ -11348,7 +12024,7 @@ async function launchMaps() {
       currentLon = lm.lon;
       zoomLevel = 0.025;
 
-      if (cardIcon) cardIcon.innerText = lm.icon;
+      if (cardIcon) cardIcon.innerHTML = getMapPOIBadge(lm.symbol, lm.bg, 36, 18);
       if (cardTitle) cardTitle.innerText = lm.name;
       if (cardCity) cardCity.innerText = lm.city;
       if (cardRating) cardRating.innerText = lm.rating;
@@ -12020,158 +12696,11 @@ async function launchHostMonitor() {
   }
 }
 
-// Photos Library (macOS Sequoia Design)
+// Photos Library Delegate
 async function launchGallery(filePath = null) {
-  const res = await window.aliceOS.pm.spawn('gallery');
-  if (res.success) {
-    const pid = res.data.pid;
-    let photosList = [
-      { name: 'macOS_Sequoia_Dark.heic', url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80', album: 'wallpapers' },
-      { name: 'Sonoma_Horizon_4K.heic', url: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80', album: 'wallpapers' },
-      { name: 'Apple_Park_Rainbow.jpg', url: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=80', album: 'wallpapers' }
-    ];
-    let activePhoto = photosList[0];
-    let currentView = 'grid'; // 'grid' or 'detail'
-
-    const win = createWindow(pid, t('gallery_image_viewer', 'Photos'), `
-      <div class="mac-photos-app">
-        <!-- Photos Sidebar -->
-        <div class="mac-photos-sidebar">
-          <div style="font-size:11px;font-weight:700;color:#71717a;text-transform:uppercase;letter-spacing:0.5px;padding:4px 8px;">Photos</div>
-          <div class="mac-photos-nav-item active" data-filter="all" style="display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:8px;cursor:pointer;font-size:13px;background:rgba(255,255,255,0.12);">
-            <span>🖼️</span> <span>All Photos</span>
-          </div>
-          <div class="mac-photos-nav-item" data-filter="wallpapers" style="display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:8px;cursor:pointer;font-size:13px;opacity:0.8;">
-            <span>🏞️</span> <span>Wallpapers</span>
-          </div>
-          <div class="mac-photos-nav-item" data-filter="camera" style="display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:8px;cursor:pointer;font-size:13px;opacity:0.8;">
-            <span>📸</span> <span>Photo Booth</span>
-          </div>
-          <div class="mac-photos-nav-item" data-filter="markup" style="display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:8px;cursor:pointer;font-size:13px;opacity:0.8;">
-            <span>🎨</span> <span>Markup Art</span>
-          </div>
-        </div>
-
-        <!-- Photos Main Content -->
-        <div class="mac-photos-content">
-          <!-- Photos Header Toolbar -->
-          <div class="mac-photos-header">
-            <div style="display:flex;align-items:center;gap:8px;">
-              <button id="photos-back-btn-${pid}" style="display:none;background:rgba(255,255,255,0.1);border:none;color:white;padding:4px 10px;border-radius:6px;font-size:11px;cursor:pointer;">◀ Back to Grid</button>
-              <div id="photos-title-${pid}" style="font-weight:600;font-size:13px;">Library</div>
-            </div>
-            <div style="display:flex;align-items:center;gap:12px;font-size:11px;color:#a1a1aa;">
-              <span id="photos-count-${pid}">${photosList.length} Items</span>
-            </div>
-          </div>
-
-          <!-- Grid View -->
-          <div class="mac-photos-grid" id="photos-grid-${pid}">
-            <!-- Rendered thumbnails -->
-          </div>
-
-          <!-- Detail View -->
-          <div id="photos-detail-${pid}" style="display:none;flex:1;align-items:center;justify-content:center;background:#000000;position:relative;overflow:hidden;">
-            <img id="photos-detail-img-${pid}" style="max-width:94%;max-height:94%;object-fit:contain;border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,0.8);" />
-          </div>
-        </div>
-      </div>
-    `);
-
-    win.style.width = '820px';
-    win.style.height = '540px';
-
-    const gridEl = win.querySelector(`#photos-grid-${pid}`);
-    const detailEl = win.querySelector(`#photos-detail-${pid}`);
-    const detailImg = win.querySelector(`#photos-detail-img-${pid}`);
-    const backBtn = win.querySelector(`#photos-back-btn-${pid}`);
-    const titleEl = win.querySelector(`#photos-title-${pid}`);
-    const countEl = win.querySelector(`#photos-count-${pid}`);
-    const navItems = win.querySelectorAll('.mac-photos-nav-item');
-
-    // Scan VFS desktop for user created photos & artworks
-    try {
-      const vfsFiles = await window.aliceOS.vfs.readDir(`/Users/${currentUser}/Desktop`);
-      if (vfsFiles.success && Array.isArray(vfsFiles.data)) {
-        for (let f of vfsFiles.data) {
-          if (typeof f === 'string' && (f.endsWith('.png') || f.endsWith('.jpg'))) {
-            const dataRes = await window.aliceOS.vfs.readFile(`/Users/${currentUser}/Desktop/${f}`);
-            if (dataRes.success) {
-              const alb = f.toLowerCase().includes('photo') ? 'camera' : (f.toLowerCase().includes('artwork') ? 'markup' : 'all');
-              photosList.unshift({ name: f, url: dataRes.data, album: alb });
-            }
-          }
-        }
-      }
-    } catch (e) {}
-
-    function renderGrid(filter = 'all') {
-      currentView = 'grid';
-      gridEl.style.display = 'grid';
-      detailEl.style.display = 'none';
-      backBtn.style.display = 'none';
-      titleEl.innerText = filter === 'all' ? 'Library' : filter.toUpperCase();
-
-      let filtered = photosList;
-      if (filter !== 'all') {
-        filtered = photosList.filter(p => p.album === filter);
-      }
-      countEl.innerText = `${filtered.length} Items`;
-
-      gridEl.innerHTML = filtered.map((p, idx) => `
-        <div class="mac-photos-thumb" data-idx="${idx}">
-          <img src="${p.url}" alt="${p.name}" loading="lazy" />
-          <div style="position:absolute;bottom:0;left:0;width:100%;padding:4px 8px;background:linear-gradient(to top,rgba(0,0,0,0.8),transparent);font-size:10px;color:white;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${p.name}</div>
-        </div>
-      `).join('');
-
-      gridEl.querySelectorAll('.mac-photos-thumb').forEach(thumb => {
-        thumb.addEventListener('click', () => {
-          const idx = parseInt(thumb.getAttribute('data-idx'));
-          showDetail(filtered[idx]);
-        });
-      });
-    }
-
-    function showDetail(photo) {
-      activePhoto = photo;
-      currentView = 'detail';
-      gridEl.style.display = 'none';
-      detailEl.style.display = 'flex';
-      backBtn.style.display = 'block';
-      detailImg.src = photo.url;
-      titleEl.innerText = photo.name;
-    }
-
-    backBtn.addEventListener('click', () => {
-      renderGrid();
-    });
-
-    navItems.forEach(item => {
-      item.addEventListener('click', () => {
-        navItems.forEach(n => {
-          n.style.background = 'transparent';
-          n.style.opacity = '0.8';
-        });
-        item.style.background = 'rgba(255,255,255,0.12)';
-        item.style.opacity = '1';
-        const filter = item.getAttribute('data-filter');
-        renderGrid(filter);
-      });
-    });
-
-    if (filePath) {
-      const imgRes = await window.aliceOS.vfs.readFile(filePath);
-      if (imgRes.success) {
-        showDetail({ name: filePath.split('/').pop(), url: imgRes.data, album: 'all' });
-      } else {
-        renderGrid();
-      }
-    } else {
-      renderGrid();
-    }
-  }
+  return launchPaint(filePath);
 }
+
 
 // Apple Weather App - Full macOS Sequoia Fidelity
 async function launchWeather() {
@@ -12195,7 +12724,7 @@ async function launchWeather() {
       <div class="weather-mac-app" id="weather-mac-app-${pid}">
         <!-- City Pills Selector -->
         <div class="weather-city-bar" id="weather-city-bar-${pid}">
-          <button class="weather-city-pill" id="weather-my-loc-${pid}">📍 ${currentSystemLang === 'zh' ? '我的位置' : 'My Location'}</button>
+          <button class="weather-city-pill" id="weather-my-loc-${pid}"><span style="display:inline-flex;align-items:center;margin-right:4px;">${getSFSymbol('location', 12, '#38bdf8')}</span> ${currentSystemLang === 'zh' ? '我的位置' : 'My Location'}</button>
           ${cities.map((c, i) => `
             <button class="weather-city-pill ${i === 0 ? 'active' : ''}" data-idx="${i}">
               ${currentSystemLang === 'zh' ? c.nameZh : c.name}
@@ -12216,7 +12745,7 @@ async function launchWeather() {
           <!-- 24-Hour Forecast Card -->
           <div class="weather-frosted-card">
             <div class="weather-card-hdr">
-              ⏱️ ${currentSystemLang === 'zh' ? '24小时逐时预报' : 'Hourly Forecast'}
+              <span style="display:inline-flex;align-items:center;margin-right:4px;">${getSFSymbol('clock', 12, 'rgba(255,255,255,0.8)')}</span> ${currentSystemLang === 'zh' ? '24小时逐时预报' : 'Hourly Forecast'}
             </div>
             <div class="weather-hourly-row" id="weather-hourly-row-${pid}">
               <div style="font-size:12px;opacity:0.6;padding:10px 0;">${t('weather_requesting', '加载逐时预报中...')}</div>
@@ -12226,7 +12755,7 @@ async function launchWeather() {
           <!-- 10-Day Forecast Card -->
           <div class="weather-frosted-card">
             <div class="weather-card-hdr">
-              📅 ${currentSystemLang === 'zh' ? '10天天气预报' : '10-Day Forecast'}
+              <span style="display:inline-flex;align-items:center;margin-right:4px;">${getSFSymbol('calendar', 12, 'rgba(255,255,255,0.8)')}</span> ${currentSystemLang === 'zh' ? '10天天气预报' : '10-Day Forecast'}
             </div>
             <div class="weather-daily-list" id="weather-daily-list-${pid}">
               <div style="font-size:12px;opacity:0.6;padding:10px 0;">${t('weather_requesting', '加载多日预报中...')}</div>
@@ -12236,32 +12765,32 @@ async function launchWeather() {
           <!-- 2x3 Weather Metrics Grid -->
           <div class="weather-metrics-grid" id="weather-metrics-${pid}">
             <div class="weather-metric-box">
-              <div class="weather-metric-hdr">☀️ ${currentSystemLang === 'zh' ? '紫外线指数' : 'UV INDEX'}</div>
+              <div class="weather-metric-hdr"><span style="display:inline-flex;align-items:center;margin-right:4px;">${getSFSymbol('sun', 12, '#ffcc00')}</span> ${currentSystemLang === 'zh' ? '紫外线指数' : 'UV INDEX'}</div>
               <div class="weather-metric-val" id="weather-uv-val-${pid}">--</div>
               <div class="weather-metric-sub" id="weather-uv-sub-${pid}">${currentSystemLang === 'zh' ? '今日保持良好防晒防护' : 'Take protective measures'}</div>
             </div>
             <div class="weather-metric-box">
-              <div class="weather-metric-hdr">💨 ${currentSystemLang === 'zh' ? '风向与风速' : 'WIND'}</div>
+              <div class="weather-metric-hdr"><span style="display:inline-flex;align-items:center;margin-right:4px;">${getSFSymbol('wind', 12, '#38bdf8')}</span> ${currentSystemLang === 'zh' ? '风向与风速' : 'WIND'}</div>
               <div class="weather-metric-val" id="weather-wind-val-${pid}">-- km/h</div>
               <div class="weather-metric-sub" id="weather-wind-sub-${pid}">${currentSystemLang === 'zh' ? '微风拂面' : 'Light breeze'}</div>
             </div>
             <div class="weather-metric-box">
-              <div class="weather-metric-hdr">💧 ${currentSystemLang === 'zh' ? '相对湿度' : 'HUMIDITY'}</div>
+              <div class="weather-metric-hdr"><span style="display:inline-flex;align-items:center;margin-right:4px;">${getSFSymbol('humidity', 12, '#007aff')}</span> ${currentSystemLang === 'zh' ? '相对湿度' : 'HUMIDITY'}</div>
               <div class="weather-metric-val" id="weather-hum-val-${pid}">--%</div>
               <div class="weather-metric-sub" id="weather-hum-sub-${pid}">${currentSystemLang === 'zh' ? '舒适室内环境' : 'Comfortable dew point'}</div>
             </div>
             <div class="weather-metric-box">
-              <div class="weather-metric-hdr">👁️ ${currentSystemLang === 'zh' ? '能见度' : 'VISIBILITY'}</div>
+              <div class="weather-metric-hdr"><span style="display:inline-flex;align-items:center;margin-right:4px;">${getSFSymbol('eye', 12, '#34c759')}</span> ${currentSystemLang === 'zh' ? '能见度' : 'VISIBILITY'}</div>
               <div class="weather-metric-val" id="weather-vis-val-${pid}">16 km</div>
               <div class="weather-metric-sub" id="weather-vis-sub-${pid}">${currentSystemLang === 'zh' ? '视野极佳，一览无余' : 'Completely clear horizon'}</div>
             </div>
             <div class="weather-metric-box">
-              <div class="weather-metric-hdr">🧭 ${currentSystemLang === 'zh' ? '气压' : 'PRESSURE'}</div>
+              <div class="weather-metric-hdr"><span style="display:inline-flex;align-items:center;margin-right:4px;">${getSFSymbol('gauge', 12, '#af52de')}</span> ${currentSystemLang === 'zh' ? '气压' : 'PRESSURE'}</div>
               <div class="weather-metric-val" id="weather-press-val-${pid}">1013 hPa</div>
               <div class="weather-metric-sub" id="weather-press-sub-${pid}">${currentSystemLang === 'zh' ? '标准海平面大气压' : 'Normal atmospheric pressure'}</div>
             </div>
             <div class="weather-metric-box">
-              <div class="weather-metric-hdr">🌅 ${currentSystemLang === 'zh' ? '日出与日落' : 'SUN'}</div>
+              <div class="weather-metric-hdr"><span style="display:inline-flex;align-items:center;margin-right:4px;">${getSFSymbol('sunset', 12, '#ff9500')}</span> ${currentSystemLang === 'zh' ? '日出与日落' : 'SUN'}</div>
               <div class="weather-metric-val" id="weather-sun-val-${pid}">--:--</div>
               <div class="weather-metric-sub" id="weather-sun-sub-${pid}">${currentSystemLang === 'zh' ? '日落即将来临' : 'Sunset upcoming'}</div>
             </div>
@@ -12289,18 +12818,22 @@ async function launchWeather() {
     const sunVal = win.querySelector(`#weather-sun-val-${pid}`);
     const sunSub = win.querySelector(`#weather-sun-sub-${pid}`);
     const pressVal = win.querySelector(`#weather-press-val-${pid}`);
+    const cityBar = win.querySelector(`#weather-city-bar-${pid}`);
+
+    enableHorizontalDragScroll(hourlyRow);
+    enableHorizontalDragScroll(cityBar);
 
     function getWeatherInfo(code, isDay = 1) {
-      if (code === 0) return { icon: isDay ? '☀️' : '🌙', desc: currentSystemLang === 'zh' ? '晴朗' : 'Clear', gradient: isDay ? 'linear-gradient(180deg, #1e62a1 0%, #3e8fc7 40%, #7dbbe6 100%)' : 'linear-gradient(180deg, #0d1b2a 0%, #1b263b 60%, #415a77 100%)' };
-      if (code === 1 || code === 2) return { icon: isDay ? '🌤️' : '☁️', desc: currentSystemLang === 'zh' ? '大部晴朗' : 'Mostly Clear', gradient: isDay ? 'linear-gradient(180deg, #2b6cb0 0%, #4299e1 60%, #90cdf4 100%)' : 'linear-gradient(180deg, #1a202c 0%, #2d3748 100%)' };
-      if (code === 3) return { icon: '☁️', desc: currentSystemLang === 'zh' ? '阴天多云' : 'Overcast', gradient: 'linear-gradient(180deg, #4a5568 0%, #718096 100%)' };
-      if (code === 45 || code === 48) return { icon: '🌫️', desc: currentSystemLang === 'zh' ? '有雾' : 'Foggy', gradient: 'linear-gradient(180deg, #5a6578 0%, #8892a0 100%)' };
-      if (code >= 51 && code <= 55) return { icon: '🌦️', desc: currentSystemLang === 'zh' ? '毛毛雨' : 'Drizzle', gradient: 'linear-gradient(180deg, #334155 0%, #475569 60%, #64748b 100%)' };
-      if (code >= 61 && code <= 67) return { icon: '🌧️', desc: currentSystemLang === 'zh' ? '中雨' : 'Rain', gradient: 'linear-gradient(180deg, #1e293b 0%, #334155 60%, #475569 100%)' };
-      if (code >= 71 && code <= 77) return { icon: '🌨️', desc: currentSystemLang === 'zh' ? '飘雪' : 'Snow', gradient: 'linear-gradient(180deg, #64748b 0%, #94a3b8 60%, #cbd5e1 100%)' };
-      if (code >= 80 && code <= 82) return { icon: '🌧️', desc: currentSystemLang === 'zh' ? '强阵雨' : 'Showers', gradient: 'linear-gradient(180deg, #0f172a 0%, #1e293b 100%)' };
-      if (code >= 95) return { icon: '⛈️', desc: currentSystemLang === 'zh' ? '雷阵雨' : 'Thunderstorm', gradient: 'linear-gradient(180deg, #18181b 0%, #27272a 50%, #3f3f46 100%)' };
-      return { icon: '⛅', desc: currentSystemLang === 'zh' ? '多云' : 'Partly Cloudy', gradient: 'linear-gradient(180deg, #2563eb 0%, #38bdf8 100%)' };
+      if (code === 0) return { icon: isDay ? getSFSymbol('sun', 20, '#ffcc00') : getSFSymbol('moon', 18, '#e2e8f0'), desc: currentSystemLang === 'zh' ? '晴朗' : 'Clear', gradient: isDay ? 'linear-gradient(180deg, #1e62a1 0%, #3e8fc7 40%, #7dbbe6 100%)' : 'linear-gradient(180deg, #0d1b2a 0%, #1b263b 60%, #415a77 100%)' };
+      if (code === 1 || code === 2) return { icon: isDay ? getSFSymbol('cloud', 20, '#f1f5f9') : getSFSymbol('cloud', 20, '#94a3b8'), desc: currentSystemLang === 'zh' ? '大部晴朗' : 'Mostly Clear', gradient: isDay ? 'linear-gradient(180deg, #2b6cb0 0%, #4299e1 60%, #90cdf4 100%)' : 'linear-gradient(180deg, #1a202c 0%, #2d3748 100%)' };
+      if (code === 3) return { icon: getSFSymbol('cloud', 20, '#cbd5e1'), desc: currentSystemLang === 'zh' ? '阴天多云' : 'Overcast', gradient: 'linear-gradient(180deg, #4a5568 0%, #718096 100%)' };
+      if (code === 45 || code === 48) return { icon: getSFSymbol('cloud', 20, '#94a3b8'), desc: currentSystemLang === 'zh' ? '有雾' : 'Foggy', gradient: 'linear-gradient(180deg, #5a6578 0%, #8892a0 100%)' };
+      if (code >= 51 && code <= 55) return { icon: getSFSymbol('cloud-rain', 20, '#60a5fa'), desc: currentSystemLang === 'zh' ? '毛毛雨' : 'Drizzle', gradient: 'linear-gradient(180deg, #334155 0%, #475569 60%, #64748b 100%)' };
+      if (code >= 61 && code <= 67) return { icon: getSFSymbol('cloud-rain', 20, '#38bdf8'), desc: currentSystemLang === 'zh' ? '中雨' : 'Rain', gradient: 'linear-gradient(180deg, #1e293b 0%, #334155 60%, #475569 100%)' };
+      if (code >= 71 && code <= 77) return { icon: getSFSymbol('cloud', 20, '#ffffff'), desc: currentSystemLang === 'zh' ? '飘雪' : 'Snow', gradient: 'linear-gradient(180deg, #64748b 0%, #94a3b8 60%, #cbd5e1 100%)' };
+      if (code >= 80 && code <= 82) return { icon: getSFSymbol('cloud-rain', 20, '#0ea5e9'), desc: currentSystemLang === 'zh' ? '强阵雨' : 'Showers', gradient: 'linear-gradient(180deg, #0f172a 0%, #1e293b 100%)' };
+      if (code >= 95) return { icon: getSFSymbol('cloud-rain', 20, '#facc15'), desc: currentSystemLang === 'zh' ? '雷阵雨' : 'Thunderstorm', gradient: 'linear-gradient(180deg, #18181b 0%, #27272a 50%, #3f3f46 100%)' };
+      return { icon: getSFSymbol('cloud', 20, '#e2e8f0'), desc: currentSystemLang === 'zh' ? '多云' : 'Partly Cloudy', gradient: 'linear-gradient(180deg, #2563eb 0%, #38bdf8 100%)' };
     }
 
     async function loadCityWeather(city) {
@@ -12350,6 +12883,7 @@ async function launchWeather() {
             `);
           }
           hourlyRow.innerHTML = next24.join('');
+          enableHorizontalDragScroll(hourlyRow);
         }
 
         // Render 10-Day Forecast
@@ -12377,7 +12911,7 @@ async function launchWeather() {
             dRows.push(`
               <div class="weather-day-row">
                 <span style="width:48px;font-weight:500;">${dayName}</span>
-                <span style="font-size:18px;width:28px;text-align:center;">${dInfo.icon}</span>
+                <span style="width:28px;display:inline-flex;align-items:center;justify-content:center;">${dInfo.icon}</span>
                 <span style="width:28px;text-align:right;opacity:0.75;">${dMin}°</span>
                 <div class="weather-temp-bar-bg">
                   <div class="weather-temp-bar-fill" style="margin-left:${leftPct}%; width:${widthPct}%;"></div>
@@ -12422,15 +12956,15 @@ async function launchWeather() {
         hlRange.innerText = `${isZh ? '最高' : 'H:'} 26°  ${isZh ? '最低' : 'L:'} 15°`;
 
         hourlyRow.innerHTML = [
-          { t: isZh ? '现在' : 'Now', icon: '☀️', deg: 22 },
-          { t: '14:00', icon: '☀️', deg: 24 },
-          { t: '15:00', icon: '🌤️', deg: 25 },
-          { t: '16:00', icon: '🌤️', deg: 24 },
-          { t: '17:00', icon: '⛅', deg: 23 },
-          { t: '18:00', icon: '⛅', deg: 21 },
-          { t: '19:00', icon: '🌅', deg: 19 },
-          { t: '20:00', icon: '🌙', deg: 18 },
-          { t: '21:00', icon: '🌙', deg: 17 }
+          { t: isZh ? '现在' : 'Now', icon: getSFSymbol('sun', 20, '#ffcc00'), deg: 22 },
+          { t: '14:00', icon: getSFSymbol('sun', 20, '#ffcc00'), deg: 24 },
+          { t: '15:00', icon: getSFSymbol('cloud', 20, '#f1f5f9'), deg: 25 },
+          { t: '16:00', icon: getSFSymbol('cloud', 20, '#f1f5f9'), deg: 24 },
+          { t: '17:00', icon: getSFSymbol('cloud', 20, '#cbd5e1'), deg: 23 },
+          { t: '18:00', icon: getSFSymbol('cloud', 20, '#cbd5e1'), deg: 21 },
+          { t: '19:00', icon: getSFSymbol('sunset', 20, '#ff9500'), deg: 19 },
+          { t: '20:00', icon: getSFSymbol('moon', 18, '#e2e8f0'), deg: 18 },
+          { t: '21:00', icon: getSFSymbol('moon', 18, '#e2e8f0'), deg: 17 }
         ].map(item => `
           <div class="weather-hour-box">
             <span style="opacity:0.8;">${item.t}</span>
@@ -12438,12 +12972,13 @@ async function launchWeather() {
             <span style="font-weight:600;">${item.deg}°</span>
           </div>
         `).join('');
+        enableHorizontalDragScroll(hourlyRow);
 
         const days = isZh ? ['今天', '周二', '周三', '周四', '周五', '周六', '周日'] : ['Today', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
         dailyList.innerHTML = days.map((day, i) => `
           <div class="weather-day-row">
             <span style="width:48px;font-weight:500;">${day}</span>
-            <span style="font-size:18px;width:28px;text-align:center;">${i % 3 === 0 ? '☀️' : i % 3 === 1 ? '🌤️' : '⛅'}</span>
+            <span style="width:28px;display:inline-flex;align-items:center;justify-content:center;">${i % 3 === 0 ? getSFSymbol('sun', 18, '#ffcc00') : getSFSymbol('cloud', 18, '#cbd5e1')}</span>
             <span style="width:28px;text-align:right;opacity:0.75;">${14 + i % 3}°</span>
             <div class="weather-temp-bar-bg">
               <div class="weather-temp-bar-fill" style="margin-left:${i * 5}%; width:${60 - i * 2}%;"></div>
@@ -14057,18 +14592,18 @@ async function launchStore() {
     let activeTab = 'discover';
 
     const storeApps = [
-      { id: 'xcode', name: 'Xcode 16 Studio', category: 'develop', icon: '🛠️', desc: 'Powerful IDE with Swift syntax, LLDB console & live build.', badge: 'Apple Silicon Ready', action: 'launchIDE()', installed: true },
-      { id: 'maps', name: 'Apple Maps 3D', category: 'discover', icon: '🗺️', desc: 'Explore world landmarks with Look Around and live transit.', badge: 'Sequoia Edition', action: 'launchMaps()', installed: true },
-      { id: 'camera', name: 'Photo Booth HD', category: 'create', icon: '📸', desc: 'Take studio photos with 8 live filter effects & 3-2-1 timer.', badge: 'Popular', action: 'launchCamera()', installed: true },
-      { id: 'markup', name: 'Photos & Markup', category: 'create', icon: '🎨', desc: 'Precision sketching with Apple Pencil smoothing & palettes.', badge: 'Creative Choice', action: 'launchPaint()', installed: true },
-      { id: 'tictactoe', name: 'TicTacToe Pro', category: 'play', icon: '⭕', desc: 'Sleek glass board puzzle game with intelligent AI opponent.', badge: 'Arcade Classic', action: 'launchTicTacToe()', installed: false },
-      { id: 'snake', name: 'Snake Arcade 2', category: 'play', icon: '🐍', desc: 'Retro arcade classic with high-score tracking & smooth physics.', badge: 'Game of the Day', action: 'launchSnake()', installed: true },
-      { id: 'synth', name: 'Logic Synth Audio', category: 'create', icon: '🎹', desc: 'WebAudio polyphonic synthesizer with real-time waveform filters.', badge: 'Pro Audio', action: 'launchSynth()', installed: true },
-      { id: 'universe', name: 'Cosmic Gravity 3D', category: 'play', icon: '🌌', desc: 'Orbital physics and cosmic particle simulation sandbox.', badge: 'Simulation', action: 'launchUniverse()', installed: true },
-      { id: 'notes', name: 'Apple Notes', category: 'work', icon: '📝', desc: 'Rich notes organizer with VFS persistence and live search.', badge: 'Essential', action: 'launchNotes()', installed: true },
-      { id: 'activity', name: 'Activity Monitor', category: 'work', icon: '📊', desc: 'Real-time CPU, RAM and hardware thread telemetry.', badge: 'System Tool', action: 'launchActivityMonitor()', installed: true },
-      { id: 'terminal', name: 'Zsh Terminal', category: 'develop', icon: '💻', desc: 'Advanced microkernel command terminal with APT bridge.', badge: 'Developer Tool', action: 'launchTerminal()', installed: true },
-      { id: 'syslogs', name: 'Console & Kernel Logs', category: 'develop', icon: '📋', desc: 'Real-time IPC bridge telemetry and microkernel audit trace.', badge: 'Diagnostics', action: 'launchSysLogs()', installed: false }
+      { id: 'xcode', name: 'Xcode 16 Studio', category: 'develop', desc: 'Powerful IDE with Swift syntax, LLDB console & live build.', badge: 'Apple Silicon Ready', action: 'launchIDE()', installed: true },
+      { id: 'maps', name: 'Apple Maps 3D', category: 'discover', desc: 'Explore world landmarks with Look Around and live transit.', badge: 'Sequoia Edition', action: 'launchMaps()', installed: true },
+      { id: 'camera', name: 'Photo Booth HD', category: 'create', desc: 'Take studio photos with 8 live filter effects & 3-2-1 timer.', badge: 'Popular', action: 'launchCamera()', installed: true },
+      { id: 'paint', name: 'Photos & Markup', category: 'create', desc: 'macOS Sequoia Photos library with EXIF info & Apple Pencil studio.', badge: 'Creative Choice', action: 'launchPaint()', installed: true },
+      { id: 'tictactoe', name: 'TicTacToe Pro', category: 'play', desc: 'Sleek glass board puzzle game with intelligent AI opponent.', badge: 'Arcade Classic', action: 'launchTicTacToe()', installed: false },
+      { id: 'snake', name: 'Snake Arcade 2', category: 'play', desc: 'Retro arcade classic with high-score tracking & smooth physics.', badge: 'Game of the Day', action: 'launchSnake()', installed: true },
+      { id: 'synth', name: 'Logic Synth Audio', category: 'create', desc: 'WebAudio polyphonic synthesizer with real-time waveform filters.', badge: 'Pro Audio', action: 'launchSynth()', installed: true },
+      { id: 'universe', name: 'Cosmic Gravity 3D', category: 'play', desc: 'Orbital physics and cosmic particle simulation sandbox.', badge: 'Simulation', action: 'launchUniverse()', installed: true },
+      { id: 'notes', name: 'Apple Notes', category: 'work', desc: 'Rich 3-column notes organizer with VFS persistence and Math Notes.', badge: 'Essential', action: 'launchNotes()', installed: true },
+      { id: 'activity', name: 'Activity Monitor', category: 'work', desc: 'Real-time CPU, RAM and hardware thread telemetry.', badge: 'System Tool', action: 'launchActivityMonitor()', installed: true },
+      { id: 'terminal', name: 'Zsh Terminal', category: 'develop', desc: 'Advanced microkernel command terminal with APT bridge & history.', badge: 'Developer Tool', action: 'launchTerminal()', installed: true },
+      { id: 'syslogs', name: 'Console & Kernel Logs', category: 'develop', desc: 'Real-time IPC bridge telemetry and microkernel audit trace.', badge: 'Diagnostics', action: 'launchSysLogs()', installed: false }
     ];
 
     const win = createWindow(pid, t('app_store', 'App Store'), `
@@ -14284,7 +14819,7 @@ async function launchStore() {
         <div class="mac-store-grid">
           ${filtered.map(app => `
             <div class="mac-store-card">
-              <div style="font-size:40px;">${app.icon}</div>
+              <div style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${getAppIconSvg(app.id, 48)}</div>
               <div style="flex:1;min-width:0;">
                 <div style="font-size:13px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${app.name}</div>
                 <div style="font-size:11px;color:#6e6e73;margin-top:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${app.desc}</div>
@@ -14316,17 +14851,9 @@ async function launchStore() {
             btn.style.opacity = '1';
 
             // Add to Launchpad registry if needed
-            if (!apps.find(a => a.name === app.name)) {
-              apps.push({ name: app.name, icon: app.icon, action: app.action });
-              const launchpadApps = document.getElementById('launchpad-apps');
-              if (launchpadApps) {
-                launchpadApps.innerHTML = apps.map(a => `
-                  <div class="app-icon" onclick="${a.action}; toggleLaunchpad();">
-                    <div class="icon">${a.icon}</div>
-                    <div class="name">${a.name}</div>
-                  </div>
-                `).join('');
-              }
+            if (!launchpadItems.find(a => a.id === app.id)) {
+              launchpadItems.push({ type: 'app', id: app.id, name: app.name, action: app.action });
+              renderLaunchpad();
             }
             if (typeof showNotification === 'function') {
               showNotification(t('app_store', 'App Store'), `Successfully installed ${app.name}`);
