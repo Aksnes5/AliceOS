@@ -444,6 +444,182 @@ const i18nDict = {
     notes_math_notes: 'Math Notes',
     notes_math_eval: 'Calculated',
 
+    // Notes App
+    notes_all: 'All iCloud',
+    notes_quick: 'Quick Notes',
+    notes_work: 'Work',
+    notes_personal: 'Personal',
+    notes_search_ph: 'Search Notes...',
+    notes_new: 'New Note',
+    notes_checklist: 'Checklist',
+    notes_math: 'Math',
+    notes_save: 'Save',
+    notes_del: 'Delete',
+    notes_textarea_ph: 'Type here... (e.g. 250 + 750 = for Math Notes)',
+
+    // Music App
+    music_listen_now: 'Listen Now',
+    music_browse: 'Browse',
+    music_radio: 'Radio',
+    music_library: 'Library',
+    music_recents: 'Recently Played',
+    music_artists: 'Artists',
+    music_albums: 'Albums',
+    music_playlists: 'Playlists',
+    music_featured_playlist: 'FEATURED PLAYLIST · APPLE MUSIC',
+    music_hero_desc: 'Mellow jazz chords, slow tempo grooves, and warm vinyl crackle crafted for deep coding and focus.',
+    music_play_all: 'Play All',
+    music_shuffle: 'Shuffle',
+    music_col_title: 'Title',
+    music_col_artist: 'Artist',
+    music_col_album: 'Album',
+    music_col_time: 'Time',
+    music_prev: 'Previous',
+    music_play_pause: 'Play / Pause',
+    music_next: 'Next',
+    music_repeat: 'Repeat',
+
+    // Photos App
+    photos_library: 'Library',
+    photos_all: 'All Photos',
+    photos_favorites: 'Favorites',
+    photos_recents: 'Recents',
+    photos_albums: 'Albums',
+    photos_wallpapers: 'Wallpapers',
+    photos_nature: 'Nature',
+    photos_architecture: 'Architecture',
+    photos_markup: 'Drawings & Markup',
+    photos_back: 'Library',
+    photos_new_canvas: 'New Canvas',
+    photos_rotate: 'Rotate 90°',
+    photos_fav: 'Favorite',
+    photos_info: 'Photo Info',
+    photos_edit: 'Edit',
+    photos_export: 'Export',
+    photos_count_suffix: 'photos',
+    photos_info_title: 'Photo Details',
+    photos_info_filename: 'Filename',
+    photos_info_date: 'Date Taken',
+    photos_info_camera: 'Camera',
+    photos_info_lens: 'Lens',
+    photos_info_exposure: 'Exposure',
+    photos_info_dim: 'Resolution',
+    photos_edit_title: 'Color & Markup',
+    photos_revert: 'Revert',
+    photos_done: 'Done',
+    photos_filters_hdr: 'Filters',
+    photos_filter_original: 'Original',
+    photos_filter_vivid: 'Vivid',
+    photos_filter_warm: 'Warm',
+    photos_filter_cool: 'Cool',
+    photos_filter_dramatic: 'Dramatic',
+    photos_filter_noir: 'Noir',
+    photos_markup_hdr: 'Markup Tools',
+    photos_pen: 'Pen',
+    photos_brush: 'Brush',
+    photos_highlighter: 'Highlighter',
+    photos_eraser: 'Eraser',
+
+    // Settings - Displays, Battery, Wi-Fi
+    settings_displays: 'Displays',
+    settings_display_retina: 'Built-in Liquid Retina XDR Display',
+    settings_display_desc: '3024 × 1964 Retina Extreme · ProMotion 120Hz',
+    settings_refresh_rate: 'Refresh Rate',
+    settings_refresh_desc: 'Apple ProMotion 120Hz adaptive smooth motion',
+    settings_refresh_opt_promotion: 'ProMotion (120Hz Ultra Smooth)',
+    settings_refresh_opt_60hz: '60Hz (Standard Power Saver)',
+    settings_true_tone: 'True Tone',
+    settings_true_tone_desc: 'Automatically adapt display colors based on ambient light conditions',
+    settings_battery: 'Battery',
+    settings_power_adapter: 'Power Source: Power Adapter Connected (140W USB-C Fast Charge)',
+    settings_battery_health: 'Battery Health',
+    settings_battery_health_desc: 'Maximum Capacity 100% · Peak Performance · 12 Cycles',
+    settings_battery_normal: 'Normal',
+    settings_low_power: 'Low Power Mode',
+    settings_low_power_desc: 'Reduce background power consumption to prolong battery life',
+    settings_wifi: 'Wi-Fi',
+    settings_wifi_broadcast: 'Wi-Fi Broadcast',
+    settings_wifi_on: 'On',
+    settings_known_networks: 'Known Networks',
+    settings_connected: 'Connected',
+
+    // Xcode Studio
+    xcode_run: 'Run (⌘R)',
+    xcode_stop: 'Stop (⌘.)',
+    xcode_clear: 'Clear Console',
+    xcode_navigator: 'Project Navigator',
+    xcode_build_succeeded: 'Build AliceApp: Succeeded',
+    xcode_building: 'Building AliceApp...',
+
+    // iPhone Mirroring
+    iphone_messages: 'Messages',
+    iphone_photos: 'Photos',
+    iphone_clock: 'Clock',
+    iphone_settings: 'Settings',
+    iphone_music: 'Music',
+    iphone_safari: 'Safari',
+    iphone_notes: 'Notes',
+    iphone_camera: 'Camera',
+    iphone_phone: 'Phone',
+    iphone_featured_photos: 'Featured Photos',
+    iphone_select: 'Select',
+    iphone_today: 'Today',
+    iphone_stopwatch: 'Stopwatch',
+    iphone_lap: 'Lap',
+    iphone_start: 'Start',
+    iphone_stop: 'Stop',
+    iphone_reset: 'Reset',
+    iphone_home: 'Home',
+
+    // Photo Booth / Camera
+    pb_mode_single: 'Single',
+    pb_mode_burst: '4-Up',
+    pb_timer_on: '3s Timer: On',
+    pb_timer_off: '3s Timer: Off',
+    pb_effects: 'Effects',
+    pb_recent_shots: 'Recent Shots',
+    filter_normal: 'Normal',
+    filter_sepia: 'Sepia',
+    filter_noir: 'Noir',
+    filter_thermal: 'Thermal',
+    filter_pop: 'Pop Art',
+    filter_cyber: 'Cyber',
+    filter_invert: 'Invert',
+
+    // Weather
+    weather_my_location: 'My Location',
+    weather_hourly: '24-Hour Forecast',
+    weather_tenday: '10-Day Forecast',
+    weather_uv: 'UV Index',
+    weather_uv_sub: 'Keep good sun protection today',
+    weather_wind: 'Wind & Direction',
+    weather_wind_sub: 'Light gentle breeze',
+    weather_humidity: 'Humidity',
+    weather_hum_sub: 'Comfortable indoor dew point',
+    weather_visibility: 'Visibility',
+    weather_vis_sub: 'Perfect clear horizon view',
+    weather_pressure: 'Pressure',
+    weather_press_sub: 'Standard sea-level atmospheric',
+    weather_sunset: 'Sunrise & Sunset',
+    weather_sunset_sub: 'Sunset approaching shortly',
+
+    // Activity Monitor
+    am_cpu: 'CPU',
+    am_memory: 'Memory',
+    am_energy: 'Energy',
+    am_disk: 'Disk',
+    am_network: 'Network',
+    am_force_quit: 'Force Quit',
+    am_force_quit_title: 'Force Quit Selected Process',
+    am_filter: 'Search processes...',
+    am_proc_name: 'Process Name',
+    am_cpu_time: 'CPU Time',
+    am_threads: 'Threads',
+    am_user: 'User',
+    am_chart_cpu: 'CPU Load History',
+    am_chart_legend_user: '■ User',
+    am_chart_legend_sys: '■ System',
+
     // Folders
     folder_productivity: 'Productivity',
     folder_media: 'Media & Arts',
@@ -1040,6 +1216,182 @@ const i18nDict = {
     notes_math_notes: '数学备忘录',
     notes_math_eval: '计算结果',
 
+    // 备忘录
+    notes_all: '全部备忘录',
+    notes_quick: '便笺',
+    notes_work: '工作备忘',
+    notes_personal: '个人生活',
+    notes_search_ph: '搜索备忘录...',
+    notes_new: '新建',
+    notes_checklist: '待办',
+    notes_math: '数学',
+    notes_save: '存储',
+    notes_del: '删除',
+    notes_textarea_ph: '在此键入文字... (输入算式如 250 + 750 = 自动求解)',
+
+    // 音乐
+    music_listen_now: '现在就听',
+    music_browse: '浏览',
+    music_radio: '广播',
+    music_library: '资料库',
+    music_recents: '最近播放',
+    music_artists: '艺人',
+    music_albums: '专辑',
+    music_playlists: '播放列表',
+    music_featured_playlist: '精选歌单 · APPLE MUSIC',
+    music_hero_desc: '柔和细腻的爵士和弦、慢节拍律动与温暖黑胶底噪，为专注代码与深度思考量身打造。',
+    music_play_all: '播放全部',
+    music_shuffle: '随机播放',
+    music_col_title: '标题',
+    music_col_artist: '艺人',
+    music_col_album: '专辑',
+    music_col_time: '时长',
+    music_prev: '上一首',
+    music_play_pause: '播放 / 暂停',
+    music_next: '下一首',
+    music_repeat: '单曲循环',
+
+    // 照片
+    photos_library: '图库',
+    photos_all: '全部照片',
+    photos_favorites: '个人收藏',
+    photos_recents: '最近项目',
+    photos_albums: '相册',
+    photos_wallpapers: '精选壁纸',
+    photos_nature: '自然风光',
+    photos_architecture: '建筑与城市',
+    photos_markup: '标注与画作',
+    photos_back: '图库',
+    photos_new_canvas: '新建画布',
+    photos_rotate: '逆时针旋转 90°',
+    photos_fav: '收藏照片',
+    photos_info: '照片详细信息',
+    photos_edit: '编辑',
+    photos_export: '导出',
+    photos_count_suffix: '张照片',
+    photos_info_title: '照片详细信息',
+    photos_info_filename: '文件名',
+    photos_info_date: '拍摄时间',
+    photos_info_camera: '设备相机',
+    photos_info_lens: '镜头光圈',
+    photos_info_exposure: '感光曝光',
+    photos_info_dim: '分辨率规格',
+    photos_edit_title: '调色与涂鸦标记',
+    photos_revert: '复原',
+    photos_done: '完成',
+    photos_filters_hdr: '滤镜风格',
+    photos_filter_original: '原图',
+    photos_filter_vivid: '鲜明',
+    photos_filter_warm: '暖色',
+    photos_filter_cool: '冷色',
+    photos_filter_dramatic: '戏剧',
+    photos_filter_noir: '黑白 Noir',
+    photos_markup_hdr: '标记涂鸦',
+    photos_pen: '钢笔',
+    photos_brush: '画刷',
+    photos_highlighter: '荧光笔',
+    photos_eraser: '橡皮擦',
+
+    // 系统设置
+    settings_displays: '显示器',
+    settings_display_retina: '内置 Liquid Retina XDR 显示屏',
+    settings_display_desc: '3024 × 1964 视网膜极限画质 · ProMotion 120Hz 极速自适应刷新率',
+    settings_refresh_rate: '刷新率',
+    settings_refresh_desc: '支持 Apple ProMotion 120Hz 极速平滑流动画质',
+    settings_refresh_opt_promotion: 'ProMotion (120Hz 极速刷新)',
+    settings_refresh_opt_60hz: '60Hz (标准省电)',
+    settings_true_tone: '原彩显示',
+    settings_true_tone_desc: '根据周围环境光线条件自动调整屏幕色温',
+    settings_battery: '电池',
+    settings_power_adapter: '电源：已连接电源适配器 (140W USB-C 极速闪充)',
+    settings_battery_health: '电池健康',
+    settings_battery_health_desc: '最大容量 100% · 状态极佳 · 循环计数 12 次',
+    settings_battery_normal: '正常',
+    settings_low_power: '低电量模式',
+    settings_low_power_desc: '降低后台功耗以延长综合电池续航',
+    settings_wifi: '无线局域网',
+    settings_wifi_broadcast: 'Wi-Fi 局域网广播',
+    settings_wifi_on: '已开启',
+    settings_known_networks: '已连接的网络',
+    settings_connected: '已连接',
+
+    // Xcode Studio
+    xcode_run: '运行 (⌘R)',
+    xcode_stop: '停止 (⌘.)',
+    xcode_clear: '清空控制台',
+    xcode_navigator: '项目导航器',
+    xcode_build_succeeded: '编译 AliceApp: 成功',
+    xcode_building: '正在编译 AliceApp...',
+
+    // iPhone 镜像
+    iphone_messages: '信息',
+    iphone_photos: '照片',
+    iphone_clock: '时钟',
+    iphone_settings: '设置',
+    iphone_music: '音乐',
+    iphone_safari: 'Safari',
+    iphone_notes: '备忘录',
+    iphone_camera: '相机',
+    iphone_phone: '电话',
+    iphone_featured_photos: '精选照片',
+    iphone_select: '选择',
+    iphone_today: '今天',
+    iphone_stopwatch: '秒表',
+    iphone_lap: '计次',
+    iphone_start: '启动',
+    iphone_stop: '停止',
+    iphone_reset: '复位',
+    iphone_home: '主屏幕',
+
+    // 相机 Photo Booth
+    pb_mode_single: '单张',
+    pb_mode_burst: '四格',
+    pb_timer_on: '3秒倒计时: 开',
+    pb_timer_off: '倒计时: 关',
+    pb_effects: '效果',
+    pb_recent_shots: '最近快照',
+    filter_normal: '原色 Normal',
+    filter_sepia: '复古 Sepia',
+    filter_noir: '黑白 Noir',
+    filter_thermal: '热感 Thermal',
+    filter_pop: '波普 Pop Art',
+    filter_cyber: '赛博 Cyber',
+    filter_invert: '反相 Invert',
+
+    // 天气
+    weather_my_location: '我的位置',
+    weather_hourly: '24小时逐时预报',
+    weather_tenday: '10天天气预报',
+    weather_uv: '紫外线指数',
+    weather_uv_sub: '今日保持良好防晒防护',
+    weather_wind: '风向与风速',
+    weather_wind_sub: '微风拂面',
+    weather_humidity: '相对湿度',
+    weather_hum_sub: '舒适室内环境',
+    weather_visibility: '能见度',
+    weather_vis_sub: '视野极佳，一览无余',
+    weather_pressure: '气压',
+    weather_press_sub: '标准海平面大气压',
+    weather_sunset: '日出与日落',
+    weather_sunset_sub: '日落即将来临',
+
+    // 活动监视器
+    am_cpu: 'CPU',
+    am_memory: '内存',
+    am_energy: '能耗',
+    am_disk: '磁盘',
+    am_network: '网络',
+    am_force_quit: '强制退出',
+    am_force_quit_title: '强制退出选中的进程',
+    am_filter: '搜索进程...',
+    am_proc_name: '进程名称',
+    am_cpu_time: 'CPU 时间',
+    am_threads: '线程',
+    am_user: '用户',
+    am_chart_cpu: 'CPU 负载历史',
+    am_chart_legend_user: '■ 用户',
+    am_chart_legend_sys: '■ 系统',
+
     // 分类文件夹
     folder_productivity: '工作效率',
     folder_media: '影音与创意',
@@ -1608,6 +1960,182 @@ const i18nDict = {
     notes_math_notes: '計算メモ',
     notes_math_eval: '計算結果',
 
+    // メモ
+    notes_all: 'すべてのiCloud',
+    notes_quick: 'クイックメモ',
+    notes_work: '仕事',
+    notes_personal: 'プライベート',
+    notes_search_ph: 'メモを検索...',
+    notes_new: '新規作成',
+    notes_checklist: 'チェックリスト',
+    notes_math: '計算メモ',
+    notes_save: '保存',
+    notes_del: '削除',
+    notes_textarea_ph: 'ここに入力... (例: 250 + 750 = で自動計算)',
+
+    // ミュージック
+    music_listen_now: '今すぐ聴く',
+    music_browse: '見つける',
+    music_radio: 'ラジオ',
+    music_library: 'ライブラリ',
+    music_recents: '最近再生した項目',
+    music_artists: 'アーティスト',
+    music_albums: 'アルバム',
+    music_playlists: 'プレイリスト',
+    music_featured_playlist: 'おすすめプレイリスト · APPLE MUSIC',
+    music_hero_desc: '心地よいジャズコードと穏やかなビート、集中とコーディングのためのローファイサウンド。',
+    music_play_all: 'すべて再生',
+    music_shuffle: 'シャッフル',
+    music_col_title: 'タイトル',
+    music_col_artist: 'アーティスト',
+    music_col_album: 'アルバム',
+    music_col_time: '時間',
+    music_prev: '前の曲',
+    music_play_pause: '再生 / 一時停止',
+    music_next: '次の曲',
+    music_repeat: 'リピート',
+
+    // 写真
+    photos_library: 'ライブラリ',
+    photos_all: 'すべての写真',
+    photos_favorites: 'よく使う項目',
+    photos_recents: '最近の項目',
+    photos_albums: 'アルバム',
+    photos_wallpapers: '壁紙',
+    photos_nature: '自然',
+    photos_architecture: '建築と都市',
+    photos_markup: 'スケッチとマークアップ',
+    photos_back: 'ライブラリ',
+    photos_new_canvas: '新規キャンバス',
+    photos_rotate: '反時計回りに90°回転',
+    photos_fav: 'よく使う項目に追加',
+    photos_info: '写真の情報',
+    photos_edit: '編集',
+    photos_export: '書き出す',
+    photos_count_suffix: '枚の写真',
+    photos_info_title: '写真の情報',
+    photos_info_filename: 'ファイル名',
+    photos_info_date: '撮影日時',
+    photos_info_camera: 'カメラ',
+    photos_info_lens: 'レンズ',
+    photos_info_exposure: '露出',
+    photos_info_dim: '解像度',
+    photos_edit_title: 'カラー調整とマークアップ',
+    photos_revert: '元に戻す',
+    photos_done: '完了',
+    photos_filters_hdr: 'フィルタ',
+    photos_filter_original: 'オリジナル',
+    photos_filter_vivid: 'ビビッド',
+    photos_filter_warm: 'ウォーム',
+    photos_filter_cool: 'クール',
+    photos_filter_dramatic: 'ドラマチック',
+    photos_filter_noir: 'モノクロ Noir',
+    photos_markup_hdr: 'マークアップツール',
+    photos_pen: 'ペン',
+    photos_brush: 'ブラシ',
+    photos_highlighter: '蛍光ペン',
+    photos_eraser: '消しゴム',
+
+    // システム設定
+    settings_displays: 'ディスプレイ',
+    settings_display_retina: '内蔵 Liquid Retina XDR ディスプレイ',
+    settings_display_desc: '3024 × 1964 Retina Extreme · ProMotion 120Hz アダプティブリフレッシュレート',
+    settings_refresh_rate: 'リフレッシュレート',
+    settings_refresh_desc: 'Apple ProMotion 120Hz による極めて滑らかな動画表示',
+    settings_refresh_opt_promotion: 'ProMotion (120Hz 超高速)',
+    settings_refresh_opt_60hz: '60Hz (標準省電力)',
+    settings_true_tone: 'True Tone',
+    settings_true_tone_desc: '周囲の光環境に合わせてディスプレイの色温度を自動調整',
+    settings_battery: 'バッテリー',
+    settings_power_adapter: '電源: 電源アダプタ接続中 (140W USB-C 急速充電)',
+    settings_battery_health: 'バッテリーの状態',
+    settings_battery_health_desc: '最大容量 100% · ピークパフォーマンス · 充放電回数 12回',
+    settings_battery_normal: '正常',
+    settings_low_power: '低電力モード',
+    settings_low_power_desc: 'バックグラウンド消費電力を抑えてバッテリー駆動時間を延長',
+    settings_wifi: 'Wi-Fi',
+    settings_wifi_broadcast: 'Wi-Fi ブロードキャスト',
+    settings_wifi_on: 'オン',
+    settings_known_networks: '接続済みのネットワーク',
+    settings_connected: '接続済み',
+
+    // Xcode Studio
+    xcode_run: '実行 (⌘R)',
+    xcode_stop: '停止 (⌘.)',
+    xcode_clear: 'コンソールを消去',
+    xcode_navigator: 'プロジェクトナビゲータ',
+    xcode_build_succeeded: 'AliceApp のビルド: 成功',
+    xcode_building: 'AliceApp をビルド中...',
+
+    // iPhone ミラーリング
+    iphone_messages: 'メッセージ',
+    iphone_photos: '写真',
+    iphone_clock: '時計',
+    iphone_settings: '設定',
+    iphone_music: 'ミュージック',
+    iphone_safari: 'Safari',
+    iphone_notes: 'メモ',
+    iphone_camera: 'カメラ',
+    iphone_phone: '電話',
+    iphone_featured_photos: 'おすすめの写真',
+    iphone_select: '選択',
+    iphone_today: '今日',
+    iphone_stopwatch: 'ストップウォッチ',
+    iphone_lap: 'ラップ',
+    iphone_start: '開始',
+    iphone_stop: '停止',
+    iphone_reset: 'リセット',
+    iphone_home: 'ホーム',
+
+    // カメラ Photo Booth
+    pb_mode_single: '1枚',
+    pb_mode_burst: '4コマ',
+    pb_timer_on: '3秒タイマー: オン',
+    pb_timer_off: 'タイマー: オフ',
+    pb_effects: 'エフェクト',
+    pb_recent_shots: '最近の写真',
+    filter_normal: 'ノーマル Normal',
+    filter_sepia: 'セピア Sepia',
+    filter_noir: 'モノクロ Noir',
+    filter_thermal: 'サーマル Thermal',
+    filter_pop: 'ポップアート Pop Art',
+    filter_cyber: 'サイバー Cyber',
+    filter_invert: '反転 Invert',
+
+    // 天気
+    weather_my_location: '現在地',
+    weather_hourly: '24時間予报',
+    weather_tenday: '10日間の天気予報',
+    weather_uv: 'UV指数',
+    weather_uv_sub: '日焼け対策をおすすめします',
+    weather_wind: '風と風速',
+    weather_wind_sub: '穏やかなそよ風',
+    weather_humidity: '湿度',
+    weather_hum_sub: '快適な室内環境',
+    weather_visibility: '視程',
+    weather_vis_sub: '見通し良好',
+    weather_pressure: '気圧',
+    weather_press_sub: '標準的な海面気圧',
+    weather_sunset: '日の出と日の入り',
+    weather_sunset_sub: 'まもなく日没',
+
+    // アクティビティモニタ
+    am_cpu: 'CPU',
+    am_memory: 'メモリ',
+    am_energy: 'エネルギー',
+    am_disk: 'ディスク',
+    am_network: 'ネットワーク',
+    am_force_quit: '強制終了',
+    am_force_quit_title: '選択したプロセスを強制終了',
+    am_filter: 'プロセスを検索...',
+    am_proc_name: 'プロセス名',
+    am_cpu_time: 'CPU 時間',
+    am_threads: 'スレッド',
+    am_user: 'ユーザ',
+    am_chart_cpu: 'CPU 負荷履歴',
+    am_chart_legend_user: '■ ユーザ',
+    am_chart_legend_sys: '■ システム',
+
     // フォルダ
     folder_productivity: '仕事効率化',
     folder_media: 'メディアとアート',
@@ -1963,6 +2491,386 @@ function updateDockTooltips() {
     trashIcon.title = dict.app_trash;
   }
 }
+
+// macOS Dock Dynamic App Engine
+const DOCK_APP_ICONS = {
+  textedit: `<svg viewBox="0 0 100 100" class="macos-app-icon">
+    <defs>
+      <linearGradient id="te-dyn-bg" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#f8fafc"/></linearGradient>
+      <linearGradient id="te-dyn-pen" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f59e0b"/><stop offset="50%" stop-color="#fbbf24"/><stop offset="100%" stop-color="#d97706"/></linearGradient>
+    </defs>
+    <rect width="100" height="100" rx="22.5" fill="url(#te-dyn-bg)"/>
+    <rect width="100" height="100" rx="22.5" fill="none" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+    <line x1="20" y1="24" x2="20" y2="82" stroke="#fca5a5" stroke-width="1.5"/>
+    <line x1="16" y1="36" x2="84" y2="36" stroke="#cbd5e1" stroke-width="1.5"/>
+    <line x1="16" y1="48" x2="84" y2="48" stroke="#cbd5e1" stroke-width="1.5"/>
+    <line x1="16" y1="60" x2="84" y2="60" stroke="#cbd5e1" stroke-width="1.5"/>
+    <line x1="16" y1="72" x2="84" y2="72" stroke="#cbd5e1" stroke-width="1.5"/>
+    <line x1="26" y1="34" x2="65" y2="34" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="26" y1="46" x2="72" y2="46" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="26" y1="58" x2="55" y2="58" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
+    <g transform="translate(62, 58) rotate(-45)">
+      <rect x="-6" y="-36" width="12" height="42" rx="1.5" fill="url(#te-dyn-pen)"/>
+      <rect x="-6" y="-42" width="12" height="6" rx="2" fill="#cbd5e1"/>
+      <rect x="-6" y="-46" width="12" height="5" rx="2" fill="#f43f5e"/>
+      <polygon points="-6,6 6,6 0,18" fill="#e2e8f0"/>
+      <polygon points="-2,13 2,13 0,18" fill="#1e293b"/>
+    </g>
+  </svg>`,
+
+  calculator: `<svg viewBox="0 0 100 100" class="macos-app-icon">
+    <defs>
+      <linearGradient id="calc-dyn-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#323236"/>
+        <stop offset="100%" stop-color="#1c1c1e"/>
+      </linearGradient>
+    </defs>
+    <rect width="100" height="100" rx="22.5" fill="url(#calc-dyn-bg)"/>
+    <rect x="16" y="14" width="68" height="18" rx="6" fill="#242426"/>
+    <text x="76" y="27" font-family="-apple-system, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="end">42</text>
+    <circle cx="32" cy="50" r="13" fill="#a5a5a5"/>
+    <text x="32" y="55" font-family="-apple-system, sans-serif" font-size="14" font-weight="700" fill="#1c1c1e" text-anchor="middle">C</text>
+    <circle cx="68" cy="50" r="13" fill="#ff9f0a"/>
+    <text x="68" y="55" font-family="-apple-system, sans-serif" font-size="18" font-weight="600" fill="#ffffff" text-anchor="middle">÷</text>
+    <circle cx="32" cy="80" r="13" fill="#505050"/>
+    <text x="32" y="85" font-family="-apple-system, sans-serif" font-size="14" font-weight="600" fill="#ffffff" text-anchor="middle">7</text>
+    <circle cx="68" cy="80" r="13" fill="#ff9f0a"/>
+    <text x="68" y="85" font-family="-apple-system, sans-serif" font-size="18" font-weight="600" fill="#ffffff" text-anchor="middle">=</text>
+  </svg>`,
+
+  clock: `<svg viewBox="0 0 100 100" class="macos-app-icon">
+    <defs>
+      <linearGradient id="clk-dyn-bg" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#2c2c2e"/><stop offset="100%" stop-color="#000000"/></linearGradient>
+    </defs>
+    <rect width="100" height="100" rx="22.5" fill="url(#clk-dyn-bg)"/>
+    <circle cx="50" cy="50" r="44" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+    <g stroke="#ffffff" stroke-linecap="round">
+      <line x1="50" y1="12" x2="50" y2="18" stroke-width="3"/>
+      <line x1="50" y1="88" x2="50" y2="82" stroke-width="3"/>
+      <line x1="12" y1="50" x2="18" y2="50" stroke-width="3"/>
+      <line x1="88" y1="50" x2="82" y2="50" stroke-width="3"/>
+    </g>
+    <line x1="50" y1="50" x2="32" y2="34" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="50" y1="50" x2="70" y2="30" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round"/>
+    <circle cx="50" cy="50" r="3.5" fill="#ff9500"/>
+    <line x1="50" y1="60" x2="50" y2="18" stroke="#ff9500" stroke-width="1.8" stroke-linecap="round"/>
+    <circle cx="50" cy="50" r="1.5" fill="#000000"/>
+  </svg>`,
+
+  video: `<svg viewBox="0 0 100 100" class="macos-app-icon">
+    <defs>
+      <linearGradient id="qt-dyn-bg" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#1e1e24"/><stop offset="100%" stop-color="#09090b"/></linearGradient>
+      <linearGradient id="qt-dyn-q" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#0284c7"/></linearGradient>
+    </defs>
+    <rect width="100" height="100" rx="22.5" fill="url(#qt-dyn-bg)"/>
+    <circle cx="50" cy="50" r="30" fill="none" stroke="url(#qt-dyn-q)" stroke-width="8"/>
+    <polygon points="45,36 65,50 45,64" fill="#ffffff"/>
+  </svg>`,
+
+  weather: `<svg viewBox="0 0 100 100" class="macos-app-icon">
+    <defs>
+      <linearGradient id="weather-dyn-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#38bdf8"/>
+        <stop offset="100%" stop-color="#0284c7"/>
+      </linearGradient>
+      <linearGradient id="sun-dyn-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#fde047"/>
+        <stop offset="100%" stop-color="#eab308"/>
+      </linearGradient>
+    </defs>
+    <rect width="100" height="100" rx="22.5" fill="url(#weather-dyn-bg)"/>
+    <circle cx="64" cy="38" r="16" fill="url(#sun-dyn-grad)"/>
+    <path d="M 26 72 C 18 72 12 66 12 58 C 12 51 17 45 24 44 C 27 34 36 27 47 27 C 59 27 69 36 71 47 C 76 48 80 52 80 58 C 80 66 74 72 66 72 Z" fill="#ffffff"/>
+  </svg>`,
+
+  camera: `<svg viewBox="0 0 100 100" class="macos-app-icon">
+    <defs>
+      <linearGradient id="cam-dyn-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#3a3a3c"/>
+        <stop offset="100%" stop-color="#1c1c1e"/>
+      </linearGradient>
+      <linearGradient id="lens-dyn-rim" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#d1d5db"/>
+        <stop offset="100%" stop-color="#6b7280"/>
+      </linearGradient>
+      <linearGradient id="lens-dyn-glass" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#1e1b4b"/>
+        <stop offset="50%" stop-color="#312e81"/>
+        <stop offset="100%" stop-color="#0f172a"/>
+      </linearGradient>
+    </defs>
+    <rect width="100" height="100" rx="22.5" fill="url(#cam-dyn-bg)"/>
+    <circle cx="50" cy="50" r="36" fill="url(#lens-dyn-rim)"/>
+    <circle cx="50" cy="50" r="32" fill="#111827"/>
+    <circle cx="50" cy="50" r="28" fill="url(#lens-dyn-glass)"/>
+    <circle cx="50" cy="50" r="14" fill="#030712"/>
+    <ellipse cx="40" cy="40" rx="9" ry="5" transform="rotate(-30 40 40)" fill="rgba(255,255,255,0.4)"/>
+    <circle cx="62" cy="62" r="3" fill="rgba(129, 140, 248, 0.5)"/>
+  </svg>`,
+
+  iphonemirror: `<svg viewBox="0 0 100 100" class="macos-app-icon">
+    <defs>
+      <linearGradient id="ipm-dyn-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#1e293b"/>
+        <stop offset="100%" stop-color="#0f172a"/>
+      </linearGradient>
+    </defs>
+    <rect width="100" height="100" rx="22.5" fill="url(#ipm-dyn-bg)"/>
+    <rect x="25" y="12" width="50" height="76" rx="12" fill="#18181b" stroke="#64748b" stroke-width="2.5"/>
+    <rect x="42" y="16" width="16" height="5" rx="2.5" fill="#000000"/>
+    <rect x="28" y="24" width="44" height="60" rx="4" fill="#3b82f6" opacity="0.35"/>
+    <circle cx="50" cy="54" r="10" fill="#60a5fa" opacity="0.6"/>
+  </svg>`,
+
+  maps: `<svg viewBox="0 0 100 100" class="macos-app-icon">
+    <defs>
+      <linearGradient id="maps-dyn-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#f8fafc"/>
+        <stop offset="100%" stop-color="#e2e8f0"/>
+      </linearGradient>
+    </defs>
+    <rect width="100" height="100" rx="22.5" fill="url(#maps-dyn-bg)"/>
+    <path d="M 0 35 Q 40 30 60 0 L 100 0 L 100 45 Q 60 70 0 60 Z" fill="#86efac"/>
+    <path d="M 0 55 Q 50 65 100 35 L 100 65 Q 50 95 0 85 Z" fill="#fed7aa"/>
+    <path d="M 20 100 Q 50 40 85 0" stroke="#f97316" stroke-width="6" fill="none"/>
+    <path d="M 0 50 Q 50 60 100 20" stroke="#ffffff" stroke-width="8" fill="none"/>
+    <path d="M 50 32 C 43 32 38 37 38 44 C 38 52 50 68 50 68 C 50 68 62 52 62 44 C 62 37 57 32 50 32 Z" fill="#ef4444"/>
+    <circle cx="50" cy="43" r="4.5" fill="#ffffff"/>
+  </svg>`,
+
+  activity: `<svg viewBox="0 0 100 100" class="macos-app-icon">
+    <defs>
+      <linearGradient id="am-dyn-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#1c1c1e"/>
+        <stop offset="100%" stop-color="#0a0a0c"/>
+      </linearGradient>
+    </defs>
+    <rect width="100" height="100" rx="22.5" fill="url(#am-dyn-bg)"/>
+    <line x1="15" y1="30" x2="85" y2="30" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+    <line x1="15" y1="50" x2="85" y2="50" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+    <line x1="15" y1="70" x2="85" y2="70" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+    <path d="M 12 50 L 32 50 L 38 24 L 46 76 L 54 36 L 60 58 L 66 50 L 88 50" fill="none" stroke="#30d158" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>`,
+
+  ide: `<svg viewBox="0 0 100 100" class="macos-app-icon">
+    <defs>
+      <linearGradient id="xcode-dyn-bg" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#0a84ff"/><stop offset="100%" stop-color="#0055d4"/></linearGradient>
+    </defs>
+    <rect width="100" height="100" rx="22.5" fill="url(#xcode-dyn-bg)"/>
+    <path d="M 32 28 L 68 72 M 68 28 L 32 72" stroke="#ffffff" stroke-width="9" stroke-linecap="round"/>
+    <polygon points="50,22 62,45 38,45" fill="#f59e0b"/>
+  </svg>`,
+
+  snake: `<svg viewBox="0 0 100 100" class="macos-app-icon">
+    <rect width="100" height="100" rx="22.5" fill="linear-gradient(135deg, #10b981, #047857)"/>
+    <path d="M 30 70 Q 30 40 50 40 T 70 30" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="70" cy="30" r="6" fill="#f59e0b"/>
+  </svg>`,
+
+  flappy: `<svg viewBox="0 0 100 100" class="macos-app-icon">
+    <rect width="100" height="100" rx="22.5" fill="linear-gradient(135deg, #38bdf8, #0284c7)"/>
+    <circle cx="50" cy="50" r="22" fill="#facc15"/>
+    <circle cx="60" cy="44" r="5" fill="#ffffff"/>
+    <circle cx="62" cy="44" r="2.5" fill="#000000"/>
+    <polygon points="62,52 76,56 62,60" fill="#f97316"/>
+  </svg>`,
+
+  synth: `<svg viewBox="0 0 100 100" class="macos-app-icon">
+    <rect width="100" height="100" rx="22.5" fill="linear-gradient(135deg, #8b5cf6, #6d28d9)"/>
+    <path d="M 20 50 Q 35 20 50 50 T 80 50" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round"/>
+  </svg>`,
+
+  universe: `<svg viewBox="0 0 100 100" class="macos-app-icon">
+    <rect width="100" height="100" rx="22.5" fill="linear-gradient(135deg, #1e1b4b, #312e81)"/>
+    <circle cx="50" cy="50" r="18" fill="#ec4899"/>
+    <ellipse cx="50" cy="50" rx="34" ry="10" fill="none" stroke="#a855f7" stroke-width="3" transform="rotate(-25 50 50)"/>
+  </svg>`,
+
+  radar: `<svg viewBox="0 0 100 100" class="macos-app-icon">
+    <rect width="100" height="100" rx="22.5" fill="linear-gradient(135deg, #0ea5e9, #0284c7)"/>
+    <circle cx="50" cy="50" r="32" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="3"/>
+    <circle cx="50" cy="50" r="20" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="3"/>
+    <circle cx="50" cy="50" r="8" fill="#ffffff"/>
+  </svg>`,
+
+  hostinfo: `<svg viewBox="0 0 100 100" class="macos-app-icon">
+    <rect width="100" height="100" rx="22.5" fill="linear-gradient(135deg, #475569, #1e293b)"/>
+    <circle cx="50" cy="50" r="30" fill="none" stroke="#38bdf8" stroke-width="6" stroke-dasharray="120 40"/>
+    <text x="50" y="56" font-family="-apple-system, sans-serif" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">CPU</text>
+  </svg>`,
+
+  hostscreen: `<svg viewBox="0 0 100 100" class="macos-app-icon">
+    <rect width="100" height="100" rx="22.5" fill="linear-gradient(135deg, #6366f1, #4338ca)"/>
+    <rect x="22" y="24" width="56" height="38" rx="4" fill="none" stroke="#ffffff" stroke-width="4"/>
+    <path d="M 40 70 L 60 70 M 50 62 L 50 70" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+  </svg>`,
+
+  webhost: `<svg viewBox="0 0 100 100" class="macos-app-icon">
+    <rect width="100" height="100" rx="22.5" fill="linear-gradient(135deg, #14b8a6, #0f766e)"/>
+    <circle cx="50" cy="50" r="28" fill="none" stroke="#ffffff" stroke-width="4"/>
+    <ellipse cx="50" cy="50" rx="14" ry="28" fill="none" stroke="#ffffff" stroke-width="3"/>
+    <line x1="22" y1="50" x2="78" y2="50" stroke="#ffffff" stroke-width="3"/>
+  </svg>`
+};
+
+function getAppDockSvg(appKey) {
+  if (DOCK_APP_ICONS[appKey]) return DOCK_APP_ICONS[appKey];
+  return `<div class="macos-app-icon" style="background:linear-gradient(135deg,#6366f1,#3b82f6);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:20px;border-radius:22.5%;">${(appKey || 'A').charAt(0).toUpperCase()}</div>`;
+}
+
+function launchAppByName(appKey) {
+  switch (appKey) {
+    case 'finder': launchFinder(); break;
+    case 'browser': launchBrowser(); break;
+    case 'notes': launchNotes(); break;
+    case 'reminders': launchReminders(); break;
+    case 'calendar': launchCalendar(); break;
+    case 'paint': launchPaint(); break;
+    case 'music': launchMusic(); break;
+    case 'settings': launchSettings(); break;
+    case 'terminal': launchTerminal(); break;
+    case 'calculator': launchCalculator(); break;
+    case 'clock': launchClock(); break;
+    case 'textedit': launchTextEdit(); break;
+    case 'video': launchVideo(); break;
+    case 'weather': launchWeather(); break;
+    case 'camera': launchCamera(); break;
+    case 'iphonemirror': launchIPhoneMirroring(); break;
+    case 'maps': launchMaps(); break;
+    case 'activity': launchActivityMonitor(); break;
+    case 'ide': launchIDE(); break;
+    case 'store': launchStore(); break;
+    case 'snake': launchSnake(); break;
+    case 'flappy': launchFlappy(); break;
+    case 'synth': launchSynth(); break;
+    case 'universe': launchUniverse(); break;
+    case 'radar': launchRadar(); break;
+    case 'hostinfo': launchHostMonitor(); break;
+    case 'hostscreen': launchHostScreen(); break;
+    case 'webhost': launchWebHost(); break;
+    default:
+      console.warn('Unknown appKey to launch:', appKey);
+  }
+}
+
+function updateDockScale() {
+  const dock = document.getElementById('dock-ui');
+  if (!dock) return;
+  const icons = dock.querySelectorAll('.dock-icon');
+  const count = icons.length;
+  const availWidth = window.innerWidth * 0.90;
+
+  let iconSize = 48;
+  let gap = 8;
+  let needed = count * iconSize + (count - 1) * gap + 40;
+
+  if (needed > availWidth) {
+    const totalSlot = (availWidth - 40) / Math.max(1, count);
+    iconSize = Math.max(28, Math.floor(totalSlot * 0.85));
+    gap = Math.max(3, Math.floor(totalSlot * 0.15));
+  }
+
+  dock.style.setProperty('--dock-icon-size', `${iconSize}px`);
+  dock.style.setProperty('--dock-gap', `${gap}px`);
+}
+window.addEventListener('resize', updateDockScale);
+
+function updateDockRunningState(appKey, isRunning) {
+  if (!appKey) return;
+  const dock = document.getElementById('dock-ui');
+  if (!dock) return;
+
+  const pinnedIcon = document.querySelector(`.dock-icon[data-app="${appKey}"]:not(.dynamic-running-app)`);
+  if (pinnedIcon) {
+    let dot = pinnedIcon.querySelector('.dock-dot');
+    if (!dot) {
+      dot = document.createElement('div');
+      dot.className = 'dock-dot';
+      pinnedIcon.appendChild(dot);
+    }
+    if (isRunning) {
+      dot.classList.add('active');
+    } else {
+      dot.classList.remove('active');
+    }
+  } else {
+    // Dynamic running app in #dock-running-apps
+    const runningContainer = document.getElementById('dock-running-apps');
+    if (!runningContainer) return;
+    let dynIcon = runningContainer.querySelector(`.dock-icon[data-app="${appKey}"]`);
+
+    if (isRunning) {
+      if (!dynIcon) {
+        dynIcon = document.createElement('div');
+        dynIcon.className = 'dock-icon dynamic-running-app';
+        dynIcon.dataset.app = appKey;
+        const dict = i18nDict[currentSystemLang] || i18nDict.en;
+        dynIcon.title = dict[`app_${appKey}`] || appKey;
+        dynIcon.setAttribute('data-i18n-title', `app_${appKey}`);
+        dynIcon.onclick = () => launchAppByName(appKey);
+        dynIcon.innerHTML = `${getAppDockSvg(appKey)}<div class="dock-dot active"></div>`;
+        runningContainer.appendChild(dynIcon);
+
+        dynIcon.classList.add('dock-bouncing');
+        setTimeout(() => dynIcon.classList.remove('dock-bouncing'), 1200);
+        updateDockScale();
+      }
+    } else {
+      if (dynIcon) {
+        dynIcon.style.transition = 'all 0.22s cubic-bezier(0.4, 0, 0.2, 1)';
+        dynIcon.style.transform = 'scale(0.3)';
+        dynIcon.style.opacity = '0';
+        dynIcon.style.width = '0px';
+        dynIcon.style.margin = '0px';
+        setTimeout(() => {
+          dynIcon.remove();
+          updateDockScale();
+        }, 220);
+      }
+    }
+  }
+}
+
+function initDockMagnification() {
+  const dockUi = document.getElementById('dock-ui');
+  if (!dockUi) return;
+
+  dockUi.addEventListener('mousemove', (e) => {
+    const icons = dockUi.querySelectorAll('.dock-icon');
+    const mouseX = e.clientX;
+    const maxScale = 1.30;
+    const range = 100;
+
+    icons.forEach(icon => {
+      const rect = icon.getBoundingClientRect();
+      const iconCenterX = rect.left + rect.width / 2;
+      const dist = Math.abs(mouseX - iconCenterX);
+      if (dist < range) {
+        const factor = (Math.cos((dist / range) * Math.PI) + 1) / 2;
+        const scale = 1 + (maxScale - 1) * factor;
+        const lift = -10 * factor;
+        icon.style.transform = `translateY(${lift}px) scale(${scale})`;
+      } else {
+        icon.style.transform = 'translateY(0px) scale(1)';
+      }
+    });
+  });
+
+  dockUi.addEventListener('mouseleave', () => {
+    const icons = dockUi.querySelectorAll('.dock-icon');
+    icons.forEach(icon => {
+      icon.style.transform = '';
+    });
+  });
+}
+window.addEventListener('DOMContentLoaded', () => {
+  initDockMagnification();
+  updateDockScale();
+});
+setTimeout(() => {
+  initDockMagnification();
+  updateDockScale();
+}, 500);
 
 function toggleLanguagePopover(e) {
   if (e) e.stopPropagation();
@@ -2772,7 +3680,10 @@ function createWindow(pid, title, contentHtml, explicitAppKey = null) {
   `;
   win.dataset.title = localizedTitle;
   win.dataset.pid = pid;
-  if (appKey) win.dataset.appKey = appKey;
+  if (appKey) {
+    win.dataset.appKey = appKey;
+    updateDockRunningState(appKey, true);
+  }
   let appIcon = '🪟';
   if (title.includes('Finder')) appIcon = '📁';
   else if (title.includes('Terminal')) appIcon = '＞_';
@@ -3056,6 +3967,18 @@ function createWindow(pid, title, contentHtml, explicitAppKey = null) {
       if (window.aliceOS && window.aliceOS.stageManagerEnabled) {
         updateStageManager();
       }
+      if (appKey) {
+        let hasOtherWin = false;
+        for (const [otherPid, otherWin] of windows.entries()) {
+          if (otherWin.dataset.appKey === appKey) {
+            hasOtherWin = true;
+            break;
+          }
+        }
+        if (!hasOtherWin) {
+          updateDockRunningState(appKey, false);
+        }
+      }
     }, 300);
   });
 
@@ -3234,7 +4157,7 @@ async function launchIPhoneMirroring() {
             <div class="iphone-app-icon" style="background: linear-gradient(180deg, #34c759, #28a745);display:flex;align-items:center;justify-content:center;">
               ${getSFSymbol('message', 24, '#ffffff')}
             </div>
-            <div class="iphone-app-name">信息</div>
+            <div class="iphone-app-name" id="iphone-lbl-msg-${pid}">${t('iphone_messages', 'Messages')}</div>
           </div>
 
           <!-- Photos -->
@@ -3242,7 +4165,7 @@ async function launchIPhoneMirroring() {
             <div class="iphone-app-icon" style="background: linear-gradient(180deg, #ffffff, #e5e5ea);display:flex;align-items:center;justify-content:center;">
               ${getSFSymbol('photos', 24, '#ff2d55')}
             </div>
-            <div class="iphone-app-name">照片</div>
+            <div class="iphone-app-name" id="iphone-lbl-photos-${pid}">${t('iphone_photos', 'Photos')}</div>
           </div>
 
           <!-- Stopwatch / Clock -->
@@ -3250,7 +4173,7 @@ async function launchIPhoneMirroring() {
             <div class="iphone-app-icon" style="background: #000; border: 1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;">
               ${getSFSymbol('clock', 24, '#ff9500')}
             </div>
-            <div class="iphone-app-name">时钟</div>
+            <div class="iphone-app-name" id="iphone-lbl-clock-${pid}">${t('iphone_clock', 'Clock')}</div>
           </div>
 
           <!-- Settings -->
@@ -3258,7 +4181,7 @@ async function launchIPhoneMirroring() {
             <div class="iphone-app-icon" style="background: linear-gradient(180deg, #8e8e93, #636366);display:flex;align-items:center;justify-content:center;">
               ${getSFSymbol('gear', 24, '#ffffff')}
             </div>
-            <div class="iphone-app-name">设置</div>
+            <div class="iphone-app-name" id="iphone-lbl-settings-${pid}">${t('iphone_settings', 'Settings')}</div>
           </div>
 
           <!-- Music -->
@@ -3266,7 +4189,7 @@ async function launchIPhoneMirroring() {
             <div class="iphone-app-icon" style="background: linear-gradient(180deg, #fc3d39, #e02420);display:flex;align-items:center;justify-content:center;">
               ${getSFSymbol('waveform', 24, '#ffffff')}
             </div>
-            <div class="iphone-app-name">音乐</div>
+            <div class="iphone-app-name" id="iphone-lbl-music-${pid}">${t('iphone_music', 'Music')}</div>
           </div>
 
           <!-- Safari -->
@@ -3274,7 +4197,7 @@ async function launchIPhoneMirroring() {
             <div class="iphone-app-icon" style="background: linear-gradient(180deg, #ffffff, #e5e5ea);display:flex;align-items:center;justify-content:center;">
               ${getSFSymbol('safari', 24, '#007aff')}
             </div>
-            <div class="iphone-app-name">Safari</div>
+            <div class="iphone-app-name" id="iphone-lbl-safari-${pid}">${t('iphone_safari', 'Safari')}</div>
           </div>
 
           <!-- Notes -->
@@ -3282,7 +4205,7 @@ async function launchIPhoneMirroring() {
             <div class="iphone-app-icon" style="background: linear-gradient(180deg, #ffd60a, #ffb300);display:flex;align-items:center;justify-content:center;">
               ${getSFSymbol('doc-text', 24, '#ffffff')}
             </div>
-            <div class="iphone-app-name">备忘录</div>
+            <div class="iphone-app-name" id="iphone-lbl-notes-${pid}">${t('iphone_notes', 'Notes')}</div>
           </div>
 
           <!-- Camera -->
@@ -3290,7 +4213,7 @@ async function launchIPhoneMirroring() {
             <div class="iphone-app-icon" style="background: linear-gradient(180deg, #8e8e93, #48484a);display:flex;align-items:center;justify-content:center;">
               ${getSFSymbol('camera', 24, '#ffffff')}
             </div>
-            <div class="iphone-app-name">相机</div>
+            <div class="iphone-app-name" id="iphone-lbl-camera-${pid}">${t('iphone_camera', 'Camera')}</div>
           </div>
         </div>
 
@@ -3314,7 +4237,7 @@ async function launchIPhoneMirroring() {
       <!-- Sub-App: iMessage -->
       <div class="iphone-app-view" id="iphone-view-messages-${pid}">
         <div class="iphone-app-header">
-          <button class="iphone-back-btn" id="msg-back-${pid}">‹ 信息</button>
+          <button class="iphone-back-btn" id="msg-back-${pid}">‹ ${t('iphone_messages', 'Messages')}</button>
           <div class="iphone-app-title">Alice 🌸</div>
           <div style="font-size:14px;color:#007aff;cursor:pointer;">ⓘ</div>
         </div>
@@ -3337,12 +4260,12 @@ async function launchIPhoneMirroring() {
       <!-- Sub-App: Photos -->
       <div class="iphone-app-view" id="iphone-view-photos-${pid}">
         <div class="iphone-app-header">
-          <button class="iphone-back-btn" id="photos-back-${pid}">‹ 图库</button>
-          <div class="iphone-app-title">精选照片</div>
-          <div style="font-size:14px;color:#007aff;cursor:pointer;">选择</div>
+          <button class="iphone-back-btn" id="photos-back-${pid}">‹ ${t('photos_library', 'Library')}</button>
+          <div class="iphone-app-title" id="photos-title-${pid}">${t('iphone_featured_photos', 'Featured Photos')}</div>
+          <div style="font-size:14px;color:#007aff;cursor:pointer;" id="photos-sel-${pid}">${t('iphone_select', 'Select')}</div>
         </div>
         <div class="iphone-app-body">
-          <div style="font-size:11px;color:#8e8e93;margin-bottom:8px;font-weight:600;">今天</div>
+          <div style="font-size:11px;color:#8e8e93;margin-bottom:8px;font-weight:600;" id="photos-today-${pid}">${t('iphone_today', 'Today')}</div>
           <div class="photos-grid" id="photos-grid-${pid}">
             <div class="photo-thumb" data-src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80">
               <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300&q=70" alt="Wallpaper">
@@ -3373,15 +4296,15 @@ async function launchIPhoneMirroring() {
       <!-- Sub-App: Stopwatch (秒表) -->
       <div class="iphone-app-view" id="iphone-view-stopwatch-${pid}">
         <div class="iphone-app-header">
-          <button class="iphone-back-btn" id="sw-back-${pid}">‹ 时钟</button>
-          <div class="iphone-app-title">秒表</div>
-          <div style="font-size:14px;color:#007aff;cursor:pointer;">毫秒</div>
+          <button class="iphone-back-btn" id="sw-back-${pid}">‹ ${t('iphone_clock', 'Clock')}</button>
+          <div class="iphone-app-title" id="sw-title-${pid}">${t('iphone_stopwatch', 'Stopwatch')}</div>
+          <div style="font-size:14px;color:#007aff;cursor:pointer;">MS</div>
         </div>
         <div class="iphone-app-body">
           <div class="stopwatch-display" id="sw-display-${pid}">00:00.00</div>
           <div class="stopwatch-controls">
-            <button class="sw-btn sw-btn-lap" id="sw-btn-lap-${pid}">计次</button>
-            <button class="sw-btn sw-btn-start" id="sw-btn-start-${pid}">启动</button>
+            <button class="sw-btn sw-btn-lap" id="sw-btn-lap-${pid}">${t('iphone_lap', 'Lap')}</button>
+            <button class="sw-btn sw-btn-start" id="sw-btn-start-${pid}">${t('iphone_start', 'Start')}</button>
           </div>
           <div class="sw-laps-list" id="sw-laps-${pid}"></div>
         </div>
@@ -3390,8 +4313,8 @@ async function launchIPhoneMirroring() {
       <!-- Sub-App: Settings -->
       <div class="iphone-app-view" id="iphone-view-settings-${pid}">
         <div class="iphone-app-header">
-          <button class="iphone-back-btn" id="settings-back-${pid}">‹ 首页</button>
-          <div class="iphone-app-title">设置</div>
+          <button class="iphone-back-btn" id="settings-back-${pid}">‹ ${t('iphone_home', 'Home')}</button>
+          <div class="iphone-app-title" id="settings-title-${pid}">${t('iphone_settings', 'Settings')}</div>
           <div></div>
         </div>
         <div class="iphone-app-body">
@@ -3629,9 +4552,9 @@ async function launchIPhoneMirroring() {
       if (!swRunning) {
         swRunning = true;
         swStartTime = Date.now() - swElapsed;
-        swBtnStart.innerText = '停止';
+        swBtnStart.innerText = t('iphone_stop', 'Stop');
         swBtnStart.className = 'sw-btn sw-btn-stop';
-        swBtnLap.innerText = '计次';
+        swBtnLap.innerText = t('iphone_lap', 'Lap');
         swTimer = setInterval(() => {
           swElapsed = Date.now() - swStartTime;
           if (swDisplay) swDisplay.innerText = formatStopwatch(swElapsed);
@@ -3639,9 +4562,9 @@ async function launchIPhoneMirroring() {
       } else {
         swRunning = false;
         clearInterval(swTimer);
-        swBtnStart.innerText = '启动';
+        swBtnStart.innerText = t('iphone_start', 'Start');
         swBtnStart.className = 'sw-btn sw-btn-start';
-        swBtnLap.innerText = '复位';
+        swBtnLap.innerText = t('iphone_reset', 'Reset');
       }
     });
   }
@@ -3659,7 +4582,7 @@ async function launchIPhoneMirroring() {
         swLapCount = 0;
         if (swDisplay) swDisplay.innerText = '00:00.00';
         if (swLapsList) swLapsList.innerHTML = '';
-        swBtnLap.innerText = '计次';
+        swBtnLap.innerText = t('iphone_lap', 'Lap');
       }
     });
   }
@@ -4367,22 +5290,22 @@ async function launchNotes(filePath = null) {
         <div class="notes-section-hdr">iCloud</div>
         <div class="notes-folder-row active" data-folder="all">
           <span>${getSFSymbol('folder', 14, '#ff9500')}</span>
-          <span style="flex:1;">全部备忘录</span>
+          <span style="flex:1;">${t('notes_all', 'All iCloud')}</span>
           <span class="notes-folder-count" id="notes-cnt-all-${pid}">${allNotes.length}</span>
         </div>
         <div class="notes-folder-row" data-folder="quick">
           <span>${getSFSymbol('doc-text', 14, '#ff9500')}</span>
-          <span style="flex:1;">便笺</span>
+          <span style="flex:1;">${t('notes_quick', 'Quick Notes')}</span>
           <span class="notes-folder-count" id="notes-cnt-quick-${pid}">${allNotes.filter(n => n.folder === 'quick').length}</span>
         </div>
         <div class="notes-folder-row" data-folder="work">
           <span>${getSFSymbol('internaldrive', 14, '#ff9500')}</span>
-          <span style="flex:1;">工作备忘</span>
+          <span style="flex:1;">${t('notes_work', 'Work')}</span>
           <span class="notes-folder-count" id="notes-cnt-work-${pid}">${allNotes.filter(n => n.folder === 'work').length}</span>
         </div>
         <div class="notes-folder-row" data-folder="personal">
           <span>${getSFSymbol('house', 14, '#ff9500')}</span>
-          <span style="flex:1;">个人生活</span>
+          <span style="flex:1;">${t('notes_personal', 'Personal')}</span>
           <span class="notes-folder-count" id="notes-cnt-personal-${pid}">${allNotes.filter(n => n.folder === 'personal').length}</span>
         </div>
       </div>
@@ -4391,7 +5314,7 @@ async function launchNotes(filePath = null) {
       <div class="notes-list-col">
         <div class="notes-search-wrap" style="display:flex;align-items:center;gap:6px;">
           ${getSFSymbol('magnifyingglass', 12, '#888')}
-          <input type="text" class="notes-search-input" id="notes-search-${pid}" placeholder="搜索备忘录...">
+          <input type="text" class="notes-search-input" id="notes-search-${pid}" placeholder="${t('notes_search_ph', 'Search Notes...')}">
         </div>
         <div class="notes-cards-list" id="notes-cards-${pid}"></div>
       </div>
@@ -4400,19 +5323,19 @@ async function launchNotes(filePath = null) {
       <div class="notes-editor-col">
         <div class="notes-mac-toolbar">
           <div style="display:flex;align-items:center;gap:6px;">
-            <button class="notes-tb-btn" id="notes-new-btn-${pid}">${getSFSymbol('pencil', 13)} <span>新建</span></button>
-            <button class="notes-tb-btn" id="notes-checklist-btn-${pid}">${getSFSymbol('checklist', 13)} <span>待办</span></button>
-            <button class="notes-tb-btn" id="notes-math-badge-${pid}" title="macOS Sequoia 数学备忘录">∑ <span>数学</span></button>
+            <button class="notes-tb-btn" id="notes-new-btn-${pid}">${getSFSymbol('pencil', 13)} <span>${t('notes_new', 'New Note')}</span></button>
+            <button class="notes-tb-btn" id="notes-checklist-btn-${pid}">${getSFSymbol('checklist', 13)} <span>${t('notes_checklist', 'Checklist')}</span></button>
+            <button class="notes-tb-btn" id="notes-math-badge-${pid}" title="macOS Sequoia 数学备忘录">∑ <span>${t('notes_math', 'Math')}</span></button>
           </div>
           <div style="display:flex;align-items:center;gap:6px;">
-            <button class="notes-tb-btn" id="notes-save-btn-${pid}">${getSFSymbol('doc', 13)} <span>存储</span></button>
-            <button class="notes-tb-btn" id="notes-del-btn-${pid}" style="color:#ff3b30;">${getSFSymbol('trash', 13, '#ff3b30')}</button>
+            <button class="notes-tb-btn" id="notes-save-btn-${pid}">${getSFSymbol('doc', 13)} <span>${t('notes_save', 'Save')}</span></button>
+            <button class="notes-tb-btn" id="notes-del-btn-${pid}" style="color:#ff3b30;" title="${t('notes_del', 'Delete')}">${getSFSymbol('trash', 13, '#ff3b30')}</button>
           </div>
         </div>
         <div class="notes-math-toast" id="notes-math-toast-${pid}"></div>
         <div class="notes-editor-body">
           <div class="notes-date-stamp" id="notes-date-stamp-${pid}"></div>
-          <textarea class="notes-rich-textarea" id="notes-textarea-${pid}" spellcheck="false" placeholder="在此键入文字... (输入算式如 250 + 750 = 自动求解)"></textarea>
+          <textarea class="notes-rich-textarea" id="notes-textarea-${pid}" spellcheck="false" placeholder="${t('notes_textarea_ph', 'Type here... (e.g. 250 + 750 = for Math Notes)')}"></textarea>
         </div>
       </div>
     </div>
@@ -4587,14 +5510,37 @@ async function launchNotes(filePath = null) {
   // Manual Save feedback
   saveBtn.addEventListener('click', async () => {
     await persistNotes();
-    saveBtn.innerText = '✓ 已存储';
-    setTimeout(() => saveBtn.innerText = '💾 存储', 1500);
+    saveBtn.innerHTML = `<span style="color:#34c759;">✓</span> <span>${currentSystemLang === 'zh' ? '已存储' : (currentSystemLang === 'ja' ? '保存済み' : 'Saved')}</span>`;
+    setTimeout(() => {
+      saveBtn.innerHTML = `${getSFSymbol('doc', 13)} <span>${t('notes_save', 'Save')}</span>`;
+    }, 1500);
   });
 
   // Search
   searchInput.addEventListener('input', () => {
     renderCards(searchInput.value);
   });
+
+  win._onLanguageChange = () => {
+    const allFolder = win.querySelector('.notes-folder-row[data-folder="all"] span:nth-child(2)');
+    if (allFolder) allFolder.innerText = t('notes_all', 'All iCloud');
+    const quickFolder = win.querySelector('.notes-folder-row[data-folder="quick"] span:nth-child(2)');
+    if (quickFolder) quickFolder.innerText = t('notes_quick', 'Quick Notes');
+    const workFolder = win.querySelector('.notes-folder-row[data-folder="work"] span:nth-child(2)');
+    if (workFolder) workFolder.innerText = t('notes_work', 'Work');
+    const personalFolder = win.querySelector('.notes-folder-row[data-folder="personal"] span:nth-child(2)');
+    if (personalFolder) personalFolder.innerText = t('notes_personal', 'Personal');
+
+    searchInput.placeholder = t('notes_search_ph', 'Search Notes...');
+    newBtn.innerHTML = `${getSFSymbol('pencil', 13)} <span>${t('notes_new', 'New Note')}</span>`;
+    checklistBtn.innerHTML = `${getSFSymbol('checklist', 13)} <span>${t('notes_checklist', 'Checklist')}</span>`;
+    const mathBadge = win.querySelector(`#notes-math-badge-${pid}`);
+    if (mathBadge) mathBadge.innerHTML = `∑ <span>${t('notes_math', 'Math')}</span>`;
+    saveBtn.innerHTML = `${getSFSymbol('doc', 13)} <span>${t('notes_save', 'Save')}</span>`;
+    delBtn.title = t('notes_del', 'Delete');
+    textarea.placeholder = t('notes_textarea_ph', 'Type here... (e.g. 250 + 750 = for Math Notes)');
+    renderCards(searchInput.value);
+  };
 
   // Initial load
   selectNote(activeNoteId);
@@ -6466,7 +7412,7 @@ async function launchSettings() {
           </div>
           <div class="ventura-nav-item" data-tab="displays">
             <div class="ventura-badge" style="background:linear-gradient(135deg,#007aff,#30b0c7);">${getSFSymbol('desktop', 12, '#fff')}</div>
-            <span>显示器 (Displays)</span>
+            <span data-i18n="settings_displays">${t('settings_displays', 'Displays')}</span>
           </div>
           <div class="ventura-nav-item" data-tab="desktop">
             <div class="ventura-badge" style="background:linear-gradient(135deg,#30b0c7,#34c759);">${getSFSymbol('grid', 12, '#fff')}</div>
@@ -6478,11 +7424,11 @@ async function launchSettings() {
           </div>
           <div class="ventura-nav-item" data-tab="battery">
             <div class="ventura-badge" style="background:linear-gradient(135deg,#34c759,#30b0c7);">${getSFSymbol('battery', 12, '#fff')}</div>
-            <span>电池 (Battery)</span>
+            <span data-i18n="settings_battery">${t('settings_battery', 'Battery')}</span>
           </div>
           <div class="ventura-nav-item" data-tab="wifi">
             <div class="ventura-badge" style="background:linear-gradient(135deg,#007aff,#0a84ff);">${getSFSymbol('wifi', 12, '#fff')}</div>
-            <span>无线局域网 (Wi-Fi)</span>
+            <span data-i18n="settings_wifi">${t('settings_wifi', 'Wi-Fi')}</span>
           </div>
           <div class="ventura-nav-item" data-tab="language">
             <div class="ventura-badge" style="background:linear-gradient(135deg,#5856d6,#007aff);">${getSFSymbol('globe', 12, '#fff')}</div>
@@ -6982,31 +7928,31 @@ async function launchSettings() {
       }
       else if (tab === 'displays') {
         contentArea.innerHTML = `
-          <h2 style="font-size:20px;margin:0 0 16px 0;font-weight:600;">显示器 (Displays)</h2>
+          <h2 style="font-size:20px;margin:0 0 16px 0;font-weight:600;">${t('settings_displays', 'Displays')}</h2>
           <div class="ventura-card">
             <div style="display:flex;align-items:center;gap:16px;margin-bottom:12px;">
               <div style="width:48px;height:40px;background:#007aff;border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;">
                 ${getSFSymbol('desktop', 24, '#fff')}
               </div>
               <div>
-                <div style="font-weight:600;font-size:14px;">内置 Liquid Retina XDR 显示屏</div>
-                <div style="font-size:11px;opacity:0.6;">3024 × 1964 视网膜极限画质 · ProMotion 120Hz 极速自适应刷新率</div>
+                <div style="font-weight:600;font-size:14px;">${t('settings_display_retina', 'Built-in Liquid Retina XDR Display')}</div>
+                <div style="font-size:11px;opacity:0.6;">${t('settings_display_desc', '3024 × 1964 Retina Extreme · ProMotion 120Hz')}</div>
               </div>
             </div>
             <div class="ventura-row">
               <div>
-                <div style="font-weight:600;font-size:13px;">刷新率 (Refresh Rate)</div>
-                <div style="font-size:11px;opacity:0.6;">支持 Apple ProMotion 120Hz 极速平滑流动画质</div>
+                <div style="font-weight:600;font-size:13px;">${t('settings_refresh_rate', 'Refresh Rate')}</div>
+                <div style="font-size:11px;opacity:0.6;">${t('settings_refresh_desc', 'Apple ProMotion 120Hz adaptive smooth motion')}</div>
               </div>
               <select style="background:rgba(255,255,255,0.15);border:1px solid rgba(0,0,0,0.15);border-radius:6px;padding:4px 8px;color:inherit;font-size:12px;outline:none;">
-                <option>ProMotion (120Hz 极速刷新)</option>
-                <option>60Hz (标准省电)</option>
+                <option>${t('settings_refresh_opt_promotion', 'ProMotion (120Hz Ultra Smooth)')}</option>
+                <option>${t('settings_refresh_opt_60hz', '60Hz (Standard Power Saver)')}</option>
               </select>
             </div>
             <div class="ventura-row">
               <div>
-                <div style="font-weight:600;font-size:13px;">原彩显示 (True Tone)</div>
-                <div style="font-size:11px;opacity:0.6;">根据周围环境光线条件自动调整屏幕色温</div>
+                <div style="font-weight:600;font-size:13px;">${t('settings_true_tone', 'True Tone')}</div>
+                <div style="font-size:11px;opacity:0.6;">${t('settings_true_tone_desc', 'Automatically adapt display colors based on ambient light conditions')}</div>
               </div>
               <input type="checkbox" checked style="accent-color:#007aff;cursor:pointer;width:16px;height:16px;">
             </div>
@@ -7015,7 +7961,7 @@ async function launchSettings() {
       }
       else if (tab === 'battery') {
         contentArea.innerHTML = `
-          <h2 style="font-size:20px;margin:0 0 16px 0;font-weight:600;">电池 (Battery)</h2>
+          <h2 style="font-size:20px;margin:0 0 16px 0;font-weight:600;">${t('settings_battery', 'Battery')}</h2>
           <div class="ventura-card">
             <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
               <div style="color:#34c759;">
@@ -7023,20 +7969,20 @@ async function launchSettings() {
               </div>
               <div>
                 <div style="font-size:26px;font-weight:700;line-height:1;">100%</div>
-                <div style="font-size:11px;opacity:0.6;margin-top:4px;">电源：已连接电源适配器 (140W USB-C 极速闪充)</div>
+                <div style="font-size:11px;opacity:0.6;margin-top:4px;">${t('settings_power_adapter', 'Power Source: Power Adapter Connected (140W USB-C Fast Charge)')}</div>
               </div>
             </div>
             <div class="ventura-row">
               <div>
-                <div style="font-weight:600;font-size:13px;">电池健康 (Battery Health)</div>
-                <div style="font-size:11px;opacity:0.6;">最大容量 100% · 状态极佳 · 循环计数 12 次</div>
+                <div style="font-weight:600;font-size:13px;">${t('settings_battery_health', 'Battery Health')}</div>
+                <div style="font-size:11px;opacity:0.6;">${t('settings_battery_health_desc', 'Maximum Capacity 100% · Peak Performance · 12 Cycles')}</div>
               </div>
-              <span style="color:#34c759;font-weight:600;font-size:12px;">正常 (Normal)</span>
+              <span style="color:#34c759;font-weight:600;font-size:12px;">${t('settings_battery_normal', 'Normal')}</span>
             </div>
             <div class="ventura-row">
               <div>
-                <div style="font-weight:600;font-size:13px;">低电量模式 (Low Power Mode)</div>
-                <div style="font-size:11px;opacity:0.6;">降低后台功耗以延长综合电池续航</div>
+                <div style="font-weight:600;font-size:13px;">${t('settings_low_power', 'Low Power Mode')}</div>
+                <div style="font-size:11px;opacity:0.6;">${t('settings_low_power_desc', 'Reduce background power consumption to prolong battery life')}</div>
               </div>
               <input type="checkbox" style="accent-color:#34c759;cursor:pointer;width:16px;height:16px;">
             </div>
@@ -7045,26 +7991,26 @@ async function launchSettings() {
       }
       else if (tab === 'wifi') {
         contentArea.innerHTML = `
-          <h2 style="font-size:20px;margin:0 0 16px 0;font-weight:600;">无线局域网 (Wi-Fi)</h2>
+          <h2 style="font-size:20px;margin:0 0 16px 0;font-weight:600;">${t('settings_wifi', 'Wi-Fi')}</h2>
           <div class="ventura-card">
             <div class="ventura-row" style="padding-bottom:12px;border-bottom:1px solid rgba(0,0,0,0.06);">
               <div style="display:flex;align-items:center;gap:10px;">
                 ${getSFSymbol('wifi', 20, '#007aff')}
                 <div>
-                  <div style="font-weight:600;font-size:13px;">Wi-Fi 局域网广播</div>
-                  <div style="font-size:11px;opacity:0.6;">已开启</div>
+                  <div style="font-weight:600;font-size:13px;">${t('settings_wifi_broadcast', 'Wi-Fi Broadcast')}</div>
+                  <div style="font-size:11px;opacity:0.6;">${t('settings_wifi_on', 'On')}</div>
                 </div>
               </div>
               <input type="checkbox" checked style="accent-color:#007aff;cursor:pointer;width:16px;height:16px;">
             </div>
             <div style="margin-top:12px;">
-              <div style="font-size:11px;font-weight:700;color:#888;margin-bottom:8px;letter-spacing:0.5px;">已连接的网络</div>
+              <div style="font-size:11px;font-weight:700;color:#888;margin-bottom:8px;letter-spacing:0.5px;">${t('settings_known_networks', 'Known Networks')}</div>
               <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:rgba(0,122,255,0.08);border-radius:8px;border:1px solid rgba(0,122,255,0.2);">
                 <div style="display:flex;align-items:center;gap:8px;">
                   ${getSFSymbol('wifi', 15, '#007aff')}
                   <span style="font-weight:600;font-size:13px;">Apple_Park_5G</span>
                 </div>
-                <span style="font-size:11px;color:#007aff;font-weight:600;">✓ 已连接 · IP: 192.168.1.108</span>
+                <span style="font-size:11px;color:#007aff;font-weight:600;">✓ ${t('settings_connected', 'Connected')} · IP: 192.168.1.108</span>
               </div>
             </div>
           </div>
@@ -7115,20 +8061,28 @@ async function launchSettings() {
       };
     });
 
-    win._onLanguageChange = () => {
+    win._onLanguageChange = (lang, dict) => {
+      const d = dict || i18nDict[lang] || i18nDict.en;
       win.querySelectorAll('.ventura-nav-item').forEach(item => {
         const tabKey = item.dataset.tab;
         const span = item.querySelector('span');
         if (span) {
-          if (tabKey === 'appearance') span.innerText = t('settings_appearance', 'Appearance');
-          else if (tabKey === 'wallpaper') span.innerText = t('settings_wallpaper', 'Wallpaper');
-          else if (tabKey === 'desktop') span.innerText = t('settings_desktop', 'Desktop & Stage');
-          else if (tabKey === 'language') span.innerText = t('settings_lang_region', 'Language & Region');
-          else if (tabKey === 'about') span.innerText = t('settings_about', 'General & About');
+          const keyMap = {
+            appearance: d.settings_appearance,
+            wallpaper: d.settings_wallpaper,
+            displays: d.settings_displays,
+            desktop: d.settings_desktop,
+            sound: d.settings_sound,
+            battery: d.settings_battery,
+            wifi: d.settings_wifi,
+            language: d.settings_lang_region,
+            about: d.settings_about
+          };
+          if (keyMap[tabKey]) span.innerText = keyMap[tabKey];
         }
       });
       const adminLabel = win.querySelector('[data-i18n="settings_admin"]');
-      if (adminLabel) adminLabel.innerText = t('settings_admin', 'Administrator');
+      if (adminLabel && d.settings_admin) adminLabel.innerText = d.settings_admin;
 
       renderTab(currentActiveTab);
     };
@@ -8600,18 +9554,18 @@ async function launchMusic() {
         </div>
         <div class="music-nav-group">
           <div class="music-nav-hdr">Apple Music</div>
-          <div class="music-nav-item active"><span style="display:flex;align-items:center;">${getSFSymbol('play', 14, '#fc3c44')}</span> 现在就听</div>
-          <div class="music-nav-item"><span style="display:flex;align-items:center;">${getSFSymbol('globe', 14, 'currentColor')}</span> 浏览</div>
-          <div class="music-nav-item"><span style="display:flex;align-items:center;">${getSFSymbol('waveform', 14, 'currentColor')}</span> 广播</div>
+          <div class="music-nav-item active" id="music-nav-listen-${pid}"><span style="display:flex;align-items:center;">${getSFSymbol('play', 14, '#fc3c44')}</span> <span>${t('music_listen_now', 'Listen Now')}</span></div>
+          <div class="music-nav-item" id="music-nav-browse-${pid}"><span style="display:flex;align-items:center;">${getSFSymbol('globe', 14, 'currentColor')}</span> <span>${t('music_browse', 'Browse')}</span></div>
+          <div class="music-nav-item" id="music-nav-radio-${pid}"><span style="display:flex;align-items:center;">${getSFSymbol('waveform', 14, 'currentColor')}</span> <span>${t('music_radio', 'Radio')}</span></div>
         </div>
         <div class="music-nav-group">
-          <div class="music-nav-hdr">资料库</div>
-          <div class="music-nav-item"><span style="display:flex;align-items:center;">${getSFSymbol('clock', 14, 'currentColor')}</span> 最近播放</div>
-          <div class="music-nav-item"><span style="display:flex;align-items:center;">${getSFSymbol('speaker', 14, 'currentColor')}</span> 艺人</div>
-          <div class="music-nav-item"><span style="display:flex;align-items:center;">${getSFSymbol('internaldrive', 14, 'currentColor')}</span> 专辑</div>
+          <div class="music-nav-hdr" id="music-hdr-library-${pid}">${t('music_library', 'Library')}</div>
+          <div class="music-nav-item" id="music-nav-recents-${pid}"><span style="display:flex;align-items:center;">${getSFSymbol('clock', 14, 'currentColor')}</span> <span>${t('music_recents', 'Recently Played')}</span></div>
+          <div class="music-nav-item" id="music-nav-artists-${pid}"><span style="display:flex;align-items:center;">${getSFSymbol('speaker', 14, 'currentColor')}</span> <span>${t('music_artists', 'Artists')}</span></div>
+          <div class="music-nav-item" id="music-nav-albums-${pid}"><span style="display:flex;align-items:center;">${getSFSymbol('internaldrive', 14, 'currentColor')}</span> <span>${t('music_albums', 'Albums')}</span></div>
         </div>
         <div class="music-nav-group">
-          <div class="music-nav-hdr">播放列表</div>
+          <div class="music-nav-hdr" id="music-hdr-playlists-${pid}">${t('music_playlists', 'Playlists')}</div>
           <div class="music-nav-item"><span style="display:flex;align-items:center;">${getSFSymbol('list', 14, '#fc3c44')}</span> Apple Chill Lo-Fi</div>
           <div class="music-nav-item"><span style="display:flex;align-items:center;">${getSFSymbol('list', 14, '#007aff')}</span> Cupertino Code</div>
           <div class="music-nav-item"><span style="display:flex;align-items:center;">${getSFSymbol('list', 14, '#ff9500')}</span> Sequoia Sunset</div>
@@ -8624,12 +9578,12 @@ async function launchMusic() {
             ${getSFSymbol('waveform', 42, '#ffffff')}
           </div>
           <div class="music-hero-info">
-            <div class="music-hero-tag">精选歌单 · APPLE MUSIC</div>
+            <div class="music-hero-tag" id="music-hero-tag-${pid}">${t('music_featured_playlist', 'FEATURED PLAYLIST · APPLE MUSIC')}</div>
             <div class="music-hero-title">Apple Chill Lo-Fi Beats</div>
-            <div class="music-hero-desc">柔和细腻的爵士和弦、慢节拍律动与温暖黑胶底噪，为专注代码与深度思考量身打造。</div>
+            <div class="music-hero-desc" id="music-hero-desc-${pid}">${t('music_hero_desc', 'Mellow jazz chords, slow tempo grooves, and warm vinyl crackle crafted for deep coding and focus.')}</div>
             <div class="music-hero-btns">
-              <button class="music-play-btn" id="music-hero-play-${pid}" style="display:flex;align-items:center;gap:6px;">${getSFSymbol('play', 12, '#ffffff')} 播放全部</button>
-              <button class="music-shuffle-btn" id="music-hero-shuffle-${pid}" style="display:flex;align-items:center;gap:6px;">${getSFSymbol('arrow-clockwise', 12, 'currentColor')} 随机播放</button>
+              <button class="music-play-btn" id="music-hero-play-${pid}" style="display:flex;align-items:center;gap:6px;">${getSFSymbol('play', 12, '#ffffff')} <span>${t('music_play_all', 'Play All')}</span></button>
+              <button class="music-shuffle-btn" id="music-hero-shuffle-${pid}" style="display:flex;align-items:center;gap:6px;">${getSFSymbol('arrow-clockwise', 12, 'currentColor')} <span>${t('music_shuffle', 'Shuffle')}</span></button>
             </div>
           </div>
         </div>
@@ -8637,10 +9591,10 @@ async function launchMusic() {
         <div class="music-tracklist">
           <div class="music-table-hdr">
             <div style="width:36px;">#</div>
-            <div style="flex:2;">标题</div>
-            <div style="flex:1.5;">艺人</div>
-            <div style="flex:1.5;">专辑</div>
-            <div style="width:60px;text-align:right;">时长</div>
+            <div style="flex:2;" id="music-th-title-${pid}">${t('music_col_title', 'Title')}</div>
+            <div style="flex:1.5;" id="music-th-artist-${pid}">${t('music_col_artist', 'Artist')}</div>
+            <div style="flex:1.5;" id="music-th-album-${pid}">${t('music_col_album', 'Album')}</div>
+            <div style="width:60px;text-align:right;" id="music-th-time-${pid}">${t('music_col_time', 'Time')}</div>
             <div style="width:40px;display:flex;align-items:center;justify-content:center;">${getSFSymbol('heart', 13, '#fc3c44')}</div>
           </div>
           <div class="music-table-body" id="music-table-body-${pid}"></div>
@@ -8659,11 +9613,11 @@ async function launchMusic() {
 
         <div class="music-center-controls">
           <div class="music-btn-row">
-            <button class="music-ctrl-btn" id="music-shuffle-toggle-${pid}" title="随机播放">${getSFSymbol('arrow-clockwise', 14, 'currentColor')}</button>
-            <button class="music-ctrl-btn" id="music-prev-btn-${pid}" title="上一首">${getSFSymbol('backward', 15, 'currentColor')}</button>
-            <button class="music-play-circle-btn" id="music-play-toggle-${pid}" title="播放/暂停">${getSFSymbol('play', 15, 'currentColor')}</button>
-            <button class="music-ctrl-btn" id="music-next-btn-${pid}" title="下一首">${getSFSymbol('forward', 15, 'currentColor')}</button>
-            <button class="music-ctrl-btn" id="music-repeat-toggle-${pid}" title="单曲循环">${getSFSymbol('arrow-clockwise', 14, 'currentColor')}</button>
+            <button class="music-ctrl-btn" id="music-shuffle-toggle-${pid}" title="${t('music_shuffle', 'Shuffle')}">${getSFSymbol('arrow-clockwise', 14, 'currentColor')}</button>
+            <button class="music-ctrl-btn" id="music-prev-btn-${pid}" title="${t('music_prev', 'Previous')}">${getSFSymbol('backward', 15, 'currentColor')}</button>
+            <button class="music-play-circle-btn" id="music-play-toggle-${pid}" title="${t('music_play_pause', 'Play / Pause')}">${getSFSymbol('play', 15, 'currentColor')}</button>
+            <button class="music-ctrl-btn" id="music-next-btn-${pid}" title="${t('music_next', 'Next')}">${getSFSymbol('forward', 15, 'currentColor')}</button>
+            <button class="music-ctrl-btn" id="music-repeat-toggle-${pid}" title="${t('music_repeat', 'Repeat')}">${getSFSymbol('arrow-clockwise', 14, 'currentColor')}</button>
           </div>
           <div class="music-progress-row">
             <span class="music-time-lbl" id="music-time-cur-${pid}">0:00</span>
@@ -8677,8 +9631,8 @@ async function launchMusic() {
         <div class="music-volume-controls">
           <span style="display:flex;align-items:center;opacity:0.6;">${getSFSymbol('speaker', 14, 'currentColor')}</span>
           <input type="range" class="music-vol-slider" id="music-vol-${pid}" min="0" max="100" value="75">
-          <span style="display:flex;align-items:center;opacity:0.6;margin-left:8px;cursor:pointer;" title="隔空播放">${getSFSymbol('airdrop', 14, 'currentColor')}</span>
-          <button class="music-ctrl-btn" id="music-lyrics-btn-${pid}" title="实时歌词" style="display:flex;align-items:center;margin-left:8px;background:none;border:none;cursor:pointer;color:inherit;opacity:0.75;">${getSFSymbol('lyrics', 14, 'currentColor')}</button>
+          <span style="display:flex;align-items:center;opacity:0.6;margin-left:8px;cursor:pointer;" title="${t('cc_airplay_audio', 'AirPlay')}">${getSFSymbol('airdrop', 14, 'currentColor')}</span>
+          <button class="music-ctrl-btn" id="music-lyrics-btn-${pid}" title="${t('music_lyrics', 'Live Lyrics')}" style="display:flex;align-items:center;margin-left:8px;background:none;border:none;cursor:pointer;color:inherit;opacity:0.75;">${getSFSymbol('lyrics', 14, 'currentColor')}</button>
         </div>
       </div>
 
@@ -8901,7 +9855,7 @@ async function launchCamera() {
 
         <!-- Filmstrip Tray -->
         <div id="pb-filmstrip-${pid}" style="height:56px;background:#18181b;border-top:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:10px;padding:0 16px;overflow-x:auto;">
-          <div style="font-size:11px;color:#71717a;font-weight:600;text-transform:uppercase;">Recent Shots</div>
+          <div style="font-size:11px;color:#71717a;font-weight:600;text-transform:uppercase;" id="pb-recent-lbl-${pid}">${t('pb_recent_shots', 'Recent Shots')}</div>
           <div id="pb-filmstrip-items-${pid}" style="display:flex;align-items:center;gap:8px;"></div>
         </div>
 
@@ -8909,8 +9863,8 @@ async function launchCamera() {
         <div class="pb-bottom-bar">
           <!-- Modes -->
           <div style="display:flex;align-items:center;gap:6px;">
-            <button class="pb-mode-btn active" id="pb-mode-single-${pid}" title="单张照片" style="background:rgba(255,255,255,0.2);border:none;color:white;padding:5px 10px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;">单张</button>
-            <button class="pb-mode-btn" id="pb-mode-burst-${pid}" title="四格快照" style="background:transparent;border:none;color:#8e8e93;padding:5px 10px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;">四格</button>
+            <button class="pb-mode-btn active" id="pb-mode-single-${pid}" title="${t('pb_mode_single', 'Single')}" style="background:rgba(255,255,255,0.2);border:none;color:white;padding:5px 10px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;">${t('pb_mode_single', 'Single')}</button>
+            <button class="pb-mode-btn" id="pb-mode-burst-${pid}" title="${t('pb_mode_burst', '4-Up')}" style="background:transparent;border:none;color:#8e8e93;padding:5px 10px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;">${t('pb_mode_burst', '4-Up')}</button>
           </div>
 
           <!-- Shutter Button -->
@@ -8919,23 +9873,23 @@ async function launchCamera() {
           <!-- Timer & Effects -->
           <div style="display:flex;align-items:center;gap:8px;">
             <button id="pb-timer-toggle-${pid}" style="background:rgba(255,255,255,0.15);border:none;color:white;padding:6px 12px;border-radius:12px;font-size:11px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:4px;">
-              ${getSFSymbol('clock', 12, '#ffffff')} <span id="pb-timer-txt-${pid}">3秒倒计时: 开</span>
+              ${getSFSymbol('clock', 12, '#ffffff')} <span id="pb-timer-txt-${pid}">${t('pb_timer_on', '3s Timer: On')}</span>
             </button>
             <button id="pb-effects-toggle-${pid}" style="background:rgba(255,255,255,0.15);border:none;color:white;padding:6px 12px;border-radius:12px;font-size:11px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:4px;">
-              ${getSFSymbol('effects', 12, '#ff9500')} <span>效果</span>
+              ${getSFSymbol('effects', 12, '#ff9500')} <span id="pb-effects-lbl-${pid}">${t('pb_effects', 'Effects')}</span>
             </button>
           </div>
         </div>
 
         <!-- 3x3 Effects Grid Tray -->
         <div class="pb-effects-tray" id="pb-effects-${pid}">
-          <div class="pb-effect-chip active" data-filter="none">原色 Normal</div>
-          <div class="pb-effect-chip" data-filter="sepia(0.85) contrast(1.1)">复古 Sepia</div>
-          <div class="pb-effect-chip" data-filter="grayscale(1) contrast(1.2)">黑白 Noir</div>
-          <div class="pb-effect-chip" data-filter="invert(1) hue-rotate(180deg) saturate(3)">热感 Thermal</div>
-          <div class="pb-effect-chip" data-filter="contrast(2) saturate(2.5)">波普 Pop Art</div>
-          <div class="pb-effect-chip" data-filter="hue-rotate(90deg) contrast(1.3)">赛博 Cyber</div>
-          <div class="pb-effect-chip" data-filter="invert(1)">反相 Invert</div>
+          <div class="pb-effect-chip active" data-filter="none">${t('filter_normal', 'Normal')}</div>
+          <div class="pb-effect-chip" data-filter="sepia(0.85) contrast(1.1)">${t('filter_sepia', 'Sepia')}</div>
+          <div class="pb-effect-chip" data-filter="grayscale(1) contrast(1.2)">${t('filter_noir', 'Noir')}</div>
+          <div class="pb-effect-chip" data-filter="invert(1) hue-rotate(180deg) saturate(3)">${t('filter_thermal', 'Thermal')}</div>
+          <div class="pb-effect-chip" data-filter="contrast(2) saturate(2.5)">${t('filter_pop', 'Pop Art')}</div>
+          <div class="pb-effect-chip" data-filter="hue-rotate(90deg) contrast(1.3)">${t('filter_cyber', 'Cyber')}</div>
+          <div class="pb-effect-chip" data-filter="invert(1)">${t('filter_invert', 'Invert')}</div>
         </div>
       </div>
     `);
@@ -9039,7 +9993,7 @@ async function launchCamera() {
 
     timerToggle.addEventListener('click', () => {
       useTimer = !useTimer;
-      timerTxt.innerText = useTimer ? '3秒倒计时: 开' : '3秒倒计时: 关';
+      timerTxt.innerText = useTimer ? t('pb_timer_on', '3s Timer: On') : t('pb_timer_off', '3s Timer: Off');
       timerToggle.style.background = useTimer ? 'rgba(0,122,255,0.4)' : 'rgba(255,255,255,0.12)';
     });
 
@@ -9127,9 +10081,33 @@ async function launchCamera() {
       }
     });
 
-    win._onLanguageChange = () => {
+    win._onLanguageChange = (lang, dict) => {
+      const d = dict || i18nDict[lang] || i18nDict.en;
+      const setTxt = (sel, val) => {
+        const el = win.querySelector(sel);
+        if (el && val) el.innerText = val;
+      };
       const sBtn = win.querySelector(`#pb-shutter-${pid}`);
-      if (sBtn) sBtn.title = t('pb_take_photo', 'Take Photo');
+      if (sBtn && d.pb_take_photo) sBtn.title = d.pb_take_photo;
+      setTxt(`#pb-recent-lbl-${pid}`, d.pb_recent_shots);
+      setTxt(`#pb-mode-single-${pid}`, d.pb_mode_single);
+      setTxt(`#pb-mode-burst-${pid}`, d.pb_mode_burst);
+      setTxt(`#pb-effects-lbl-${pid}`, d.pb_effects);
+      if (timerTxt) timerTxt.innerText = useTimer ? (d.pb_timer_on || '3s Timer: On') : (d.pb_timer_off || '3s Timer: Off');
+
+      const chipMap = {
+        'none': d.filter_normal,
+        'sepia(0.85) contrast(1.1)': d.filter_sepia,
+        'grayscale(1) contrast(1.2)': d.filter_noir,
+        'invert(1) hue-rotate(180deg) saturate(3)': d.filter_thermal,
+        'contrast(2) saturate(2.5)': d.filter_pop,
+        'hue-rotate(90deg) contrast(1.3)': d.filter_cyber,
+        'invert(1)': d.filter_invert
+      };
+      Object.entries(chipMap).forEach(([f, label]) => {
+        const c = win.querySelector(`.pb-effect-chip[data-filter="${f}"]`);
+        if (c && label) c.innerText = label;
+      });
     };
   }
 }
@@ -9326,17 +10304,17 @@ async function launchActivityMonitor() {
         <!-- Top Toolbar -->
         <div class="am-topbar">
           <div class="am-tabs-group" id="am-tabs-${pid}">
-            <button class="am-tab-btn active" data-tab="cpu">CPU</button>
-            <button class="am-tab-btn" data-tab="memory">${currentSystemLang === 'zh' ? '内存' : 'Memory'}</button>
-            <button class="am-tab-btn" data-tab="energy">${currentSystemLang === 'zh' ? '能耗' : 'Energy'}</button>
-            <button class="am-tab-btn" data-tab="disk">${currentSystemLang === 'zh' ? '磁盘' : 'Disk'}</button>
-            <button class="am-tab-btn" data-tab="network">${currentSystemLang === 'zh' ? '网络' : 'Network'}</button>
+            <button class="am-tab-btn active" data-tab="cpu">${t('am_cpu', 'CPU')}</button>
+            <button class="am-tab-btn" data-tab="memory">${t('am_memory', 'Memory')}</button>
+            <button class="am-tab-btn" data-tab="energy">${t('am_energy', 'Energy')}</button>
+            <button class="am-tab-btn" data-tab="disk">${t('am_disk', 'Disk')}</button>
+            <button class="am-tab-btn" data-tab="network">${t('am_network', 'Network')}</button>
           </div>
           <div style="display:flex;align-items:center;gap:10px;">
-            <button class="am-tool-btn danger" id="am-force-quit-${pid}" title="${currentSystemLang === 'zh' ? '强制退出选中的进程' : 'Force Quit Process'}" style="display:flex;align-items:center;gap:6px;">
-              ${getSFSymbol('stop', 13, '#ff3b30')} ${currentSystemLang === 'zh' ? '强制退出' : 'Force Quit'}
+            <button class="am-tool-btn danger" id="am-force-quit-${pid}" title="${t('am_force_quit_title', 'Force Quit Process')}" style="display:flex;align-items:center;gap:6px;">
+              ${getSFSymbol('stop', 13, '#ff3b30')} <span id="am-force-quit-lbl-${pid}">${t('am_force_quit', 'Force Quit')}</span>
             </button>
-            <input type="text" class="am-search-input" id="am-search-${pid}" placeholder="${currentSystemLang === 'zh' ? '搜索进程...' : 'Filter...'}" />
+            <input type="text" class="am-search-input" id="am-search-${pid}" placeholder="${t('am_filter', 'Search processes...')}" />
           </div>
         </div>
 
@@ -9345,13 +10323,13 @@ async function launchActivityMonitor() {
           <table class="am-mac-table" id="am-table-${pid}">
             <thead>
               <tr>
-                <th style="min-width:170px;">${currentSystemLang === 'zh' ? '进程名称' : 'Process Name'}</th>
+                <th style="min-width:170px;" id="am-th-name-${pid}">${t('am_proc_name', 'Process Name')}</th>
                 <th style="width:70px;text-align:right;">% CPU</th>
-                <th style="width:90px;text-align:right;">${currentSystemLang === 'zh' ? 'CPU 时间' : 'CPU Time'}</th>
-                <th style="width:60px;text-align:right;">${currentSystemLang === 'zh' ? '线程' : 'Threads'}</th>
-                <th style="width:85px;text-align:right;">${currentSystemLang === 'zh' ? '内存' : 'Memory'}</th>
+                <th style="width:90px;text-align:right;" id="am-th-time-${pid}">${t('am_cpu_time', 'CPU Time')}</th>
+                <th style="width:60px;text-align:right;" id="am-th-threads-${pid}">${t('am_threads', 'Threads')}</th>
+                <th style="width:85px;text-align:right;" id="am-th-mem-${pid}">${t('am_memory', 'Memory')}</th>
                 <th style="width:55px;text-align:right;">PID</th>
-                <th style="width:90px;">${currentSystemLang === 'zh' ? '用户' : 'User'}</th>
+                <th style="width:90px;" id="am-th-user-${pid}">${t('am_user', 'User')}</th>
               </tr>
             </thead>
             <tbody id="am-tbody-${pid}">
@@ -9667,8 +10645,30 @@ async function launchActivityMonitor() {
       setTimeout(refreshProcesses, 1800);
     }
 
-    win._onLanguageChange = () => {
-      win.querySelector('.title').innerText = t('app_activity', '活动监视器');
+    win._onLanguageChange = (lang, dict) => {
+      const d = dict || i18nDict[lang] || i18nDict.en;
+      const setTxt = (sel, val) => {
+        const el = win.querySelector(sel);
+        if (el && val) el.innerText = val;
+      };
+      setTxt('.title', d.app_activity);
+      setTxt('.am-tab-btn[data-tab="cpu"]', d.am_cpu);
+      setTxt('.am-tab-btn[data-tab="memory"]', d.am_memory);
+      setTxt('.am-tab-btn[data-tab="energy"]', d.am_energy);
+      setTxt('.am-tab-btn[data-tab="disk"]', d.am_disk);
+      setTxt('.am-tab-btn[data-tab="network"]', d.am_network);
+      setTxt(`#am-force-quit-lbl-${pid}`, d.am_force_quit);
+      const fqBtn = win.querySelector(`#am-force-quit-${pid}`);
+      if (fqBtn && d.am_force_quit_title) fqBtn.title = d.am_force_quit_title;
+      const sInp = win.querySelector(`#am-search-${pid}`);
+      if (sInp && d.am_filter) sInp.placeholder = d.am_filter;
+
+      setTxt(`#am-th-name-${pid}`, d.am_proc_name);
+      setTxt(`#am-th-time-${pid}`, d.am_cpu_time);
+      setTxt(`#am-th-threads-${pid}`, d.am_threads);
+      setTxt(`#am-th-mem-${pid}`, d.am_memory);
+      setTxt(`#am-th-user-${pid}`, d.am_user);
+
       updateTabHeadings();
       refreshProcesses();
     };
@@ -9843,38 +10843,38 @@ async function launchPaint(initialFilePath = null) {
     <div class="mac-photos-app" id="photos-app-${pid}">
       <!-- Left Sidebar -->
       <div class="mac-photos-sidebar">
-        <div class="photos-sidebar-group-title">图库 (LIBRARY)</div>
+        <div class="photos-sidebar-group-title" id="photos-grp-lib-${pid}">${t('photos_library', 'Library')}</div>
         <div class="photos-nav-item active" data-cat="all">
           <span style="display:flex;align-items:center;">${getSFSymbol('photos', 14, '#007aff')}</span>
-          <span>全部照片</span>
+          <span class="photos-nav-txt">${t('photos_all', 'All Photos')}</span>
           <span class="photos-nav-badge" id="photos-cnt-all-${pid}">${photos.length}</span>
         </div>
         <div class="photos-nav-item" data-cat="favorites">
           <span style="display:flex;align-items:center;">${getSFSymbol('heart', 14, '#ff2d55')}</span>
-          <span>个人收藏</span>
+          <span class="photos-nav-txt">${t('photos_favorites', 'Favorites')}</span>
           <span class="photos-nav-badge" id="photos-cnt-fav-${pid}">${photos.filter(p => p.fav).length}</span>
         </div>
         <div class="photos-nav-item" data-cat="recents">
           <span style="display:flex;align-items:center;">${getSFSymbol('clock', 14, '#ff9500')}</span>
-          <span>最近项目</span>
+          <span class="photos-nav-txt">${t('photos_recents', 'Recents')}</span>
         </div>
 
-        <div class="photos-sidebar-group-title" style="margin-top:14px;">相册 (ALBUMS)</div>
+        <div class="photos-sidebar-group-title" style="margin-top:14px;" id="photos-grp-alb-${pid}">${t('photos_albums', 'Albums')}</div>
         <div class="photos-nav-item" data-cat="wallpapers">
           <span style="display:flex;align-items:center;">${getSFSymbol('desktop', 14, '#5856d6')}</span>
-          <span>精选壁纸</span>
+          <span class="photos-nav-txt">${t('photos_wallpapers', 'Wallpapers')}</span>
         </div>
         <div class="photos-nav-item" data-cat="nature">
           <span style="display:flex;align-items:center;">${getSFSymbol('photo', 14, '#34c759')}</span>
-          <span>自然风光</span>
+          <span class="photos-nav-txt">${t('photos_nature', 'Nature')}</span>
         </div>
         <div class="photos-nav-item" data-cat="architecture">
           <span style="display:flex;align-items:center;">${getSFSymbol('internaldrive', 14, '#ff9500')}</span>
-          <span>建筑与城市</span>
+          <span class="photos-nav-txt">${t('photos_architecture', 'Architecture')}</span>
         </div>
         <div class="photos-nav-item" data-cat="markup">
           <span style="display:flex;align-items:center;">${getSFSymbol('palette', 14, '#af52de')}</span>
-          <span>标注与画作</span>
+          <span class="photos-nav-txt">${t('photos_markup', 'Drawings & Markup')}</span>
         </div>
       </div>
 
@@ -9884,30 +10884,30 @@ async function launchPaint(initialFilePath = null) {
         <div class="mac-photos-topbar">
           <div style="display:flex;align-items:center;gap:8px;">
             <button class="photos-tb-btn" id="photos-back-${pid}" style="display:none;align-items:center;gap:4px;">
-              ${getSFSymbol('chevron-left', 12, 'currentColor')} <span>图库</span>
+              ${getSFSymbol('chevron-left', 12, 'currentColor')} <span>${t('photos_back', 'Library')}</span>
             </button>
-            <div class="photos-title-label" id="photos-title-${pid}">全部照片</div>
-            <span style="font-size:11px;color:#8e8e93;margin-left:4px;" id="photos-subhead-${pid}">(${photos.length} 张照片)</span>
+            <div class="photos-title-label" id="photos-title-${pid}">${t('photos_all', 'All Photos')}</div>
+            <span style="font-size:11px;color:#8e8e93;margin-left:4px;" id="photos-subhead-${pid}">(${photos.length} ${t('photos_count_suffix', 'photos')})</span>
           </div>
 
           <div style="display:flex;align-items:center;gap:8px;">
-            <button class="photos-tb-btn" id="photos-new-blank-${pid}" title="新建空白画布标注" style="display:flex;align-items:center;gap:4px;">
-              ${getSFSymbol('plus', 12, 'currentColor')} <span>新建画布</span>
+            <button class="photos-tb-btn" id="photos-new-blank-${pid}" title="${t('photos_new_canvas', 'New Canvas')}" style="display:flex;align-items:center;gap:4px;">
+              ${getSFSymbol('plus', 12, 'currentColor')} <span>${t('photos_new_canvas', 'New Canvas')}</span>
             </button>
-            <button class="photos-tb-btn" id="photos-rotate-${pid}" title="逆时针旋转 90°" style="display:none;">
+            <button class="photos-tb-btn" id="photos-rotate-${pid}" title="${t('photos_rotate', 'Rotate 90°')}" style="display:none;">
               ${getSFSymbol('rotate', 13, 'currentColor')}
             </button>
-            <button class="photos-tb-btn" id="photos-fav-${pid}" title="收藏照片" style="display:none;">
+            <button class="photos-tb-btn" id="photos-fav-${pid}" title="${t('photos_fav', 'Favorite')}" style="display:none;">
               ${getSFSymbol('heart', 13, 'currentColor')}
             </button>
-            <button class="photos-tb-btn" id="photos-info-${pid}" title="照片详细信息" style="display:none;">
+            <button class="photos-tb-btn" id="photos-info-${pid}" title="${t('photos_info', 'Photo Info')}" style="display:none;">
               ${getSFSymbol('info', 13, 'currentColor')}
             </button>
-            <button class="photos-tb-btn active-blue" id="photos-edit-${pid}" title="调色滤镜与标记标注" style="display:none;align-items:center;gap:4px;">
-              ${getSFSymbol('adjust', 12, '#ffffff')} <span>编辑</span>
+            <button class="photos-tb-btn active-blue" id="photos-edit-${pid}" title="${t('photos_edit_title', 'Color & Markup')}" style="display:none;align-items:center;gap:4px;">
+              ${getSFSymbol('adjust', 12, '#ffffff')} <span>${t('photos_edit', 'Edit')}</span>
             </button>
-            <button class="photos-tb-btn" id="photos-export-${pid}" title="导出照片到桌面" style="display:none;align-items:center;gap:4px;">
-              ${getSFSymbol('share', 12, 'currentColor')} <span>导出</span>
+            <button class="photos-tb-btn" id="photos-export-${pid}" title="${t('photos_export', 'Export')}" style="display:none;align-items:center;gap:4px;">
+              ${getSFSymbol('share', 12, 'currentColor')} <span>${t('photos_export', 'Export')}</span>
             </button>
           </div>
         </div>
@@ -9927,45 +10927,45 @@ async function launchPaint(initialFilePath = null) {
           <!-- EXIF Info Card Drawer -->
           <div class="photos-info-drawer" id="photos-info-drawer-${pid}">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-              <div style="font-weight:700;font-size:13px;">照片详细信息</div>
+              <div style="font-weight:700;font-size:13px;" id="photos-info-hdr-${pid}">${t('photos_info_title', 'Photo Details')}</div>
               <button id="photos-info-close-${pid}" style="background:none;border:none;color:#888;cursor:pointer;font-size:16px;">✕</button>
             </div>
-            <div class="photos-info-row"><span class="info-lbl">文件名</span><span class="info-val" id="info-name-${pid}">--</span></div>
-            <div class="photos-info-row"><span class="info-lbl">拍摄时间</span><span class="info-val" id="info-date-${pid}">--</span></div>
-            <div class="photos-info-row"><span class="info-lbl">设备相机</span><span class="info-val" id="info-cam-${pid}">--</span></div>
-            <div class="photos-info-row"><span class="info-lbl">镜头光圈</span><span class="info-val" id="info-lens-${pid}">--</span></div>
-            <div class="photos-info-row"><span class="info-lbl">感光曝光</span><span class="info-val" id="info-iso-${pid}">--</span></div>
-            <div class="photos-info-row"><span class="info-lbl">分辨率规格</span><span class="info-val" id="info-dim-${pid}">--</span></div>
+            <div class="photos-info-row"><span class="info-lbl" id="lbl-name-${pid}">${t('photos_info_filename', 'Filename')}</span><span class="info-val" id="info-name-${pid}">--</span></div>
+            <div class="photos-info-row"><span class="info-lbl" id="lbl-date-${pid}">${t('photos_info_date', 'Date Taken')}</span><span class="info-val" id="info-date-${pid}">--</span></div>
+            <div class="photos-info-row"><span class="info-lbl" id="lbl-cam-${pid}">${t('photos_info_camera', 'Camera')}</span><span class="info-val" id="info-cam-${pid}">--</span></div>
+            <div class="photos-info-row"><span class="info-lbl" id="lbl-lens-${pid}">${t('photos_info_lens', 'Lens')}</span><span class="info-val" id="info-lens-${pid}">--</span></div>
+            <div class="photos-info-row"><span class="info-lbl" id="lbl-iso-${pid}">${t('photos_info_exposure', 'Exposure')}</span><span class="info-val" id="info-iso-${pid}">--</span></div>
+            <div class="photos-info-row"><span class="info-lbl" id="lbl-dim-${pid}">${t('photos_info_dim', 'Resolution')}</span><span class="info-val" id="info-dim-${pid}">--</span></div>
           </div>
 
           <!-- Edit & Markup Drawer -->
           <div class="photos-edit-drawer" id="photos-edit-drawer-${pid}">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.1);">
-              <div style="font-weight:700;font-size:13px;color:#fff;">调色与涂鸦标记</div>
+              <div style="font-weight:700;font-size:13px;color:#fff;" id="photos-edit-hdr-${pid}">${t('photos_edit_title', 'Color & Markup')}</div>
               <div style="display:flex;gap:6px;">
-                <button class="photos-btn-small" id="photos-revert-${pid}">复原</button>
-                <button class="photos-btn-small primary" id="photos-save-edit-${pid}">完成</button>
+                <button class="photos-btn-small" id="photos-revert-${pid}">${t('photos_revert', 'Revert')}</button>
+                <button class="photos-btn-small primary" id="photos-save-edit-${pid}">${t('photos_done', 'Done')}</button>
               </div>
             </div>
 
             <!-- Filters Selection -->
-            <div style="font-size:11px;color:#8e8e93;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px;">滤镜风格 (FILTERS)</div>
+            <div style="font-size:11px;color:#8e8e93;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px;" id="photos-filters-hdr-${pid}">${t('photos_filters_hdr', 'Filters')}</div>
             <div class="photos-filters-row">
-              <div class="photo-filter-chip active" data-filter="none">原图</div>
-              <div class="photo-filter-chip" data-filter="saturate(1.4) contrast(1.1)">鲜明</div>
-              <div class="photo-filter-chip" data-filter="sepia(0.3) saturate(1.2)">暖色</div>
-              <div class="photo-filter-chip" data-filter="hue-rotate(180deg) saturate(0.8)">冷色</div>
-              <div class="photo-filter-chip" data-filter="contrast(1.4) brightness(0.9)">戏剧</div>
-              <div class="photo-filter-chip" data-filter="grayscale(1) contrast(1.3)">黑白 Noir</div>
+              <div class="photo-filter-chip active" data-filter="none">${t('photos_filter_original', 'Original')}</div>
+              <div class="photo-filter-chip" data-filter="saturate(1.4) contrast(1.1)">${t('photos_filter_vivid', 'Vivid')}</div>
+              <div class="photo-filter-chip" data-filter="sepia(0.3) saturate(1.2)">${t('photos_filter_warm', 'Warm')}</div>
+              <div class="photo-filter-chip" data-filter="hue-rotate(180deg) saturate(0.8)">${t('photos_filter_cool', 'Cool')}</div>
+              <div class="photo-filter-chip" data-filter="contrast(1.4) brightness(0.9)">${t('photos_filter_dramatic', 'Dramatic')}</div>
+              <div class="photo-filter-chip" data-filter="grayscale(1) contrast(1.3)">${t('photos_filter_noir', 'Noir')}</div>
             </div>
 
             <!-- Drawing Markup Tools -->
-            <div style="font-size:11px;color:#8e8e93;margin:12px 0 6px;text-transform:uppercase;letter-spacing:0.5px;">标记涂鸦 (MARKUP TOOLS)</div>
+            <div style="font-size:11px;color:#8e8e93;margin:12px 0 6px;text-transform:uppercase;letter-spacing:0.5px;" id="photos-tools-hdr-${pid}">${t('photos_markup_hdr', 'Markup Tools')}</div>
             <div class="photos-markup-tools">
-              <button class="markup-tool-btn active" data-tool="pen" title="画笔">${getSFSymbol('pencil', 12)} 钢笔</button>
-              <button class="markup-tool-btn" data-tool="brush" title="毛笔">${getSFSymbol('palette', 12)} 画刷</button>
-              <button class="markup-tool-btn" data-tool="highlighter" title="荧光笔">荧光</button>
-              <button class="markup-tool-btn" data-tool="eraser" title="橡皮擦">${getSFSymbol('trash', 12)} 擦除</button>
+              <button class="markup-tool-btn active" data-tool="pen" title="${t('photos_pen', 'Pen')}">${getSFSymbol('pencil', 12)} <span>${t('photos_pen', 'Pen')}</span></button>
+              <button class="markup-tool-btn" data-tool="brush" title="${t('photos_brush', 'Brush')}">${getSFSymbol('palette', 12)} <span>${t('photos_brush', 'Brush')}</span></button>
+              <button class="markup-tool-btn" data-tool="highlighter" title="${t('photos_highlighter', 'Highlighter')}">${getSFSymbol('pencil', 12)} <span>${t('photos_highlighter', 'Highlighter')}</span></button>
+              <button class="markup-tool-btn" data-tool="eraser" title="${t('photos_eraser', 'Eraser')}">${getSFSymbol('trash', 12)} <span>${t('photos_eraser', 'Eraser')}</span></button>
               <input type="color" id="markup-color-${pid}" value="#ff3b30" style="width:24px;height:24px;border:none;background:none;cursor:pointer;border-radius:50%;">
             </div>
           </div>
@@ -10010,7 +11010,17 @@ async function launchPaint(initialFilePath = null) {
     else if (currentCategory === 'recents') filtered = photos.slice(0, 4);
     else if (currentCategory !== 'all') filtered = photos.filter(p => p.album === currentCategory);
 
-    subheadLbl.innerText = `(${filtered.length} 张照片)`;
+    const catMap = {
+      all: t('photos_all', 'All Photos'),
+      favorites: t('photos_favorites', 'Favorites'),
+      recents: t('photos_recents', 'Recents'),
+      wallpapers: t('photos_wallpapers', 'Wallpapers'),
+      nature: t('photos_nature', 'Nature'),
+      architecture: t('photos_architecture', 'Architecture'),
+      markup: t('photos_markup', 'Drawings & Markup')
+    };
+    titleLbl.innerText = catMap[currentCategory] || t('photos_all', 'All Photos');
+    subheadLbl.innerText = `(${filtered.length} ${t('photos_count_suffix', 'photos')})`;
     gridContainer.innerHTML = filtered.map(p => `
       <div class="photos-thumb-card" data-id="${p.id}">
         <img src="${p.url}" alt="${p.name}" loading="lazy" />
@@ -10253,6 +11263,85 @@ async function launchPaint(initialFilePath = null) {
       else renderGrid();
     });
   });
+
+  win._onLanguageChange = (lang, dict) => {
+    const d = dict || i18nDict[lang] || i18nDict.en;
+    const setTxt = (sel, val) => {
+      const el = win.querySelector(sel);
+      if (el && val) el.innerText = val;
+    };
+    setTxt(`#photos-grp-lib-${pid}`, d.photos_library);
+    setTxt(`#photos-grp-alb-${pid}`, d.photos_albums);
+    
+    const navItems = {
+      all: d.photos_all,
+      favorites: d.photos_favorites,
+      recents: d.photos_recents,
+      wallpapers: d.photos_wallpapers,
+      nature: d.photos_nature,
+      architecture: d.photos_architecture,
+      markup: d.photos_markup
+    };
+    Object.entries(navItems).forEach(([cat, text]) => {
+      const item = win.querySelector(`.photos-nav-item[data-cat="${cat}"] .photos-nav-txt`);
+      if (item && text) item.innerText = text;
+    });
+
+    const backTxt = win.querySelector(`#photos-back-${pid} span`);
+    if (backTxt && d.photos_back) backTxt.innerText = d.photos_back;
+    const newBtnSpan = win.querySelector(`#photos-new-blank-${pid} span`);
+    if (newBtnSpan && d.photos_new_canvas) newBtnSpan.innerText = d.photos_new_canvas;
+    const editBtnSpan = win.querySelector(`#photos-edit-${pid} span`);
+    if (editBtnSpan && d.photos_edit) editBtnSpan.innerText = d.photos_edit;
+    const exportBtnSpan = win.querySelector(`#photos-export-${pid} span`);
+    if (exportBtnSpan && d.photos_export) exportBtnSpan.innerText = d.photos_export;
+
+    if (rotateBtn && d.photos_rotate) rotateBtn.title = d.photos_rotate;
+    if (favBtn && d.photos_fav) favBtn.title = d.photos_fav;
+    if (infoBtn && d.photos_info) infoBtn.title = d.photos_info;
+
+    setTxt(`#photos-info-hdr-${pid}`, d.photos_info_title);
+    setTxt(`#lbl-name-${pid}`, d.photos_info_filename);
+    setTxt(`#lbl-date-${pid}`, d.photos_info_date);
+    setTxt(`#lbl-cam-${pid}`, d.photos_info_camera);
+    setTxt(`#lbl-lens-${pid}`, d.photos_info_lens);
+    setTxt(`#lbl-iso-${pid}`, d.photos_info_exposure);
+    setTxt(`#lbl-dim-${pid}`, d.photos_info_dim);
+
+    setTxt(`#photos-edit-hdr-${pid}`, d.photos_edit_title);
+    setTxt(`#photos-revert-${pid}`, d.photos_revert);
+    setTxt(`#photos-save-edit-${pid}`, d.photos_done);
+    setTxt(`#photos-filters-hdr-${pid}`, d.photos_filters_hdr);
+    setTxt(`#photos-tools-hdr-${pid}`, d.photos_markup_hdr);
+
+    const filterChips = {
+      'none': d.photos_filter_original,
+      'saturate(1.4) contrast(1.1)': d.photos_filter_vivid,
+      'sepia(0.3) saturate(1.2)': d.photos_filter_warm,
+      'hue-rotate(180deg) saturate(0.8)': d.photos_filter_cool,
+      'contrast(1.4) brightness(0.9)': d.photos_filter_dramatic,
+      'grayscale(1) contrast(1.3)': d.photos_filter_noir
+    };
+    Object.entries(filterChips).forEach(([f, label]) => {
+      const chip = win.querySelector(`.photo-filter-chip[data-filter="${f}"]`);
+      if (chip && label) chip.innerText = label;
+    });
+
+    const markupTools = {
+      'pen': d.photos_pen,
+      'brush': d.photos_brush,
+      'highlighter': d.photos_highlighter,
+      'eraser': d.photos_eraser
+    };
+    Object.entries(markupTools).forEach(([tKey, label]) => {
+      const btn = win.querySelector(`.markup-tool-btn[data-tool="${tKey}"] span`);
+      if (btn && label) btn.innerText = label;
+    });
+
+    if (!isViewingDetail) {
+      renderGrid();
+    }
+  };
 
   // Open initial file if specified
   if (initialFilePath) {
@@ -13083,10 +14172,10 @@ async function launchWeather() {
       <div class="weather-mac-app" id="weather-mac-app-${pid}">
         <!-- City Pills Selector -->
         <div class="weather-city-bar" id="weather-city-bar-${pid}">
-          <button class="weather-city-pill" id="weather-my-loc-${pid}"><span style="display:inline-flex;align-items:center;margin-right:4px;">${getSFSymbol('location', 12, '#38bdf8')}</span> ${currentSystemLang === 'zh' ? '我的位置' : 'My Location'}</button>
+          <button class="weather-city-pill" id="weather-my-loc-${pid}"><span style="display:inline-flex;align-items:center;margin-right:4px;">${getSFSymbol('location', 12, '#38bdf8')}</span> ${t('weather_my_location', 'My Location')}</button>
           ${cities.map((c, i) => `
             <button class="weather-city-pill ${i === 0 ? 'active' : ''}" data-idx="${i}">
-              ${currentSystemLang === 'zh' ? c.nameZh : c.name}
+              ${(currentSystemLang === 'zh' || currentSystemLang === 'ja') ? c.nameZh : c.name}
             </button>
           `).join('')}
         </div>
@@ -13103,55 +14192,55 @@ async function launchWeather() {
 
           <!-- 24-Hour Forecast Card -->
           <div class="weather-frosted-card">
-            <div class="weather-card-hdr">
-              <span style="display:inline-flex;align-items:center;margin-right:4px;">${getSFSymbol('clock', 12, 'rgba(255,255,255,0.8)')}</span> ${currentSystemLang === 'zh' ? '24小时逐时预报' : 'Hourly Forecast'}
+            <div class="weather-card-hdr" id="weather-hourly-hdr-${pid}">
+              <span style="display:inline-flex;align-items:center;margin-right:4px;">${getSFSymbol('clock', 12, 'rgba(255,255,255,0.8)')}</span> ${t('weather_hourly', '24-Hour Forecast')}
             </div>
             <div class="weather-hourly-row" id="weather-hourly-row-${pid}">
-              <div style="font-size:12px;opacity:0.6;padding:10px 0;">${t('weather_requesting', '加载逐时预报中...')}</div>
+              <div style="font-size:12px;opacity:0.6;padding:10px 0;">${t('weather_requesting', 'Loading forecast...')}</div>
             </div>
           </div>
 
           <!-- 10-Day Forecast Card -->
           <div class="weather-frosted-card">
-            <div class="weather-card-hdr">
-              <span style="display:inline-flex;align-items:center;margin-right:4px;">${getSFSymbol('calendar', 12, 'rgba(255,255,255,0.8)')}</span> ${currentSystemLang === 'zh' ? '10天天气预报' : '10-Day Forecast'}
+            <div class="weather-card-hdr" id="weather-tenday-hdr-${pid}">
+              <span style="display:inline-flex;align-items:center;margin-right:4px;">${getSFSymbol('calendar', 12, 'rgba(255,255,255,0.8)')}</span> ${t('weather_tenday', '10-Day Forecast')}
             </div>
             <div class="weather-daily-list" id="weather-daily-list-${pid}">
-              <div style="font-size:12px;opacity:0.6;padding:10px 0;">${t('weather_requesting', '加载多日预报中...')}</div>
+              <div style="font-size:12px;opacity:0.6;padding:10px 0;">${t('weather_requesting', 'Loading forecast...')}</div>
             </div>
           </div>
 
           <!-- 2x3 Weather Metrics Grid -->
           <div class="weather-metrics-grid" id="weather-metrics-${pid}">
             <div class="weather-metric-box">
-              <div class="weather-metric-hdr"><span style="display:inline-flex;align-items:center;margin-right:4px;">${getSFSymbol('sun', 12, '#ffcc00')}</span> ${currentSystemLang === 'zh' ? '紫外线指数' : 'UV INDEX'}</div>
+              <div class="weather-metric-hdr" id="weather-uv-hdr-${pid}"><span style="display:inline-flex;align-items:center;margin-right:4px;">${getSFSymbol('sun', 12, '#ffcc00')}</span> ${t('weather_uv', 'UV Index')}</div>
               <div class="weather-metric-val" id="weather-uv-val-${pid}">--</div>
-              <div class="weather-metric-sub" id="weather-uv-sub-${pid}">${currentSystemLang === 'zh' ? '今日保持良好防晒防护' : 'Take protective measures'}</div>
+              <div class="weather-metric-sub" id="weather-uv-sub-${pid}">${t('weather_uv_sub', 'Keep good sun protection')}</div>
             </div>
             <div class="weather-metric-box">
-              <div class="weather-metric-hdr"><span style="display:inline-flex;align-items:center;margin-right:4px;">${getSFSymbol('wind', 12, '#38bdf8')}</span> ${currentSystemLang === 'zh' ? '风向与风速' : 'WIND'}</div>
+              <div class="weather-metric-hdr" id="weather-wind-hdr-${pid}"><span style="display:inline-flex;align-items:center;margin-right:4px;">${getSFSymbol('wind', 12, '#38bdf8')}</span> ${t('weather_wind', 'Wind & Speed')}</div>
               <div class="weather-metric-val" id="weather-wind-val-${pid}">-- km/h</div>
-              <div class="weather-metric-sub" id="weather-wind-sub-${pid}">${currentSystemLang === 'zh' ? '微风拂面' : 'Light breeze'}</div>
+              <div class="weather-metric-sub" id="weather-wind-sub-${pid}">${t('weather_wind_sub', 'Light gentle breeze')}</div>
             </div>
             <div class="weather-metric-box">
-              <div class="weather-metric-hdr"><span style="display:inline-flex;align-items:center;margin-right:4px;">${getSFSymbol('humidity', 12, '#007aff')}</span> ${currentSystemLang === 'zh' ? '相对湿度' : 'HUMIDITY'}</div>
+              <div class="weather-metric-hdr" id="weather-hum-hdr-${pid}"><span style="display:inline-flex;align-items:center;margin-right:4px;">${getSFSymbol('humidity', 12, '#007aff')}</span> ${t('weather_humidity', 'Humidity')}</div>
               <div class="weather-metric-val" id="weather-hum-val-${pid}">--%</div>
-              <div class="weather-metric-sub" id="weather-hum-sub-${pid}">${currentSystemLang === 'zh' ? '舒适室内环境' : 'Comfortable dew point'}</div>
+              <div class="weather-metric-sub" id="weather-hum-sub-${pid}">${t('weather_hum_sub', 'Comfortable indoor dew point')}</div>
             </div>
             <div class="weather-metric-box">
-              <div class="weather-metric-hdr"><span style="display:inline-flex;align-items:center;margin-right:4px;">${getSFSymbol('eye', 12, '#34c759')}</span> ${currentSystemLang === 'zh' ? '能见度' : 'VISIBILITY'}</div>
+              <div class="weather-metric-hdr" id="weather-vis-hdr-${pid}"><span style="display:inline-flex;align-items:center;margin-right:4px;">${getSFSymbol('eye', 12, '#34c759')}</span> ${t('weather_visibility', 'Visibility')}</div>
               <div class="weather-metric-val" id="weather-vis-val-${pid}">16 km</div>
-              <div class="weather-metric-sub" id="weather-vis-sub-${pid}">${currentSystemLang === 'zh' ? '视野极佳，一览无余' : 'Completely clear horizon'}</div>
+              <div class="weather-metric-sub" id="weather-vis-sub-${pid}">${t('weather_vis_sub', 'Clear horizon view')}</div>
             </div>
             <div class="weather-metric-box">
-              <div class="weather-metric-hdr"><span style="display:inline-flex;align-items:center;margin-right:4px;">${getSFSymbol('gauge', 12, '#af52de')}</span> ${currentSystemLang === 'zh' ? '气压' : 'PRESSURE'}</div>
+              <div class="weather-metric-hdr" id="weather-press-hdr-${pid}"><span style="display:inline-flex;align-items:center;margin-right:4px;">${getSFSymbol('gauge', 12, '#af52de')}</span> ${t('weather_pressure', 'Pressure')}</div>
               <div class="weather-metric-val" id="weather-press-val-${pid}">1013 hPa</div>
-              <div class="weather-metric-sub" id="weather-press-sub-${pid}">${currentSystemLang === 'zh' ? '标准海平面大气压' : 'Normal atmospheric pressure'}</div>
+              <div class="weather-metric-sub" id="weather-press-sub-${pid}">${t('weather_press_sub', 'Standard atmospheric')}</div>
             </div>
             <div class="weather-metric-box">
-              <div class="weather-metric-hdr"><span style="display:inline-flex;align-items:center;margin-right:4px;">${getSFSymbol('sunset', 12, '#ff9500')}</span> ${currentSystemLang === 'zh' ? '日出与日落' : 'SUN'}</div>
+              <div class="weather-metric-hdr" id="weather-sunset-hdr-${pid}"><span style="display:inline-flex;align-items:center;margin-right:4px;">${getSFSymbol('sunset', 12, '#ff9500')}</span> ${t('weather_sunset', 'Sunrise & Sunset')}</div>
               <div class="weather-metric-val" id="weather-sun-val-${pid}">--:--</div>
-              <div class="weather-metric-sub" id="weather-sun-sub-${pid}">${currentSystemLang === 'zh' ? '日落即将来临' : 'Sunset upcoming'}</div>
+              <div class="weather-metric-sub" id="weather-sun-sub-${pid}">${t('weather_sunset_sub', 'Sunset approaching')}</div>
             </div>
           </div>
         </div>
@@ -13388,8 +14477,33 @@ async function launchWeather() {
       }
     });
 
-    win._onLanguageChange = () => {
-      win.querySelector('.title').innerText = t('app_weather', '天气');
+    win._onLanguageChange = (lang, dict) => {
+      const d = dict || i18nDict[lang] || i18nDict.en;
+      const titleEl = win.querySelector('.title');
+      if (titleEl && d.app_weather) titleEl.innerText = d.app_weather;
+
+      const myLocEl = win.querySelector(`#weather-my-loc-${pid}`);
+      if (myLocEl && d.weather_my_location) {
+        myLocEl.innerHTML = `<span style="display:inline-flex;align-items:center;margin-right:4px;">${getSFSymbol('location', 12, '#38bdf8')}</span> ${d.weather_my_location}`;
+      }
+
+      win.querySelectorAll('.weather-city-pill[data-idx]').forEach(btn => {
+        const idx = parseInt(btn.dataset.idx);
+        if (cities[idx]) {
+          btn.innerText = (lang === 'zh' || lang === 'ja') ? cities[idx].nameZh : cities[idx].name;
+        }
+      });
+
+      const hourlyHdr = win.querySelector(`#weather-hourly-hdr-${pid}`);
+      if (hourlyHdr && d.weather_hourly) {
+        hourlyHdr.innerHTML = `<span style="display:inline-flex;align-items:center;margin-right:4px;">${getSFSymbol('clock', 12, 'rgba(255,255,255,0.8)')}</span> ${d.weather_hourly}`;
+      }
+
+      const tendayHdr = win.querySelector(`#weather-tenday-hdr-${pid}`);
+      if (tendayHdr && d.weather_tenday) {
+        tendayHdr.innerHTML = `<span style="display:inline-flex;align-items:center;margin-right:4px;">${getSFSymbol('calendar', 12, 'rgba(255,255,255,0.8)')}</span> ${d.weather_tenday}`;
+      }
+
       loadCityWeather(activeCity);
     };
 
@@ -16524,7 +17638,7 @@ print("[SWIFTUI] ContentView rendered.");`,
 
           <!-- View Controls -->
           <div style="display:flex;gap:4px;">
-            <button class="xcode-btn" id="xcode-clear-btn-${pid}" title="${t('xcode_clear', 'Clear Console')}" style="font-size:11px;background:rgba(255,255,255,0.08);">🗑 Clear</button>
+            <button class="xcode-btn" id="xcode-clear-btn-${pid}" title="${t('xcode_clear', 'Clear Console')}" style="font-size:11px;background:rgba(255,255,255,0.08);display:flex;align-items:center;gap:4px;">${getSFSymbol('trash', 11, 'currentColor')} <span>${t('xcode_clear', 'Clear Console')}</span></button>
           </div>
         </div>
 
@@ -16532,22 +17646,22 @@ print("[SWIFTUI] ContentView rendered.");`,
         <div class="xcode-body">
           <!-- Project Navigator Sidebar -->
           <div class="xcode-sidebar">
-            <div style="font-size:11px;font-weight:700;color:#71717a;text-transform:uppercase;letter-spacing:0.5px;padding:4px 8px;">Project Navigator</div>
-            <div class="xcode-tree-item" style="font-weight:600;">
-              <span>📁</span> <span>AliceApp</span>
+            <div style="font-size:11px;font-weight:700;color:#71717a;text-transform:uppercase;letter-spacing:0.5px;padding:4px 8px;" id="xcode-nav-title-${pid}">${t('xcode_navigator', 'Project Navigator')}</div>
+            <div class="xcode-tree-item" style="font-weight:600;display:flex;align-items:center;gap:6px;">
+              <span>${getSFSymbol('folder', 13, '#007aff')}</span> <span>AliceApp</span>
             </div>
             <div style="margin-left:14px;display:flex;flex-direction:column;gap:1px;">
-              <div class="xcode-tree-item active" data-file="main.swift">
-                <span>📄</span> <span>main.swift</span>
+              <div class="xcode-tree-item active" data-file="main.swift" style="display:flex;align-items:center;gap:6px;">
+                <span>${getSFSymbol('doc-text', 13, '#e4e4e7')}</span> <span>main.swift</span>
               </div>
-              <div class="xcode-tree-item" data-file="KernelBridge.swift">
-                <span>📄</span> <span>KernelBridge.swift</span>
+              <div class="xcode-tree-item" data-file="KernelBridge.swift" style="display:flex;align-items:center;gap:6px;">
+                <span>${getSFSymbol('doc-text', 13, '#e4e4e7')}</span> <span>KernelBridge.swift</span>
               </div>
-              <div class="xcode-tree-item" data-file="ContentView.swift">
-                <span>📄</span> <span>ContentView.swift</span>
+              <div class="xcode-tree-item" data-file="ContentView.swift" style="display:flex;align-items:center;gap:6px;">
+                <span>${getSFSymbol('doc-text', 13, '#e4e4e7')}</span> <span>ContentView.swift</span>
               </div>
-              <div class="xcode-tree-item" data-file="Info.plist">
-                <span>⚙️</span> <span>Info.plist</span>
+              <div class="xcode-tree-item" data-file="Info.plist" style="display:flex;align-items:center;gap:6px;">
+                <span>${getSFSymbol('gear', 13, '#8e8e93')}</span> <span>Info.plist</span>
               </div>
             </div>
           </div>
@@ -16612,7 +17726,7 @@ print("[SWIFTUI] ContentView rendered.");`,
     // Run action
     runBtn.addEventListener('click', async () => {
       projectFiles[activeFile] = codeArea.value;
-      statusPill.innerHTML = '<span style="color:#f59e0b;">●</span> Building AliceApp...';
+      statusPill.innerHTML = '<span style="color:#f59e0b;">●</span> ' + t('xcode_building', 'Building AliceApp...');
 
       let logs = [];
       const originalLog = console.log;
@@ -16629,7 +17743,7 @@ print("[SWIFTUI] ContentView rendered.");`,
         const executor = new AsyncFunction(code);
         const result = await executor();
 
-        statusPill.innerHTML = '<span style="color:#34c759;">✓</span> Build AliceApp: Succeeded';
+        statusPill.innerHTML = '<span style="color:#34c759;">✓</span> ' + t('xcode_build_succeeded', 'Build AliceApp: Succeeded');
         
         let outputHtml = '';
         if (logs.length > 0) {
@@ -16660,11 +17774,20 @@ print("[SWIFTUI] ContentView rendered.");`,
       logOutput.innerHTML = '';
     });
 
-    win._onLanguageChange = () => {
+    win._onLanguageChange = (lang, dict) => {
+      const d = dict || i18nDict[lang] || i18nDict.en;
       const runB = win.querySelector(`#xcode-run-${pid}`);
-      if (runB) runB.title = t('xcode_run', 'Run (⌘R)');
+      if (runB && d.xcode_run) runB.title = d.xcode_run;
       const stopB = win.querySelector(`#xcode-stop-${pid}`);
-      if (stopB) stopB.title = t('xcode_stop', 'Stop (⌘.)');
+      if (stopB && d.xcode_stop) stopB.title = d.xcode_stop;
+      const clrB = win.querySelector(`#xcode-clear-btn-${pid}`);
+      if (clrB) {
+        if (d.xcode_clear) clrB.title = d.xcode_clear;
+        const span = clrB.querySelector('span');
+        if (span && d.xcode_clear) span.innerText = d.xcode_clear;
+      }
+      const navTitle = win.querySelector(`#xcode-nav-title-${pid}`);
+      if (navTitle && d.xcode_navigator) navTitle.innerText = d.xcode_navigator;
     };
   }
 }

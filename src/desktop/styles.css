@@ -195,36 +195,45 @@ body {
 /* Dock */
 .dock-container {
   position: absolute;
-  bottom: 10px;
+  bottom: 8px;
   width: 100%;
   display: flex;
   justify-content: center;
   z-index: 1000;
+  pointer-events: none;
 }
 
 .dock {
+  --dock-icon-size: 48px;
+  --dock-gap: 8px;
+  pointer-events: auto;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0.12) 100%);
   backdrop-filter: blur(35px) saturate(180%);
   -webkit-backdrop-filter: blur(35px) saturate(180%);
   border-radius: 20px;
-  padding: 8px 12px;
+  padding: 6px 10px;
   display: flex;
-  gap: 12px;
+  align-items: flex-end;
+  gap: var(--dock-gap);
   border: 1px solid rgba(255, 255, 255, 0.28);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  max-width: calc(100vw - 32px);
+  box-sizing: border-box;
+  transition: gap 0.2s ease, padding 0.2s ease;
 }
 
 .dock-icon {
-  width: 52px;
-  height: 52px;
+  width: var(--dock-icon-size);
+  height: var(--dock-icon-size);
   background-color: transparent;
-  border-radius: 14px;
+  border-radius: 12px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   position: relative;
-  transition: transform 0.18s cubic-bezier(0.25, 0.46, 0.45, 0.94), margin 0.18s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  flex-shrink: 0;
+  transition: transform 0.15s cubic-bezier(0.2, 0.9, 0.3, 1), width 0.2s ease, height 0.2s ease;
   transform-origin: bottom center;
   will-change: transform;
 }
@@ -238,14 +247,14 @@ body {
 }
 
 .macos-app-icon {
-  width: 50px;
-  height: 50px;
+  width: var(--dock-icon-size);
+  height: var(--dock-icon-size);
   border-radius: 22.5%;
   filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.32));
   pointer-events: none;
   display: block;
   user-select: none;
-  transition: transform 0.18s ease;
+  transition: width 0.2s ease, height 0.2s ease;
 }
 
 .dock-dot {
