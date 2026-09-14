@@ -199,6 +199,18 @@ const i18nDict = {
     settings_physical_bridge: 'Physical Bridge',
     settings_bridge_connected: 'Connected (Physical Storage)',
     settings_about_desc: 'Designed by AliceOS Labs. Inspired by Apple macOS & iOS.',
+    settings_sound: 'Sound',
+    settings_sound_effects: 'Sound Effects',
+    settings_alert_sound: 'Alert Sound',
+    settings_touch_feedback: 'Touch & Trackpad Haptic Feedback',
+    settings_play_ui_sounds: 'Play user interface sound effects',
+    settings_play_vol_feedback: 'Play feedback when volume changes',
+    settings_haptic_strength: 'Haptic Click Strength',
+    settings_haptic_light: 'Light',
+    settings_haptic_medium: 'Medium',
+    settings_haptic_heavy: 'Firm',
+    settings_output_vol: 'Output Volume',
+    settings_test_sound: 'Test',
 
     // Finder
     finder_favorites: 'FAVORITES',
@@ -773,6 +785,18 @@ const i18nDict = {
     settings_physical_bridge: '物理存储桥接',
     settings_bridge_connected: '已连接（本地物理存储）',
     settings_about_desc: '由 AliceOS 实验室设计，深度灵感源自 Apple macOS 与 iOS。',
+    settings_sound: '声音',
+    settings_sound_effects: '声音效果',
+    settings_alert_sound: '警告声音',
+    settings_touch_feedback: '触摸与触控板触感反馈',
+    settings_play_ui_sounds: '播放用户界面声音效果',
+    settings_play_vol_feedback: '更改音量时播放反馈声音',
+    settings_haptic_strength: '触控按压力度',
+    settings_haptic_light: '轻度',
+    settings_haptic_medium: '标准',
+    settings_haptic_heavy: '深沉',
+    settings_output_vol: '输出音量',
+    settings_test_sound: '测试',
 
     // 访达
     finder_favorites: '个人收藏',
@@ -1347,6 +1371,18 @@ const i18nDict = {
     settings_physical_bridge: '物理ストレージブリッジ',
     settings_bridge_connected: '接続済み（物理ストレージ）',
     settings_about_desc: 'AliceOS Labs 設計。Apple macOS と iOS にインスパイアされています。',
+    settings_sound: 'サウンド',
+    settings_sound_effects: 'サウンドエフェクト',
+    settings_alert_sound: '警告音',
+    settings_touch_feedback: 'タッチとトラックパッドの触覚フィードバック',
+    settings_play_ui_sounds: 'ユーザーインターフェイスのサウンドエ费クトを再生',
+    settings_play_vol_feedback: '音量変更時にフィードバックを再生',
+    settings_haptic_strength: 'クリックの強さ',
+    settings_haptic_light: '弱い',
+    settings_haptic_medium: '中',
+    settings_haptic_heavy: '強い',
+    settings_output_vol: '出力音量',
+    settings_test_sound: 'テスト',
 
     // Finder
     finder_favorites: 'よく使う項目',
@@ -3641,8 +3677,8 @@ async function launchSystemInfo() {
     const win = createWindow(pid, t('about_title', 'About This Mac'), `
       <div id="sys-about-${pid}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:26px 24px;text-align:center;font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;height:100%;box-sizing:border-box;background:inherit;color:inherit;user-select:none;">
         <div style="margin-bottom:12px;filter:drop-shadow(0 6px 16px rgba(0,0,0,0.25));display:flex;align-items:center;justify-content:center;">
-          <svg viewBox="0 0 170 170" width="56" height="56" fill="currentColor">
-            <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.7-3.08-7.71-7.96-12.02-14.64-5.87-9.14-10.45-19.46-13.73-30.98-3.28-11.51-4.92-22.18-4.92-32 0-14.15 3.73-26.05 11.2-35.7 7.46-9.65 16.9-14.54 28.32-14.68 5.44 0 11.21 1.45 17.32 4.35 6.11 2.91 10.13 4.41 12.07 4.5 1.74 0 6.09-1.61 13.06-4.82 6.96-3.21 13.1-4.66 18.42-4.35 13.72.68 24.64 5.75 32.74 15.22-11.97 7.24-17.84 17.06-17.6 29.47.24 9.98 4.09 18.25 11.55 24.81 7.46 6.56 16.42 10.37 26.88 11.44-2.58 8.16-5.77 16.59-9.58 25.3l.26-.26zM119.22 31.84c0-7.72 2.76-14.89 8.27-21.52 5.52-6.62 12.3-10.32 20.35-11.1 0 1.09.07 2.12.2 3.1.26 7.64-2.55 14.69-8.43 21.15-5.88 6.46-12.92 10.12-20.39 10.98 0-.87 0-1.74 0-2.61z"/>
+          <svg viewBox="0 0 384 512" width="54" height="72" fill="currentColor">
+            <path d="M318.7 268.7c-.2-36.2 16.4-61.2 41.2-90.8-23.7-34.7-59.4-48.4-100.1-49.9-42.8-1.5-82.5 25.5-102.8 25.5-20.4 0-51.9-25.2-85.3-24.5-43.7 1-84.5 25.7-107.4 64.9-46.3 79.9-11.8 196.4 32.7 261.3 21.6 31.4 47.4 66.8 81.6 65.5 32.2-1.3 44.5-20.7 83.1-20.7 38.6 0 49.9 20.7 84 20.7 35.3 0 57.1-32.9 78.9-64.4 24.9-36.3 35.1-71.5 35.5-73.4-.9-.3-52.9-20.4-53.2-80.4zM245.9 83.1c17.5-21.2 29.3-50.6 26.1-79.9-25.2 1-55.7 16.7-73.8 37.7-16.1 18.5-29.3 48.7-25.6 78 28.2 2.1 55.7-16.1 73.3-35.8z"/>
           </svg>
         </div>
         <h2 style="margin:0 0 4px 0;font-size:24px;font-weight:700;letter-spacing:-0.5px;">macOS Sequoia</h2>
@@ -4817,8 +4853,8 @@ async function launchBrowser() {
         <div style="height:100%;overflow-y:auto;background:#000;color:#f5f5f7;font-family:-apple-system,BlinkMacSystemFont,sans-serif;user-select:none;">
           <div style="background:rgba(22,22,23,0.8);backdrop-filter:blur(20px);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.08);position:sticky;top:0;z-index:5;">
             <span style="display:inline-flex;align-items:center;opacity:0.9;">
-              <svg viewBox="0 0 170 170" width="16" height="16" fill="currentColor">
-                <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.7-3.08-7.71-7.96-12.02-14.64-5.87-9.14-10.45-19.46-13.73-30.98-3.28-11.51-4.92-22.18-4.92-32 0-14.15 3.73-26.05 11.2-35.7 7.46-9.65 16.9-14.54 28.32-14.68 5.44 0 11.21 1.45 17.32 4.35 6.11 2.91 10.13 4.41 12.07 4.5 1.74 0 6.09-1.61 13.06-4.82 6.96-3.21 13.1-4.66 18.42-4.35 13.72.68 24.64 5.75 32.74 15.22-11.97 7.24-17.84 17.06-17.6 29.47.24 9.98 4.09 18.25 11.55 24.81 7.46 6.56 16.42 10.37 26.88 11.44-2.58 8.16-5.77 16.59-9.58 25.3l.26-.26zM119.22 31.84c0-7.72 2.76-14.89 8.27-21.52 5.52-6.62 12.3-10.32 20.35-11.1 0 1.09.07 2.12.2 3.1.26 7.64-2.55 14.69-8.43 21.15-5.88 6.46-12.92 10.12-20.39 10.98 0-.87 0-1.74 0-2.61z"/>
+              <svg viewBox="0 0 384 512" width="13.5" height="18" fill="currentColor">
+                <path d="M318.7 268.7c-.2-36.2 16.4-61.2 41.2-90.8-23.7-34.7-59.4-48.4-100.1-49.9-42.8-1.5-82.5 25.5-102.8 25.5-20.4 0-51.9-25.2-85.3-24.5-43.7 1-84.5 25.7-107.4 64.9-46.3 79.9-11.8 196.4 32.7 261.3 21.6 31.4 47.4 66.8 81.6 65.5 32.2-1.3 44.5-20.7 83.1-20.7 38.6 0 49.9 20.7 84 20.7 35.3 0 57.1-32.9 78.9-64.4 24.9-36.3 35.1-71.5 35.5-73.4-.9-.3-52.9-20.4-53.2-80.4zM245.9 83.1c17.5-21.2 29.3-50.6 26.1-79.9-25.2 1-55.7 16.7-73.8 37.7-16.1 18.5-29.3 48.7-25.6 78 28.2 2.1 55.7-16.1 73.3-35.8z"/>
               </svg>
             </span>
             <div style="display:flex;gap:20px;font-size:12px;color:#a1a1a6;">
@@ -5636,6 +5672,10 @@ async function launchSettings() {
             <div class="ventura-badge" style="background:linear-gradient(135deg,#30b0c7,#34c759);">🪟</div>
             <span data-i18n="settings_desktop">${t('settings_desktop', 'Desktop & Stage')}</span>
           </div>
+          <div class="ventura-nav-item" data-tab="sound">
+            <div class="ventura-badge" style="background:linear-gradient(135deg,#ff2d55,#ff375f);">🔊</div>
+            <span data-i18n="settings_sound">${t('settings_sound', 'Sound')}</span>
+          </div>
           <div class="ventura-nav-item" data-tab="language">
             <div class="ventura-badge" style="background:linear-gradient(135deg,#5856d6,#007aff);">🌐</div>
             <span data-i18n="settings_lang_region">${t('settings_lang_region', 'Language & Region')}</span>
@@ -5982,12 +6022,162 @@ async function launchSettings() {
           };
         });
       }
+      else if (tab === 'sound') {
+        const audioEngine = window.AppleAudioEngine;
+        const soundEnabled = audioEngine ? audioEngine.settings.soundEffectsEnabled : true;
+        const volFeedbackEnabled = audioEngine ? audioEngine.settings.volumeFeedbackEnabled : true;
+        const touchFeedbackEnabled = audioEngine ? audioEngine.settings.touchHapticsEnabled : true;
+        const hapticStrength = audioEngine ? audioEngine.settings.hapticStrength : 'medium';
+        const masterVol = audioEngine ? Math.round(audioEngine.settings.masterVolume * 100) : 100;
+
+        contentArea.innerHTML = `
+          <h2 style="font-size:20px;margin:0 0 16px 0;font-weight:600;">${t('settings_sound', 'Sound')}</h2>
+          
+          <div class="ventura-card">
+            <div style="font-size:12px;font-weight:600;opacity:0.6;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px;">${t('settings_sound_effects', 'Sound Effects')}</div>
+            
+            <div class="ventura-row" style="display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div style="font-weight:600;font-size:13px;">${t('settings_play_ui_sounds', 'Play user interface sound effects')}</div>
+                <div style="font-size:11px;opacity:0.6;">Apple Trackpad Taptic Click & Touch Haptics</div>
+              </div>
+              <input type="checkbox" id="setting-ui-sounds" ${soundEnabled && touchFeedbackEnabled ? 'checked' : ''} style="cursor:pointer;width:18px;height:18px;accent-color:#007aff;">
+            </div>
+
+            <div class="ventura-row" style="display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div style="font-weight:600;font-size:13px;">${t('settings_play_vol_feedback', 'Play feedback when volume changes')}</div>
+                <div style="font-size:11px;opacity:0.6;">macOS Pop (640Hz Apple acoustic bubble resonance)</div>
+              </div>
+              <input type="checkbox" id="setting-vol-feedback" ${volFeedbackEnabled ? 'checked' : ''} style="cursor:pointer;width:18px;height:18px;accent-color:#007aff;">
+            </div>
+          </div>
+
+          <div class="ventura-card" style="margin-top:16px;">
+            <div style="font-size:12px;font-weight:600;opacity:0.6;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px;">${t('settings_touch_feedback', 'Touch & Trackpad Haptic Feedback')}</div>
+            
+            <div class="ventura-row" style="display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div style="font-weight:600;font-size:13px;">${t('settings_haptic_strength', 'Haptic Click Strength')}</div>
+                <div style="font-size:11px;opacity:0.6;">Force Touch physical acoustic damping</div>
+              </div>
+              <div style="display:flex;background:rgba(0,0,0,0.08);padding:3px;border-radius:8px;gap:2px;">
+                <button class="haptic-pill ${hapticStrength === 'light' ? 'active' : ''}" data-strength="light" style="border:none;background:${hapticStrength === 'light' ? '#007aff' : 'transparent'};color:${hapticStrength === 'light' ? 'white' : 'inherit'};padding:4px 12px;border-radius:6px;font-size:12px;cursor:pointer;font-weight:600;">${t('settings_haptic_light', 'Light')}</button>
+                <button class="haptic-pill ${hapticStrength === 'medium' ? 'active' : ''}" data-strength="medium" style="border:none;background:${hapticStrength === 'medium' ? '#007aff' : 'transparent'};color:${hapticStrength === 'medium' ? 'white' : 'inherit'};padding:4px 12px;border-radius:6px;font-size:12px;cursor:pointer;font-weight:600;">${t('settings_haptic_medium', 'Medium')}</button>
+                <button class="haptic-pill ${hapticStrength === 'heavy' ? 'active' : ''}" data-strength="heavy" style="border:none;background:${hapticStrength === 'heavy' ? '#007aff' : 'transparent'};color:${hapticStrength === 'heavy' ? 'white' : 'inherit'};padding:4px 12px;border-radius:6px;font-size:12px;cursor:pointer;font-weight:600;">${t('settings_haptic_heavy', 'Firm')}</button>
+              </div>
+            </div>
+
+            <div class="ventura-row" style="display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div style="font-weight:600;font-size:13px;">${t('settings_output_vol', 'Output Volume')}</div>
+                <div style="font-size:11px;opacity:0.6;" id="sound-vol-txt">${masterVol}%</div>
+              </div>
+              <input type="range" id="sound-vol-slider" min="0" max="100" value="${masterVol}" style="width:160px;cursor:pointer;accent-color:#007aff;">
+            </div>
+          </div>
+
+          <div class="ventura-card" style="margin-top:16px;">
+            <div style="font-size:12px;font-weight:600;opacity:0.6;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px;">${t('settings_alert_sound', 'Alert Sound')} & Acoustic Preview</div>
+            
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+              <button class="sound-preview-btn" data-sfx="haptic" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);padding:10px 14px;border-radius:10px;color:inherit;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:space-between;">
+                <span>👆 Trackpad Taptic Click</span>
+                <span style="opacity:0.6;">▶</span>
+              </button>
+              <button class="sound-preview-btn" data-sfx="pop" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);padding:10px 14px;border-radius:10px;color:inherit;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:space-between;">
+                <span>🫧 macOS Pop (Volume)</span>
+                <span style="opacity:0.6;">▶</span>
+              </button>
+              <button class="sound-preview-btn" data-sfx="tink" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);padding:10px 14px;border-radius:10px;color:inherit;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:space-between;">
+                <span>🔔 macOS Tink (Glass Bell)</span>
+                <span style="opacity:0.6;">▶</span>
+              </button>
+              <button class="sound-preview-btn" data-sfx="switch" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);padding:10px 14px;border-radius:10px;color:inherit;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:space-between;">
+                <span>🔘 macOS Switch Click</span>
+                <span style="opacity:0.6;">▶</span>
+              </button>
+              <button class="sound-preview-btn" data-sfx="airdrop" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);padding:10px 14px;border-radius:10px;color:inherit;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:space-between;">
+                <span>📡 macOS AirDrop Chime</span>
+                <span style="opacity:0.6;">▶</span>
+              </button>
+              <button class="sound-preview-btn" data-sfx="trash" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);padding:10px 14px;border-radius:10px;color:inherit;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:space-between;">
+                <span>🗑️ macOS Paper Crumple</span>
+                <span style="opacity:0.6;">▶</span>
+              </button>
+            </div>
+          </div>
+        `;
+
+        const uiSoundsChk = contentArea.querySelector('#setting-ui-sounds');
+        const volFeedbackChk = contentArea.querySelector('#setting-vol-feedback');
+        const volSlider = contentArea.querySelector('#sound-vol-slider');
+        const volTxt = contentArea.querySelector('#sound-vol-txt');
+        const hapticPills = contentArea.querySelectorAll('.haptic-pill');
+        const previewBtns = contentArea.querySelectorAll('.sound-preview-btn');
+
+        if (uiSoundsChk) {
+          uiSoundsChk.onchange = () => {
+            const checked = uiSoundsChk.checked;
+            if (window.AppleAudioEngine) {
+              window.AppleAudioEngine.settings.soundEffectsEnabled = checked;
+              window.AppleAudioEngine.settings.touchHapticsEnabled = checked;
+            }
+          };
+        }
+
+        if (volFeedbackChk) {
+          volFeedbackChk.onchange = () => {
+            const checked = volFeedbackChk.checked;
+            if (window.AppleAudioEngine) {
+              window.AppleAudioEngine.settings.volumeFeedbackEnabled = checked;
+            }
+          };
+        }
+
+        if (volSlider && volTxt) {
+          volSlider.oninput = (e) => {
+            const val = parseInt(e.target.value);
+            volTxt.innerText = `${val}%`;
+            if (window.AppleAudioEngine) {
+              window.AppleAudioEngine.settings.masterVolume = val / 100;
+            }
+          };
+          volSlider.onchange = () => {
+            if (window.AppleAudioEngine) window.AppleAudioEngine.playPop();
+          };
+        }
+
+        hapticPills.forEach(pill => {
+          pill.onclick = () => {
+            const strength = pill.getAttribute('data-strength');
+            if (window.AppleAudioEngine) {
+              window.AppleAudioEngine.settings.hapticStrength = strength;
+              window.AppleAudioEngine.playHapticClick(strength);
+            }
+            renderTab('sound');
+          };
+        });
+
+        previewBtns.forEach(btn => {
+          btn.onclick = () => {
+            const sfx = btn.getAttribute('data-sfx');
+            if (!window.AppleAudioEngine) return;
+            if (sfx === 'haptic') window.AppleAudioEngine.playHapticClick();
+            else if (sfx === 'pop') window.AppleAudioEngine.playPop();
+            else if (sfx === 'tink') window.AppleAudioEngine.playTink();
+            else if (sfx === 'switch') window.AppleAudioEngine.playSwitch(true);
+            else if (sfx === 'airdrop') window.AppleAudioEngine.playAirDrop();
+            else if (sfx === 'trash') window.AppleAudioEngine.playTrash();
+          };
+        });
+      }
       else if (tab === 'about') {
         contentArea.innerHTML = `
           <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:20px 0;">
             <div style="margin-bottom:12px;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.2));display:flex;align-items:center;justify-content:center;">
-              <svg viewBox="0 0 170 170" width="64" height="64" fill="currentColor">
-                <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.7-3.08-7.71-7.96-12.02-14.64-5.87-9.14-10.45-19.46-13.73-30.98-3.28-11.51-4.92-22.18-4.92-32 0-14.15 3.73-26.05 11.2-35.7 7.46-9.65 16.9-14.54 28.32-14.68 5.44 0 11.21 1.45 17.32 4.35 6.11 2.91 10.13 4.41 12.07 4.5 1.74 0 6.09-1.61 13.06-4.82 6.96-3.21 13.1-4.66 18.42-4.35 13.72.68 24.64 5.75 32.74 15.22-11.97 7.24-17.84 17.06-17.6 29.47.24 9.98 4.09 18.25 11.55 24.81 7.46 6.56 16.42 10.37 26.88 11.44-2.58 8.16-5.77 16.59-9.58 25.3l.26-.26zM119.22 31.84c0-7.72 2.76-14.89 8.27-21.52 5.52-6.62 12.3-10.32 20.35-11.1 0 1.09.07 2.12.2 3.1.26 7.64-2.55 14.69-8.43 21.15-5.88 6.46-12.92 10.12-20.39 10.98 0-.87 0-1.74 0-2.61z"/>
+              <svg viewBox="0 0 384 512" width="54" height="72" fill="currentColor">
+                <path d="M318.7 268.7c-.2-36.2 16.4-61.2 41.2-90.8-23.7-34.7-59.4-48.4-100.1-49.9-42.8-1.5-82.5 25.5-102.8 25.5-20.4 0-51.9-25.2-85.3-24.5-43.7 1-84.5 25.7-107.4 64.9-46.3 79.9-11.8 196.4 32.7 261.3 21.6 31.4 47.4 66.8 81.6 65.5 32.2-1.3 44.5-20.7 83.1-20.7 38.6 0 49.9 20.7 84 20.7 35.3 0 57.1-32.9 78.9-64.4 24.9-36.3 35.1-71.5 35.5-73.4-.9-.3-52.9-20.4-53.2-80.4zM245.9 83.1c17.5-21.2 29.3-50.6 26.1-79.9-25.2 1-55.7 16.7-73.8 37.7-16.1 18.5-29.3 48.7-25.6 78 28.2 2.1 55.7-16.1 73.3-35.8z"/>
               </svg>
             </div>
             <h1 style="margin:0;font-size:24px;font-weight:700;">AliceOS</h1>
@@ -7755,20 +7945,9 @@ async function launchCamera() {
     });
 
     function playShutterSound() {
-      try {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'square';
-        osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.08);
-        gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.09);
-      } catch (e) {}
+      if (window.AppleAudioEngine) {
+        window.AppleAudioEngine.playShutter();
+      }
     }
 
     async function takeSnapshot() {
@@ -9600,161 +9779,354 @@ function startVoiceRecognition() {
   };
 }
 
-// System Audio Engine (Apple High-Fidelity Synthetic Acoustics)
+// ==========================================================
+// System Audio Engine (Apple High-Fidelity Synthetic Acoustics - macOS Sequoia Edition)
+// ==========================================================
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
 const AppleAudioEngine = {
+  settings: {
+    soundEffectsEnabled: true,
+    volumeFeedbackEnabled: true,
+    touchHapticsEnabled: true,
+    hapticStrength: 'medium', // 'light', 'medium', 'heavy'
+    masterVolume: 0.9
+  },
+
   ensureCtx() {
     if (audioCtx.state === 'suspended') {
       audioCtx.resume().catch(() => {});
     }
   },
 
-  playShutter() {
+  // 1. Apple Magic Trackpad / Taptic Engine Click (The authentic macOS touch/click sound)
+  playHapticClick(forceStrength) {
+    if (!this.settings.touchHapticsEnabled && !this.settings.soundEffectsEnabled) return;
     try {
       this.ensureCtx();
       const t = audioCtx.currentTime;
-      const bufferSize = Math.floor(audioCtx.sampleRate * 0.05);
-      const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-      const data = buffer.getChannelData(0);
-      for (let i = 0; i < bufferSize; i++) {
-        data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (audioCtx.sampleRate * 0.009));
+      const strength = forceStrength || this.settings.hapticStrength;
+      const isHeavy = strength === 'heavy';
+      const isLight = strength === 'light';
+
+      // (A) Micro-impulse transient (Glass surface contact impact: ~2.2ms bandpass noise)
+      const bufSize = Math.max(1, Math.floor(audioCtx.sampleRate * 0.0025));
+      const buf = audioCtx.createBuffer(1, bufSize, audioCtx.sampleRate);
+      const data = buf.getChannelData(0);
+      for (let i = 0; i < bufSize; i++) {
+        data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (audioCtx.sampleRate * 0.0005));
       }
       const noise = audioCtx.createBufferSource();
-      noise.buffer = buffer;
-      const filter = audioCtx.createBiquadFilter();
-      filter.type = 'bandpass';
-      filter.frequency.setValueAtTime(3200, t);
-      filter.Q.setValueAtTime(2.0, t);
-      
-      const gain = audioCtx.createGain();
-      gain.gain.setValueAtTime(0.35, t);
-      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.045);
-      
-      noise.connect(filter);
-      filter.connect(gain);
-      gain.connect(audioCtx.destination);
+      noise.buffer = buf;
+      const bFilter = audioCtx.createBiquadFilter();
+      bFilter.type = 'bandpass';
+      bFilter.frequency.setValueAtTime(isLight ? 2900 : (isHeavy ? 2000 : 2400), t);
+      bFilter.Q.setValueAtTime(2.2, t);
+
+      const nGain = audioCtx.createGain();
+      const nVol = (isLight ? 0.10 : (isHeavy ? 0.25 : 0.16)) * this.settings.masterVolume;
+      nGain.gain.setValueAtTime(nVol, t);
+      nGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.0025);
+
+      noise.connect(bFilter);
+      bFilter.connect(nGain);
+      nGain.connect(audioCtx.destination);
       noise.start(t);
-      
-      // Secondary snap
-      const t2 = t + 0.05;
-      const noise2 = audioCtx.createBufferSource();
-      noise2.buffer = buffer;
-      const filter2 = audioCtx.createBiquadFilter();
-      filter2.type = 'highpass';
-      filter2.frequency.setValueAtTime(2400, t2);
-      
-      const gain2 = audioCtx.createGain();
-      gain2.gain.setValueAtTime(0.4, t2);
-      gain2.gain.exponentialRampToValueAtTime(0.001, t2 + 0.06);
-      
-      noise2.connect(filter2);
-      filter2.connect(gain2);
-      gain2.connect(audioCtx.destination);
-      noise2.start(t2);
-    } catch (e) {}
+
+      // (B) Low-frequency chassis inertia body ("thump/thock": 155Hz damped triangle wave)
+      const osc = audioCtx.createOscillator();
+      const oGain = audioCtx.createGain();
+      const lFilter = audioCtx.createBiquadFilter();
+
+      osc.type = 'triangle';
+      const baseF = isLight ? 185 : (isHeavy ? 135 : 155);
+      osc.frequency.setValueAtTime(baseF, t);
+      osc.frequency.exponentialRampToValueAtTime(baseF * 0.7, t + 0.012);
+
+      lFilter.type = 'lowpass';
+      lFilter.frequency.setValueAtTime(360, t);
+
+      const oVol = (isLight ? 0.12 : (isHeavy ? 0.28 : 0.18)) * this.settings.masterVolume;
+      oGain.gain.setValueAtTime(oVol, t);
+      oGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.014);
+
+      osc.connect(lFilter);
+      lFilter.connect(oGain);
+      oGain.connect(audioCtx.destination);
+
+      osc.start(t);
+      osc.stop(t + 0.015);
+    } catch(e) {}
   },
 
-  playTrash() {
+  // 2. Official macOS "Pop" (The iconic volume feedback and popover sound)
+  playPop(scale = 1.0) {
+    if (!this.settings.volumeFeedbackEnabled && !this.settings.soundEffectsEnabled) return;
     try {
       this.ensureCtx();
       const t = audioCtx.currentTime;
-      const bufferSize = Math.floor(audioCtx.sampleRate * 0.18);
-      const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-      const data = buffer.getChannelData(0);
-      for (let i = 0; i < bufferSize; i++) {
-        data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (audioCtx.sampleRate * 0.035));
-      }
-      const noise = audioCtx.createBufferSource();
-      noise.buffer = buffer;
+
+      // Authentic Apple Pop: Warm, hollow acoustic wooden/bubble resonance around 640Hz
+      const osc1 = audioCtx.createOscillator();
+      const osc2 = audioCtx.createOscillator();
       const filter = audioCtx.createBiquadFilter();
-      filter.type = 'bandpass';
-      filter.frequency.setValueAtTime(1400, t);
-      filter.frequency.exponentialRampToValueAtTime(350, t + 0.17);
-      
       const gain = audioCtx.createGain();
-      gain.gain.setValueAtTime(0.3, t);
-      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.17);
-      
-      noise.connect(filter);
+
+      // Primary formant with slight pitch curve
+      osc1.type = 'sine';
+      osc1.frequency.setValueAtTime(670, t);
+      osc1.frequency.exponentialRampToValueAtTime(510, t + 0.038);
+
+      // Second harmonic giving the wooden/bubble body
+      osc2.type = 'sine';
+      osc2.frequency.setValueAtTime(1340, t);
+      osc2.frequency.exponentialRampToValueAtTime(1020, t + 0.025);
+
+      filter.type = 'bandpass';
+      filter.frequency.setValueAtTime(640, t);
+      filter.Q.setValueAtTime(3.0, t);
+
+      const vol = 0.26 * scale * this.settings.masterVolume;
+      gain.gain.setValueAtTime(vol, t);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.04);
+
+      osc1.connect(filter);
+      osc2.connect(filter);
       filter.connect(gain);
       gain.connect(audioCtx.destination);
-      noise.start(t);
-    } catch (e) {}
+
+      osc1.start(t);
+      osc2.start(t);
+      osc1.stop(t + 0.042);
+      osc2.stop(t + 0.042);
+    } catch(e) {}
   },
 
-  playAirDrop() {
+  // Throttled volume pop for smooth dragging on volume sliders
+  _lastVolPopTime: 0,
+  playThrottledVolumePop(scale = 1.0) {
+    const now = performance.now();
+    if (now - this._lastVolPopTime > 55) {
+      this._lastVolPopTime = now;
+      this.playPop(scale);
+    }
+  },
+
+  // 3. Official macOS "Tink" (Glass Bell Chime)
+  playTink() {
+    if (!this.settings.soundEffectsEnabled) return;
     try {
       this.ensureCtx();
       const t = audioCtx.currentTime;
       [
-        { freq: 587.33, start: 0, dur: 0.18 },
-        { freq: 880.00, start: 0.14, dur: 0.3 }
+        { freq: 2093.0, vol: 0.22, dur: 0.24 }, // C7
+        { freq: 4186.0, vol: 0.07, dur: 0.12 }, // C8
+        { freq: 6279.0, vol: 0.02, dur: 0.05 }  // G8
+      ].forEach(comp => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(comp.freq, t);
+        gain.gain.setValueAtTime(comp.vol * this.settings.masterVolume, t);
+        gain.gain.exponentialRampToValueAtTime(0.0001, t + comp.dur);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(t);
+        osc.stop(t + comp.dur + 0.01);
+      });
+    } catch(e) {}
+  },
+
+  // 4. Official macOS / iOS Switch Click (Control Center & Settings toggle)
+  playSwitch(isOn = true) {
+    if (!this.settings.soundEffectsEnabled) return;
+    try {
+      this.ensureCtx();
+      const t = audioCtx.currentTime;
+      const f1 = isOn ? 1900 : 1400;
+      const f2 = isOn ? 2500 : 1100;
+      this._playMicroImpulse(t, f1, 0.14);
+      this._playMicroImpulse(t + 0.012, f2, 0.09);
+    } catch(e) {}
+  },
+
+  _playMicroImpulse(t, freq, vol) {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    const filter = audioCtx.createBiquadFilter();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(freq, t);
+    filter.type = 'bandpass';
+    filter.frequency.setValueAtTime(freq, t);
+    filter.Q.setValueAtTime(2.0, t);
+    gain.gain.setValueAtTime(vol * this.settings.masterVolume, t);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.008);
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start(t);
+    osc.stop(t + 0.01);
+  },
+
+  // 5. Official macOS "Trash" (Paper Crumple / Wastebasket)
+  playTrash() {
+    if (!this.settings.soundEffectsEnabled) return;
+    try {
+      this.ensureCtx();
+      const t = audioCtx.currentTime;
+      [
+        { delay: 0, dur: 0.14, fStart: 1600, fEnd: 500, vol: 0.3 },
+        { delay: 0.035, dur: 0.11, fStart: 2400, fEnd: 800, vol: 0.22 },
+        { delay: 0.075, dur: 0.16, fStart: 950, fEnd: 280, vol: 0.35 }
+      ].forEach(layer => {
+        const bufSize = Math.max(1, Math.floor(audioCtx.sampleRate * layer.dur));
+        const buf = audioCtx.createBuffer(1, bufSize, audioCtx.sampleRate);
+        const data = buf.getChannelData(0);
+        for (let i = 0; i < bufSize; i++) {
+          data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (audioCtx.sampleRate * (layer.dur * 0.35)));
+        }
+        const noise = audioCtx.createBufferSource();
+        noise.buffer = buf;
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(layer.fStart, t + layer.delay);
+        filter.frequency.exponentialRampToValueAtTime(layer.fEnd, t + layer.delay + layer.dur);
+        filter.Q.setValueAtTime(2.5, t + layer.delay);
+
+        const gain = audioCtx.createGain();
+        gain.gain.setValueAtTime(layer.vol * this.settings.masterVolume, t + layer.delay);
+        gain.gain.exponentialRampToValueAtTime(0.0001, t + layer.delay + layer.dur);
+
+        noise.connect(filter);
+        filter.connect(gain);
+        gain.connect(audioCtx.destination);
+        noise.start(t + layer.delay);
+      });
+    } catch(e) {}
+  },
+
+  // 6. Official macOS / iOS Shutter (SLR Mirror & Dual Curtain Shutter)
+  playShutter() {
+    if (!this.settings.soundEffectsEnabled) return;
+    try {
+      this.ensureCtx();
+      const t = audioCtx.currentTime;
+      // Curtain 1 Snap
+      this._playShutterBlade(t, 3200, 0.35);
+      // Low mirror slap
+      const osc = audioCtx.createOscillator();
+      const oGain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(180, t + 0.015);
+      osc.frequency.exponentialRampToValueAtTime(60, t + 0.045);
+      oGain.gain.setValueAtTime(0.22 * this.settings.masterVolume, t + 0.015);
+      oGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.05);
+      osc.connect(oGain);
+      oGain.connect(audioCtx.destination);
+      osc.start(t + 0.015);
+      osc.stop(t + 0.055);
+
+      // Curtain 2 Catch
+      this._playShutterBlade(t + 0.052, 2600, 0.38);
+    } catch(e) {}
+  },
+
+  _playShutterBlade(t, freq, vol) {
+    const bufSize = Math.max(1, Math.floor(audioCtx.sampleRate * 0.035));
+    const buf = audioCtx.createBuffer(1, bufSize, audioCtx.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < bufSize; i++) {
+      data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (audioCtx.sampleRate * 0.007));
+    }
+    const noise = audioCtx.createBufferSource();
+    noise.buffer = buf;
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = 'bandpass';
+    filter.frequency.setValueAtTime(freq, t);
+    filter.Q.setValueAtTime(2.2, t);
+    const gain = audioCtx.createGain();
+    gain.gain.setValueAtTime(vol * this.settings.masterVolume, t);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.035);
+    noise.connect(filter);
+    filter.connect(gain);
+    gain.connect(audioCtx.destination);
+    noise.start(t);
+  },
+
+  // 7. Official macOS Notification & AirDrop Chord (Pure Apple Chime)
+  playAirDrop() {
+    if (!this.settings.soundEffectsEnabled) return;
+    try {
+      this.ensureCtx();
+      const t = audioCtx.currentTime;
+      [
+        { freq: 739.99, start: 0, dur: 0.28, vol: 0.22 },     // F#5
+        { freq: 1108.73, start: 0.12, dur: 0.45, vol: 0.28 },  // C#6
+        { freq: 1479.98, start: 0.13, dur: 0.32, vol: 0.09 }   // F#6 (shimmer)
       ].forEach(note => {
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
         osc.type = 'sine';
         osc.frequency.setValueAtTime(note.freq, t + note.start);
-        
         gain.gain.setValueAtTime(0.001, t + note.start);
-        gain.gain.linearRampToValueAtTime(0.2, t + note.start + 0.02);
-        gain.gain.exponentialRampToValueAtTime(0.001, t + note.start + note.dur);
-        
+        gain.gain.linearRampToValueAtTime(note.vol * this.settings.masterVolume, t + note.start + 0.015);
+        gain.gain.exponentialRampToValueAtTime(0.0001, t + note.start + note.dur);
         osc.connect(gain);
         gain.connect(audioCtx.destination);
         osc.start(t + note.start);
-        osc.stop(t + note.start + note.dur);
+        osc.stop(t + note.start + note.dur + 0.01);
       });
-    } catch (e) {}
+    } catch(e) {}
   },
 
+  // 8. Official macOS Glass Chime (Bell)
   playGlassChime() {
-    try {
-      this.ensureCtx();
-      const t = audioCtx.currentTime;
-      [1318.5, 2637.0].forEach((freq, idx) => {
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(freq, t);
-        const initVol = idx === 0 ? 0.22 : 0.08;
-        gain.gain.setValueAtTime(initVol, t);
-        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.6);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start(t);
-        osc.stop(t + 0.6);
-      });
-    } catch (e) {}
-  },
-
-  playPop() {
-    playClickSound();
+    this.playTink();
   }
 };
-window.AppleAudioEngine = AppleAudioEngine;
 
-function playClickSound() {
-  if (audioCtx.state === 'suspended') audioCtx.resume();
-  const osc = audioCtx.createOscillator();
-  const gain = audioCtx.createGain();
-  osc.connect(gain);
-  gain.connect(audioCtx.destination);
-  osc.type = 'sine';
-  osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-  osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.05);
-  gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
-  osc.start();
-  osc.stop(audioCtx.currentTime + 0.05);
+window.AppleAudioEngine = AppleAudioEngine;
+window.appleAudio = AppleAudioEngine;
+
+// Backward compatible aliases
+function playClickSound(strength) {
+  AppleAudioEngine.playHapticClick(strength);
+}
+window.playClickSound = playClickSound;
+
+// Global macOS Haptic Touch & UI Click Dispatcher
+// When user taps/clicks any interactive element or touchscreen:
+let lastGlobalClickTime = 0;
+function handleGlobalTouchInteraction(e) {
+  const now = performance.now();
+  if (now - lastGlobalClickTime < 35) return; // Prevent double-trigger from pointer+mouse redundancy
+
+  const target = e.target;
+  if (!target) return;
+
+  // Never play sound when typing in text fields
+  if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) {
+    return;
+  }
+
+  // Identify interactive macOS UI elements
+  const isInteractive = !!target.closest(
+    'button, a, select, [role="button"], .dock-icon, .menu-item, .ventura-nav-item, ' +
+    '.ventura-card, .ventura-row, .control, .mac-tab, .cc-icon-btn, .cc-card, .cc-slider, ' +
+    '.finder-item, .window-titlebar, .widget, .btn, .qt-track-pill, .mac-qt-btn, ' +
+    '.finder-view-btn, .finder-tag-circle, .tab, .seg-btn, .calc-btn, ' +
+    '[onclick], [data-tab], [data-action], [data-app]'
+  );
+
+  // If interactive element, or direct physical touchscreen tap, trigger authentic Apple Haptic Click!
+  if (isInteractive || e.pointerType === 'touch') {
+    lastGlobalClickTime = now;
+    const isFirm = !!target.closest('.control.close, .finder-open-btn, .bold, .calc-op');
+    AppleAudioEngine.playHapticClick(isFirm ? 'heavy' : 'medium');
+  }
 }
 
-// Bind click sound to global clicks (except inputs/textareas to avoid spam)
-document.addEventListener('mousedown', (e) => {
-  if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
-    playClickSound();
-  }
-});
+document.addEventListener('pointerdown', handleGlobalTouchInteraction, { capture: true, passive: true });
 
 // macOS Lock Screen Logic
 let idleTimer;
@@ -10684,7 +11056,7 @@ async function launchVideo() {
   if (res.success) {
     const pid = res.data.pid;
     const mediaTracks = [
-      { id: 'sequoia', title: 'macOS Sequoia Keynote & Intelligence', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4', icon: '<svg viewBox="0 0 170 170" width="11" height="11" fill="currentColor" style="display:inline-block;vertical-align:-1px;margin-right:2px;"><path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.7-3.08-7.71-7.96-12.02-14.64-5.87-9.14-10.45-19.46-13.73-30.98-3.28-11.51-4.92-22.18-4.92-32 0-14.15 3.73-26.05 11.2-35.7 7.46-9.65 16.9-14.54 28.32-14.68 5.44 0 11.21 1.45 17.32 4.35 6.11 2.91 10.13 4.41 12.07 4.5 1.74 0 6.09-1.61 13.06-4.82 6.96-3.21 13.1-4.66 18.42-4.35 13.72.68 24.64 5.75 32.74 15.22-11.97 7.24-17.84 17.06-17.6 29.47.24 9.98 4.09 18.25 11.55 24.81 7.46 6.56 16.42 10.37 26.88 11.44-2.58 8.16-5.77 16.59-9.58 25.3l.26-.26zM119.22 31.84c0-7.72 2.76-14.89 8.27-21.52 5.52-6.62 12.3-10.32 20.35-11.1 0 1.09.07 2.12.2 3.1.26 7.64-2.55 14.69-8.43 21.15-5.88 6.46-12.92 10.12-20.39 10.98 0-.87 0-1.74 0-2.61z"/></svg>' },
+      { id: 'sequoia', title: 'macOS Sequoia Keynote & Intelligence', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4', icon: '<svg viewBox="0 0 384 512" width="10.5" height="14" fill="currentColor" style="display:inline-block;vertical-align:-1.5px;margin-right:2px;"><path d="M318.7 268.7c-.2-36.2 16.4-61.2 41.2-90.8-23.7-34.7-59.4-48.4-100.1-49.9-42.8-1.5-82.5 25.5-102.8 25.5-20.4 0-51.9-25.2-85.3-24.5-43.7 1-84.5 25.7-107.4 64.9-46.3 79.9-11.8 196.4 32.7 261.3 21.6 31.4 47.4 66.8 81.6 65.5 32.2-1.3 44.5-20.7 83.1-20.7 38.6 0 49.9 20.7 84 20.7 35.3 0 57.1-32.9 78.9-64.4 24.9-36.3 35.1-71.5 35.5-73.4-.9-.3-52.9-20.4-53.2-80.4zM245.9 83.1c17.5-21.2 29.3-50.6 26.1-79.9-25.2 1-55.7 16.7-73.8 37.7-16.1 18.5-29.3 48.7-25.6 78 28.2 2.1 55.7-16.1 73.3-35.8z"/></svg>' },
       { id: 'bunny', title: 'Big Buck Bunny (Apple 4K ProRes)', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', icon: '🎬' },
       { id: 'tears', title: 'Tears of Steel (Sci-Fi Cinema)', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4', icon: '🚀' }
     ];
@@ -14344,21 +14716,11 @@ initQuickNote();
 // Control Center Slider Haptics & Dynamic Icons
 // ==========================================
 function playVolumeFeedbackBeep() {
-  try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(800, ctx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.07);
-    gain.gain.setValueAtTime(0.12, ctx.currentTime);
-    gain.gain.linearRampToValueAtTime(0.001, ctx.currentTime + 0.07);
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.start();
-    osc.stop(ctx.currentTime + 0.07);
-  } catch(e) {}
+  if (window.AppleAudioEngine) {
+    window.AppleAudioEngine.playPop();
+  }
 }
+window.playVolumeFeedbackBeep = playVolumeFeedbackBeep;
 
 function initCCSliderHaptics() {
   const volSlider = document.getElementById('cc-volume');
@@ -14380,10 +14742,15 @@ function initCCSliderHaptics() {
       if (typeof showVolumeHUD === 'function') {
         showVolumeHUD(val);
       }
+      if (window.AppleAudioEngine) {
+        window.AppleAudioEngine.playThrottledVolumePop(Math.max(0.2, val / 100));
+      }
     });
 
     volSlider.addEventListener('change', () => {
-      playVolumeFeedbackBeep();
+      if (window.AppleAudioEngine) {
+        window.AppleAudioEngine.playPop();
+      }
     });
   }
 
@@ -14460,11 +14827,14 @@ function initSoundPopover() {
       if (ccVol && ccVol !== e.target) {
         ccVol.value = val;
       }
+      if (window.AppleAudioEngine) {
+        window.AppleAudioEngine.playThrottledVolumePop(Math.max(0.2, val / 100));
+      }
     });
 
     slider.addEventListener('change', () => {
-      if (typeof playVolumeFeedbackBeep === 'function') {
-        playVolumeFeedbackBeep();
+      if (window.AppleAudioEngine) {
+        window.AppleAudioEngine.playPop();
       }
     });
   }
