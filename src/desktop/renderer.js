@@ -1,13 +1,25 @@
-// Global Selected File Management (syncing with contextBridge & Quick Look)
+// ====================================================
+// Phase 73: Unified Reactive Desktop State Store & Global APIs
+// ====================================================
+window.aliceDesktopState = {
+  selectedFile: null,
+  stageManagerEnabled: false,
+  islandEnabled: true,
+  wallpaperSetting: 'dynamic-solar'
+};
+
+// Selection State
 window.selectedFile = null;
 window.setSystemSelectedFile = function(file) {
   window.selectedFile = file;
+  window.aliceDesktopState.selectedFile = file;
   if (window.aliceOS && typeof window.aliceOS.setSelectedFile === 'function') {
     try { window.aliceOS.setSelectedFile(file); } catch (e) {}
   }
 };
 window.getSystemSelectedFile = function() {
   if (window.selectedFile) return window.selectedFile;
+  if (window.aliceDesktopState.selectedFile) return window.aliceDesktopState.selectedFile;
   if (window.aliceOS && typeof window.aliceOS.getSelectedFile === 'function') {
     try {
       const f = window.aliceOS.getSelectedFile();
@@ -15,6 +27,87 @@ window.getSystemSelectedFile = function() {
     } catch (e) {}
   }
   return null;
+};
+
+// Stage Manager State
+window.isStageManagerEnabled = function() {
+  return !!window.aliceDesktopState.stageManagerEnabled;
+};
+window.setStageManagerEnabled = function(val) {
+  window.aliceDesktopState.stageManagerEnabled = !!val;
+};
+
+// Dynamic Island State
+window.isIslandEnabled = function() {
+  return window.aliceDesktopState.islandEnabled !== false;
+};
+window.setIslandEnabled = function(val) {
+  window.aliceDesktopState.islandEnabled = !!val;
+};
+
+// Wallpaper State
+window.getWallpaperSetting = function() {
+  return window.aliceDesktopState.wallpaperSetting || 'dynamic-solar';
+};
+window.setWallpaperSetting = function(val) {
+  window.aliceDesktopState.wallpaperSetting = val;
+};
+
+// Dock Badges API
+window.setDockBadge = function(appName, countOrText) {
+  const iconEl = document.querySelector(`.dock-icon[data-app="${appName.toLowerCase()}"]`);
+  if (!iconEl) return;
+
+  let badge = iconEl.querySelector('.dock-badge');
+  if (!countOrText || countOrText === 0 || countOrText === '0') {
+    if (badge) badge.remove();
+    return;
+  }
+
+  if (!badge) {
+    badge = document.createElement('div');
+    badge.className = 'dock-badge';
+    iconEl.appendChild(badge);
+  }
+  badge.innerText = countOrText;
+};
+
+// Dynamic Island Global API
+let islandGlobalTimer = null;
+window.notifyIsland = function(icon, title, valuePct) {
+  if (typeof window.isIslandEnabled === 'function' && !window.isIslandEnabled()) return;
+  const island = document.getElementById('dynamic-island');
+  const content = document.getElementById('island-content');
+  const iIcon = document.getElementById('island-icon');
+  const iTitle = document.getElementById('island-title');
+  const iBar = document.getElementById('island-bar');
+  
+  if (!island || !content) return;
+  
+  if (typeof icon === 'string' && (icon.includes('<svg') || icon.includes('<div') || icon.includes('<img'))) {
+    if (iIcon) iIcon.innerHTML = icon;
+  } else {
+    if (iIcon) iIcon.innerText = icon;
+  }
+  if (iTitle) iTitle.innerText = title;
+  if (iBar) iBar.style.width = `${valuePct}%`;
+  
+  // Expand with fluid morphing
+  island.style.width = '320px';
+  island.style.height = '64px';
+  island.style.borderRadius = '32px';
+  
+  setTimeout(() => { if (content) content.style.opacity = '1'; }, 150);
+  
+  clearTimeout(islandGlobalTimer);
+  islandGlobalTimer = setTimeout(() => {
+    if (content) content.style.opacity = '0';
+    setTimeout(() => {
+      island.style.width = '120px';
+      island.style.height = '30px';
+      island.style.borderRadius = '20px';
+    }, 200);
+  }, 2000);
 };
 
 // ====================================================
@@ -3317,14 +3410,15 @@ function updateTime() {
 let zIndexCounter = 100;
 const windows = new Map(); // pid -> window element
 
-window.aliceOS = window.aliceOS || {};
-window.aliceOS.stageManagerEnabled = false;
 let currentStageActivePid = null;
 let stagePeeked = false;
 
 function toggleStageManager(forceState) {
-  const newState = forceState !== undefined ? forceState : !window.aliceOS.stageManagerEnabled;
-  window.aliceOS.stageManagerEnabled = newState;
+  const currentState = typeof window.isStageManagerEnabled === 'function' ? window.isStageManagerEnabled() : false;
+  const newState = forceState !== undefined ? forceState : !currentState;
+  if (typeof window.setStageManagerEnabled === 'function') {
+    window.setStageManagerEnabled(newState);
+  }
   
   const ccBtn = document.getElementById('cc-stage-manager-btn');
   const shelf = document.getElementById('stage-manager-shelf');
@@ -3369,7 +3463,8 @@ function toggleStageManager(forceState) {
 }
 
 function updateStageManager(targetWin) {
-  if (!window.aliceOS || !window.aliceOS.stageManagerEnabled) return;
+  const isSM = typeof window.isStageManagerEnabled === 'function' ? window.isStageManagerEnabled() : false;
+  if (!isSM) return;
   const allWindows = Array.from(windows.values()).filter(w => !w.dataset.isMinimized);
   const shelf = document.getElementById('stage-manager-shelf');
   
@@ -3481,7 +3576,7 @@ function focusWindow(win) {
   }
 
   // macOS Stage Manager support
-  if (window.aliceOS && window.aliceOS.stageManagerEnabled) {
+  if (typeof window.isStageManagerEnabled === 'function' && window.isStageManagerEnabled()) {
     updateStageManager(win);
   }
 }
@@ -3694,7 +3789,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // Stage Manager Desktop Peek
-      if (window.aliceOS && window.aliceOS.stageManagerEnabled && currentStageActivePid) {
+      if (typeof window.isStageManagerEnabled === 'function' && window.isStageManagerEnabled() && currentStageActivePid) {
         const activeWin = document.getElementById(currentStageActivePid);
         if (activeWin) {
           stagePeeked = !stagePeeked;
@@ -4250,9 +4345,9 @@ function createWindow(pid, title, contentHtml, explicitAppKey = null) {
     win.style.transition = 'none'; // clear transition so dragging doesn't lag
   }, 500);
   
-  if (window.aliceOS && window.aliceOS.notifyIsland) {
+  if (window.aliceOS && window.notifyIsland) {
     const iconSvg = getAppIconSvg(appKey || 'finder', 24);
-    window.aliceOS.notifyIsland(iconSvg, localizedTitle, 100);
+    window.notifyIsland(iconSvg, localizedTitle, 100);
   }
 
   // Setup dragging
@@ -4496,7 +4591,7 @@ function createWindow(pid, title, contentHtml, explicitAppKey = null) {
       }
       win.remove();
       windows.delete(pid);
-      if (window.aliceOS && window.aliceOS.stageManagerEnabled) {
+      if (typeof window.isStageManagerEnabled === 'function' && window.isStageManagerEnabled()) {
         updateStageManager();
       }
       if (appKey) {
@@ -4533,7 +4628,7 @@ function createWindow(pid, title, contentHtml, explicitAppKey = null) {
   minBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     win.dataset.isMinimized = 'true';
-    if (window.aliceOS && window.aliceOS.stageManagerEnabled) {
+    if (typeof window.isStageManagerEnabled === 'function' && window.isStageManagerEnabled()) {
       updateStageManager();
     }
     
@@ -4644,7 +4739,7 @@ function createWindow(pid, title, contentHtml, explicitAppKey = null) {
 
 // macOS Sequoia 15.x — iPhone Mirroring (iPhone 镜像互联)
 async function launchIPhoneMirroring() {
-  if (window.aliceOS && window.aliceOS.setDockBadge) window.aliceOS.setDockBadge('iphonemirror', 0);
+  if (window.aliceOS && window.setDockBadge) window.setDockBadge('iphonemirror', 0);
   const res = await window.aliceOS.pm.spawn('iphonemirror');
   if (!res.success) return;
   const pid = res.data.pid;
@@ -5086,8 +5181,8 @@ async function launchIPhoneMirroring() {
       msgList.appendChild(aliceBubble);
       msgList.scrollTop = msgList.scrollHeight;
 
-      if (window.aliceOS && window.aliceOS.notifyIsland) {
-        window.aliceOS.notifyIsland('💬', 'Alice: ' + reply.slice(0, 15), 100);
+      if (window.aliceOS && window.notifyIsland) {
+        window.notifyIsland('💬', 'Alice: ' + reply.slice(0, 15), 100);
       }
     }, 800);
   }
@@ -5193,7 +5288,7 @@ async function launchIPhoneMirroring() {
 
 // App Launchers
 async function launchTerminal() {
-  if (window.aliceOS && window.aliceOS.setDockBadge) window.aliceOS.setDockBadge('terminal', 0);
+  if (window.aliceOS && window.setDockBadge) window.setDockBadge('terminal', 0);
   const res = await window.aliceOS.pm.spawn('terminal');
   if (!res.success) return;
   const pid = res.data.pid;
@@ -5842,7 +5937,7 @@ async function launchSystemInfo() {
 }
 
 async function launchNotes(filePath = null) {
-  if (window.aliceOS && window.aliceOS.setDockBadge) window.aliceOS.setDockBadge('notes', 0);
+  if (window.aliceOS && window.setDockBadge) window.setDockBadge('notes', 0);
   const res = await window.aliceOS.pm.spawn('notes');
   if (!res.success) return;
   const pid = res.data.pid;
@@ -7913,26 +8008,36 @@ const ccMenu = document.getElementById('control-center');
 const brightnessSlider = document.getElementById('cc-brightness');
 const brightnessOverlay = document.getElementById('brightness-overlay');
 
-ccBtn.addEventListener('click', (e) => {
-  e.stopPropagation();
+function toggleControlCenter() {
+  const ccMenu = document.getElementById('control-center');
+  if (!ccMenu) return;
   if (ccMenu.style.display === 'flex') {
     ccMenu.style.opacity = '0';
     ccMenu.style.transform = 'translateY(-20px)';
     setTimeout(() => ccMenu.style.display = 'none', 300);
   } else {
-    if (ncActive) toggleNotificationCenter();
+    if (typeof ncActive !== 'undefined' && ncActive && typeof toggleNotificationCenter === 'function') {
+      toggleNotificationCenter();
+    }
     ccMenu.style.display = 'flex';
-    // Force reflow
     void ccMenu.offsetWidth;
     ccMenu.style.opacity = '1';
     ccMenu.style.transform = 'translateY(0)';
   }
+}
+
+ccBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  toggleControlCenter();
 });
 
 // Dynamic Island Logic
 let islandTimer;
-window.aliceOS.notifyIsland = (icon, title, valuePct) => {
-  if (window.aliceOS.islandEnabled === false) return;
+window.notifyIslandLocal = (icon, title, valuePct) => {
+  if (typeof window.notifyIsland === 'function') {
+    window.notifyIsland(icon, title, valuePct);
+    return;
+  }
   const island = document.getElementById('dynamic-island');
   const content = document.getElementById('island-content');
   const iIcon = document.getElementById('island-icon');
@@ -7972,7 +8077,7 @@ if (brightnessSlider) {
     const val = parseInt(e.target.value);
     const opacity = (100 - val) * 0.8 / 100;
     brightnessOverlay.style.opacity = opacity.toString();
-    window.aliceOS.notifyIsland(getSFSymbol('sun', 20, '#ff9500'), t('island_brightness', 'Brightness'), val);
+    window.notifyIsland(getSFSymbol('sun', 20, '#ff9500'), t('island_brightness', 'Brightness'), val);
   });
 }
 
@@ -7980,7 +8085,7 @@ const volumeSlider = document.getElementById('cc-volume');
 if (volumeSlider) {
   volumeSlider.addEventListener('input', (e) => {
     const val = parseInt(e.target.value);
-    window.aliceOS.notifyIsland(getSFSymbol('volume-3', 20, '#ffffff'), t('island_volume', 'Volume'), val);
+    window.notifyIsland(getSFSymbol('volume-3', 20, '#ffffff'), t('island_volume', 'Volume'), val);
   });
 }
 
@@ -8155,7 +8260,8 @@ async function launchSettings() {
           <h2 style="font-size:20px;margin:0 0 16px 0;font-weight:600;">${t('settings_wallpaper', 'Wallpaper')}</h2>
           <div style="display:grid;grid-template-columns:repeat(2, 1fr);gap:16px;">
             ${wallpapers.map(wp => {
-              const isActive = (window.aliceOS.wallpaperSetting === wp.val) || (currentSettings.wallpaper === wp.val);
+              const curWp = typeof window.getWallpaperSetting === 'function' ? window.getWallpaperSetting() : 'dynamic-solar';
+              const isActive = (curWp === wp.val) || (currentSettings.wallpaper === wp.val);
               const bgStyle = wp.preview ? `background-image:url('${wp.preview}');background-size:cover;background-position:center;` : `background:${wp.bg};`;
               return `
                 <div class="wp-card" data-val="${wp.val}" style="border-radius:12px;overflow:hidden;border:2px solid ${isActive ? '#007aff' : 'rgba(0,0,0,0.1)'};box-shadow:0 4px 12px rgba(0,0,0,0.1);cursor:pointer;transition:transform 0.2s ease;">
@@ -8189,7 +8295,7 @@ async function launchSettings() {
         contentArea.querySelectorAll('.wp-card').forEach(c => {
           c.onclick = async () => {
             const val = c.dataset.val;
-            window.aliceOS.wallpaperSetting = val;
+            if (typeof window.setWallpaperSetting === 'function') window.setWallpaperSetting(val);
             if (val === 'dynamic-solar' || val === 'dynamic-mojave') {
               updateSolarDynamicWallpaper();
             } else {
@@ -8208,7 +8314,7 @@ async function launchSettings() {
           slider.oninput = (e) => {
             const h = parseFloat(e.target.value);
             simulatedSolarHour = h;
-            window.aliceOS.wallpaperSetting = 'dynamic-solar';
+            if (typeof window.setWallpaperSetting === 'function') window.setWallpaperSetting('dynamic-solar');
             updateSolarDynamicWallpaper(h);
             const phase = getSolarPhaseForHour(h);
             const hh = Math.floor(h).toString().padStart(2, '0');
@@ -8228,8 +8334,8 @@ async function launchSettings() {
         }
       }
       else if (tab === 'desktop') {
-        const isSM = window.aliceOS.stageManagerEnabled;
-        const isDI = window.aliceOS.islandEnabled !== false;
+        const isSM = typeof window.isStageManagerEnabled === 'function' ? window.isStageManagerEnabled() : false;
+        const isDI = typeof window.isIslandEnabled === 'function' ? window.isIslandEnabled() : true;
         const is3D = currentSettings.isometric === 'on';
 
         contentArea.innerHTML = `
@@ -8276,7 +8382,7 @@ async function launchSettings() {
 
         const diToggle = contentArea.querySelector('#ventura-di-toggle');
         diToggle.onchange = (e) => {
-          window.aliceOS.islandEnabled = e.target.checked;
+          if (typeof window.setIslandEnabled === 'function') window.setIslandEnabled(e.target.checked);
           const islandDom = document.getElementById('dynamic-island');
           if (islandDom) islandDom.style.display = e.target.checked ? 'flex' : 'none';
           saveSettings({ island: e.target.checked ? 'on' : 'off' });
@@ -10024,7 +10130,8 @@ function getSolarPhaseForHour(hour) {
 }
 
 function updateSolarDynamicWallpaper(forceHour = null) {
-  const isDynamic = (window.aliceOS && (window.aliceOS.wallpaperSetting === 'dynamic-solar' || window.aliceOS.wallpaperSetting === 'dynamic-mojave'));
+  const curWpSetting = typeof window.getWallpaperSetting === 'function' ? window.getWallpaperSetting() : 'dynamic-solar';
+  const isDynamic = (curWpSetting === 'dynamic-solar' || curWpSetting === 'dynamic-mojave');
   const layer = document.getElementById('dynamic-wallpaper-layer');
   const overlay = document.getElementById('dynamic-wallpaper-overlay');
   
@@ -10149,7 +10256,8 @@ function updateClock() {
     if (ncDay.innerText !== newNcDay) ncDay.innerText = newNcDay;
   }
   
-  if (window.aliceOS && (window.aliceOS.wallpaperSetting === 'dynamic-solar' || window.aliceOS.wallpaperSetting === 'dynamic-mojave')) {
+  const activeWp = typeof window.getWallpaperSetting === 'function' ? window.getWallpaperSetting() : 'dynamic-solar';
+  if (activeWp === 'dynamic-solar' || activeWp === 'dynamic-mojave') {
     updateSolarDynamicWallpaper();
   }
 
@@ -11330,7 +11438,7 @@ loginUser = async function() {
           setSystemLanguage(settings.lang, false);
         }
         if (settings.wallpaper) {
-           window.aliceOS.wallpaperSetting = settings.wallpaper;
+           if (typeof window.setWallpaperSetting === 'function') window.setWallpaperSetting(settings.wallpaper);
            if (settings.wallpaper !== 'dynamic-mojave' && settings.wallpaper !== 'dynamic-solar') {
              applySystemWallpaper(settings.wallpaper);
            }
@@ -11350,7 +11458,10 @@ loginUser = async function() {
             document.body.style.overflow = 'hidden';
          }
          
-         window.aliceOS.islandEnabled = settings.island !== 'off';
+         if (typeof window.setIslandEnabled === 'function') window.setIslandEnabled(settings.island !== 'off');
+         if (settings.stageManager === 'on') {
+           toggleStageManager(true);
+         }
          const islandDom = document.getElementById('dynamic-island');
          if (islandDom) islandDom.style.display = window.aliceOS.islandEnabled ? 'flex' : 'none';
       }
@@ -13709,8 +13820,8 @@ function sendAirDrop(deviceName, deviceIcon) {
   if (window.AppleAudioEngine) window.AppleAudioEngine.playAirDrop();
   else if (typeof playClickSound === 'function') playClickSound();
   showNotification(t('airdrop_title', 'AirDrop'), t('notif_airdrop_sent', 'Sent file to %s').replace('%s', `${deviceName} ${deviceIcon}`));
-  if (window.aliceOS && window.aliceOS.notifyIsland) {
-    window.aliceOS.notifyIsland(deviceIcon, `AirDrop to ${deviceName}`, 100);
+  if (window.aliceOS && window.notifyIsland) {
+    window.notifyIsland(deviceIcon, `AirDrop to ${deviceName}`, 100);
   }
   setTimeout(() => {
     closeAirDrop();
@@ -13760,7 +13871,7 @@ document.addEventListener('keyup', (e) => {
     
     if (openAppList[switcherIndex]) {
       focusWindow(openAppList[switcherIndex]);
-      if (window.aliceOS && window.aliceOS.stageManagerEnabled) {
+      if (typeof window.isStageManagerEnabled === 'function' && window.isStageManagerEnabled()) {
         updateStageManager(openAppList[switcherIndex]);
       }
     }
@@ -18850,40 +18961,87 @@ function skipTrack(dir) {
 }
 
 // ==========================================
-// macOS Dock Badge Helper API
+// macOS Dock Badge Initializer
 // ==========================================
-window.aliceOS = window.aliceOS || {};
-window.aliceOS.setDockBadge = function(appName, countOrText) {
-  const iconEl = document.querySelector(`.dock-icon[data-app="${appName.toLowerCase()}"]`);
-  if (!iconEl) return;
-
-  let badge = iconEl.querySelector('.dock-badge');
-  if (!countOrText || countOrText === 0 || countOrText === '0') {
-    if (badge) badge.remove();
-    return;
-  }
-
-  if (!badge) {
-    badge = document.createElement('div');
-    badge.className = 'dock-badge';
-    iconEl.appendChild(badge);
-  }
-  badge.innerText = countOrText;
-};
-
-// Set initial sample dock badges for lively macOS feel
 setTimeout(() => {
-  if (window.aliceOS && window.aliceOS.setDockBadge) {
-    window.aliceOS.setDockBadge('notes', '2');
-    window.aliceOS.setDockBadge('terminal', '1');
+  if (typeof window.setDockBadge === 'function') {
+    window.setDockBadge('notes', '2');
+    window.setDockBadge('terminal', '1');
   }
-}, 1500);
+}, 1200);
 
 // ==========================================
 // macOS Monterey/Ventura/Sonoma Quick Note Engine
 // ==========================================
 let quickNoteOpen = false;
 let quickNoteSaveTimer = null;
+
+function toggleQuickNote() {
+  if (quickNoteOpen) {
+    closeQuickNote();
+  } else {
+    openQuickNote();
+  }
+}
+
+// ==========================================
+// Phase 73: macOS Hot Corners (活动角落 / 触发角) Engine
+// ==========================================
+let hotCornerTimer = null;
+let activeHotCorner = null;
+
+function initHotCorners() {
+  document.addEventListener('mousemove', (e) => {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    const cornerSize = 12;
+
+    let corner = null;
+    if (e.clientX <= cornerSize && e.clientY <= cornerSize) corner = 'top-left';
+    else if (e.clientX >= w - cornerSize && e.clientY <= cornerSize) corner = 'top-right';
+    else if (e.clientX <= cornerSize && e.clientY >= h - cornerSize) corner = 'bottom-left';
+    else if (e.clientX >= w - cornerSize && e.clientY >= h - cornerSize) corner = 'bottom-right';
+
+    if (corner) {
+      if (activeHotCorner === corner) return;
+      if (!hotCornerTimer) {
+        hotCornerTimer = setTimeout(() => {
+          activeHotCorner = corner;
+          hotCornerTimer = null;
+          triggerHotCorner(corner);
+        }, 220);
+      }
+    } else {
+      if (hotCornerTimer) {
+        clearTimeout(hotCornerTimer);
+        hotCornerTimer = null;
+      }
+      if (e.clientX > 40 && e.clientX < w - 40 && e.clientY > 40 && e.clientY < h - 40) {
+        activeHotCorner = null;
+      }
+    }
+  });
+}
+
+function triggerHotCorner(corner) {
+  if (window.AppleAudioEngine && window.AppleAudioEngine.playPop) {
+    try { window.AppleAudioEngine.playPop(); } catch (e) {}
+  }
+  switch (corner) {
+    case 'top-left':
+      if (typeof toggleMissionControl === 'function') toggleMissionControl();
+      break;
+    case 'top-right':
+      if (typeof toggleControlCenter === 'function') toggleControlCenter();
+      break;
+    case 'bottom-left':
+      if (typeof toggleRevealDesktop === 'function') toggleRevealDesktop();
+      break;
+    case 'bottom-right':
+      if (typeof toggleQuickNote === 'function') toggleQuickNote();
+      break;
+  }
+}
 
 function initQuickNote() {
   const peek = document.getElementById('quick-note-peek');
@@ -18977,6 +19135,7 @@ async function saveAndCloseQuickNote() {
 }
 
 initQuickNote();
+initHotCorners();
 
 // ==========================================
 // Control Center Slider Haptics & Dynamic Icons
