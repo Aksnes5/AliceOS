@@ -2831,35 +2831,41 @@ function updateDockRunningState(appKey, isRunning) {
   }
 }
 
+let isDockMagnificationBound = false;
 function initDockMagnification() {
-  const dockUi = document.getElementById('dock-ui');
-  if (!dockUi) return;
+  const dock = document.querySelector('.dock');
+  if (!dock || isDockMagnificationBound) return;
+  isDockMagnificationBound = true;
 
-  dockUi.addEventListener('mousemove', (e) => {
-    const icons = dockUi.querySelectorAll('.dock-icon');
+  dock.addEventListener('mousemove', (e) => {
+    const icons = Array.from(dock.querySelectorAll('.dock-icon'));
     const mouseX = e.clientX;
-    const maxScale = 1.30;
-    const range = 100;
+    const maxScale = 1.6;
+    const baseScale = 1.0;
+    const influenceRadius = 150; // pixels
 
     icons.forEach(icon => {
       const rect = icon.getBoundingClientRect();
-      const iconCenterX = rect.left + rect.width / 2;
-      const dist = Math.abs(mouseX - iconCenterX);
-      if (dist < range) {
-        const factor = (Math.cos((dist / range) * Math.PI) + 1) / 2;
-        const scale = 1 + (maxScale - 1) * factor;
-        const lift = -10 * factor;
-        icon.style.transform = `translateY(${lift}px) scale(${scale})`;
-      } else {
-        icon.style.transform = 'translateY(0px) scale(1)';
+      const centerX = rect.left + rect.width / 2;
+      const distance = Math.abs(mouseX - centerX);
+
+      let scale = baseScale;
+      if (distance < influenceRadius) {
+        // Smooth cosine water wave interpolation
+        const factor = Math.cos((distance / influenceRadius) * (Math.PI / 2));
+        scale = baseScale + (maxScale - baseScale) * factor;
       }
+
+      icon.style.transform = `scale(${scale}) translateY(-${(scale - 1) * 20}px)`;
+      icon.style.margin = `0 ${(scale - 1) * 15}px`;
     });
   });
 
-  dockUi.addEventListener('mouseleave', () => {
-    const icons = dockUi.querySelectorAll('.dock-icon');
+  dock.addEventListener('mouseleave', () => {
+    const icons = Array.from(dock.querySelectorAll('.dock-icon'));
     icons.forEach(icon => {
-      icon.style.transform = '';
+      icon.style.transform = 'scale(1) translateY(0)';
+      icon.style.margin = '0';
     });
   });
 }
@@ -17873,44 +17879,7 @@ function triggerBSOD() {
   }, 4000);
 }
 
-// --- macOS Dock Magnification Engine ---
-// Restore widgets when clicking on empty desktop
-(function initDockMagnification() {
-  const dock = document.querySelector('.dock');
-  const icons = Array.from(document.querySelectorAll('.dock-icon'));
-  
-  if (!dock) return;
-
-  dock.addEventListener('mousemove', (e) => {
-    icons.forEach(icon => {
-      const rect = icon.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const distance = Math.abs(e.clientX - centerX);
-      
-      // Calculate scale based on distance using a smooth decay function
-      const maxScale = 1.6;
-      const baseScale = 1.0;
-      const influenceRadius = 150; // pixels
-      
-      let scale = baseScale;
-      if (distance < influenceRadius) {
-        // Smooth interpolation
-        const factor = Math.cos((distance / influenceRadius) * (Math.PI / 2));
-        scale = baseScale + (maxScale - baseScale) * factor;
-      }
-      
-      icon.style.transform = `scale(${scale}) translateY(-${(scale - 1) * 20}px)`;
-      icon.style.margin = `0 ${(scale - 1) * 15}px`;
-    });
-  });
-
-  dock.addEventListener('mouseleave', () => {
-    icons.forEach(icon => {
-      icon.style.transform = 'scale(1) translateY(0)';
-      icon.style.margin = '0';
-    });
-  });
-})();
+// (Dock Magnification Engine initialized in dock core)
 
 // --- macOS Dock Launch Bounce & Active Running Dot ---
 (function initDockBounce() {
