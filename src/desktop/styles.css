@@ -5120,3 +5120,637 @@ body.dark-mode .notes-tb-btn:hover {
   display: flex;
   justify-content: space-between;
 }
+
+/* --- 6. Safari Start Page & Browser Enhancements --- */
+.safari-start-page {
+  flex: 1;
+  background: radial-gradient(circle at 50% 30%, #ffffff 0%, #f0f2f5 100%);
+  overflow-y: auto;
+  padding: 36px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  user-select: none;
+}
+body.dark-mode .safari-start-page {
+  background: radial-gradient(circle at 50% 30%, #2c2c2e 0%, #1c1c1e 100%);
+  color: #f5f5f7;
+}
+.safari-start-header {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  letter-spacing: -0.5px;
+}
+.safari-section-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #6e6e73;
+  margin-bottom: 14px;
+  align-self: flex-start;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.safari-favs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 680px;
+  margin-bottom: 36px;
+}
+.safari-fav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  gap: 8px;
+  transition: transform 0.15s ease;
+}
+.safari-fav-item:hover {
+  transform: translateY(-2px);
+}
+.safari-fav-tile {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  transition: box-shadow 0.15s;
+}
+body.dark-mode .safari-fav-tile {
+  background: #3a3a3c;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+.safari-fav-tile:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+}
+.safari-fav-name {
+  font-size: 11px;
+  font-weight: 500;
+  color: #1d1d1f;
+  text-align: center;
+  max-width: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+body.dark-mode .safari-fav-name {
+  color: #e5e5ea;
+}
+.safari-privacy-card {
+  width: 100%;
+  max-width: 680px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  padding: 16px 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+body.dark-mode .safari-privacy-card {
+  background: rgba(44, 44, 46, 0.85);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* --- 7. macOS App Store --- */
+.mac-store-app {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  background: #f5f5f7;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  overflow: hidden;
+  user-select: none;
+}
+body.dark-mode .mac-store-app {
+  background: #1c1c1e;
+  color: #f5f5f7;
+}
+.mac-store-sidebar {
+  width: 180px;
+  background: rgba(240, 240, 245, 0.8);
+  backdrop-filter: blur(25px);
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 16px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+body.dark-mode .mac-store-sidebar {
+  background: rgba(30, 30, 32, 0.8);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+.mac-store-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #1d1d1f;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+body.dark-mode .mac-store-nav-item {
+  color: #f5f5f7;
+}
+.mac-store-nav-item.active {
+  background: #007aff;
+  color: white;
+  font-weight: 600;
+}
+.mac-store-nav-item:hover:not(.active) {
+  background: rgba(0, 0, 0, 0.05);
+}
+body.dark-mode .mac-store-nav-item:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.08);
+}
+.mac-store-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.mac-store-hero {
+  border-radius: 18px;
+  padding: 28px 32px;
+  background: linear-gradient(135deg, #1e3a8a 0%, #0284c7 60%, #38bdf8 100%);
+  color: white;
+  box-shadow: 0 10px 30px rgba(2, 132, 199, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+.mac-store-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+.mac-store-card {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+body.dark-mode .mac-store-card {
+  background: #2c2c2e;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+.mac-store-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+}
+.mac-store-get-btn {
+  background: rgba(0, 122, 255, 0.12);
+  color: #007aff;
+  border: none;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 5px 16px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-width: 68px;
+  text-align: center;
+}
+.mac-store-get-btn:hover {
+  background: #007aff;
+  color: white;
+}
+.mac-store-get-btn.installed {
+  background: rgba(52, 199, 89, 0.15);
+  color: #34c759;
+}
+
+/* --- 8. Apple Maps --- */
+.mac-maps-app {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  overflow: hidden;
+  user-select: none;
+}
+.mac-maps-floating-sidebar {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  width: 290px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(30px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.18);
+  z-index: 10;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: calc(100% - 28px);
+  overflow-y: auto;
+}
+body.dark-mode .mac-maps-floating-sidebar {
+  background: rgba(36, 36, 38, 0.88);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #f5f5f7;
+}
+.mac-maps-search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 10px;
+  padding: 6px 12px;
+}
+body.dark-mode .mac-maps-search-box {
+  background: rgba(255, 255, 255, 0.1);
+}
+.mac-maps-landmark-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.mac-maps-landmark-item:hover {
+  background: rgba(0, 122, 255, 0.12);
+}
+.mac-maps-controls {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 10;
+}
+.mac-maps-ctrl-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  color: #1d1d1f;
+  transition: transform 0.1s;
+}
+body.dark-mode .mac-maps-ctrl-btn {
+  background: rgba(44, 44, 46, 0.9);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: white;
+}
+
+/* --- 9. Xcode IDE --- */
+.xcode-mac-app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background: #1f1f24;
+  color: #f5f5f7;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", monospace;
+  overflow: hidden;
+  user-select: none;
+}
+.xcode-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  background: #2a2a30;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.xcode-run-pill {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 2px;
+}
+.xcode-btn {
+  background: transparent;
+  border: none;
+  color: #f5f5f7;
+  padding: 4px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.xcode-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+.xcode-status-pill {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 4px 14px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #a1a1aa;
+}
+.xcode-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+.xcode-sidebar {
+  width: 200px;
+  background: #19191c;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow-y: auto;
+}
+.xcode-tree-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+  border-radius: 5px;
+  font-size: 12px;
+  cursor: pointer;
+  color: #d1d5db;
+}
+.xcode-tree-item.active {
+  background: #007aff;
+  color: white;
+}
+.xcode-editor-pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #1e1e24;
+}
+.xcode-tab-bar {
+  display: flex;
+  background: #18181b;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0 10px;
+}
+.xcode-code-textarea {
+  flex: 1;
+  background: #1a1a1e;
+  color: #93c5fd;
+  font-family: 'SF Mono', Monaco, Menlo, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  padding: 14px 18px;
+  border: none;
+  outline: none;
+  resize: none;
+}
+.xcode-console-pane {
+  height: 120px;
+  background: #111113;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 8px 12px;
+  overflow-y: auto;
+  font-family: 'SF Mono', monospace;
+  font-size: 11px;
+  color: #34c759;
+}
+
+/* --- 10. Photo Booth & Photos Markup --- */
+.pb-app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background: #141416;
+  color: white;
+  overflow: hidden;
+  user-select: none;
+}
+.pb-view-box {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: black;
+  overflow: hidden;
+}
+.pb-bottom-bar {
+  height: 80px;
+  background: rgba(26, 26, 30, 0.95);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+.pb-shutter-btn {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ff453a 0%, #d70015 100%);
+  border: 4px solid #ffffff;
+  box-shadow: 0 4px 16px rgba(255, 69, 58, 0.5);
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+.pb-shutter-btn:active {
+  transform: scale(0.92);
+}
+.pb-effects-tray {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 0;
+  max-width: 420px;
+}
+.pb-effect-chip {
+  padding: 4px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.pb-effect-chip.active {
+  background: #007aff;
+  border-color: #007aff;
+}
+
+/* --- 11. Photos & Markup Studio --- */
+.mac-markup-app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background: #2a2a2e;
+  overflow: hidden;
+  user-select: none;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  position: relative;
+}
+.mac-markup-toolbar {
+  height: 48px;
+  background: rgba(45, 45, 48, 0.85);
+  backdrop-filter: blur(25px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  z-index: 10;
+}
+.mac-markup-toolgroup {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 2px 4px;
+}
+.mac-markup-tool-btn {
+  background: transparent;
+  border: none;
+  color: #f5f5f7;
+  padding: 5px 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: background 0.15s ease;
+}
+.mac-markup-tool-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+.mac-markup-tool-btn.active {
+  background: #007aff;
+  color: white;
+}
+.mac-markup-colors {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.mac-markup-color-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.15s, border-color 0.15s;
+}
+.mac-markup-color-dot.active {
+  border-color: white;
+  transform: scale(1.15);
+}
+.mac-markup-canvas-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1e1e22;
+  overflow: auto;
+  padding: 20px;
+}
+.mac-markup-canvas-wrap canvas {
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+  cursor: crosshair;
+}
+
+/* --- 12. Photos Library Gallery --- */
+.mac-photos-app {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  background: #1e1e20;
+  color: #f5f5f7;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  overflow: hidden;
+  user-select: none;
+}
+.mac-photos-sidebar {
+  width: 200px;
+  background: rgba(30, 30, 34, 0.85);
+  backdrop-filter: blur(25px);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.mac-photos-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.mac-photos-header {
+  height: 44px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  background: rgba(35, 35, 40, 0.6);
+}
+.mac-photos-grid {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+  align-content: start;
+}
+.mac-photos-thumb {
+  aspect-ratio: 16 / 10;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #2c2c30;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  position: relative;
+}
+.mac-photos-thumb:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+.mac-photos-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+

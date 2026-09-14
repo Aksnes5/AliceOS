@@ -303,6 +303,10 @@ const i18nDict = {
     lang_pref_ja: '優先する言語',
 
     // Safari extra
+    safari_start_page: 'Start Page',
+    safari_favorites: 'Favorites',
+    safari_privacy_report: 'Privacy Report',
+    safari_reading_list: 'Reading List',
     safari_back: 'Back',
     safari_forward: 'Forward',
     safari_refresh: 'Refresh',
@@ -319,11 +323,35 @@ const i18nDict = {
     maps_locating: 'Acquiring Physical GPS Coordinates...',
     maps_physical_loc: 'Your Physical Location',
     maps_failed: 'Failed to acquire location',
+    maps_search_placeholder: 'Search Maps or enter address',
+    maps_mode_explore: 'Explore',
+    maps_mode_drive: 'Drive',
+    maps_mode_transit: 'Transit',
+    maps_mode_sat: 'Satellite',
+    maps_directions: 'Directions',
+    maps_featured_places: 'World Landmarks',
+    maps_compass: 'Compass',
+    maps_zoomin: 'Zoom In',
+    maps_zoomout: 'Zoom Out',
+    maps_my_location: 'Current Location',
     video_pip: 'Picture in Picture',
+    pb_take_photo: 'Take Photo',
+    xcode_run: 'Run (⌘R)',
+    xcode_stop: 'Stop (⌘.)',
+    xcode_clear: 'Clear Console',
 
     // App Store
     store_title: 'Alice Store 🛍️',
     store_subtitle: 'Discover & Install Native Applications',
+    store_search: 'Search',
+    store_nav_discover: 'Discover',
+    store_nav_create: 'Create',
+    store_nav_work: 'Work',
+    store_nav_play: 'Play',
+    store_nav_develop: 'Develop',
+    store_nav_updates: 'Updates',
+    store_popular_apps: 'Popular Apps & Extensions',
+    store_open: 'OPEN',
     store_tictactoe_title: 'Tic Tac Toe',
     store_tictactoe_desc: 'A classic grid-based puzzle game.',
     store_syslogs_title: 'System Logs',
@@ -849,6 +877,10 @@ const i18nDict = {
     lang_pref_ja: '優先する言語',
 
     // Safari 拓展
+    safari_start_page: '起始页',
+    safari_favorites: '个人收藏',
+    safari_privacy_report: '隐私报告',
+    safari_reading_list: '阅读列表',
     safari_back: '返回',
     safari_forward: '前进',
     safari_refresh: '刷新',
@@ -865,11 +897,35 @@ const i18nDict = {
     maps_locating: '正在获取物理 GPS 坐标...',
     maps_physical_loc: '您的物理位置',
     maps_failed: '无法获取位置信息',
+    maps_search_placeholder: '搜索地图或输入地址',
+    maps_mode_explore: '探索',
+    maps_mode_drive: '驾车',
+    maps_mode_transit: '公交',
+    maps_mode_sat: '卫星',
+    maps_directions: '路线',
+    maps_featured_places: '世界地标',
+    maps_compass: '指南针',
+    maps_zoomin: '放大',
+    maps_zoomout: '缩小',
+    maps_my_location: '当前位置',
     video_pip: '画中画',
+    pb_take_photo: '拍照',
+    xcode_run: '运行 (⌘R)',
+    xcode_stop: '停止 (⌘.)',
+    xcode_clear: '清空控制台',
 
     // 应用程序商店
     store_title: 'Alice 商店 🛍️',
     store_subtitle: '发现并安装原生应用程序',
+    store_search: '搜索',
+    store_nav_discover: '探索',
+    store_nav_create: '创作',
+    store_nav_work: '工作',
+    store_nav_play: '游戏',
+    store_nav_develop: '开发',
+    store_nav_updates: '更新',
+    store_popular_apps: '热门应用与扩展',
+    store_open: '打开',
     store_tictactoe_title: '井字棋',
     store_tictactoe_desc: '经典的九宫格棋盘对弈游戏。',
     store_syslogs_title: '系统日志',
@@ -4535,26 +4591,28 @@ async function launchBrowser() {
   if (res.success) {
     const pid = res.data.pid;
     let tabs = [
-      { id: 1, title: 'Apple', url: 'https://apple.com', icon: '🍎' },
-      { id: 2, title: 'GitHub', url: 'https://github.com', icon: '🐙' }
+      { id: 1, title: t('safari_start_page', 'Start Page'), url: 'safari:start', icon: '🧭' },
+      { id: 2, title: 'Apple', url: 'https://apple.com', icon: '🍎' },
+      { id: 3, title: 'AliceOS Docs', url: 'https://docs.aliceos.org', icon: '💻' }
     ];
     let activeTabId = 1;
-    let tabCounter = 2;
+    let tabCounter = 3;
     let inOverview = false;
+    let readerActive = false;
 
     const win = createWindow(pid, t('app_browser', 'Safari'), `
       <div class="browser-container" style="display:flex;flex-direction:column;height:100%;position:relative;background:#f5f5f7;">
         <!-- Safari Tab Bar -->
         <div class="safari-tab-bar" id="safari-tab-bar-${pid}">
           <div id="safari-tabs-list-${pid}" style="display:flex;align-items:center;gap:6px;flex:1;overflow-x:auto;">
-            <!-- Tabs rendered dynamically -->
+            <!-- Dynamic Tabs -->
           </div>
-          <button id="safari-new-tab-${pid}" title="${t('safari_new_tab', 'New Tab')}" style="background:rgba(0,0,0,0.06);border:none;border-radius:6px;width:24px;height:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:#555;">+</button>
+          <button id="safari-new-tab-${pid}" title="${t('safari_new_tab', 'New Tab')}" style="background:rgba(0,0,0,0.06);border:none;border-radius:6px;width:24px;height:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:#555;">＋</button>
           <button id="safari-tab-overview-btn-${pid}" title="${t('safari_tab_overview', 'Show All Tabs')}" style="background:rgba(0,0,0,0.06);border:none;border-radius:6px;width:24px;height:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;color:#555;">⊞</button>
         </div>
 
         <!-- Safari Navigation Toolbar -->
-        <div class="browser-toolbar" style="display:flex;align-items:center;gap:10px;padding:8px 14px;background:rgba(255,255,255,0.7);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,0.08);">
+        <div class="browser-toolbar" style="display:flex;align-items:center;gap:10px;padding:8px 14px;background:rgba(255,255,255,0.8);backdrop-filter:blur(25px);border-bottom:1px solid rgba(0,0,0,0.08);">
           <div style="display:flex;gap:4px;">
             <button id="browser-back-${pid}" title="${t('safari_back', 'Back')}" style="background:transparent;border:none;cursor:pointer;font-size:14px;padding:4px 6px;border-radius:6px;opacity:0.7;">◀</button>
             <button id="browser-forward-${pid}" title="${t('safari_forward', 'Forward')}" style="background:transparent;border:none;cursor:pointer;font-size:14px;padding:4px 6px;border-radius:6px;opacity:0.7;">▶</button>
@@ -4564,7 +4622,7 @@ async function launchBrowser() {
           <!-- Capsule Search / URL bar -->
           <div style="flex:1;display:flex;align-items:center;background:rgba(0,0,0,0.06);border-radius:10px;padding:5px 12px;gap:8px;border:1px solid rgba(0,0,0,0.05);transition:background 0.2s;">
             <span style="font-size:12px;opacity:0.5;">🔒</span>
-            <input type="text" id="browser-url-${pid}" value="https://apple.com" placeholder="${t('safari_search_placeholder', 'Search or enter website name')}" style="flex:1;border:none;outline:none;background:transparent;font-size:13px;color:#1d1d1f;font-family:-apple-system,sans-serif;text-align:center;">
+            <input type="text" id="browser-url-${pid}" value="safari:start" placeholder="${t('safari_search_placeholder', 'Search or enter website name')}" style="flex:1;border:none;outline:none;background:transparent;font-size:13px;color:#1d1d1f;font-family:-apple-system,sans-serif;text-align:center;">
             <span id="browser-share-${pid}" style="font-size:12px;opacity:0.5;cursor:pointer;" title="${t('safari_share', 'Download / Share')}">↗</span>
           </div>
 
@@ -4609,12 +4667,12 @@ async function launchBrowser() {
           </div>
         </div>
 
-        <!-- Tab Webviews Container -->
+        <!-- Tab Content Container -->
         <div id="safari-frames-container-${pid}" style="flex:1;position:relative;overflow:hidden;display:flex;">
         </div>
 
         <!-- 3D Tab Overview Grid Overlay -->
-        <div id="safari-overview-${pid}" style="position:absolute;top:38px;left:0;width:100%;height:calc(100% - 38px);background:rgba(240,240,245,0.92);backdrop-filter:blur(30px);z-index:20;display:none;flex-direction:column;opacity:0;transition:opacity 0.25s ease;">
+        <div id="safari-overview-${pid}" style="position:absolute;top:38px;left:0;width:100%;height:calc(100% - 38px);background:rgba(240,240,245,0.95);backdrop-filter:blur(30px);z-index:20;display:none;flex-direction:column;opacity:0;transition:opacity 0.25s ease;">
           <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 24px;border-bottom:1px solid rgba(0,0,0,0.06);">
             <div style="font-size:15px;font-weight:700;color:#1d1d1f;display:flex;align-items:center;gap:10px;">
               <span id="safari-overview-title-${pid}">${t('safari_tab_overview', 'Safari Tab Overview')}</span>
@@ -4626,11 +4684,29 @@ async function launchBrowser() {
             </div>
           </div>
           <div id="safari-overview-grid-${pid}" class="safari-overview-grid">
-            <!-- Rendered cards -->
+          </div>
+        </div>
+
+        <!-- Reader Mode Overlay -->
+        <div id="safari-reader-modal-${pid}" style="position:absolute;top:76px;left:0;width:100%;height:calc(100% - 76px);background:#faf8f5;color:#2c2c2e;z-index:15;display:none;flex-direction:column;overflow-y:auto;padding:40px 15%;font-family:-apple-system, 'SF Pro Text', Georgia, serif;line-height:1.7;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;border-bottom:1px solid rgba(0,0,0,0.08);padding-bottom:14px;">
+            <div style="font-size:12px;color:#8e8e93;font-weight:600;text-transform:uppercase;letter-spacing:1px;">SAFARI READER VIEW</div>
+            <button id="safari-reader-close-${pid}" style="background:rgba(0,0,0,0.06);border:none;padding:4px 12px;border-radius:12px;font-size:12px;cursor:pointer;">✕ Close</button>
+          </div>
+          <h1 id="safari-reader-title-${pid}" style="font-size:28px;margin-bottom:12px;letter-spacing:-0.5px;color:#1d1d1f;">Apple Intelligence in macOS Sequoia</h1>
+          <div id="safari-reader-meta-${pid}" style="font-size:13px;color:#8e8e93;margin-bottom:24px;">Published by Apple Newsroom • 4 min read</div>
+          <div id="safari-reader-body-${pid}" style="font-size:16px;color:#3a3a3c;">
+            <p>macOS Sequoia introduces powerful intelligence and groundbreaking new features to the world's most advanced desktop operating system. Designed from the ground up for Apple Silicon, it empowers users to work faster, write smarter, and express themselves seamlessly.</p>
+            <p>With deep system-wide integration, Apple Intelligence understands your personal context to deliver assistance that is genuinely useful and relevant, all while setting an unmatched standard for privacy in AI through on-device processing and Private Cloud Compute.</p>
+            <p>The updated Safari brings an all-new Start Page, Highlights that quickly extract key information from articles, and a redesigned Reader View for distraction-free enjoyment of your favorite content.</p>
           </div>
         </div>
       </div>
     `);
+
+    // Standard macOS Safari window size
+    win.style.width = '840px';
+    win.style.height = '560px';
 
     const tabsList = win.querySelector(`#safari-tabs-list-${pid}`);
     const framesContainer = win.querySelector(`#safari-frames-container-${pid}`);
@@ -4643,6 +4719,124 @@ async function launchBrowser() {
     const overviewCount = win.querySelector(`#safari-overview-count-${pid}`);
     const newTabBtn = win.querySelector(`#safari-new-tab-${pid}`);
     const pipBtn = win.querySelector(`#browser-pip-${pid}`);
+    const readerBtn = win.querySelector(`#browser-reader-${pid}`);
+    const readerModal = win.querySelector(`#safari-reader-modal-${pid}`);
+    const readerCloseBtn = win.querySelector(`#safari-reader-close-${pid}`);
+
+    const favoritesList = [
+      { name: 'Apple', url: 'https://apple.com', icon: '🍎' },
+      { name: 'AliceOS Docs', url: 'https://docs.aliceos.org', icon: '💻' },
+      { name: 'GitHub', url: 'https://github.com', icon: '🐙' },
+      { name: 'Wikipedia', url: 'https://en.wikipedia.org', icon: '📖' },
+      { name: 'Hacker News', url: 'https://news.ycombinator.com', icon: '📰' },
+      { name: 'YouTube', url: 'https://youtube.com', icon: '▶️' },
+      { name: 'Open-Meteo', url: 'https://open-meteo.com', icon: '🌤️' },
+      { name: 'Reddit', url: 'https://reddit.com', icon: '🤖' }
+    ];
+
+    function getStartPageHtml() {
+      return `
+        <div class="safari-start-page">
+          <div class="safari-start-header">${t('safari_favorites', 'Favorites')}</div>
+          <div class="safari-favs-grid">
+            ${favoritesList.map(fav => `
+              <div class="safari-fav-item" data-url="${fav.url}" data-name="${fav.name}">
+                <div class="safari-fav-tile">${fav.icon}</div>
+                <div class="safari-fav-name">${fav.name}</div>
+              </div>
+            `).join('')}
+          </div>
+
+          <!-- Privacy Report -->
+          <div class="safari-privacy-card">
+            <div style="font-size:32px;">🛡️</div>
+            <div style="flex:1;">
+              <div style="font-size:14px;font-weight:700;color:#1d1d1f;">${t('safari_privacy_report', 'Privacy Report')}</div>
+              <div style="font-size:12px;color:#6e6e73;margin-top:2px;">In the last 30 days, Safari prevented 78 trackers from profiling you. Intelligent Tracking Prevention is active.</div>
+            </div>
+            <div style="font-size:18px;font-weight:700;color:#007aff;">78</div>
+          </div>
+
+          <!-- Reading List Suggestions -->
+          <div style="width:100%;max-width:680px;margin-top:24px;">
+            <div class="safari-section-title">${t('safari_reading_list', 'Reading List')}</div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div class="safari-reading-item" style="background:white;padding:12px 16px;border-radius:12px;border:1px solid rgba(0,0,0,0.06);display:flex;align-items:center;gap:12px;cursor:pointer;" onclick="createTab('https://apple.com', 'Apple', '🍎')">
+                <div style="font-size:24px;">🍎</div>
+                <div style="flex:1;">
+                  <div style="font-size:13px;font-weight:600;">Apple Introduces macOS Sequoia with Groundbreaking Apple Intelligence</div>
+                  <div style="font-size:11px;color:#8e8e93;">apple.com • 3 min read</div>
+                </div>
+              </div>
+              <div class="safari-reading-item" style="background:white;padding:12px 16px;border-radius:12px;border:1px solid rgba(0,0,0,0.06);display:flex;align-items:center;gap:12px;cursor:pointer;" onclick="createTab('https://docs.aliceos.org', 'AliceOS Architecture', '💻')">
+                <div style="font-size:24px;">💻</div>
+                <div style="flex:1;">
+                  <div style="font-size:13px;font-weight:600;">AliceOS Architecture: Microkernel VFS & Hardware Compositor</div>
+                  <div style="font-size:11px;color:#8e8e93;">docs.aliceos.org • 5 min read</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function getApplePageHtml() {
+      return `
+        <div style="height:100%;overflow-y:auto;background:#000;color:#f5f5f7;font-family:-apple-system,BlinkMacSystemFont,sans-serif;user-select:none;">
+          <div style="background:rgba(22,22,23,0.8);backdrop-filter:blur(20px);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.08);position:sticky;top:0;z-index:5;">
+            <span style="font-size:18px;"></span>
+            <div style="display:flex;gap:20px;font-size:12px;color:#a1a1a6;">
+              <span>Store</span><span>Mac</span><span>iPad</span><span>iPhone</span><span>Watch</span><span>Vision</span><span>AirPods</span>
+            </div>
+            <span style="font-size:14px;cursor:pointer;">🔍</span>
+          </div>
+          <div style="text-align:center;padding:60px 20px 40px;background:radial-gradient(circle at 50% 20%, #1e1e24 0%, #000000 80%);">
+            <div style="font-size:48px;font-weight:700;letter-spacing:-1px;margin-bottom:8px;">iPhone 16 Pro</div>
+            <div style="font-size:22px;color:#86868b;margin-bottom:16px;">Hello, Apple Intelligence.</div>
+            <div style="display:flex;justify-content:center;gap:14px;margin-bottom:30px;">
+              <button style="background:#0071e3;color:white;border:none;padding:8px 20px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;">Learn more</button>
+              <button style="background:transparent;color:#2997ff;border:1px solid #2997ff;padding:8px 20px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;">Buy</button>
+            </div>
+            <div style="font-size:72px;margin:20px 0;">📱✨</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:24px;max-width:960px;margin:0 auto;">
+            <div style="background:#161617;border-radius:18px;padding:32px;text-align:center;">
+              <div style="font-size:28px;font-weight:700;margin-bottom:6px;">MacBook Pro</div>
+              <div style="font-size:15px;color:#86868b;margin-bottom:16px;">Mind-blowing. Head-turning.</div>
+              <div style="font-size:48px;">💻</div>
+            </div>
+            <div style="background:#161617;border-radius:18px;padding:32px;text-align:center;">
+              <div style="font-size:28px;font-weight:700;margin-bottom:6px;">Apple Watch Series 10</div>
+              <div style="font-size:15px;color:#86868b;margin-bottom:16px;">Thinscredible.</div>
+              <div style="font-size:48px;">⌚</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function getAliceDocsHtml() {
+      return `
+        <div style="height:100%;overflow-y:auto;background:#ffffff;color:#1d1d1f;padding:40px 60px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.6;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;border-bottom:1px solid #eee;padding-bottom:16px;">
+            <span style="font-size:32px;">💻</span>
+            <div>
+              <h1 style="margin:0;font-size:24px;font-weight:700;">AliceOS Developer Documentation</h1>
+              <div style="font-size:12px;color:#6e6e73;">Release 1.0.0 • Microkernel Architecture & Electron Engine</div>
+            </div>
+          </div>
+          <h2 style="font-size:18px;margin-top:24px;color:#007aff;">1. Virtual File System (VFS)</h2>
+          <p style="font-size:14px;color:#424245;">The virtual file system persists across sessions using a JSON-backed node store at <code>AppData/Roaming/AliceOS/vfs.json</code>. Call <code>window.aliceOS.vfs.readFile(path)</code> or <code>window.aliceOS.vfs.writeFile(path, data)</code> asynchronously.</p>
+          
+          <h2 style="font-size:18px;margin-top:24px;color:#007aff;">2. Process Manager (PM)</h2>
+          <p style="font-size:14px;color:#424245;">Spawn tasks and windows using <code>window.aliceOS.pm.spawn(appName)</code>. Processes maintain active PIDs, status flags, and signal handlers.</p>
+
+          <h2 style="font-size:18px;margin-top:24px;color:#007aff;">3. macOS Sequoia Visual Design Guidelines</h2>
+          <p style="font-size:14px;color:#424245;">All built-in applications adhere to the standard 22.5% squircle curvature icon format, native SF Pro typography, floating glass panels, and live Dark/Light theme switching.</p>
+        </div>
+      `;
+    }
 
     function renderTabs() {
       tabsList.innerHTML = '';
@@ -4670,7 +4864,7 @@ async function launchBrowser() {
       activeTabId = tabId;
       const tab = tabs.find(t => t.id === tabId);
       if (tab) {
-        urlInput.value = tab.url;
+        urlInput.value = tab.url === 'safari:start' ? '' : tab.url;
       }
       renderTabs();
 
@@ -4683,7 +4877,7 @@ async function launchBrowser() {
       });
     }
 
-    function createTab(url = 'https://apple.com', title = 'Apple', icon = '🍎') {
+    function createTab(url = 'safari:start', title = 'Start Page', icon = '🧭') {
       tabCounter++;
       const newId = tabCounter;
       tabs.push({ id: newId, title, url, icon });
@@ -4696,25 +4890,64 @@ async function launchBrowser() {
       frameWrapper.style.height = '100%';
       frameWrapper.style.display = 'none';
 
-      frameWrapper.innerHTML = `
-        <webview src="${url}" style="flex:1;border:none;width:100%;height:100%;"></webview>
-      `;
-
-      const webview = frameWrapper.querySelector('webview');
-      webview.addEventListener('did-navigate', (e) => {
-        if (activeTabId === newId) {
-          urlInput.value = e.url;
-        }
-        const t = tabs.find(x => x.id === newId);
-        if (t) {
-          t.url = e.url;
-          t.title = e.url.replace(/^https?:\/\//, '').split('/')[0] || 'Website';
-          renderTabs();
-        }
-      });
-
+      loadContentIntoFrame(frameWrapper, url, newId);
       framesContainer.appendChild(frameWrapper);
       switchTab(newId);
+    }
+
+    function loadContentIntoFrame(frameWrapper, url, tabId) {
+      frameWrapper.innerHTML = '';
+      if (url === 'safari:start' || url === 'about:blank' || !url) {
+        frameWrapper.innerHTML = getStartPageHtml();
+        frameWrapper.querySelectorAll('.safari-fav-item').forEach(fav => {
+          fav.onclick = () => {
+            const u = fav.getAttribute('data-url');
+            const n = fav.getAttribute('data-name');
+            navigateTab(tabId, u, n);
+          };
+        });
+      } else if (url === 'https://apple.com' || url === 'http://apple.com') {
+        frameWrapper.innerHTML = getApplePageHtml();
+      } else if (url.includes('docs.aliceos.org')) {
+        frameWrapper.innerHTML = getAliceDocsHtml();
+      } else {
+        const webview = document.createElement('webview');
+        webview.src = url;
+        webview.style.cssText = 'flex:1;border:none;width:100%;height:100%;';
+        webview.addEventListener('did-navigate', (e) => {
+          if (activeTabId === tabId) {
+            urlInput.value = e.url;
+          }
+          const t = tabs.find(x => x.id === tabId);
+          if (t) {
+            t.url = e.url;
+            t.title = e.url.replace(/^https?:\/\//, '').split('/')[0] || 'Website';
+            renderTabs();
+          }
+        });
+        frameWrapper.appendChild(webview);
+      }
+    }
+
+    function navigateTab(tabId, url, title = null) {
+      const tab = tabs.find(t => t.id === tabId);
+      if (tab) {
+        tab.url = url;
+        if (title) tab.title = title;
+        else tab.title = url.replace(/^https?:\/\//, '').split('/')[0] || 'Website';
+        if (url.includes('apple.com')) tab.icon = '🍎';
+        else if (url.includes('github.com')) tab.icon = '🐙';
+        else if (url.includes('aliceos')) tab.icon = '💻';
+        else tab.icon = '🌐';
+      }
+      const frameWrapper = framesContainer.querySelector(`.browser-tab-frame[data-tab-id="${tabId}"]`);
+      if (frameWrapper) {
+        loadContentIntoFrame(frameWrapper, url, tabId);
+      }
+      if (activeTabId === tabId) {
+        urlInput.value = url === 'safari:start' ? '' : url;
+      }
+      renderTabs();
     }
 
     function closeTab(tabId) {
@@ -4800,7 +5033,7 @@ async function launchBrowser() {
         </div>
       `;
       newCard.onclick = () => {
-        createTab('https://apple.com', 'Apple', '🍎');
+        createTab('safari:start', 'Start Page', '🧭');
         toggleOverview();
       };
       overviewGrid.appendChild(newCard);
@@ -4816,20 +5049,7 @@ async function launchBrowser() {
       frameWrapper.style.height = '100%';
       frameWrapper.style.display = t.id === activeTabId ? 'flex' : 'none';
 
-      frameWrapper.innerHTML = `
-        <webview src="${t.url}" style="flex:1;border:none;width:100%;height:100%;"></webview>
-      `;
-
-      const webview = frameWrapper.querySelector('webview');
-      webview.addEventListener('did-navigate', (e) => {
-        if (activeTabId === t.id) {
-          urlInput.value = e.url;
-        }
-        t.url = e.url;
-        t.title = e.url.replace(/^https?:\/\//, '').split('/')[0] || 'Website';
-        renderTabs();
-      });
-
+      loadContentIntoFrame(frameWrapper, t.url, t.id);
       framesContainer.appendChild(frameWrapper);
     });
 
@@ -4837,17 +5057,18 @@ async function launchBrowser() {
 
     function navigate() {
       let url = urlInput.value.trim();
-      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      if (!url) {
+        navigateTab(activeTabId, 'safari:start', 'Start Page');
+        return;
+      }
+      if (!url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('safari:')) {
         if (url.includes('.') && !url.includes(' ')) {
           url = 'https://' + url;
         } else {
           url = 'https://www.bing.com/search?q=' + encodeURIComponent(url);
         }
       }
-      const activeFrame = framesContainer.querySelector(`.browser-tab-frame[data-tab-id="${activeTabId}"] webview`);
-      if (activeFrame) {
-        activeFrame.src = url;
-      }
+      navigateTab(activeTabId, url);
     }
 
     urlInput.addEventListener('keydown', (e) => {
@@ -4855,15 +5076,31 @@ async function launchBrowser() {
     });
 
     newTabBtn.addEventListener('click', () => {
-      createTab('https://bing.com', 'Bing Search', '🔍');
+      createTab('safari:start', 'Start Page', '🧭');
     });
 
     overviewBtn.addEventListener('click', toggleOverview);
     overviewCloseBtn.addEventListener('click', toggleOverview);
 
+    readerBtn.addEventListener('click', () => {
+      readerActive = !readerActive;
+      readerModal.style.display = readerActive ? 'flex' : 'none';
+      if (readerActive) {
+        const curTab = tabs.find(x => x.id === activeTabId);
+        const rTitle = win.querySelector(`#safari-reader-title-${pid}`);
+        if (rTitle && curTab) rTitle.innerText = curTab.title;
+      }
+    });
+
+    readerCloseBtn.addEventListener('click', () => {
+      readerActive = false;
+      readerModal.style.display = 'none';
+    });
+
     win.querySelector(`#browser-back-${pid}`).addEventListener('click', () => {
       const activeFrame = framesContainer.querySelector(`.browser-tab-frame[data-tab-id="${activeTabId}"] webview`);
       if (activeFrame && activeFrame.canGoBack()) activeFrame.goBack();
+      else navigateTab(activeTabId, 'safari:start', 'Start Page');
     });
 
     win.querySelector(`#browser-forward-${pid}`).addEventListener('click', () => {
@@ -4872,8 +5109,8 @@ async function launchBrowser() {
     });
 
     win.querySelector(`#browser-refresh-${pid}`).addEventListener('click', () => {
-      const activeFrame = framesContainer.querySelector(`.browser-tab-frame[data-tab-id="${activeTabId}"] webview`);
-      if (activeFrame) activeFrame.reload();
+      const activeTab = tabs.find(x => x.id === activeTabId);
+      if (activeTab) navigateTab(activeTabId, activeTab.url, activeTab.title);
     });
 
     pipBtn.addEventListener('click', () => {
@@ -4917,10 +5154,6 @@ async function launchBrowser() {
       });
     }
 
-    if (overviewBtn) overviewBtn.onclick = toggleOverview;
-    if (overviewCloseBtn) overviewCloseBtn.onclick = toggleOverview;
-    if (newTabBtn) newTabBtn.onclick = () => createTab('https://apple.com', 'Apple', '🍎');
-
     if (overviewSearch) {
       overviewSearch.addEventListener('input', (e) => {
         renderOverview(e.target.value);
@@ -4931,8 +5164,13 @@ async function launchBrowser() {
       if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === '\\' || e.code === 'Backslash')) {
         e.preventDefault();
         toggleOverview();
-      } else if (e.key === 'Escape' && inOverview) {
-        toggleOverview();
+      } else if (e.key === 'Escape') {
+        if (readerActive) {
+          readerActive = false;
+          readerModal.style.display = 'none';
+        } else if (inOverview) {
+          toggleOverview();
+        }
       }
     });
 
@@ -7333,55 +7571,237 @@ async function launchMusic() {
   renderTable();
 }
 
+// Photo Booth (macOS Sequoia Design)
 async function launchCamera() {
   const res = await window.aliceOS.pm.spawn('camera');
   if (res.success) {
     const pid = res.data.pid;
-    const win = createWindow(pid, t('app_camera', 'Camera'), `
-      <div style="background:black;height:100%;display:flex;flex-direction:column;align-items:center;">
-        <video id="webcam-${pid}" autoplay playsinline style="flex-grow:1;width:100%;object-fit:cover;background:#222;"></video>
-        <div style="padding:15px;background:#333;width:100%;display:flex;justify-content:center;">
-          <button id="snap-${pid}" style="width:50px;height:50px;border-radius:50%;background:white;border:4px solid #ccc;cursor:pointer;"></button>
+    let currentFilter = 'none';
+    let photoCount = 1;
+    let recentPhotos = [];
+
+    const win = createWindow(pid, t('app_camera', 'Photo Booth'), `
+      <div class="pb-app">
+        <!-- Viewport -->
+        <div class="pb-view-box" id="pb-view-${pid}">
+          <video id="webcam-${pid}" autoplay playsinline style="width:100%;height:100%;object-fit:cover;transform:scaleX(-1);transition:filter 0.2s;"></video>
+          <canvas id="pb-fallback-${pid}" width="640" height="480" style="display:none;width:100%;height:100%;object-fit:cover;"></canvas>
+          
+          <!-- 3-2-1 Countdown Overlay -->
+          <div id="pb-countdown-${pid}" style="position:absolute;font-size:84px;font-weight:800;color:white;text-shadow:0 4px 20px rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;pointer-events:none;z-index:20;">3</div>
+          
+          <!-- Flash Overlay -->
+          <div id="pb-flash-${pid}" style="position:absolute;top:0;left:0;width:100%;height:100%;background:white;opacity:0;pointer-events:none;z-index:30;transition:opacity 0.05s ease;"></div>
+        </div>
+
+        <!-- Filmstrip Tray -->
+        <div id="pb-filmstrip-${pid}" style="height:56px;background:#18181b;border-top:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:10px;padding:0 16px;overflow-x:auto;">
+          <div style="font-size:11px;color:#71717a;font-weight:600;text-transform:uppercase;">Recent Shots</div>
+          <div id="pb-filmstrip-items-${pid}" style="display:flex;align-items:center;gap:8px;"></div>
+        </div>
+
+        <!-- Bottom Controls Bar -->
+        <div class="pb-bottom-bar">
+          <!-- Effects Tray -->
+          <div class="pb-effects-tray" id="pb-effects-${pid}">
+            <div class="pb-effect-chip active" data-filter="none">Normal</div>
+            <div class="pb-effect-chip" data-filter="sepia(0.85) contrast(1.1)">Sepia</div>
+            <div class="pb-effect-chip" data-filter="grayscale(1) contrast(1.2)">Noir</div>
+            <div class="pb-effect-chip" data-filter="invert(1) hue-rotate(180deg) saturate(3)">Thermal</div>
+            <div class="pb-effect-chip" data-filter="contrast(2) saturate(2.5)">Pop Art</div>
+            <div class="pb-effect-chip" data-filter="hue-rotate(90deg) contrast(1.3)">Cyber</div>
+            <div class="pb-effect-chip" data-filter="invert(1)">Invert</div>
+          </div>
+
+          <!-- Shutter Button -->
+          <button class="pb-shutter-btn" id="pb-shutter-${pid}" title="${t('pb_take_photo', 'Take Photo')}"></button>
+
+          <!-- Timer Mode Toggle -->
+          <div style="display:flex;align-items:center;gap:6px;">
+            <button id="pb-timer-toggle-${pid}" style="background:rgba(255,255,255,0.12);border:none;color:white;padding:6px 14px;border-radius:14px;font-size:11px;font-weight:600;cursor:pointer;">⏱ 3s Timer: ON</button>
+          </div>
         </div>
       </div>
-    `, 'camera');
-    
+    `);
+
+    win.style.width = '680px';
+    win.style.height = '540px';
+
     const video = win.querySelector(`#webcam-${pid}`);
-    const snapBtn = win.querySelector(`#snap-${pid}`);
-    let photoCount = 1;
-    
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      video.srcObject = stream;
-      
-      snapBtn.addEventListener('click', async () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-        const dataUrl = canvas.toDataURL('image/png');
-        
-        // Save to VFS
-        const fileName = `photo_${photoCount++}.png`;
+    const fallbackCanvas = win.querySelector(`#pb-fallback-${pid}`);
+    const shutterBtn = win.querySelector(`#pb-shutter-${pid}`);
+    const countdownEl = win.querySelector(`#pb-countdown-${pid}`);
+    const flashEl = win.querySelector(`#pb-flash-${pid}`);
+    const timerToggle = win.querySelector(`#pb-timer-toggle-${pid}`);
+    const filmstripItems = win.querySelector(`#pb-filmstrip-items-${pid}`);
+    const effectChips = win.querySelectorAll('.pb-effect-chip');
+
+    let useTimer = true;
+    let cameraActive = false;
+
+    // Try camera access or use Apple Studio Display simulated stream
+    navigator.mediaDevices?.getUserMedia({ video: true })
+      .then(stream => {
+        video.srcObject = stream;
+        cameraActive = true;
+      })
+      .catch(() => {
+        // Fallback: animated Apple Studio Display Center Stage pattern
+        video.style.display = 'none';
+        fallbackCanvas.style.display = 'block';
+        const ctx = fallbackCanvas.getContext('2d');
+        let t = 0;
+        const animInterval = setInterval(() => {
+          if (!windows.has(pid)) {
+            clearInterval(animInterval);
+            return;
+          }
+          t += 0.03;
+          ctx.fillStyle = '#0f172a';
+          ctx.fillRect(0, 0, 640, 480);
+
+          // Animated Apple Studio Display graphics
+          const grad = ctx.createRadialGradient(320, 240, 40, 320, 240, 260);
+          grad.addColorStop(0, 'rgba(56, 189, 248, 0.25)');
+          grad.addColorStop(1, 'rgba(15, 23, 42, 0.95)');
+          ctx.fillStyle = grad;
+          ctx.fillRect(0, 0, 640, 480);
+
+          // Studio circles
+          ctx.strokeStyle = 'rgba(56, 189, 248, 0.4)';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(320, 240, 100 + Math.sin(t) * 10, 0, Math.PI * 2);
+          ctx.stroke();
+
+          // Face silhouette
+          ctx.fillStyle = '#38bdf8';
+          ctx.font = '72px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText('👤', 320, 250);
+
+          ctx.font = '16px -apple-system, sans-serif';
+          ctx.fillStyle = '#94a3b8';
+          ctx.fillText('Apple Studio Display • 12MP Center Stage', 320, 310);
+        }, 50);
+      });
+
+    // Effect selection
+    effectChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        effectChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        currentFilter = chip.getAttribute('data-filter');
+        video.style.filter = currentFilter;
+        fallbackCanvas.style.filter = currentFilter;
+      });
+    });
+
+    timerToggle.addEventListener('click', () => {
+      useTimer = !useTimer;
+      timerToggle.innerText = useTimer ? '⏱ 3s Timer: ON' : '⏱ 3s Timer: OFF';
+      timerToggle.style.background = useTimer ? 'rgba(0,122,255,0.4)' : 'rgba(255,255,255,0.12)';
+    });
+
+    function playShutterSound() {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.08);
+        gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.09);
+      } catch (e) {}
+    }
+
+    async function takeSnapshot() {
+      playShutterSound();
+
+      // Flash
+      flashEl.style.opacity = '1';
+      setTimeout(() => { flashEl.style.opacity = '0'; }, 120);
+
+      const canvas = document.createElement('canvas');
+      const w = cameraActive ? (video.videoWidth || 640) : 640;
+      const h = cameraActive ? (video.videoHeight || 480) : 480;
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d');
+
+      if (currentFilter !== 'none') {
+        ctx.filter = currentFilter;
+      }
+      if (cameraActive) {
+        // Mirrored image
+        ctx.translate(w, 0);
+        ctx.scale(-1, 1);
+        ctx.drawImage(video, 0, 0, w, h);
+      } else {
+        ctx.drawImage(fallbackCanvas, 0, 0, w, h);
+      }
+
+      const dataUrl = canvas.toDataURL('image/png');
+      const fileName = `Photo_${photoCount++}.png`;
+      recentPhotos.push({ name: fileName, url: dataUrl });
+
+      // Save to VFS
+      try {
         await window.aliceOS.vfs.mkdir(`/Users/${currentUser}/Desktop`);
         await window.aliceOS.vfs.writeFile(`/Users/${currentUser}/Desktop/${fileName}`, dataUrl);
-        refreshDesktop();
-        
-        // Flash effect
-        const flash = document.createElement('div');
-        flash.style.position = 'absolute';
-        flash.style.top = '0'; flash.style.left = '0';
-        flash.style.width = '100%'; flash.style.height = '100%';
-        flash.style.background = 'white';
-        flash.style.zIndex = '999';
-        win.appendChild(flash);
-        setTimeout(() => flash.remove(), 100);
-      });
-      
-    } catch (err) {
-      video.outerHTML = `<div style="color:white;padding:20px;text-align:center;">${t('cam_denied', 'Camera access denied or not found.')}</div>`;
+        if (typeof refreshDesktop === 'function') refreshDesktop();
+        if (typeof showNotification === 'function') {
+          showNotification(t('app_camera', 'Photo Booth'), `Saved "${fileName}" to Desktop`);
+        }
+      } catch (e) {}
+
+      // Add to filmstrip
+      const thumb = document.createElement('img');
+      thumb.src = dataUrl;
+      thumb.style.cssText = 'width:44px;height:44px;object-fit:cover;border-radius:6px;border:1px solid rgba(255,255,255,0.2);cursor:pointer;transition:transform 0.1s;';
+      thumb.title = fileName;
+      thumb.onclick = () => {
+        if (typeof launchGallery === 'function') {
+          launchGallery(`/Users/${currentUser}/Desktop/${fileName}`);
+        }
+      };
+      thumb.onmouseenter = () => { thumb.style.transform = 'scale(1.1)'; };
+      thumb.onmouseleave = () => { thumb.style.transform = 'scale(1)'; };
+      filmstripItems.prepend(thumb);
     }
+
+    shutterBtn.addEventListener('click', () => {
+      if (useTimer) {
+        shutterBtn.disabled = true;
+        let count = 3;
+        countdownEl.style.display = 'flex';
+        countdownEl.innerText = count;
+
+        const timer = setInterval(() => {
+          count--;
+          if (count > 0) {
+            countdownEl.innerText = count;
+          } else {
+            clearInterval(timer);
+            countdownEl.style.display = 'none';
+            shutterBtn.disabled = false;
+            takeSnapshot();
+          }
+        }, 800);
+      } else {
+        takeSnapshot();
+      }
+    });
+
+    win._onLanguageChange = () => {
+      const sBtn = win.querySelector(`#pb-shutter-${pid}`);
+      if (sBtn) sBtn.title = t('pb_take_photo', 'Take Photo');
+    };
   }
 }
 
@@ -7975,76 +8395,250 @@ loginUser = async function() {
   }, 1000);
 }
 
-// Paint App
+// Photos & Markup Studio (macOS Sequoia Design)
 async function launchPaint() {
   const res = await window.aliceOS.pm.spawn('paint');
   if (res.success) {
     const pid = res.data.pid;
-    const win = createWindow(pid, t('app_paint', 'Paint'), `
-      <div style="display:flex;flex-direction:column;height:100%;background:#e0e0e0;">
-        <div style="padding:10px;background:#f5f5f5;border-bottom:1px solid #ccc;display:flex;gap:10px;">
-          <input type="color" id="paint-color-${pid}" value="#000000">
-          <input type="range" id="paint-size-${pid}" min="1" max="50" value="5">
-          <button id="paint-clear-${pid}">${t('paint_clear', 'Clear')}</button>
+    let currentTool = 'pen'; // pen, brush, highlighter, eraser, rect, circle
+    let currentColor = '#007aff';
+    let currentWidth = 5;
+    let artworkCount = 1;
+    let history = [];
+
+    const win = createWindow(pid, t('app_paint', 'Photos & Markup'), `
+      <div class="mac-markup-app">
+        <!-- Floating Frosted Glass Toolbar -->
+        <div class="mac-markup-toolbar">
+          <!-- Tools Group -->
+          <div class="mac-markup-toolgroup">
+            <button class="mac-markup-tool-btn active" data-tool="pen" title="Pencil">✏️</button>
+            <button class="mac-markup-tool-btn" data-tool="brush" title="Artist Brush">🖌️</button>
+            <button class="mac-markup-tool-btn" data-tool="highlighter" title="Highlighter">🖍️</button>
+            <button class="mac-markup-tool-btn" data-tool="eraser" title="Eraser">🧹</button>
+            <button class="mac-markup-tool-btn" data-tool="rect" title="Rectangle">⬜</button>
+            <button class="mac-markup-tool-btn" data-tool="circle" title="Circle">⭕</button>
+          </div>
+
+          <!-- Stroke Width Selector -->
+          <div class="mac-markup-toolgroup">
+            <button class="mac-markup-width-btn" data-width="2" style="background:transparent;border:none;color:#aaa;padding:4px 8px;font-size:11px;cursor:pointer;">Thin</button>
+            <button class="mac-markup-width-btn active" data-width="5" style="background:#007aff;color:white;border:none;padding:4px 8px;border-radius:4px;font-size:11px;cursor:pointer;">Mid</button>
+            <button class="mac-markup-width-btn" data-width="12" style="background:transparent;border:none;color:#aaa;padding:4px 8px;font-size:11px;cursor:pointer;">Bold</button>
+            <button class="mac-markup-width-btn" data-width="24" style="background:transparent;border:none;color:#aaa;padding:4px 8px;font-size:11px;cursor:pointer;">Heavy</button>
+          </div>
+
+          <!-- Color Swatches -->
+          <div class="mac-markup-colors">
+            <div class="mac-markup-color-dot" data-color="#1d1d1f" style="background:#1d1d1f;"></div>
+            <div class="mac-markup-color-dot" data-color="#8e8e93" style="background:#8e8e93;"></div>
+            <div class="mac-markup-color-dot active" data-color="#007aff" style="background:#007aff;"></div>
+            <div class="mac-markup-color-dot" data-color="#5856d6" style="background:#5856d6;"></div>
+            <div class="mac-markup-color-dot" data-color="#af52de" style="background:#af52de;"></div>
+            <div class="mac-markup-color-dot" data-color="#ff2d55" style="background:#ff2d55;"></div>
+            <div class="mac-markup-color-dot" data-color="#ff9500" style="background:#ff9500;"></div>
+            <div class="mac-markup-color-dot" data-color="#34c759" style="background:#34c759;"></div>
+            <input type="color" id="paint-custom-color-${pid}" value="#007aff" style="width:20px;height:20px;padding:0;border:none;background:none;cursor:pointer;">
+          </div>
+
+          <!-- Actions -->
+          <div style="display:flex;align-items:center;gap:6px;">
+            <button id="paint-undo-${pid}" title="Undo" style="background:rgba(255,255,255,0.1);border:none;color:white;padding:5px 10px;border-radius:6px;font-size:12px;cursor:pointer;">↩️</button>
+            <button id="paint-clear-${pid}" title="${t('paint_clear', 'Clear')}" style="background:rgba(255,255,255,0.1);border:none;color:white;padding:5px 10px;border-radius:6px;font-size:12px;cursor:pointer;">🗑</button>
+            <button id="paint-save-${pid}" style="background:#007aff;color:white;border:none;padding:5px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;">💾 ${t('notes_save', 'Save')}</button>
+          </div>
         </div>
-        <canvas id="paint-canvas-${pid}" width="800" height="600" style="background:white;flex-grow:1;cursor:crosshair;touch-action:none;"></canvas>
+
+        <!-- Canvas Container -->
+        <div class="mac-markup-canvas-wrap">
+          <canvas id="paint-canvas-${pid}" width="800" height="520"></canvas>
+        </div>
       </div>
-    `, 'paint');
+    `);
+
+    win.style.width = '840px';
+    win.style.height = '600px';
 
     const canvas = win.querySelector(`#paint-canvas-${pid}`);
     const ctx = canvas.getContext('2d');
-    const colorPicker = win.querySelector(`#paint-color-${pid}`);
-    const sizePicker = win.querySelector(`#paint-size-${pid}`);
+    const toolBtns = win.querySelectorAll('.mac-markup-tool-btn');
+    const widthBtns = win.querySelectorAll('.mac-markup-width-btn');
+    const colorDots = win.querySelectorAll('.mac-markup-color-dot');
+    const customColor = win.querySelector(`#paint-custom-color-${pid}`);
     const clearBtn = win.querySelector(`#paint-clear-${pid}`);
+    const undoBtn = win.querySelector(`#paint-undo-${pid}`);
+    const saveBtn = win.querySelector(`#paint-save-${pid}`);
 
-    win._onLanguageChange = () => {
-      if (clearBtn) clearBtn.innerText = t('paint_clear', 'Clear');
-    };
+    // Fill initial canvas with clean white
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    saveState();
+
+    function saveState() {
+      if (history.length > 15) history.shift();
+      history.push(canvas.toDataURL());
+    }
+
+    // Tool switching
+    toolBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        toolBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentTool = btn.getAttribute('data-tool');
+      });
+    });
+
+    // Width switching
+    widthBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        widthBtns.forEach(b => {
+          b.classList.remove('active');
+          b.style.background = 'transparent';
+          b.style.color = '#aaa';
+        });
+        btn.classList.add('active');
+        btn.style.background = '#007aff';
+        btn.style.color = 'white';
+        currentWidth = parseInt(btn.getAttribute('data-width'));
+      });
+    });
+
+    // Color switching
+    colorDots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        colorDots.forEach(d => d.classList.remove('active'));
+        dot.classList.add('active');
+        currentColor = dot.getAttribute('data-color');
+      });
+    });
+
+    if (customColor) {
+      customColor.addEventListener('input', (e) => {
+        currentColor = e.target.value;
+        colorDots.forEach(d => d.classList.remove('active'));
+      });
+    }
 
     let isDrawing = false;
+    let startX = 0, startY = 0;
+    let snapshot = null;
 
-    // Adjust canvas internal size to match its CSS size to avoid stretching, but a fixed 800x600 works for simulation.
-    // In a real app we'd resize the canvas dynamically.
-
-    function startDraw(e) {
-      isDrawing = true;
-      draw(e);
-    }
-
-    function stopDraw() {
-      isDrawing = false;
-      ctx.beginPath();
-    }
-
-    function draw(e) {
-      if (!isDrawing) return;
-      
+    function getCoords(e) {
       const rect = canvas.getBoundingClientRect();
-      // scale coordinates based on canvas internal size vs display size
       const scaleX = canvas.width / rect.width;
       const scaleY = canvas.height / rect.height;
-      
-      const x = (e.clientX - rect.left) * scaleX;
-      const y = (e.clientY - rect.top) * scaleY;
-
-      ctx.lineWidth = sizePicker.value;
-      ctx.lineCap = 'round';
-      ctx.strokeStyle = colorPicker.value;
-
-      ctx.lineTo(x, y);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(x, y);
+      return {
+        x: (e.clientX - rect.left) * scaleX,
+        y: (e.clientY - rect.top) * scaleY
+      };
     }
 
-    canvas.addEventListener('mousedown', startDraw);
-    canvas.addEventListener('mousemove', draw);
-    canvas.addEventListener('mouseup', stopDraw);
-    canvas.addEventListener('mouseout', stopDraw);
+    canvas.addEventListener('mousedown', (e) => {
+      isDrawing = true;
+      const pt = getCoords(e);
+      startX = pt.x;
+      startY = pt.y;
+
+      if (currentTool === 'rect' || currentTool === 'circle') {
+        snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      } else {
+        ctx.beginPath();
+        ctx.moveTo(startX, startY);
+      }
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+      if (!isDrawing) return;
+      const pt = getCoords(e);
+
+      if (currentTool === 'rect') {
+        ctx.putImageData(snapshot, 0, 0);
+        ctx.strokeStyle = currentColor;
+        ctx.lineWidth = currentWidth;
+        ctx.strokeRect(startX, startY, pt.x - startX, pt.y - startY);
+      } else if (currentTool === 'circle') {
+        ctx.putImageData(snapshot, 0, 0);
+        ctx.strokeStyle = currentColor;
+        ctx.lineWidth = currentWidth;
+        const rx = Math.abs(pt.x - startX) / 2;
+        const ry = Math.abs(pt.y - startY) / 2;
+        const cx = Math.min(startX, pt.x) + rx;
+        const cy = Math.min(startY, pt.y) + ry;
+        ctx.beginPath();
+        ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
+        ctx.stroke();
+      } else if (currentTool === 'eraser') {
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = currentWidth * 3;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.lineTo(pt.x, pt.y);
+        ctx.stroke();
+      } else if (currentTool === 'highlighter') {
+        ctx.strokeStyle = currentColor;
+        ctx.globalAlpha = 0.35;
+        ctx.lineWidth = currentWidth * 2.5;
+        ctx.lineCap = 'square';
+        ctx.lineTo(pt.x, pt.y);
+        ctx.stroke();
+        ctx.globalAlpha = 1.0;
+      } else {
+        // Pen / Brush with smooth curves
+        ctx.strokeStyle = currentColor;
+        ctx.lineWidth = currentTool === 'brush' ? currentWidth * 1.6 : currentWidth;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.lineTo(pt.x, pt.y);
+        ctx.stroke();
+      }
+    });
+
+    function endDrawing() {
+      if (!isDrawing) return;
+      isDrawing = false;
+      ctx.closePath();
+      saveState();
+    }
+
+    canvas.addEventListener('mouseup', endDrawing);
+    canvas.addEventListener('mouseleave', endDrawing);
+
+    undoBtn.addEventListener('click', () => {
+      if (history.length > 1) {
+        history.pop(); // remove current state
+        const prevState = history[history.length - 1];
+        const img = new Image();
+        img.src = prevState;
+        img.onload = () => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(img, 0, 0);
+        };
+      }
+    });
 
     clearBtn.addEventListener('click', () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      saveState();
     });
+
+    saveBtn.addEventListener('click', async () => {
+      const dataUrl = canvas.toDataURL('image/png');
+      const fileName = `Artwork_${artworkCount++}.png`;
+      try {
+        await window.aliceOS.vfs.mkdir(`/Users/${currentUser}/Desktop`);
+        await window.aliceOS.vfs.writeFile(`/Users/${currentUser}/Desktop/${fileName}`, dataUrl);
+        if (typeof refreshDesktop === 'function') refreshDesktop();
+        if (typeof showNotification === 'function') {
+          showNotification(t('app_paint', 'Photos & Markup'), `Saved "${fileName}" to Desktop`);
+        }
+      } catch (e) {}
+    });
+
+    win._onLanguageChange = () => {
+      if (clearBtn) clearBtn.title = t('paint_clear', 'Clear');
+      if (saveBtn) saveBtn.innerText = `💾 ${t('notes_save', 'Save')}`;
+    };
   }
 }
 
@@ -9470,59 +10064,226 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// Maps App
+// Apple Maps (macOS Sequoia Design)
 async function launchMaps() {
   const res = await window.aliceOS.pm.spawn('maps');
   if (res.success) {
     const pid = res.data.pid;
-    const win = createWindow(pid, t('app_maps', 'Maps'), `
-      <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#f0f0f0;">
-        <div style="font-size:24px;margin-bottom:10px;">🌍</div>
-        <div id="maps-locating-${pid}">${t('maps_locating', 'Acquiring Physical GPS Coordinates...')}</div>
-      </div>
-    `, 'maps');
-    
-    try {
-      // 1. Fetch physical IP and Geolocation
-      const geoReq = await fetch('https://get.geojs.io/v1/ip/geo.json');
-      const geo = await geoReq.json();
-      const lat = parseFloat(geo.latitude);
-      const lon = parseFloat(geo.longitude);
-      
-      // Update Title
-      const titleEl = win.querySelector('.title') || win.querySelector('.window-title');
-      if (titleEl) titleEl.innerText = `${t('app_maps', 'Maps')} - ${geo.city}, ${geo.country}`;
-      
-      // Calculate Bounding Box (approx 0.05 degrees)
-      const offset = 0.05;
-      const bbox = `${lon - offset}%2C${lat - offset}%2C${lon + offset}%2C${lat + offset}`;
-      
-      // Replace window content with the real map
-      const contentEl = win.querySelector('.window-content');
-      if (contentEl) {
-        contentEl.innerHTML = `
-          <div style="width:100%;height:100%;display:flex;flex-direction:column;">
-            <div style="padding:10px;background:#eee;border-bottom:1px solid #ccc;display:flex;gap:10px;align-items:center;">
-              <div style="font-size:12px;color:#333;font-weight:bold;"><span id="maps-loc-lbl-${pid}">📍 ${t('maps_physical_loc', 'Your Physical Location')}:</span> ${geo.city}, ${geo.region}, ${geo.country} (IP: ${geo.ip})</div>
-            </div>
-            <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&amp;layer=mapnik&amp;marker=${lat}%2C${lon}" style="flex-grow:1;"></iframe>
-            <div style="font-size:10px;text-align:right;padding:2px 5px;background:rgba(255,255,255,0.8);">© OpenStreetMap contributors</div>
-          </div>
-        `;
-      }
+    let currentMode = 'explore';
+    let zoomLevel = 0.04;
 
-      win._onLanguageChange = () => {
-        const lbl = win.querySelector(`#maps-loc-lbl-${pid}`);
-        if (lbl) lbl.innerText = `📍 ${t('maps_physical_loc', 'Your Physical Location')}:`;
-      };
-    } catch(e) {
-      const contentEl = win.querySelector('.window-content');
-      if (contentEl) {
-        contentEl.innerHTML = `
-          <div style="padding:20px;color:red;">${t('maps_failed', 'Failed to acquire location')}: ${e.message}</div>
-        `;
-      }
+    const landmarks = [
+      { id: 'applepark', name: 'Apple Park', city: 'Cupertino, California', lat: 37.3346, lon: -122.0090, icon: '🏢', rating: '4.9 ★ (28.4K)', desc: 'Iconic ring-shaped headquarters of Apple Inc., featuring the Steve Jobs Theater and lush central park.', hours: 'Open today • Closes 6 PM' },
+      { id: 'forbiddencity', name: 'Forbidden City', city: 'Beijing, China', lat: 39.9163, lon: 116.3972, icon: '🏮', rating: '4.9 ★ (42.1K)', desc: 'Imperial palace complex from the Ming to the Qing dynasties, the heart of historical Beijing.', hours: 'Open today • Closes 5 PM' },
+      { id: 'orientalpearl', name: 'Oriental Pearl Tower', city: 'Shanghai, China', lat: 31.2397, lon: 121.4998, icon: '🗼', rating: '4.8 ★ (19.8K)', desc: 'Futuristic 468m television tower dominating the Lujiazui skyline with panoramic glass skywalks.', hours: 'Open today • Closes 9:30 PM' },
+      { id: 'eiffel', name: 'Eiffel Tower', city: 'Paris, France', lat: 48.8584, lon: 2.2945, icon: '🗼', rating: '4.8 ★ (85.2K)', desc: 'Wrought-iron lattice tower on the Champ de Mars, the world-renowned symbol of Paris.', hours: 'Open today • Closes 11:45 PM' },
+      { id: 'shibuya', name: 'Shibuya Crossing', city: 'Tokyo, Japan', lat: 35.6595, lon: 139.7005, icon: '🏙️', rating: '4.7 ★ (31.5K)', desc: 'Famous scramble intersection outside Shibuya Station surrounded by neon billboards and vibrant culture.', hours: 'Open 24 hours' },
+      { id: 'bigben', name: 'Big Ben & Westminster', city: 'London, UK', lat: 51.5007, lon: -0.1246, icon: '🕰️', rating: '4.8 ★ (39.0K)', desc: 'The Great Bell and clock tower at the north end of the Houses of Parliament on the River Thames.', hours: 'Open today • Tours available' }
+    ];
+
+    let currentLat = landmarks[0].lat;
+    let currentLon = landmarks[0].lon;
+    let selectedLandmark = landmarks[0];
+
+    const win = createWindow(pid, t('app_maps', 'Maps'), `
+      <div class="mac-maps-app">
+        <!-- Floating Glass Sidebar -->
+        <div class="mac-maps-floating-sidebar" id="maps-sidebar-${pid}">
+          <div class="mac-maps-search-box">
+            <span style="font-size:13px;opacity:0.6;">🔍</span>
+            <input type="text" id="maps-search-${pid}" placeholder="${t('maps_search_placeholder', 'Search Maps or enter address')}" style="flex:1;border:none;background:transparent;outline:none;font-size:12px;color:inherit;">
+          </div>
+
+          <!-- Mode Selector Segmented Control -->
+          <div style="display:flex;background:rgba(0,0,0,0.06);padding:3px;border-radius:10px;gap:2px;">
+            <button class="mac-maps-mode-btn active" data-mode="explore" style="flex:1;border:none;background:white;padding:4px 0;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,0.08);">${t('maps_mode_explore', 'Explore')}</button>
+            <button class="mac-maps-mode-btn" data-mode="driving" style="flex:1;border:none;background:transparent;padding:4px 0;border-radius:7px;font-size:11px;font-weight:500;cursor:pointer;color:#555;">${t('maps_mode_drive', 'Drive')}</button>
+            <button class="mac-maps-mode-btn" data-mode="transit" style="flex:1;border:none;background:transparent;padding:4px 0;border-radius:7px;font-size:11px;font-weight:500;cursor:pointer;color:#555;">${t('maps_mode_transit', 'Transit')}</button>
+            <button class="mac-maps-mode-btn" data-mode="satellite" style="flex:1;border:none;background:transparent;padding:4px 0;border-radius:7px;font-size:11px;font-weight:500;cursor:pointer;color:#555;">${t('maps_mode_sat', 'Satellite')}</button>
+          </div>
+
+          <!-- Active Landmark Detail Card -->
+          <div id="maps-landmark-card-${pid}" style="background:white;padding:12px;border-radius:12px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 4px 12px rgba(0,0,0,0.05);">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+              <div id="maps-card-icon-${pid}" style="font-size:28px;">🏢</div>
+              <div style="flex:1;min-width:0;">
+                <div id="maps-card-title-${pid}" style="font-size:14px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Apple Park</div>
+                <div id="maps-card-city-${pid}" style="font-size:11px;color:#6e6e73;">Cupertino, California</div>
+              </div>
+            </div>
+            <div id="maps-card-rating-${pid}" style="font-size:11px;font-weight:600;color:#ff9500;margin-bottom:4px;">4.9 ★ (28.4K)</div>
+            <div id="maps-card-hours-${pid}" style="font-size:11px;color:#34c759;font-weight:500;margin-bottom:6px;">Open today • Closes 6 PM</div>
+            <div id="maps-card-desc-${pid}" style="font-size:11px;color:#3a3a3c;line-height:1.4;margin-bottom:10px;">Iconic ring-shaped headquarters of Apple Inc., featuring the Steve Jobs Theater and lush central park.</div>
+            <div style="display:flex;gap:6px;">
+              <button id="maps-btn-directions-${pid}" style="flex:1;background:#007aff;color:white;border:none;padding:6px 0;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;">${t('maps_directions', 'Directions')}</button>
+              <button id="maps-btn-lookaround-${pid}" style="background:rgba(0,122,255,0.1);color:#007aff;border:none;padding:6px 12px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;">👓 Look Around</button>
+            </div>
+          </div>
+
+          <!-- Featured Landmarks Section -->
+          <div style="font-size:11px;font-weight:700;color:#8e8e93;text-transform:uppercase;letter-spacing:0.5px;margin-top:4px;">${t('maps_featured_places', 'World Landmarks')}</div>
+          <div id="maps-landmarks-list-${pid}" style="display:flex;flex-direction:column;gap:4px;">
+            ${landmarks.map(lm => `
+              <div class="mac-maps-landmark-item" data-id="${lm.id}">
+                <span style="font-size:20px;">${lm.icon}</span>
+                <div style="flex:1;min-width:0;">
+                  <div style="font-size:12px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${lm.name}</div>
+                  <div style="font-size:10px;color:#8e8e93;">${lm.city}</div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- Floating Map Controls -->
+        <div class="mac-maps-controls">
+          <button class="mac-maps-ctrl-btn" id="maps-ctrl-compass-${pid}" title="${t('maps_compass', 'Compass')}">🧭</button>
+          <button class="mac-maps-ctrl-btn" id="maps-ctrl-zoomin-${pid}" title="${t('maps_zoomin', 'Zoom In')}">＋</button>
+          <button class="mac-maps-ctrl-btn" id="maps-ctrl-zoomout-${pid}" title="${t('maps_zoomout', 'Zoom Out')}">－</button>
+          <button class="mac-maps-ctrl-btn" id="maps-ctrl-loc-${pid}" title="${t('maps_my_location', 'Current Location')}">📍</button>
+        </div>
+
+        <!-- Interactive Map Frame -->
+        <div style="width:100%;height:100%;position:relative;background:#e5e3df;">
+          <iframe id="maps-frame-${pid}" width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" style="width:100%;height:100%;border:none;"></iframe>
+          <div style="position:absolute;bottom:4px;right:10px;font-size:10px;color:#666;background:rgba(255,255,255,0.7);padding:2px 8px;border-radius:6px;backdrop-filter:blur(8px);">© Apple Maps / OpenStreetMap contributors</div>
+        </div>
+      </div>
+    `);
+
+    win.style.width = '840px';
+    win.style.height = '540px';
+
+    const mapFrame = win.querySelector(`#maps-frame-${pid}`);
+    const searchInp = win.querySelector(`#maps-search-${pid}`);
+    const cardIcon = win.querySelector(`#maps-card-icon-${pid}`);
+    const cardTitle = win.querySelector(`#maps-card-title-${pid}`);
+    const cardCity = win.querySelector(`#maps-card-city-${pid}`);
+    const cardRating = win.querySelector(`#maps-card-rating-${pid}`);
+    const cardHours = win.querySelector(`#maps-card-hours-${pid}`);
+    const cardDesc = win.querySelector(`#maps-card-desc-${pid}`);
+    const modeBtns = win.querySelectorAll('.mac-maps-mode-btn');
+
+    function updateMapIframe() {
+      const bbox = `${currentLon - zoomLevel}%2C${currentLat - zoomLevel}%2C${currentLon + zoomLevel}%2C${currentLat + zoomLevel}`;
+      let layer = 'mapnik';
+      if (currentMode === 'satellite' || currentMode === 'transit') layer = 'transportmap';
+      mapFrame.src = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=${layer}&marker=${currentLat}%2C${currentLon}`;
     }
+
+    function selectLandmark(lm) {
+      selectedLandmark = lm;
+      currentLat = lm.lat;
+      currentLon = lm.lon;
+      zoomLevel = 0.025;
+
+      if (cardIcon) cardIcon.innerText = lm.icon;
+      if (cardTitle) cardTitle.innerText = lm.name;
+      if (cardCity) cardCity.innerText = lm.city;
+      if (cardRating) cardRating.innerText = lm.rating;
+      if (cardHours) cardHours.innerText = lm.hours;
+      if (cardDesc) cardDesc.innerText = lm.desc;
+
+      updateMapIframe();
+    }
+
+    // Connect landmark items
+    win.querySelectorAll('.mac-maps-landmark-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const id = item.getAttribute('data-id');
+        const lm = landmarks.find(l => l.id === id);
+        if (lm) selectLandmark(lm);
+      });
+    });
+
+    // Map controls
+    win.querySelector(`#maps-ctrl-zoomin-${pid}`).addEventListener('click', () => {
+      zoomLevel = Math.max(0.005, zoomLevel * 0.6);
+      updateMapIframe();
+    });
+
+    win.querySelector(`#maps-ctrl-zoomout-${pid}`).addEventListener('click', () => {
+      zoomLevel = Math.min(0.5, zoomLevel * 1.6);
+      updateMapIframe();
+    });
+
+    win.querySelector(`#maps-ctrl-compass-${pid}`).addEventListener('click', () => {
+      selectLandmark(landmarks[0]);
+    });
+
+    win.querySelector(`#maps-ctrl-loc-${pid}`).addEventListener('click', async () => {
+      try {
+        const geoReq = await fetch('https://get.geojs.io/v1/ip/geo.json');
+        const geo = await geoReq.json();
+        currentLat = parseFloat(geo.latitude);
+        currentLon = parseFloat(geo.longitude);
+        zoomLevel = 0.05;
+        if (cardTitle) cardTitle.innerText = geo.city || 'Your Location';
+        if (cardCity) cardCity.innerText = `${geo.region}, ${geo.country}`;
+        if (cardDesc) cardDesc.innerText = `IP Geolocation: ${geo.ip}`;
+        updateMapIframe();
+      } catch (e) {
+        selectLandmark(landmarks[0]);
+      }
+    });
+
+    // Mode Buttons
+    modeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        modeBtns.forEach(b => {
+          b.style.background = 'transparent';
+          b.style.color = '#555';
+          b.style.boxShadow = 'none';
+        });
+        btn.style.background = 'white';
+        btn.style.color = '#1d1d1f';
+        btn.style.boxShadow = '0 1px 4px rgba(0,0,0,0.08)';
+        currentMode = btn.getAttribute('data-mode');
+        updateMapIframe();
+      });
+    });
+
+    // Search filter
+    if (searchInp) {
+      searchInp.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          const q = searchInp.value.toLowerCase().trim();
+          const match = landmarks.find(l => l.name.toLowerCase().includes(q) || l.city.toLowerCase().includes(q));
+          if (match) {
+            selectLandmark(match);
+          } else {
+            // Recenter or open map search
+            updateMapIframe();
+          }
+        }
+      });
+    }
+
+    // Try fetching initial user location quietly in background, else use Apple Park
+    fetch('https://get.geojs.io/v1/ip/geo.json')
+      .then(r => r.json())
+      .then(geo => {
+        if (geo && geo.latitude && geo.longitude) {
+          currentLat = parseFloat(geo.latitude);
+          currentLon = parseFloat(geo.longitude);
+          if (cardTitle) cardTitle.innerText = geo.city;
+          if (cardCity) cardCity.innerText = `${geo.region}, ${geo.country}`;
+          if (cardDesc) cardDesc.innerText = `Your location (${geo.ip})`;
+          updateMapIframe();
+        }
+      })
+      .catch(() => {
+        // Default Apple Park
+        selectLandmark(landmarks[0]);
+      });
+
+    // Initial load
+    selectLandmark(landmarks[0]);
+
+    win._onLanguageChange = () => {
+      const sInp = win.querySelector(`#maps-search-${pid}`);
+      if (sInp) sInp.placeholder = t('maps_search_placeholder', 'Search Maps or enter address');
+    };
   }
 }
 
@@ -9727,33 +10488,155 @@ async function launchHostMonitor() {
   }
 }
 
-// Image Viewer / Gallery App
+// Photos Library (macOS Sequoia Design)
 async function launchGallery(filePath = null) {
   const res = await window.aliceOS.pm.spawn('gallery');
   if (res.success) {
     const pid = res.data.pid;
-    const win = createWindow(pid, t('gallery_image_viewer', 'Image Viewer'), `
-      <div style="background:#111;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;">
-        <img id="gallery-img-${pid}" style="max-width:100%;max-height:100%;object-fit:contain;display:none;" />
-        <div id="gallery-placeholder-${pid}" style="color:#666;font-style:italic;">${t('gallery_no_image', 'No Image Loaded')}</div>
-      </div>
-    `, 'gallery');
+    let photosList = [
+      { name: 'macOS_Sequoia_Dark.heic', url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80', album: 'wallpapers' },
+      { name: 'Sonoma_Horizon_4K.heic', url: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80', album: 'wallpapers' },
+      { name: 'Apple_Park_Rainbow.jpg', url: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=80', album: 'wallpapers' }
+    ];
+    let activePhoto = photosList[0];
+    let currentView = 'grid'; // 'grid' or 'detail'
 
-    win._onLanguageChange = () => {
-      const placeholder = win.querySelector(`#gallery-placeholder-${pid}`);
-      if (placeholder) placeholder.innerText = t('gallery_no_image', 'No Image Loaded');
-    };
+    const win = createWindow(pid, t('gallery_image_viewer', 'Photos'), `
+      <div class="mac-photos-app">
+        <!-- Photos Sidebar -->
+        <div class="mac-photos-sidebar">
+          <div style="font-size:11px;font-weight:700;color:#71717a;text-transform:uppercase;letter-spacing:0.5px;padding:4px 8px;">Photos</div>
+          <div class="mac-photos-nav-item active" data-filter="all" style="display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:8px;cursor:pointer;font-size:13px;background:rgba(255,255,255,0.12);">
+            <span>🖼️</span> <span>All Photos</span>
+          </div>
+          <div class="mac-photos-nav-item" data-filter="wallpapers" style="display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:8px;cursor:pointer;font-size:13px;opacity:0.8;">
+            <span>🏞️</span> <span>Wallpapers</span>
+          </div>
+          <div class="mac-photos-nav-item" data-filter="camera" style="display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:8px;cursor:pointer;font-size:13px;opacity:0.8;">
+            <span>📸</span> <span>Photo Booth</span>
+          </div>
+          <div class="mac-photos-nav-item" data-filter="markup" style="display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:8px;cursor:pointer;font-size:13px;opacity:0.8;">
+            <span>🎨</span> <span>Markup Art</span>
+          </div>
+        </div>
+
+        <!-- Photos Main Content -->
+        <div class="mac-photos-content">
+          <!-- Photos Header Toolbar -->
+          <div class="mac-photos-header">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <button id="photos-back-btn-${pid}" style="display:none;background:rgba(255,255,255,0.1);border:none;color:white;padding:4px 10px;border-radius:6px;font-size:11px;cursor:pointer;">◀ Back to Grid</button>
+              <div id="photos-title-${pid}" style="font-weight:600;font-size:13px;">Library</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;font-size:11px;color:#a1a1aa;">
+              <span id="photos-count-${pid}">${photosList.length} Items</span>
+            </div>
+          </div>
+
+          <!-- Grid View -->
+          <div class="mac-photos-grid" id="photos-grid-${pid}">
+            <!-- Rendered thumbnails -->
+          </div>
+
+          <!-- Detail View -->
+          <div id="photos-detail-${pid}" style="display:none;flex:1;align-items:center;justify-content:center;background:#000000;position:relative;overflow:hidden;">
+            <img id="photos-detail-img-${pid}" style="max-width:94%;max-height:94%;object-fit:contain;border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,0.8);" />
+          </div>
+        </div>
+      </div>
+    `);
+
+    win.style.width = '820px';
+    win.style.height = '540px';
+
+    const gridEl = win.querySelector(`#photos-grid-${pid}`);
+    const detailEl = win.querySelector(`#photos-detail-${pid}`);
+    const detailImg = win.querySelector(`#photos-detail-img-${pid}`);
+    const backBtn = win.querySelector(`#photos-back-btn-${pid}`);
+    const titleEl = win.querySelector(`#photos-title-${pid}`);
+    const countEl = win.querySelector(`#photos-count-${pid}`);
+    const navItems = win.querySelectorAll('.mac-photos-nav-item');
+
+    // Scan VFS desktop for user created photos & artworks
+    try {
+      const vfsFiles = await window.aliceOS.vfs.readDir(`/Users/${currentUser}/Desktop`);
+      if (vfsFiles.success && Array.isArray(vfsFiles.data)) {
+        for (let f of vfsFiles.data) {
+          if (typeof f === 'string' && (f.endsWith('.png') || f.endsWith('.jpg'))) {
+            const dataRes = await window.aliceOS.vfs.readFile(`/Users/${currentUser}/Desktop/${f}`);
+            if (dataRes.success) {
+              const alb = f.toLowerCase().includes('photo') ? 'camera' : (f.toLowerCase().includes('artwork') ? 'markup' : 'all');
+              photosList.unshift({ name: f, url: dataRes.data, album: alb });
+            }
+          }
+        }
+      }
+    } catch (e) {}
+
+    function renderGrid(filter = 'all') {
+      currentView = 'grid';
+      gridEl.style.display = 'grid';
+      detailEl.style.display = 'none';
+      backBtn.style.display = 'none';
+      titleEl.innerText = filter === 'all' ? 'Library' : filter.toUpperCase();
+
+      let filtered = photosList;
+      if (filter !== 'all') {
+        filtered = photosList.filter(p => p.album === filter);
+      }
+      countEl.innerText = `${filtered.length} Items`;
+
+      gridEl.innerHTML = filtered.map((p, idx) => `
+        <div class="mac-photos-thumb" data-idx="${idx}">
+          <img src="${p.url}" alt="${p.name}" loading="lazy" />
+          <div style="position:absolute;bottom:0;left:0;width:100%;padding:4px 8px;background:linear-gradient(to top,rgba(0,0,0,0.8),transparent);font-size:10px;color:white;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${p.name}</div>
+        </div>
+      `).join('');
+
+      gridEl.querySelectorAll('.mac-photos-thumb').forEach(thumb => {
+        thumb.addEventListener('click', () => {
+          const idx = parseInt(thumb.getAttribute('data-idx'));
+          showDetail(filtered[idx]);
+        });
+      });
+    }
+
+    function showDetail(photo) {
+      activePhoto = photo;
+      currentView = 'detail';
+      gridEl.style.display = 'none';
+      detailEl.style.display = 'flex';
+      backBtn.style.display = 'block';
+      detailImg.src = photo.url;
+      titleEl.innerText = photo.name;
+    }
+
+    backBtn.addEventListener('click', () => {
+      renderGrid();
+    });
+
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        navItems.forEach(n => {
+          n.style.background = 'transparent';
+          n.style.opacity = '0.8';
+        });
+        item.style.background = 'rgba(255,255,255,0.12)';
+        item.style.opacity = '1';
+        const filter = item.getAttribute('data-filter');
+        renderGrid(filter);
+      });
+    });
 
     if (filePath) {
       const imgRes = await window.aliceOS.vfs.readFile(filePath);
       if (imgRes.success) {
-        const imgEl = win.querySelector(`#gallery-img-${pid}`);
-        const placeholder = win.querySelector(`#gallery-placeholder-${pid}`);
-        imgEl.src = imgRes.data;
-        imgEl.style.display = 'block';
-        placeholder.style.display = 'none';
-        win.querySelector('.title').innerText = filePath.split('/').pop();
+        showDetail({ name: filePath.split('/').pop(), url: imgRes.data, album: 'all' });
+      } else {
+        renderGrid();
       }
+    } else {
+      renderGrid();
     }
   }
 }
@@ -10592,205 +11475,571 @@ async function launchUniverse() {
   }
 }
 
-// Alice Store (Dynamic Package Manager)
+// Alice App Store (macOS Sequoia Design)
 async function launchStore() {
   const res = await window.aliceOS.pm.spawn('store');
   if (res.success) {
     const pid = res.data.pid;
+    let activeTab = 'discover';
+
+    const storeApps = [
+      { id: 'xcode', name: 'Xcode 16 Studio', category: 'develop', icon: '🛠️', desc: 'Powerful IDE with Swift syntax, LLDB console & live build.', badge: 'Apple Silicon Ready', action: 'launchIDE()', installed: true },
+      { id: 'maps', name: 'Apple Maps 3D', category: 'discover', icon: '🗺️', desc: 'Explore world landmarks with Look Around and live transit.', badge: 'Sequoia Edition', action: 'launchMaps()', installed: true },
+      { id: 'camera', name: 'Photo Booth HD', category: 'create', icon: '📸', desc: 'Take studio photos with 8 live filter effects & 3-2-1 timer.', badge: 'Popular', action: 'launchCamera()', installed: true },
+      { id: 'markup', name: 'Photos & Markup', category: 'create', icon: '🎨', desc: 'Precision sketching with Apple Pencil smoothing & palettes.', badge: 'Creative Choice', action: 'launchPaint()', installed: true },
+      { id: 'tictactoe', name: 'TicTacToe Pro', category: 'play', icon: '⭕', desc: 'Sleek glass board puzzle game with intelligent AI opponent.', badge: 'Arcade Classic', action: 'launchTicTacToe()', installed: false },
+      { id: 'snake', name: 'Snake Arcade 2', category: 'play', icon: '🐍', desc: 'Retro arcade classic with high-score tracking & smooth physics.', badge: 'Game of the Day', action: 'launchSnake()', installed: true },
+      { id: 'synth', name: 'Logic Synth Audio', category: 'create', icon: '🎹', desc: 'WebAudio polyphonic synthesizer with real-time waveform filters.', badge: 'Pro Audio', action: 'launchSynth()', installed: true },
+      { id: 'universe', name: 'Cosmic Gravity 3D', category: 'play', icon: '🌌', desc: 'Orbital physics and cosmic particle simulation sandbox.', badge: 'Simulation', action: 'launchUniverse()', installed: true },
+      { id: 'notes', name: 'Apple Notes', category: 'work', icon: '📝', desc: 'Rich notes organizer with VFS persistence and live search.', badge: 'Essential', action: 'launchNotes()', installed: true },
+      { id: 'activity', name: 'Activity Monitor', category: 'work', icon: '📊', desc: 'Real-time CPU, RAM and hardware thread telemetry.', badge: 'System Tool', action: 'launchActivityMonitor()', installed: true },
+      { id: 'terminal', name: 'Zsh Terminal', category: 'develop', icon: '💻', desc: 'Advanced microkernel command terminal with APT bridge.', badge: 'Developer Tool', action: 'launchTerminal()', installed: true },
+      { id: 'syslogs', name: 'Console & Kernel Logs', category: 'develop', icon: '📋', desc: 'Real-time IPC bridge telemetry and microkernel audit trace.', badge: 'Diagnostics', action: 'launchSysLogs()', installed: false }
+    ];
+
     const win = createWindow(pid, t('app_store', 'App Store'), `
-      <div style="background:#fff;height:100%;display:flex;flex-direction:column;font-family:sans-serif;">
-        <div style="background:#007aff;color:white;padding:20px;text-align:center;">
-          <h2 style="margin:0;" id="store-title-${pid}">${t('store_title', 'Alice Store 🛍️')}</h2>
-          <p style="margin:5px 0 0 0;font-size:12px;opacity:0.8;" id="store-sub-${pid}">${t('store_subtitle', 'Discover & Install Native Applications')}</p>
+      <div class="mac-store-app">
+        <!-- App Store Sidebar -->
+        <div class="mac-store-sidebar">
+          <div style="padding:4px 8px 12px;display:flex;align-items:center;gap:8px;">
+            <input type="text" id="store-search-${pid}" placeholder="🔍 ${t('store_search', 'Search')}" style="width:100%;border:none;background:rgba(0,0,0,0.06);padding:6px 12px;border-radius:10px;font-size:12px;outline:none;">
+          </div>
+          <div class="mac-store-nav-item active" data-tab="discover">
+            <span>🌟</span> <span class="nav-text">${t('store_nav_discover', 'Discover')}</span>
+          </div>
+          <div class="mac-store-nav-item" data-tab="create">
+            <span>🎨</span> <span class="nav-text">${t('store_nav_create', 'Create')}</span>
+          </div>
+          <div class="mac-store-nav-item" data-tab="work">
+            <span>💼</span> <span class="nav-text">${t('store_nav_work', 'Work')}</span>
+          </div>
+          <div class="mac-store-nav-item" data-tab="play">
+            <span>🎮</span> <span class="nav-text">${t('store_nav_play', 'Play')}</span>
+          </div>
+          <div class="mac-store-nav-item" data-tab="develop">
+            <span>🛠️</span> <span class="nav-text">${t('store_nav_develop', 'Develop')}</span>
+          </div>
+          <div class="mac-store-nav-item" data-tab="updates">
+            <span>🔄</span> <span class="nav-text">${t('store_nav_updates', 'Updates')}</span>
+          </div>
         </div>
-        <div style="flex-grow:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:15px;background:#f5f5f7;">
-          
-          <!-- Package: Tic Tac Toe -->
-          <div style="background:white;padding:15px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.05);display:flex;align-items:center;">
-            <div style="font-size:40px;margin-right:15px;">⭕</div>
-            <div style="flex-grow:1;">
-              <h3 style="margin:0;" id="store-tictactoe-name-${pid}">${t('store_tictactoe_title', 'Tic Tac Toe')}</h3>
-              <p style="margin:5px 0;font-size:12px;color:#666;" id="store-tictactoe-desc-${pid}">${t('store_tictactoe_desc', 'A classic grid-based puzzle game.')}</p>
-            </div>
-            <button id="install-tictactoe-${pid}" style="background:#007aff;color:white;border:none;padding:8px 16px;border-radius:20px;font-weight:bold;cursor:pointer;">${t('store_get', 'Get')}</button>
-          </div>
 
-          <!-- Package: System Logs -->
-          <div style="background:white;padding:15px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.05);display:flex;align-items:center;">
-            <div style="font-size:40px;margin-right:15px;">📋</div>
-            <div style="flex-grow:1;">
-              <h3 style="margin:0;" id="store-syslogs-name-${pid}">${t('store_syslogs_title', 'System Logs')}</h3>
-              <p style="margin:5px 0;font-size:12px;color:#666;" id="store-syslogs-desc-${pid}">${t('store_syslogs_desc', 'View raw IPC bridge streams and kernel logs.')}</p>
-            </div>
-            <button id="install-syslogs-${pid}" style="background:#007aff;color:white;border:none;padding:8px 16px;border-radius:20px;font-weight:bold;cursor:pointer;">${t('store_get', 'Get')}</button>
-          </div>
-
+        <!-- App Store Main Content Area -->
+        <div class="mac-store-content" id="store-content-${pid}">
+          <!-- Rendered dynamically -->
         </div>
       </div>
     `);
 
-    async function installApp(id, pkgName, icon, actionStr, codeStr) {
-       const btn = win.querySelector(`#${id}-${pid}`);
-       if (btn.innerText !== t('store_get', 'Get') && btn.innerText !== 'Get') return;
-       
-       btn.innerText = t('store_installing', 'Installing...');
-       btn.style.background = '#ccc';
-       btn.style.cursor = 'default';
+    win.style.width = '860px';
+    win.style.height = '580px';
 
-       // Simulate network download
-       await new Promise(r => setTimeout(r, 800));
+    const contentEl = win.querySelector(`#store-content-${pid}`);
+    const navItems = win.querySelectorAll('.mac-store-nav-item');
+    const searchInp = win.querySelector(`#store-search-${pid}`);
 
-       try {
-          // 1. Inject the logic into global scope
-          window.eval(codeStr);
-          
-          // 2. Add to Launchpad registry
-          if (!apps.find(a => a.name === pkgName)) {
-             apps.push({ name: pkgName, icon: icon, action: actionStr });
+    // Define TicTacToe globally if not defined
+    if (typeof window.launchTicTacToe !== 'function') {
+      window.launchTicTacToe = async function() {
+        const ttRes = await window.aliceOS.pm.spawn('tictactoe');
+        if (ttRes.success) {
+          const ttPid = ttRes.data.pid;
+          let board = Array(9).fill(null);
+          let currentTurn = 'X'; // X is Human, O is AI
+          let winner = null;
+
+          const ttWin = createWindow(ttPid, 'TicTacToe Pro', `
+            <div style="height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#1f1c2c,#928dab);color:white;font-family:-apple-system,sans-serif;user-select:none;">
+              <div style="font-size:20px;font-weight:700;margin-bottom:6px;">TicTacToe Pro</div>
+              <div id="tt-status-${ttPid}" style="font-size:13px;opacity:0.85;margin-bottom:20px;">Your Turn (X)</div>
+              <div style="display:grid;grid-template-columns:repeat(3, 80px);grid-template-rows:repeat(3, 80px);gap:8px;background:rgba(255,255,255,0.1);padding:10px;border-radius:16px;backdrop-filter:blur(20px);box-shadow:0 8px 32px rgba(0,0,0,0.3);">
+                ${board.map((_, i) => `<button id="tt-cell-${ttPid}-${i}" style="background:rgba(255,255,255,0.15);border:none;border-radius:12px;font-size:32px;font-weight:700;color:white;cursor:pointer;transition:background 0.15s;"></button>`).join('')}
+              </div>
+              <button id="tt-restart-${ttPid}" style="margin-top:20px;background:#007aff;color:white;border:none;padding:6px 18px;border-radius:14px;font-size:12px;font-weight:600;cursor:pointer;">Restart Game</button>
+            </div>
+          `);
+          ttWin.style.width = '340px';
+          ttWin.style.height = '420px';
+
+          function checkWinner(b) {
+            const lines = [
+              [0,1,2],[3,4,5],[6,7,8],
+              [0,3,6],[1,4,7],[2,5,8],
+              [0,4,8],[2,4,6]
+            ];
+            for (let [a,b1,c] of lines) {
+              if (b[a] && b[a] === b[b1] && b[a] === b[c]) return b[a];
+            }
+            if (b.every(c => c !== null)) return 'Draw';
+            return null;
           }
 
-          // 3. Re-render Launchpad instantly
-          const launchpadApps = document.getElementById('launchpad-apps');
-          launchpadApps.innerHTML = apps.map(app => `
-            <div class="app-icon" onclick="${app.action}; toggleLaunchpad();">
-              <div class="icon">${app.icon}</div>
-              <div class="name">${app.name}</div>
-            </div>
-          `).join('');
+          function aiMove() {
+            if (winner) return;
+            const emptyIdxs = board.map((v, i) => v === null ? i : null).filter(v => v !== null);
+            if (emptyIdxs.length === 0) return;
+            const chosen = emptyIdxs[Math.floor(Math.random() * emptyIdxs.length)];
+            board[chosen] = 'O';
+            updateUI();
+          }
 
-          btn.innerText = t('store_installed', 'Installed');
-          btn.style.background = '#34c759';
-       } catch (e) {
-          btn.innerText = 'Error';
-          btn.style.background = '#ff3b30';
-          console.error("Installation failed:", e);
-       }
+          function updateUI() {
+            winner = checkWinner(board);
+            const statusEl = ttWin.querySelector(`#tt-status-${ttPid}`);
+            board.forEach((val, i) => {
+              const btn = ttWin.querySelector(`#tt-cell-${ttPid}-${i}`);
+              if (btn) {
+                btn.innerText = val || '';
+                btn.style.color = val === 'X' ? '#38bdf8' : '#f87171';
+              }
+            });
+            if (winner === 'Draw') statusEl.innerText = 'Game is a Draw!';
+            else if (winner) statusEl.innerText = `${winner} Wins! 🎉`;
+            else statusEl.innerText = currentTurn === 'X' ? 'Your Turn (X)' : 'Mac AI Thinking...';
+          }
+
+          board.forEach((_, i) => {
+            const btn = ttWin.querySelector(`#tt-cell-${ttPid}-${i}`);
+            btn.addEventListener('click', () => {
+              if (board[i] || winner || currentTurn !== 'X') return;
+              board[i] = 'X';
+              winner = checkWinner(board);
+              if (!winner) {
+                currentTurn = 'O';
+                updateUI();
+                setTimeout(() => {
+                  aiMove();
+                  currentTurn = 'X';
+                  updateUI();
+                }, 400);
+              } else {
+                updateUI();
+              }
+            });
+          });
+
+          ttWin.querySelector(`#tt-restart-${ttPid}`).addEventListener('click', () => {
+            board = Array(9).fill(null);
+            winner = null;
+            currentTurn = 'X';
+            updateUI();
+          });
+        }
+      };
     }
 
-    win.querySelector(`#install-tictactoe-${pid}`).addEventListener('click', () => {
-       const logic = `
-       async function launchTicTacToe() {
-         const res = await window.aliceOS.pm.spawn('tictactoe');
-         if (res.success) {
-           createWindow(res.data.pid, t('store_tictactoe_title', 'Tic Tac Toe'), '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:20px;font-weight:bold;background:#fff;color:#333;">X O X<br>O X O<br>X O X (' + t('tictactoe_coming_soon', 'Coming Soon') + ')</div>', 'tictactoe');
-         }
-       }
-       `;
-       installApp('install-tictactoe', 'TicTacToe', '⭕', 'launchTicTacToe()', logic);
+    if (typeof window.launchSysLogs !== 'function') {
+      window.launchSysLogs = async function() {
+        const slRes = await window.aliceOS.pm.spawn('syslogs');
+        if (slRes.success) {
+          const slPid = slRes.data.pid;
+          const slWin = createWindow(slPid, 'Console & Kernel Logs', `
+            <div style="background:#111114;color:#a1a1aa;height:100%;display:flex;flex-direction:column;font-family:'SF Mono',Monaco,monospace;font-size:11px;user-select:none;">
+              <div style="background:#1e1e24;padding:8px 14px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;justify-content:space-between;align-items:center;">
+                <span style="color:#f5f5f7;font-weight:600;">macOS Sequoia Kernel Audit Stream</span>
+                <span style="color:#34c759;">● LIVE STREAMING</span>
+              </div>
+              <div id="sl-feed-${slPid}" style="flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:4px;color:#d1d5db;">
+                <div><span style="color:#60a5fa;">[BOOT]</span> Alice Microkernel initialized on Darwin x86_64</div>
+                <div><span style="color:#34c759;">[VFS]</span> Mounted JSON Virtual File System at /AppData/Roaming/AliceOS/vfs.json</div>
+                <div><span style="color:#a78bfa;">[GPU]</span> Aero Compositor Hardware Acceleration enabled (Metal Engine)</div>
+                <div><span style="color:#fbbf24;">[IPC]</span> Node.js IPC Bridge socket connected to WindowServer (PID 1)</div>
+                <div><span style="color:#34c759;">[SEC]</span> Gatekeeper and SIP status: enabled (Apple Root CA verified)</div>
+              </div>
+            </div>
+          `);
+          slWin.style.width = '640px';
+          slWin.style.height = '400px';
+
+          const feed = slWin.querySelector(`#sl-feed-${slPid}`);
+          const logInterval = setInterval(() => {
+            if (!windows.has(slPid)) {
+              clearInterval(logInterval);
+              return;
+            }
+            const time = new Date().toLocaleTimeString();
+            const logItem = document.createElement('div');
+            logItem.innerHTML = `<span style="color:#60a5fa;">[${time}]</span> Kernel heartbeat tick: loadavg 0.12, 0.08, 0.05 • Active processes: ${windows.size}`;
+            feed.appendChild(logItem);
+            feed.scrollTop = feed.scrollHeight;
+          }, 3500);
+        }
+      };
+    }
+
+    function renderStore(filterQuery = '') {
+      let filtered = storeApps;
+      if (activeTab !== 'discover' && activeTab !== 'updates') {
+        filtered = storeApps.filter(a => a.category === activeTab);
+      }
+      if (filterQuery) {
+        const q = filterQuery.toLowerCase().trim();
+        filtered = storeApps.filter(a => a.name.toLowerCase().includes(q) || a.desc.toLowerCase().includes(q));
+      }
+
+      if (activeTab === 'updates') {
+        contentEl.innerHTML = `
+          <div style="display:flex;flex-direction:column;gap:20px;">
+            <div style="font-size:24px;font-weight:700;">${t('store_nav_updates', 'Updates')}</div>
+            <div style="background:white;padding:24px;border-radius:16px;border:1px solid rgba(0,0,0,0.06);display:flex;align-items:center;gap:18px;">
+              <div style="font-size:36px;color:#34c759;">✓</div>
+              <div>
+                <div style="font-size:15px;font-weight:700;">All Applications Up to Date</div>
+                <div style="font-size:12px;color:#6e6e73;margin-top:2px;">macOS Sequoia Core Architecture 15.1 (24B83) and all built-in packages are running latest releases.</div>
+              </div>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      let heroHtml = '';
+      if (activeTab === 'discover') {
+        heroHtml = `
+          <div class="mac-store-hero">
+            <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;opacity:0.85;margin-bottom:4px;">FEATURED SUITE</div>
+            <div style="font-size:26px;font-weight:700;margin-bottom:8px;">Pro Creative & Developer Suites for AliceOS</div>
+            <div style="font-size:13px;opacity:0.9;max-width:540px;line-height:1.5;">Build high performance software, explore world landmarks in 3D, and sketch vector illustrations with native macOS Sequoia workflows.</div>
+          </div>
+        `;
+      }
+
+      contentEl.innerHTML = `
+        ${heroHtml}
+        <div style="font-size:18px;font-weight:700;margin-top:4px;">${activeTab === 'discover' ? t('store_popular_apps', 'Popular Apps & Extensions') : activeTab.toUpperCase()}</div>
+        <div class="mac-store-grid">
+          ${filtered.map(app => `
+            <div class="mac-store-card">
+              <div style="font-size:40px;">${app.icon}</div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:13px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${app.name}</div>
+                <div style="font-size:11px;color:#6e6e73;margin-top:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${app.desc}</div>
+                <div style="font-size:9px;color:#007aff;font-weight:600;margin-top:4px;">${app.badge}</div>
+              </div>
+              <button class="mac-store-get-btn ${app.installed ? 'installed' : ''}" data-id="${app.id}">
+                ${app.installed ? t('store_open', 'OPEN') : t('store_get', 'GET')}
+              </button>
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      contentEl.querySelectorAll('.mac-store-get-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const appId = btn.getAttribute('data-id');
+          const app = storeApps.find(a => a.id === appId);
+          if (!app) return;
+
+          if (app.installed) {
+            eval(app.action);
+          } else {
+            btn.innerText = '...';
+            btn.style.opacity = '0.7';
+            await new Promise(r => setTimeout(r, 600));
+            app.installed = true;
+            btn.innerText = t('store_open', 'OPEN');
+            btn.classList.add('installed');
+            btn.style.opacity = '1';
+
+            // Add to Launchpad registry if needed
+            if (!apps.find(a => a.name === app.name)) {
+              apps.push({ name: app.name, icon: app.icon, action: app.action });
+              const launchpadApps = document.getElementById('launchpad-apps');
+              if (launchpadApps) {
+                launchpadApps.innerHTML = apps.map(a => `
+                  <div class="app-icon" onclick="${a.action}; toggleLaunchpad();">
+                    <div class="icon">${a.icon}</div>
+                    <div class="name">${a.name}</div>
+                  </div>
+                `).join('');
+              }
+            }
+            if (typeof showNotification === 'function') {
+              showNotification(t('app_store', 'App Store'), `Successfully installed ${app.name}`);
+            }
+          }
+        });
+      });
+    }
+
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        navItems.forEach(n => n.classList.remove('active'));
+        item.classList.add('active');
+        activeTab = item.getAttribute('data-tab');
+        renderStore(searchInp ? searchInp.value : '');
+      });
     });
 
-    win.querySelector(`#install-syslogs-${pid}`).addEventListener('click', () => {
-       const logic = `
-       async function launchSysLogs() {
-         const res = await window.aliceOS.pm.spawn('syslogs');
-         if (res.success) {
-           createWindow(res.data.pid, t('store_syslogs_title', 'System Logs'), '<div style="background:black;color:#0f0;font-family:monospace;padding:10px;height:100%;box-sizing:border-box;">[KERNEL] IPC Bridge initialized.<br>[VFS] JSON File System mounted.<br>[WINDOW_SERVER] Aero Compositor ready.</div>', 'syslogs');
-         }
-       }
-       `;
-       installApp('install-syslogs', 'SysLogs', '📋', 'launchSysLogs()', logic);
-    });
+    if (searchInp) {
+      searchInp.addEventListener('input', (e) => {
+        renderStore(e.target.value);
+      });
+    }
+
+    renderStore();
 
     win._onLanguageChange = () => {
-      const titleEl = win.querySelector(`#store-title-${pid}`);
-      if (titleEl) titleEl.innerText = t('store_title', 'Alice Store 🛍️');
-      const subEl = win.querySelector(`#store-sub-${pid}`);
-      if (subEl) subEl.innerText = t('store_subtitle', 'Discover & Install Native Applications');
-      const ttTitle = win.querySelector(`#store-tictactoe-name-${pid}`);
-      if (ttTitle) ttTitle.innerText = t('store_tictactoe_title', 'Tic Tac Toe');
-      const ttDesc = win.querySelector(`#store-tictactoe-desc-${pid}`);
-      if (ttDesc) ttDesc.innerText = t('store_tictactoe_desc', 'A classic grid-based puzzle game.');
-      const slTitle = win.querySelector(`#store-syslogs-name-${pid}`);
-      if (slTitle) slTitle.innerText = t('store_syslogs_title', 'System Logs');
-      const slDesc = win.querySelector(`#store-syslogs-desc-${pid}`);
-      if (slDesc) slDesc.innerText = t('store_syslogs_desc', 'View raw IPC bridge streams and kernel logs.');
-      const btn1 = win.querySelector(`#install-tictactoe-${pid}`);
-      if (btn1 && btn1.innerText !== t('store_installed', 'Installed') && btn1.innerText !== 'Installed') {
-        btn1.innerText = t('store_get', 'Get');
-      }
-      const btn2 = win.querySelector(`#install-syslogs-${pid}`);
-      if (btn2 && btn2.innerText !== t('store_installed', 'Installed') && btn2.innerText !== 'Installed') {
-        btn2.innerText = t('store_get', 'Get');
-      }
+      const searchBox = win.querySelector(`#store-search-${pid}`);
+      if (searchBox) searchBox.placeholder = `🔍 ${t('store_search', 'Search')}`;
+      renderStore(searchBox ? searchBox.value : '');
     };
   }
 }
 
-// AliceScript IDE
+// Xcode 16 Developer Studio (macOS Sequoia Design)
 async function launchIDE() {
   const res = await window.aliceOS.pm.spawn('ide');
   if (res.success) {
     const pid = res.data.pid;
-    const win = createWindow(pid, t('app_ide', 'AliceScript IDE'), `
-      <div style="display:flex;flex-direction:column;height:100%;background:#1e1e1e;">
-        <div style="padding:10px;background:#2d2d2d;border-bottom:1px solid #444;display:flex;gap:10px;">
-          <button id="ide-run-${pid}" style="background:#4CAF50;color:white;border:none;padding:5px 15px;border-radius:4px;cursor:pointer;font-weight:bold;">${t('ide_run', '▶ Run Script')}</button>
-          <button id="ide-clear-${pid}" style="background:#f44336;color:white;border:none;padding:5px 15px;border-radius:4px;cursor:pointer;">${t('ide_clear', 'Clear Output')}</button>
-        </div>
-        <div style="display:flex;flex-grow:1;height:calc(100% - 50px);">
-          <textarea id="ide-code-${pid}" style="flex:1;background:#1e1e1e;color:#d4d4d4;font-family:monospace;font-size:14px;padding:10px;border:none;border-right:1px solid #444;resize:none;outline:none;" spellcheck="false">// Write AliceScript here...
-// You have full access to window.aliceOS APIs!
-// E.g., await window.aliceOS.pm.spawn('calculator');
 
-async function main() {
-  const vfsRes = await window.aliceOS.vfs.readDir('/Users/' + currentUser + '/Desktop');
-  console.log('Desktop items:', vfsRes.data);
-  return "Script Executed Successfully!";
+    const projectFiles = {
+      'main.swift': `//
+//  main.swift
+//  AliceApp
+//
+//  Created by Alice on 2026/09/14.
+//  Copyright © 2026 Apple Inc. All rights reserved.
+//
+
+import AliceKit
+import SwiftUI
+
+@main
+struct AliceApp {
+    static async func main() async {
+        print("[XCODE] Initializing AliceKit Framework...")
+        
+        // Inspect Virtual File System
+        let files = await window.aliceOS.vfs.readDir("/Users/" + currentUser + "/Desktop");
+        print("[XCODE] Desktop VFS files mounted: \\(files.data ? files.data.length : 0)");
+        
+        // System telemetry
+        print("[XCODE] Target: macOS Sequoia 15.1 (Apple Silicon M4)");
+        print("[XCODE] Status: Execution Completed with Code 0.");
+        return "Build & Execution Succeeded! ✨";
+    }
 }
-main();</textarea>
-          <div style="flex:1;display:flex;flex-direction:column;">
-            <div id="ide-lbl-console-${pid}" style="background:#222;color:#aaa;padding:5px 10px;font-size:12px;border-bottom:1px solid #444;">${t('ide_console', 'Console Output')}</div>
-            <div id="ide-out-${pid}" style="flex-grow:1;background:#111;color:#0f0;font-family:monospace;font-size:13px;padding:10px;overflow-y:auto;white-space:pre-wrap;"></div>
+await AliceApp.main();`,
+
+      'KernelBridge.swift': `//
+//  KernelBridge.swift
+//  AliceApp
+//
+
+class KernelBridge {
+    static func pingKernel() -> String {
+        return "IPC Bridge Socket Active: PID " + String(window.aliceOS ? 1 : 0);
+    }
+}
+print(KernelBridge.pingKernel());`,
+
+      'ContentView.swift': `//
+//  ContentView.swift
+//  AliceApp
+//
+
+import SwiftUI
+
+struct ContentView: View {
+    var body: some View {
+        VStack(spacing: 20) {
+            Image(systemName: "apple.logo")
+                .font(.system(size: 64))
+                .foregroundColor(.accentColor)
+            Text("Welcome to AliceOS")
+                .font(.title)
+                .fontWeight(.bold)
+        }
+        .padding()
+    }
+}
+print("[SWIFTUI] ContentView rendered.");`,
+
+      'Info.plist': `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleName</key>
+    <string>AliceApp</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.apple.aliceapp</string>
+    <key>CFBundleVersion</key>
+    <string>1.0.0</string>
+</dict>
+</plist>`
+    };
+
+    let activeFile = 'main.swift';
+
+    const win = createWindow(pid, t('app_ide', 'Xcode'), `
+      <div class="xcode-mac-app">
+        <!-- Xcode 16 macOS Toolbar -->
+        <div class="xcode-toolbar">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div class="xcode-run-pill">
+              <button class="xcode-btn" id="xcode-run-${pid}" title="${t('xcode_run', 'Run (⌘R)')}" style="color:#34c759;">▶</button>
+              <button class="xcode-btn" id="xcode-stop-${pid}" title="${t('xcode_stop', 'Stop (⌘.)')}" style="color:#ff453a;">■</button>
+            </div>
+            
+            <!-- Scheme Selector -->
+            <div style="display:flex;align-items:center;gap:6px;background:rgba(0,0,0,0.3);padding:4px 12px;border-radius:6px;font-size:12px;cursor:pointer;border:1px solid rgba(255,255,255,0.06);">
+              <span style="font-weight:600;color:#f5f5f7;">AliceApp</span>
+              <span style="color:#71717a;">></span>
+              <span style="color:#a1a1aa;">My Mac (Apple Silicon M4)</span>
+              <span style="font-size:9px;color:#71717a;margin-left:4px;">▼</span>
+            </div>
+          </div>
+
+          <!-- Build Status Capsule -->
+          <div class="xcode-status-pill" id="xcode-status-${pid}">
+            <span style="color:#34c759;">✓</span> Build AliceApp: Succeeded | Today at 13:45
+          </div>
+
+          <!-- View Controls -->
+          <div style="display:flex;gap:4px;">
+            <button class="xcode-btn" id="xcode-clear-btn-${pid}" title="${t('xcode_clear', 'Clear Console')}" style="font-size:11px;background:rgba(255,255,255,0.08);">🗑 Clear</button>
+          </div>
+        </div>
+
+        <!-- Xcode Body -->
+        <div class="xcode-body">
+          <!-- Project Navigator Sidebar -->
+          <div class="xcode-sidebar">
+            <div style="font-size:11px;font-weight:700;color:#71717a;text-transform:uppercase;letter-spacing:0.5px;padding:4px 8px;">Project Navigator</div>
+            <div class="xcode-tree-item" style="font-weight:600;">
+              <span>📁</span> <span>AliceApp</span>
+            </div>
+            <div style="margin-left:14px;display:flex;flex-direction:column;gap:1px;">
+              <div class="xcode-tree-item active" data-file="main.swift">
+                <span>📄</span> <span>main.swift</span>
+              </div>
+              <div class="xcode-tree-item" data-file="KernelBridge.swift">
+                <span>📄</span> <span>KernelBridge.swift</span>
+              </div>
+              <div class="xcode-tree-item" data-file="ContentView.swift">
+                <span>📄</span> <span>ContentView.swift</span>
+              </div>
+              <div class="xcode-tree-item" data-file="Info.plist">
+                <span>⚙️</span> <span>Info.plist</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Editor & Debug Pane -->
+          <div class="xcode-editor-pane">
+            <!-- Breadcrumbs -->
+            <div style="height:28px;background:#18181c;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;padding:0 14px;gap:8px;font-size:11px;color:#71717a;">
+              <span>AliceApp</span> <span>›</span> <span>Sources</span> <span>›</span> <span id="xcode-crumb-file-${pid}" style="color:#e4e4e7;">main.swift</span>
+            </div>
+
+            <!-- Code Editor Container with Line Numbers -->
+            <div style="flex:1;display:flex;position:relative;overflow:hidden;background:#1e1e24;">
+              <div id="xcode-gutter-${pid}" style="width:38px;background:#18181c;color:#52525b;font-family:'SF Mono',monospace;font-size:12px;line-height:1.6;padding:14px 6px;text-align:right;user-select:none;border-right:1px solid rgba(255,255,255,0.06);">
+                ${Array.from({length: 30}, (_, i) => i + 1).join('<br>')}
+              </div>
+              <textarea id="xcode-code-${pid}" class="xcode-code-textarea" spellcheck="false">${projectFiles['main.swift']}</textarea>
+            </div>
+
+            <!-- LLDB Console Pane -->
+            <div class="xcode-console-pane" id="xcode-console-${pid}">
+              <div style="color:#71717a;margin-bottom:4px;font-size:10px;border-bottom:1px solid rgba(255,255,255,0.06);padding-bottom:2px;display:flex;justify-content:space-between;">
+                <span>(lldb) Target Debugger Output</span>
+                <span>Console active</span>
+              </div>
+              <div id="xcode-log-output-${pid}">
+                <span style="color:#60a5fa;">[Xcode 16.0]</span> LLDB Debugger attached to process. Ready.<br>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    `, 'ide');
+    `);
 
-    const runBtn = win.querySelector(`#ide-run-${pid}`);
-    const clearBtn = win.querySelector(`#ide-clear-${pid}`);
-    const codeArea = win.querySelector(`#ide-code-${pid}`);
-    const outArea = win.querySelector(`#ide-out-${pid}`);
-    const consoleLbl = win.querySelector(`#ide-lbl-console-${pid}`);
+    win.style.width = '860px';
+    win.style.height = '560px';
 
-    win._onLanguageChange = () => {
-      if (runBtn) runBtn.innerText = t('ide_run', '▶ Run Script');
-      if (clearBtn) clearBtn.innerText = t('ide_clear', 'Clear Output');
-      if (consoleLbl) consoleLbl.innerText = t('ide_console', 'Console Output');
-    };
+    const runBtn = win.querySelector(`#xcode-run-${pid}`);
+    const stopBtn = win.querySelector(`#xcode-stop-${pid}`);
+    const clearBtn = win.querySelector(`#xcode-clear-btn-${pid}`);
+    const codeArea = win.querySelector(`#xcode-code-${pid}`);
+    const logOutput = win.querySelector(`#xcode-log-output-${pid}`);
+    const statusPill = win.querySelector(`#xcode-status-${pid}`);
+    const crumbFile = win.querySelector(`#xcode-crumb-file-${pid}`);
+    const treeItems = win.querySelectorAll('.xcode-tree-item[data-file]');
 
-    // Override console.log just for the IDE execution context temporarily
+    // File switching
+    treeItems.forEach(item => {
+      item.addEventListener('click', () => {
+        // Save current file
+        projectFiles[activeFile] = codeArea.value;
+
+        treeItems.forEach(t => t.classList.remove('active'));
+        item.classList.add('active');
+
+        activeFile = item.getAttribute('data-file');
+        crumbFile.innerText = activeFile;
+        codeArea.value = projectFiles[activeFile] || '';
+      });
+    });
+
+    // Run action
     runBtn.addEventListener('click', async () => {
-      const code = codeArea.value;
+      projectFiles[activeFile] = codeArea.value;
+      statusPill.innerHTML = '<span style="color:#f59e0b;">●</span> Building AliceApp...';
+
       let logs = [];
-      
-      // Capture logs
       const originalLog = console.log;
       console.log = (...args) => {
         logs.push(args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : a).join(' '));
         originalLog(...args);
       };
 
+      await new Promise(r => setTimeout(r, 450));
+
       try {
-        // Wrap in async IIFE
+        const code = codeArea.value;
         const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
         const executor = new AsyncFunction(code);
         const result = await executor();
+
+        statusPill.innerHTML = '<span style="color:#34c759;">✓</span> Build AliceApp: Succeeded';
         
-        if (logs.length > 0) outArea.innerHTML += logs.join('\\n') + '\\n';
-        if (result !== undefined) outArea.innerHTML += `> ${result}\\n`;
-        outArea.innerHTML += '<span style="color:#888;">' + t('ide_finished', '--- execution finished ---') + '</span>\\n';
-        
+        let outputHtml = '';
+        if (logs.length > 0) {
+          outputHtml += logs.map(l => `<div><span style="color:#34c759;">[OUT]</span> ${l}</div>`).join('');
+        }
+        if (result !== undefined) {
+          outputHtml += `<div><span style="color:#60a5fa;">(lldb) po result:</span> <span style="color:#f5f5f7;">${result}</span></div>`;
+        }
+        outputHtml += `<div><span style="color:#71717a;">Program ended with exit code: 0</span></div>`;
+        logOutput.innerHTML += outputHtml;
+
       } catch (err) {
-        outArea.innerHTML += `<span style="color:red;">Error: ${err.message}</span>\\n`;
+        statusPill.innerHTML = '<span style="color:#ef4444;">✕</span> Build AliceApp: Failed';
+        logOutput.innerHTML += `<div><span style="color:#ef4444;">(lldb) Exception: ${err.message}</span></div>`;
       } finally {
         console.log = originalLog;
-        outArea.scrollTop = outArea.scrollHeight;
+        const consolePane = win.querySelector(`#xcode-console-${pid}`);
+        if (consolePane) consolePane.scrollTop = consolePane.scrollHeight;
       }
     });
 
-    clearBtn.addEventListener('click', () => {
-      outArea.innerHTML = '';
+    stopBtn.addEventListener('click', () => {
+      statusPill.innerHTML = '<span style="color:#a1a1aa;">■</span> Execution Halted';
+      logOutput.innerHTML += `<div><span style="color:#f87171;">[LLDB] Process halted by user.</span></div>`;
     });
+
+    clearBtn.addEventListener('click', () => {
+      logOutput.innerHTML = '';
+    });
+
+    win._onLanguageChange = () => {
+      const runB = win.querySelector(`#xcode-run-${pid}`);
+      if (runB) runB.title = t('xcode_run', 'Run (⌘R)');
+      const stopB = win.querySelector(`#xcode-stop-${pid}`);
+      if (stopB) stopB.title = t('xcode_stop', 'Stop (⌘.)');
+    };
   }
 }
 
