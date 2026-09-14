@@ -38,9 +38,9 @@ const i18nDict = {
     ctx_new_folder: 'New Folder',
     ctx_new_file: 'New Text File',
     ctx_new_sticky: 'New Sticky Note',
-    ctx_use_stacks: '🥞 Use Stacks',
-    ctx_edit_widgets: '🧩 Edit Widgets...',
-    ctx_airdrop: '📡 AirDrop...',
+    ctx_use_stacks: 'Use Stacks',
+    ctx_edit_widgets: 'Edit Widgets...',
+    ctx_airdrop: 'AirDrop...',
     ctx_wallpaper: 'Change Wallpaper...',
     ctx_about: 'About AliceOS',
     ctx_toggle_widgets: 'Hide Desktop Widgets',
@@ -144,9 +144,9 @@ const i18nDict = {
 
     // Dynamic Island
     island_brightness: 'Brightness',
-    island_music: '🎵 Music',
+    island_music: 'Music',
     island_timer: '⏱️ Timer',
-    island_airdrop: '📡 AirDrop',
+    island_airdrop: 'AirDrop',
     island_focus_timer: 'Focus Timer',
     island_plus_1m: '+1 min',
     island_pause: 'Pause',
@@ -293,7 +293,7 @@ const i18nDict = {
     am_kill: 'End Process',
 
     // AI Assistant
-    ai_title: '✨ Alice Assistant',
+    ai_title: 'Alice Assistant',
     ai_help_prompt: 'How can I help you? Try "open music" or "what time is it".',
     ai_placeholder: 'Ask Alice...',
     ai_ask: 'Ask',
@@ -369,7 +369,7 @@ const i18nDict = {
     xcode_clear: 'Clear Console',
 
     // App Store
-    store_title: 'Alice Store 🛍️',
+    store_title: 'App Store',
     store_subtitle: 'Discover & Install Native Applications',
     store_search: 'Search',
     store_nav_discover: 'Discover',
@@ -392,12 +392,12 @@ const i18nDict = {
     weather_requesting: 'Requesting satellite data...',
     weather_locating: 'Locating via IP...',
     weather_fetching: 'Fetching forecast for %s...',
-    weather_clear: '☀️ Clear',
-    weather_partly_cloudy: '⛅ Partly Cloudy',
-    weather_foggy: '🌫️ Foggy',
-    weather_raining: '🌧️ Raining',
-    weather_snowing: '❄️ Snowing',
-    weather_thunderstorm: '⛈️ Thunderstorm',
+    weather_clear: 'Clear',
+    weather_partly_cloudy: 'Partly Cloudy',
+    weather_foggy: 'Foggy',
+    weather_raining: 'Raining',
+    weather_snowing: 'Snowing',
+    weather_thunderstorm: 'Thunderstorm',
     weather_error: 'Network Error: Could not fetch weather.',
 
     // Notifications
@@ -825,9 +825,9 @@ const i18nDict = {
     ctx_new_folder: '新建文件夹',
     ctx_new_file: '新建文本文件',
     ctx_new_sticky: '新建便签',
-    ctx_use_stacks: '🥞 使用叠放',
-    ctx_edit_widgets: '🧩 编辑小组件...',
-    ctx_airdrop: '📡 隔空投送...',
+    ctx_use_stacks: '使用叠放',
+    ctx_edit_widgets: '编辑小组件...',
+    ctx_airdrop: '隔空投送...',
     ctx_wallpaper: '更改壁纸...',
     ctx_about: '关于 AliceOS',
     ctx_toggle_widgets: '隐藏桌面小组件',
@@ -931,9 +931,9 @@ const i18nDict = {
 
     // 灵动岛
     island_brightness: '屏幕亮度',
-    island_music: '🎵 音乐',
+    island_music: '音乐',
     island_timer: '⏱️ 计时器',
-    island_airdrop: '📡 隔空投送',
+    island_airdrop: '隔空投送',
     island_focus_timer: '专注计时器',
     island_plus_1m: '+1 分钟',
     island_pause: '暂停',
@@ -1080,7 +1080,7 @@ const i18nDict = {
     am_kill: '结束进程',
 
     // 智能助理
-    ai_title: '✨ Alice 智能助理',
+    ai_title: 'Alice 智能助理',
     ai_help_prompt: '我能帮您做什么？试着说“打开音乐”或“现在几点了”。',
     ai_placeholder: '咨询 Alice...',
     ai_ask: '发送',
@@ -1156,7 +1156,7 @@ const i18nDict = {
     xcode_clear: '清空控制台',
 
     // 应用程序商店
-    store_title: 'Alice 商店 🛍️',
+    store_title: 'App Store',
     store_subtitle: '发现并安装原生应用程序',
     store_search: '搜索',
     store_nav_discover: '探索',
@@ -1179,12 +1179,12 @@ const i18nDict = {
     weather_requesting: '正在请求卫星气象数据...',
     weather_locating: '正在通过 IP 定位...',
     weather_fetching: '正在获取 %s 的天气预报...',
-    weather_clear: '☀️ 晴',
-    weather_partly_cloudy: '⛅ 多云',
-    weather_foggy: '🌫️ 雾',
-    weather_raining: '🌧️ 雨',
-    weather_snowing: '❄️ 雪',
-    weather_thunderstorm: '⛈️ 雷阵雨',
+    weather_clear: '晴',
+    weather_partly_cloudy: '多云',
+    weather_foggy: '大雾',
+    weather_raining: '降雨',
+    weather_snowing: '降雪',
+    weather_thunderstorm: '雷阵雨',
     weather_error: '网络错误：无法获取天气预报。',
 
     // 系统通知
@@ -1612,9 +1612,9 @@ const i18nDict = {
     ctx_new_folder: '新規フォルダ',
     ctx_new_file: '新規テキストファイル',
     ctx_new_sticky: '新規スティッキーズ',
-    ctx_use_stacks: '🥞 スタックを使用',
-    ctx_edit_widgets: '🧩 ウィジェットを編集...',
-    ctx_airdrop: '📡 AirDrop...',
+    ctx_use_stacks: 'スタックを使用',
+    ctx_edit_widgets: 'ウィジェットを編集...',
+    ctx_airdrop: 'AirDrop...',
     ctx_wallpaper: '壁紙を変更...',
     ctx_about: 'AliceOS について',
     ctx_toggle_widgets: 'ウィジェットを非表示',
@@ -1718,9 +1718,9 @@ const i18nDict = {
 
     // Dynamic Island
     island_brightness: 'ディスプレイ輝度',
-    island_music: '🎵 ミュージック',
+    island_music: 'ミュージック',
     island_timer: '⏱️ タイマー',
-    island_airdrop: '📡 AirDrop',
+    island_airdrop: 'AirDrop',
     island_focus_timer: '集中タイマー',
     island_plus_1m: '+1分',
     island_pause: '一時停止',
@@ -1867,7 +1867,7 @@ const i18nDict = {
     am_kill: 'プロセスを終了',
 
     // アシスタント
-    ai_title: '✨ Alice アシスタント',
+    ai_title: 'Alice アシスタント',
     ai_help_prompt: 'ご用件は何でしょうか？「音楽を開いて」や「今何時？」とお試しください。',
     ai_placeholder: 'Alice に質問...',
     ai_ask: '送信',
@@ -1924,7 +1924,7 @@ const i18nDict = {
     video_pip: 'ピクチャ・イン・ピクチャ',
 
     // App Store
-    store_title: 'Alice Store 🛍️',
+    store_title: 'App Store',
     store_subtitle: 'ネイティブアプリの検索とインストール',
     store_tictactoe_title: '三目並べ',
     store_tictactoe_desc: 'クラシックなマス目パズルゲーム。',
@@ -1938,12 +1938,12 @@ const i18nDict = {
     weather_requesting: '衛星気象データをリクエスト中...',
     weather_locating: 'IP による位置情報を取得中...',
     weather_fetching: '%s の天気予報を取得中...',
-    weather_clear: '☀️ 快晴',
-    weather_partly_cloudy: '⛅ 晴れ時々曇り',
-    weather_foggy: '🌫️ 霧',
-    weather_raining: '🌧️ 雨',
-    weather_snowing: '❄️ 雪',
-    weather_thunderstorm: '⛈️ 雷雨',
+    weather_clear: '快晴',
+    weather_partly_cloudy: '晴れ時々曇り',
+    weather_foggy: '霧',
+    weather_raining: '雨',
+    weather_snowing: '雪',
+    weather_thunderstorm: '雷雨',
     weather_error: 'ネットワークエラー: 天気を取得できませんでした。',
 
     // 通知
@@ -2497,7 +2497,7 @@ function setSystemLanguage(lang, save = true) {
   // Update Desktop stacks toggle button in context menu
   const stacksToggleEl = document.getElementById('ctx-stacks-toggle');
   if (stacksToggleEl && typeof desktopStacksEnabled !== 'undefined') {
-    stacksToggleEl.innerText = desktopStacksEnabled ? ('✓ ' + (dict.ctx_use_stacks || 'Use Stacks')) : ('🥞 ' + (dict.ctx_use_stacks || 'Use Stacks'));
+    stacksToggleEl.innerText = desktopStacksEnabled ? ('✓ ' + (dict.ctx_use_stacks || 'Use Stacks')) : (dict.ctx_use_stacks || 'Use Stacks');
   }
 
   // Update CC expanded slider if currently open
@@ -4024,26 +4024,7 @@ function createWindow(pid, title, contentHtml, explicitAppKey = null) {
     win.dataset.appKey = appKey;
     updateDockRunningState(appKey, true);
   }
-  let appIcon = '🪟';
-  if (title.includes('Finder')) appIcon = '📁';
-  else if (title.includes('Terminal')) appIcon = '＞_';
-  else if (title.includes('Notes')) appIcon = '📝';
-  else if (title.includes('Calculator')) appIcon = '🧮';
-  else if (title.includes('Browser') || title.includes('Safari')) appIcon = '🌐';
-  else if (title.includes('Music')) appIcon = '🎵';
-  else if (title.includes('Photo') || title.includes('Camera')) appIcon = '📷';
-  else if (title.includes('Paint')) appIcon = '🎨';
-  else if (title.includes('Snake')) appIcon = '🐍';
-  else if (title.includes('Maps')) appIcon = '🗺️';
-  else if (title.includes('Video')) appIcon = '🎬';
-  else if (title.includes('Radar')) appIcon = '👽';
-  else if (title.includes('Settings')) appIcon = '⚙️';
-  else if (title.includes('Monitor') || title.includes('Activity')) appIcon = '📈';
-  else if (title.includes('Weather')) appIcon = '🌦️';
-  else if (title.includes('Store')) appIcon = '🛍️';
-  else if (title.includes('IDE')) appIcon = '💻';
-  else if (title.includes('iPhone')) appIcon = '📱';
-  win.dataset.icon = appIcon;
+  win.dataset.icon = appKey || 'finder';
 
   // macOS Spring Spawn Animation
   win.style.transform = 'scale(0.8)';
@@ -4690,19 +4671,19 @@ async function launchIPhoneMirroring() {
           
           <div class="settings-card">
             <div class="settings-row">
-              <div class="settings-row-label"><span>📱</span> <span>设备名称</span></div>
+              <div class="settings-row-label"><span style="display:flex;align-items:center;">${getSFSymbol('iphone', 14, '#007aff')}</span> <span>设备名称</span></div>
               <div class="settings-row-val">Alice's iPhone 16 Pro</div>
             </div>
             <div class="settings-row">
-              <div class="settings-row-label"><span>⚙️</span> <span>系统版本</span></div>
+              <div class="settings-row-label"><span style="display:flex;align-items:center;">${getSFSymbol('gear', 14, '#8e8e93')}</span> <span>系统版本</span></div>
               <div class="settings-row-val">iOS 18.2 (22C152)</div>
             </div>
             <div class="settings-row">
-              <div class="settings-row-label"><span>🔋</span> <span>电池健康</span></div>
+              <div class="settings-row-label"><span style="display:flex;align-items:center;">${getSFSymbol('battery', 14, '#34c759')}</span> <span>电池健康</span></div>
               <div class="settings-row-val" style="color:#34c759;font-weight:600;">100% 峰值性能</div>
             </div>
             <div class="settings-row">
-              <div class="settings-row-label"><span>💾</span> <span>可用储存空间</span></div>
+              <div class="settings-row-label"><span style="display:flex;align-items:center;">${getSFSymbol('internaldrive', 14, '#ff9500')}</span> <span>可用储存空间</span></div>
               <div class="settings-row-val">186.4 GB / 256 GB</div>
             </div>
           </div>
@@ -4713,7 +4694,7 @@ async function launchIPhoneMirroring() {
               <div class="settings-row-val" style="color:#007aff;font-weight:600;">已连接至 Mac</div>
             </div>
             <div class="settings-row">
-              <div class="settings-row-label"><span>📶</span> <span>隔空播放与接力</span></div>
+              <div class="settings-row-label"><span style="display:flex;align-items:center;">${getSFSymbol('airplay', 14, '#007aff')}</span> <span>隔空播放与接力</span></div>
               <div class="settings-row-val">自动</div>
             </div>
           </div>
@@ -6345,7 +6326,7 @@ async function launchFinder() {
         const previewEl = document.createElement('div');
         previewEl.className = 'finder-preview-column finder-column-anim-enter';
         const isApp = colData.file.type === 'app' || (colData.file.name && colData.file.name.endsWith('.app'));
-        let icon = isApp ? getAppIconSvg(colData.file.appId || colData.file.name.replace('.app', ''), 64) : (colData.file.name.endsWith('.png') || colData.file.name.endsWith('.jpg') ? '🖼️' : (colData.file.name.endsWith('.mp4') || colData.file.name.endsWith('.webm') ? '🎬' : '📄'));
+        let icon = isApp ? getAppIconSvg(colData.file.appId || colData.file.name.replace('.app', ''), 64) : (colData.file.name.endsWith('.png') || colData.file.name.endsWith('.jpg') || colData.file.name.endsWith('.jpeg') ? getSFSymbol('doc-image', 64, '#007aff') : (colData.file.name.endsWith('.mp4') || colData.file.name.endsWith('.webm') || colData.file.name.endsWith('.mov') ? getSFSymbol('film', 64, '#007aff') : getSFSymbol('doc-text', 64, '#007aff')));
         let kind = isApp ? (currentSystemLang === 'zh' ? 'macOS 应用程序' : 'macOS Application') : (colData.file.type === 'dir' ? t('finder_folder', 'Folder') : (colData.file.name.endsWith('.png') ? t('finder_png_image', 'PNG Image') : t('finder_plain_text', 'Plain Text Document')));
 
         const currentTag = getFileTag(colData.targetPath);
@@ -6372,7 +6353,7 @@ async function launchFinder() {
 
           <div style="display:flex;gap:10px;width:100%;justify-content:center;">
             <button class="finder-ql-btn" style="background:#007aff;color:white;border:none;padding:6px 14px;border-radius:14px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;">
-              👁️ ${t('finder_quick_look', 'Quick Look')}
+              ${getSFSymbol('eye', 13, '#ffffff')} <span>${t('finder_quick_look', 'Quick Look')}</span>
             </button>
             <button class="finder-open-btn" style="background:rgba(0,0,0,0.08);border:none;padding:6px 14px;border-radius:14px;font-size:12px;cursor:pointer;">
               ${t('finder_open', 'Open')}
@@ -7125,13 +7106,13 @@ async function launchBrowser() {
         card.innerHTML = `
           <div style="padding:10px 14px;background:rgba(255,255,255,0.75);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(0,0,0,0.06);">
             <div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:140px;">
-              <span>${t.icon || '🌐'}</span>
+              <span>${t.icon || getSFSymbol('safari', 13, '#007aff')}</span>
               <span>${t.title}</span>
             </div>
             ${tabs.length > 1 ? `<button class="safari-card-close" data-id="${t.id}" style="background:rgba(0,0,0,0.1);border:none;border-radius:50%;width:20px;height:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;transition:background 0.15s;">✕</button>` : ''}
           </div>
           <div style="flex:1;background:linear-gradient(135deg,rgba(0,122,255,0.06),rgba(88,86,214,0.09));display:flex;flex-direction:column;align-items:center;justify-content:center;color:#666;font-size:11px;padding:14px;text-align:center;">
-            <div style="font-size:28px;margin-bottom:6px;opacity:0.75;">${t.icon || '🌐'}</div>
+            <div style="display:flex;align-items:center;justify-content:center;margin-bottom:8px;">${t.icon || getSFSymbol('safari', 32, '#007aff')}</div>
             <div style="font-weight:500;color:#333;word-break:break-all;padding:0 8px;">${t.url}</div>
           </div>
         `;
@@ -7159,7 +7140,7 @@ async function launchBrowser() {
         </div>
       `;
       newCard.onclick = () => {
-        createTab('safari:start', 'Start Page', '🧭');
+        createTab('safari:start', t('safari_start_page', 'Start Page'), getSFSymbol('safari', 13, '#007aff'));
         toggleOverview();
       };
       overviewGrid.appendChild(newCard);
@@ -7202,7 +7183,7 @@ async function launchBrowser() {
     });
 
     newTabBtn.addEventListener('click', () => {
-      createTab('safari:start', 'Start Page', '🧭');
+      createTab('safari:start', t('safari_start_page', 'Start Page'), getSFSymbol('safari', 13, '#007aff'));
     });
 
     overviewBtn.addEventListener('click', toggleOverview);
@@ -7330,7 +7311,7 @@ async function launchBrowser() {
       const ovCount = win.querySelector(`#safari-overview-count-${pid}`);
       if (ovCount) ovCount.innerText = `${tabs.length} ${t('safari_tabs', 'Tabs')}`;
       const ovSearch = win.querySelector(`#safari-overview-search-${pid}`);
-      if (ovSearch) ovSearch.placeholder = `🔍 ${t('safari_search_tabs', 'Search Tabs...')}`;
+      if (ovSearch) ovSearch.placeholder = t('safari_search_tabs', 'Search Tabs...');
       const ovDone = win.querySelector(`#safari-overview-close-${pid}`);
       if (ovDone) ovDone.innerText = t('safari_done', 'Done');
     };
@@ -13693,7 +13674,7 @@ spotlightInput.addEventListener('input', async () => {
       if (mathResult !== undefined && !isNaN(mathResult) && typeof mathResult === 'number') {
         const formatted = Number.isInteger(mathResult) ? mathResult.toString() : mathResult.toFixed(4).replace(/\.?0+$/, '');
         const calcDict = i18nDict[currentSystemLang] || i18nDict.en;
-        addResult('🧮', formatted, `${calcDict.spotlight_calc_res || 'Calculation Result'} for "${query}" (${t('spotlight_click_to_copy', 'Click to copy')})`, () => {
+        addResult(getSFSymbol('plus.slash.minus', 22, '#ff9500'), formatted, `${calcDict.spotlight_calc_res || 'Calculation Result'} for "${query}" (${t('spotlight_click_to_copy', 'Click to copy')})`, () => {
           navigator.clipboard.writeText(formatted);
           if (typeof showNotification === 'function') showNotification(t('app_calculator', 'Spotlight Calculator'), t('spotlight_copied', 'Copied to clipboard!'));
         });
@@ -13715,7 +13696,7 @@ spotlightInput.addEventListener('input', async () => {
   if (dirRes.success) {
     dirRes.data.forEach(item => {
        if (item.name.toLowerCase().includes(query)) {
-         let icon = item.type === 'dir' ? '📁' : (item.name.endsWith('.png') ? '🖼️' : '📄');
+         let icon = item.type === 'dir' ? getSFSymbol('folder', 20, '#007aff') : (item.name.endsWith('.png') ? getSFSymbol('doc-image', 20, '#007aff') : getSFSymbol('doc-text', 20, '#007aff'));
          addResult(icon, item.name, '/Users/alice/' + item.name, () => {
             if (item.type !== 'dir') {
                if (item.name.endsWith('.png')) launchGallery('/Users/alice/' + item.name);
@@ -13729,7 +13710,7 @@ spotlightInput.addEventListener('input', async () => {
   }
   
   // 4. Web Search Fallback
-  addResult('🔍', (spotDict.spotlight_search_web || 'Search web for "%s"').replace('%s', query), spotDict.spotlight_web_search || 'Web Search', () => {
+  addResult(getSFSymbol('globe', 22, '#007aff'), (spotDict.spotlight_search_web || 'Search web for "%s"').replace('%s', query), spotDict.spotlight_web_search || 'Web Search', () => {
     // We can't open external browser easily, but we can launch AliceOS browser
     // Assuming launchBrowser accepts a URL, or we just launch it
     launchBrowser();
