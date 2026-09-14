@@ -3,6 +3,9 @@ const path = require('path');
 const { initVFS } = require('./vfs');
 const { setupIPC } = require('./ipc');
 
+// Enable native macOS overlay scrollbars in Chromium engine
+app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar');
+
 let mainWindow;
 
 function createWindow() {
