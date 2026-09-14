@@ -214,6 +214,7 @@ const i18nDict = {
 
     // Finder
     finder_favorites: 'FAVORITES',
+    finder_applications: 'Applications',
     finder_locations: 'LOCATIONS',
     finder_tags: 'TAGS',
     finder_home: 'Alice Home',
@@ -409,6 +410,10 @@ const i18nDict = {
 
     // App Names
     app_finder: 'Finder',
+    app_calendar: 'Calendar',
+    app_clock: 'Clock',
+    app_reminders: 'Reminders',
+    app_textedit: 'TextEdit',
     app_launchpad: 'Launchpad',
     app_missioncontrol: 'Mission Control',
     app_terminal: 'Terminal',
@@ -420,7 +425,7 @@ const i18nDict = {
     app_paint: 'Paint',
     app_snake: 'Snake',
     app_maps: 'Maps',
-    app_video: 'Video Player',
+    app_video: 'QuickTime Player',
     app_radar: 'AirDrop Radar',
     app_weather: 'Weather',
     app_hostinfo: 'System Activity',
@@ -800,6 +805,7 @@ const i18nDict = {
 
     // 访达
     finder_favorites: '个人收藏',
+    finder_applications: '应用程序',
     finder_locations: '位置',
     finder_tags: '标记',
     finder_home: 'Alice 的个人主页',
@@ -995,6 +1001,10 @@ const i18nDict = {
 
     // 应用名称
     app_finder: '访达',
+    app_calendar: '日历',
+    app_clock: '时钟',
+    app_reminders: '提醒事项',
+    app_textedit: '文本编辑',
     app_launchpad: '启动台',
     app_missioncontrol: '调度中心',
     app_terminal: '终端',
@@ -1006,7 +1016,7 @@ const i18nDict = {
     app_paint: '画板',
     app_snake: '贪吃蛇',
     app_maps: '地图',
-    app_video: '视频播放器',
+    app_video: 'QuickTime Player',
     app_radar: '隔空投送雷达',
     app_weather: '天气',
     app_hostinfo: '系统性能',
@@ -1386,6 +1396,7 @@ const i18nDict = {
 
     // Finder
     finder_favorites: 'よく使う項目',
+    finder_applications: 'アプリケーション',
     finder_locations: '場所',
     finder_tags: 'タグ',
     finder_home: 'Alice ホーム',
@@ -1553,6 +1564,10 @@ const i18nDict = {
 
     // アプリケーション
     app_finder: 'Finder',
+    app_calendar: 'カレンダー',
+    app_clock: '時計',
+    app_reminders: 'リマインダー',
+    app_textedit: 'テキストエディット',
     app_launchpad: 'Launchpad',
     app_missioncontrol: 'Mission Control',
     app_terminal: 'ターミナル',
@@ -1564,7 +1579,7 @@ const i18nDict = {
     app_paint: 'ペイント',
     app_snake: 'スネークゲーム',
     app_maps: 'マップ',
-    app_video: 'ビデオプレーヤー',
+    app_video: 'QuickTime Player',
     app_radar: 'AirDrop レーダー',
     app_weather: '天気',
     app_hostinfo: 'システム性能',
@@ -1824,6 +1839,7 @@ function setSystemLanguage(lang, save = true) {
 
   // Update clock & date
   if (typeof updateClock === 'function') updateClock();
+  if (typeof updateDockCalendarIcon === 'function') updateDockCalendarIcon();
 
   // Update open windows
   if (typeof windows !== 'undefined' && windows.size > 0) {
@@ -2491,6 +2507,65 @@ function getSFSymbol(name, size = 16, color = 'currentColor') {
       break;
     case 'cube':
       svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>`;
+      break;
+    case 'film':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>`;
+      break;
+    case 'pip':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><rect x="13" y="11" width="7" height="7" rx="1" fill="${color}" fill-opacity="0.3"/></svg>`;
+      break;
+    case 'gobackward-10':
+    case 'rotate-left':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 2v6h6"/><path d="M2.66 15.57a10 10 0 1 0 .57-8.38L2.5 8"/><text x="12" y="15" font-family="-apple-system, sans-serif" font-size="7.5" font-weight="700" fill="${color}" text-anchor="middle" stroke="none">10</text></svg>`;
+      break;
+    case 'goforward-10':
+    case 'rotate-right':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6"/><path d="M21.34 15.57a10 10 0 1 1-.57-8.38L21.5 8"/><text x="12" y="15" font-family="-apple-system, sans-serif" font-size="7.5" font-weight="700" fill="${color}" text-anchor="middle" stroke="none">10</text></svg>`;
+      break;
+    case 'flag':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>`;
+      break;
+    case 'flag-fill':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="${color}" stroke="${color}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15" stroke-width="2"/></svg>`;
+      break;
+    case 'tray':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>`;
+      break;
+    case 'tray-fill':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="${color}"><path d="M20 13h-4a2 2 0 0 0-2 2H10a2 2 0 0 0-2-2H4v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5zM18.76 5.11A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11L2.24 11h5.88a4 4 0 0 1 3.88 3h0a4 4 0 0 1 3.88-3h5.88l-2.76-5.89z"/></svg>`;
+      break;
+    case 'stopwatch':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="14" r="8"/><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="14" x2="15.5" y2="10.5"/><path d="M19 5l-1.5 1.5"/></svg>`;
+      break;
+    case 'timer':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="10" y1="2" x2="14" y2="2"/><line x1="12" y1="14" x2="15" y2="11"/><circle cx="12" cy="14" r="8"/></svg>`;
+      break;
+    case 'alarm':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><polyline points="12 9 12 13 15 15"/><path d="M5 3L2 6"/><path d="M22 6L19 3"/><line x1="6.38" y1="18.7" x2="4.5" y2="21"/><line x1="17.64" y1="18.67" x2="19.5" y2="21"/></svg>`;
+      break;
+    case 'checkmark':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+      break;
+    case 'bold':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/><path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/></svg>`;
+      break;
+    case 'italic':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="4" x2="10" y2="4"/><line x1="14" y1="20" x2="5" y2="20"/><line x1="15" y1="4" x2="9" y2="20"/></svg>`;
+      break;
+    case 'underline':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v7a6 6 0 0 0 6 6 6 6 0 0 0 6-6V3"/><line x1="4" y1="21" x2="20" y2="21"/></svg>`;
+      break;
+    case 'strikethrough':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 7.5C17 5 15 3.5 12 3.5c-3.5 0-5 2-5 4 0 2 1.5 3 3.5 3.5"/><path d="M8.5 16.5c.5 2 2.5 3.5 5.5 3.5 3 0 5.5-1.5 5.5-4 0-2-1.5-3-3.5-3.5"/><line x1="4" y1="12" x2="20" y2="12"/></svg>`;
+      break;
+    case 'align-left':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="15" y1="18" x2="3" y2="18"/></svg>`;
+      break;
+    case 'align-center':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"><line x1="18" y1="10" x2="6" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="18" y1="18" x2="6" y2="18"/></svg>`;
+      break;
+    case 'align-right':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"><line x1="21" y1="10" x2="7" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="21" y1="18" x2="9" y2="18"/></svg>`;
       break;
     default:
       svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>`;
@@ -4489,6 +4564,7 @@ async function launchFinder() {
     <div class="finder-container" id="finder-${pid}">
       <div class="finder-sidebar">
         <div style="font-size:10px;font-weight:700;color:#888;margin:8px 0 4px 8px;letter-spacing:0.5px;" data-finder-header="fav">${t('finder_favorites', 'FAVORITES')}</div>
+        <div class="finder-sidebar-item" data-path="/Applications" data-host="false" data-finder-label="apps">${getSFSymbol('folder', 14, '#007aff')} <span>${t('finder_applications', 'Applications')}</span></div>
         <div class="finder-sidebar-item" data-path="/Users/alice" data-host="false" data-finder-label="home">${getSFSymbol('house', 14, '#007aff')} <span>${t('finder_home', 'Alice Home')}</span></div>
         <div class="finder-sidebar-item" data-path="/Users/alice/Desktop" data-host="false" data-finder-label="desktop">${getSFSymbol('desktop', 14, '#007aff')} <span>${t('finder_desktop', 'Desktop')}</span></div>
         <div class="finder-sidebar-item" data-path="/Users/alice/Documents" data-host="false" data-finder-label="documents">${getSFSymbol('doc-text', 14, '#007aff')} <span>${t('finder_documents', 'Documents')}</span></div>
@@ -4594,7 +4670,15 @@ async function launchFinder() {
   let searchQuery = '';
   async function getDirItems(path, host) {
     let items = [];
-    if (host) {
+    if (!host && (path === '/Applications' || path === '/Applications/')) {
+      const dict = i18nDict[currentSystemLang] || i18nDict.en;
+      items = baseAppDefs.map(def => ({
+        name: `${dict['app_' + def.id] || def.id}.app`,
+        type: 'app',
+        appId: def.id,
+        action: def.action
+      }));
+    } else if (host) {
       if (!window.aliceOS.hostReadDir) return [];
       const res = await window.aliceOS.hostReadDir(path);
       items = res.success ? res.data : [];
@@ -4630,11 +4714,24 @@ async function launchFinder() {
   }
 
   function handleFileOpen(item, targetPath, host) {
+    if (item && (item.type === 'app' || (item.name && item.name.endsWith('.app')))) {
+      const appDef = baseAppDefs.find(a => a.id === item.appId || `${a.id}.app` === item.name || (i18nDict[currentSystemLang] && `${i18nDict[currentSystemLang]['app_' + a.id]}.app` === item.name));
+      const actionStr = (item.action || (appDef && appDef.action) || '').replace('()', '');
+      if (actionStr && typeof window[actionStr] === 'function') {
+        window[actionStr]();
+        return;
+      }
+    }
     if (host) {
       alert("Opening physical files directly in AliceOS apps is restricted for safety. Path: " + targetPath);
     } else {
-      if (item.name.endsWith('.png')) {
+      const lower = ((item && item.name) || '').toLowerCase();
+      if (lower.endsWith('.png') || lower.endsWith('.jpg') || lower.endsWith('.jpeg')) {
         launchGallery(targetPath);
+      } else if (lower.endsWith('.mp4') || lower.endsWith('.webm') || lower.endsWith('.mov')) {
+        launchVideo(targetPath);
+      } else if (lower.endsWith('.txt') || lower.endsWith('.rtf') || lower.endsWith('.md')) {
+        launchTextEdit(targetPath);
       } else {
         launchNotes(targetPath);
       }
@@ -4698,7 +4795,15 @@ async function launchFinder() {
       const el = document.createElement('div');
       el.className = 'finder-item';
       let icon = item.type === 'dir' ? getSFSymbol('folder', 48) : getSFSymbol('doc', 44);
-      if (item.type !== 'dir' && item.name.endsWith('.png')) icon = getSFSymbol('doc-image', 44);
+      if (item.type === 'app' || (item.name && item.name.endsWith('.app'))) {
+        icon = getAppIconSvg(item.appId || item.name.replace('.app', ''), 48);
+      } else if (item.type !== 'dir' && (item.name.endsWith('.png') || item.name.endsWith('.jpg') || item.name.endsWith('.jpeg'))) {
+        icon = getSFSymbol('doc-image', 44);
+      } else if (item.type !== 'dir' && (item.name.endsWith('.txt') || item.name.endsWith('.rtf') || item.name.endsWith('.md'))) {
+        icon = getSFSymbol('doc-text', 44);
+      } else if (item.type !== 'dir' && (item.name.endsWith('.mp4') || item.name.endsWith('.webm') || item.name.endsWith('.mov'))) {
+        icon = getSFSymbol('film', 44);
+      }
 
       let targetPath = isHostDir 
         ? (currentDir.endsWith('\\\\') ? currentDir + item.name : currentDir + '\\\\' + item.name)
@@ -4775,8 +4880,16 @@ async function launchFinder() {
       const tr = document.createElement('tr');
       tr.className = 'finder-list-row';
       let icon = item.type === 'dir' ? getSFSymbol('folder', 18) : getSFSymbol('doc', 16);
-      if (item.type !== 'dir' && item.name.endsWith('.png')) icon = getSFSymbol('doc-image', 16);
-      let kind = item.type === 'dir' ? t('finder_folder', 'Folder') : (item.name.endsWith('.png') ? t('finder_png_image', 'PNG Image') : t('finder_document', 'Document'));
+      if (item.type === 'app' || (item.name && item.name.endsWith('.app'))) {
+        icon = getAppIconSvg(item.appId || item.name.replace('.app', ''), 20);
+      } else if (item.type !== 'dir' && (item.name.endsWith('.png') || item.name.endsWith('.jpg') || item.name.endsWith('.jpeg'))) {
+        icon = getSFSymbol('doc-image', 16);
+      } else if (item.type !== 'dir' && (item.name.endsWith('.txt') || item.name.endsWith('.rtf') || item.name.endsWith('.md'))) {
+        icon = getSFSymbol('doc-text', 16);
+      } else if (item.type !== 'dir' && (item.name.endsWith('.mp4') || item.name.endsWith('.webm') || item.name.endsWith('.mov'))) {
+        icon = getSFSymbol('film', 16);
+      }
+      let kind = item.type === 'dir' ? t('finder_folder', 'Folder') : ((item.type === 'app' || (item.name && item.name.endsWith('.app'))) ? (currentSystemLang === 'zh' ? 'macOS 应用程序' : 'macOS Application') : (item.name.endsWith('.png') ? t('finder_png_image', 'PNG Image') : t('finder_document', 'Document')));
 
       let targetPath = isHostDir 
         ? (currentDir.endsWith('\\\\') ? currentDir + item.name : currentDir + '\\\\' + item.name)
@@ -4879,8 +4992,9 @@ async function launchFinder() {
         // Render File Preview Column
         const previewEl = document.createElement('div');
         previewEl.className = 'finder-preview-column finder-column-anim-enter';
-        let icon = colData.file.name.endsWith('.png') ? '🖼️' : '📄';
-        let kind = colData.file.type === 'dir' ? t('finder_folder', 'Folder') : (colData.file.name.endsWith('.png') ? t('finder_png_image', 'PNG Image') : t('finder_plain_text', 'Plain Text Document'));
+        const isApp = colData.file.type === 'app' || (colData.file.name && colData.file.name.endsWith('.app'));
+        let icon = isApp ? getAppIconSvg(colData.file.appId || colData.file.name.replace('.app', ''), 64) : (colData.file.name.endsWith('.png') || colData.file.name.endsWith('.jpg') ? '🖼️' : (colData.file.name.endsWith('.mp4') || colData.file.name.endsWith('.webm') ? '🎬' : '📄'));
+        let kind = isApp ? (currentSystemLang === 'zh' ? 'macOS 应用程序' : 'macOS Application') : (colData.file.type === 'dir' ? t('finder_folder', 'Folder') : (colData.file.name.endsWith('.png') ? t('finder_png_image', 'PNG Image') : t('finder_plain_text', 'Plain Text Document')));
 
         const currentTag = getFileTag(colData.targetPath);
         const tagPickersHtml = FINDER_TAG_COLORS.map(c => `
@@ -4958,7 +5072,15 @@ async function launchFinder() {
             const itemEl = document.createElement('div');
             itemEl.className = 'finder-column-item' + (colData.selectedName === item.name ? ' selected' : '');
             let icon = item.type === 'dir' ? getSFSymbol('folder', 16) : getSFSymbol('doc', 15);
-            if (item.type !== 'dir' && item.name.endsWith('.png')) icon = getSFSymbol('doc-image', 15);
+            if (item.type === 'app' || (item.name && item.name.endsWith('.app'))) {
+              icon = getAppIconSvg(item.appId || item.name.replace('.app', ''), 18);
+            } else if (item.type !== 'dir' && (item.name.endsWith('.png') || item.name.endsWith('.jpg') || item.name.endsWith('.jpeg'))) {
+              icon = getSFSymbol('doc-image', 15);
+            } else if (item.type !== 'dir' && (item.name.endsWith('.txt') || item.name.endsWith('.rtf') || item.name.endsWith('.md'))) {
+              icon = getSFSymbol('doc-text', 15);
+            } else if (item.type !== 'dir' && (item.name.endsWith('.mp4') || item.name.endsWith('.webm') || item.name.endsWith('.mov'))) {
+              icon = getSFSymbol('film', 15);
+            }
             
             let childPath = colData.isHost 
               ? (colData.dirPath.endsWith('\\\\') ? colData.dirPath + item.name : colData.dirPath + '\\\\' + item.name)
@@ -5160,6 +5282,8 @@ async function launchFinder() {
     if (tagsHeader) tagsHeader.innerText = t('finder_tags', 'TAGS');
 
     // Update sidebar items
+    const appsItem = win.querySelector('[data-finder-label="apps"]');
+    if (appsItem) appsItem.innerHTML = `${getSFSymbol('folder', 14, '#007aff')} <span>${t('finder_applications', 'Applications')}</span>`;
     const homeItem = win.querySelector('[data-finder-label="home"]');
     if (homeItem) homeItem.innerHTML = `${getSFSymbol('house', 14, '#007aff')} <span>${t('finder_home', 'Alice Home')}</span>`;
     const deskItem = win.querySelector('[data-finder-label="desktop"]');
@@ -7487,6 +7611,112 @@ function getAppIconSvg(id, size = 64) {
     </svg>`;
   }
 
+  if (normId === 'calendar') {
+    const today = new Date();
+    const dNum = today.getDate();
+    const daysEn = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+    const daysZh = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+    const dayStr = currentSystemLang === 'zh' ? daysZh[today.getDay()] : daysEn[today.getDay()];
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="cal-bg-${uid}" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#f2f2f7"/>
+        </linearGradient>
+        <linearGradient id="cal-hdr-${uid}" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#ff3b30"/><stop offset="100%" stop-color="#e0281b"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#cal-bg-${uid})"/>
+      <rect width="100" height="100" rx="22.5" fill="none" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+      <path d="M 0 22.5 C 0 10 10 0 22.5 0 L 77.5 0 C 90 0 100 10 100 22.5 L 100 30 L 0 30 Z" fill="url(#cal-hdr-${uid})"/>
+      <text x="50" y="21" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="1">${dayStr}</text>
+      <text x="50" y="74" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif" font-size="44" font-weight="300" fill="#1c1c1e" text-anchor="middle">${dNum}</text>
+    </svg>`;
+  }
+
+  if (normId === 'clock') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="clk-bg-${uid}" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#2c2c2e"/><stop offset="100%" stop-color="#000000"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#clk-bg-${uid})"/>
+      <circle cx="50" cy="50" r="44" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+      <g stroke="#ffffff" stroke-linecap="round">
+        <line x1="50" y1="12" x2="50" y2="18" stroke-width="3"/>
+        <line x1="50" y1="88" x2="50" y2="82" stroke-width="3"/>
+        <line x1="12" y1="50" x2="18" y2="50" stroke-width="3"/>
+        <line x1="88" y1="50" x2="82" y2="50" stroke-width="3"/>
+        <line x1="31" y1="18" x2="34" y2="23" stroke-width="2" opacity="0.6"/>
+        <line x1="69" y1="18" x2="66" y2="23" stroke-width="2" opacity="0.6"/>
+        <line x1="82" y1="31" x2="77" y2="34" stroke-width="2" opacity="0.6"/>
+        <line x1="82" y1="69" x2="77" y2="66" stroke-width="2" opacity="0.6"/>
+        <line x1="69" y1="82" x2="66" y2="77" stroke-width="2" opacity="0.6"/>
+        <line x1="31" y1="82" x2="34" y2="77" stroke-width="2" opacity="0.6"/>
+        <line x1="18" y1="69" x2="23" y2="66" stroke-width="2" opacity="0.6"/>
+        <line x1="18" y1="31" x2="23" y2="34" stroke-width="2" opacity="0.6"/>
+      </g>
+      <line x1="50" y1="50" x2="32" y2="34" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round"/>
+      <line x1="50" y1="50" x2="70" y2="30" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="50" cy="50" r="3.5" fill="#ff9500"/>
+      <line x1="50" y1="60" x2="50" y2="18" stroke="#ff9500" stroke-width="1.8" stroke-linecap="round"/>
+      <circle cx="50" cy="50" r="1.5" fill="#000000"/>
+    </svg>`;
+  }
+
+  if (normId === 'reminders') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="rem-bg-${uid}" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#e5e5ea"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#rem-bg-${uid})"/>
+      <rect width="100" height="100" rx="22.5" fill="none" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+      <circle cx="34" cy="34" r="11" fill="#007aff"/>
+      <circle cx="34" cy="34" r="5" fill="#ffffff"/>
+      <line x1="52" y1="34" x2="78" y2="34" stroke="#8e8e93" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="34" cy="66" r="11" fill="#ff9500"/>
+      <circle cx="34" cy="66" r="5" fill="#ffffff"/>
+      <line x1="52" y1="66" x2="72" y2="66" stroke="#8e8e93" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="68" cy="48" r="9" fill="#ff2d55"/>
+      <circle cx="68" cy="48" r="4" fill="#ffffff"/>
+      <circle cx="48" cy="50" r="8" fill="#34c759"/>
+      <circle cx="48" cy="50" r="3.5" fill="#ffffff"/>
+    </svg>`;
+  }
+
+  if (normId === 'textedit') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="te-bg-${uid}" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#f8fafc"/>
+        </linearGradient>
+        <linearGradient id="pen-body-${uid}" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#f59e0b"/><stop offset="50%" stop-color="#fbbf24"/><stop offset="100%" stop-color="#d97706"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#te-bg-${uid})"/>
+      <rect width="100" height="100" rx="22.5" fill="none" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+      <line x1="20" y1="24" x2="20" y2="82" stroke="#fca5a5" stroke-width="1.5"/>
+      <line x1="16" y1="36" x2="84" y2="36" stroke="#cbd5e1" stroke-width="1.5"/>
+      <line x1="16" y1="48" x2="84" y2="48" stroke="#cbd5e1" stroke-width="1.5"/>
+      <line x1="16" y1="60" x2="84" y2="60" stroke="#cbd5e1" stroke-width="1.5"/>
+      <line x1="16" y1="72" x2="84" y2="72" stroke="#cbd5e1" stroke-width="1.5"/>
+      <line x1="26" y1="34" x2="65" y2="34" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="26" y1="46" x2="72" y2="46" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="26" y1="58" x2="55" y2="58" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
+      <g transform="translate(62, 58) rotate(-45)">
+        <rect x="-6" y="-36" width="12" height="42" rx="1.5" fill="url(#pen-body-${uid})"/>
+        <rect x="-6" y="-42" width="12" height="6" rx="2" fill="#cbd5e1"/>
+        <rect x="-6" y="-46" width="12" height="5" rx="2" fill="#f43f5e"/>
+        <polygon points="-6,6 6,6 0,20" fill="#fde68a"/>
+        <polygon points="-2,15 2,15 0,20" fill="#1e293b"/>
+      </g>
+    </svg>`;
+  }
+
   // Fallback icon
   return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
     <defs>
@@ -7503,29 +7733,33 @@ function getAppIconSvg(id, size = 64) {
 // Base App Ecosystem
 const baseAppDefs = [
   { id: 'finder', icon: '📁', action: 'launchFinder()' },
-  { id: 'terminal', icon: '＞_', action: 'launchTerminal()' },
+  { id: 'calendar', icon: '📅', action: 'launchCalendar()' },
+  { id: 'reminders', icon: '☑️', action: 'launchReminders()' },
   { id: 'notes', icon: '📝', action: 'launchNotes()' },
+  { id: 'textedit', icon: '📄', action: 'launchTextEdit()' },
+  { id: 'clock', icon: '⏰', action: 'launchClock()' },
   { id: 'calculator', icon: '🧮', action: 'launchCalculator()' },
   { id: 'browser', icon: '🌐', action: 'launchBrowser()' },
   { id: 'music', icon: '🎵', action: 'launchMusic()' },
   { id: 'camera', icon: '📷', action: 'launchCamera()' },
   { id: 'paint', icon: '🎨', action: 'launchPaint()' },
-  { id: 'snake', icon: '🐍', action: 'launchSnake()' },
   { id: 'maps', icon: '🗺️', action: 'launchMaps()' },
-  { id: 'video', icon: '🎬', action: 'launchVideo()' },
-  { id: 'radar', icon: '👽', action: 'launchRadar()' },
   { id: 'weather', icon: '⛅', action: 'launchWeather()' },
+  { id: 'video', icon: '🎬', action: 'launchVideo()' },
+  { id: 'terminal', icon: '＞_', action: 'launchTerminal()' },
+  { id: 'activity', icon: '📈', action: 'launchActivityMonitor()' },
+  { id: 'settings', icon: '⚙️', action: 'launchSettings()' },
+  { id: 'store', icon: '🛍️', action: 'launchStore()' },
+  { id: 'iphonemirror', icon: '📱', action: 'launchIPhoneMirroring()' },
+  { id: 'ide', icon: '🧑‍💻', action: 'launchIDE()' },
   { id: 'hostinfo', icon: '💻', action: 'launchHostMonitor()' },
   { id: 'hostscreen', icon: '🪞', action: 'launchHostScreen()' },
   { id: 'webhost', icon: '🌐', action: 'launchWebHost()' },
-  { id: 'ide', icon: '🧑‍💻', action: 'launchIDE()' },
-  { id: 'settings', icon: '⚙️', action: 'launchSettings()' },
+  { id: 'snake', icon: '🐍', action: 'launchSnake()' },
   { id: 'flappy', icon: '🎮', action: 'launchFlappy()' },
   { id: 'synth', icon: '🎹', action: 'launchSynth()' },
   { id: 'universe', icon: '🌌', action: 'launchUniverse()' },
-  { id: 'activity', icon: '📈', action: 'launchActivityMonitor()' },
-  { id: 'store', icon: '🛍️', action: 'launchStore()' },
-  { id: 'iphonemirror', icon: '📱', action: 'launchIPhoneMirroring()' }
+  { id: 'radar', icon: '👽', action: 'launchRadar()' }
 ];
 
 let apps = [];
@@ -7539,6 +7773,7 @@ function updateLocalizedApps() {
   }));
 
   launchpadItems = [
+    { type: 'app', id: 'calendar', name: dict.app_calendar || 'Calendar', action: 'launchCalendar()' },
     { type: 'app', id: 'browser', name: dict.app_browser, action: 'launchBrowser()' },
     { type: 'app', id: 'iphonemirror', name: dict.app_iphonemirror || 'iPhone Mirroring', action: 'launchIPhoneMirroring()' },
     { type: 'app', id: 'maps', name: dict.app_maps, action: 'launchMaps()' },
@@ -7548,9 +7783,13 @@ function updateLocalizedApps() {
       type: 'folder',
       name: dict.folder_productivity,
       apps: [
+        { id: 'calendar', name: dict.app_calendar || 'Calendar', action: 'launchCalendar()' },
+        { id: 'reminders', name: dict.app_reminders || 'Reminders', action: 'launchReminders()' },
+        { id: 'notes', name: dict.app_notes, action: 'launchNotes()' },
+        { id: 'textedit', name: dict.app_textedit || 'TextEdit', action: 'launchTextEdit()' },
+        { id: 'clock', name: dict.app_clock || 'Clock', action: 'launchClock()' },
         { id: 'finder', name: dict.app_finder, action: 'launchFinder()' },
         { id: 'terminal', name: dict.app_terminal, action: 'launchTerminal()' },
-        { id: 'notes', name: dict.app_notes, action: 'launchNotes()' },
         { id: 'calculator', name: dict.app_calculator, action: 'launchCalculator()' },
         { id: 'iphonemirror', name: dict.app_iphonemirror || 'iPhone Mirroring', action: 'launchIPhoneMirroring()' },
         { id: 'ide', name: dict.app_ide, action: 'launchIDE()' }
@@ -8241,6 +8480,10 @@ function updateClock() {
   
   if (window.aliceOS && (window.aliceOS.wallpaperSetting === 'dynamic-solar' || window.aliceOS.wallpaperSetting === 'dynamic-mojave')) {
     updateSolarDynamicWallpaper();
+  }
+
+  if (typeof updateDockCalendarIcon === 'function') {
+    updateDockCalendarIcon();
   }
 }
 setInterval(updateClock, 1000);
@@ -11484,12 +11727,26 @@ function quickLookOpenInApp() {
   const file = quickLookFiles[quickLookIndex];
   if (!file) return;
   toggleQuickLook(); // close preview
-  if (file.type === 'dir') {
+  if (file.type === 'app' || (file.name && file.name.endsWith('.app'))) {
+    const appDef = baseAppDefs.find(a => a.id === file.appId || `${a.id}.app` === file.name || (i18nDict[currentSystemLang] && `${i18nDict[currentSystemLang]['app_' + a.id]}.app` === file.name));
+    const actionStr = (file.action || (appDef && appDef.action) || '').replace('()', '');
+    if (actionStr && typeof window[actionStr] === 'function') {
+      window[actionStr]();
+      return;
+    }
+  } else if (file.type === 'dir') {
     launchFinder(file.path);
-  } else if (file.name.endsWith('.png') || file.name.endsWith('.jpg')) {
-    launchGallery(file.path);
   } else {
-    launchNotes(file.path);
+    const lower = (file.name || '').toLowerCase();
+    if (lower.endsWith('.png') || lower.endsWith('.jpg') || lower.endsWith('.jpeg')) {
+      launchGallery(file.path);
+    } else if (lower.endsWith('.mp4') || lower.endsWith('.webm') || lower.endsWith('.mov')) {
+      launchVideo(file.path);
+    } else if (lower.endsWith('.txt') || lower.endsWith('.rtf') || lower.endsWith('.md')) {
+      launchTextEdit(file.path);
+    } else {
+      launchNotes(file.path);
+    }
   }
 }
 
@@ -12141,8 +12398,8 @@ async function launchVideo() {
     const pid = res.data.pid;
     const mediaTracks = [
       { id: 'sequoia', title: 'macOS Sequoia Keynote & Intelligence', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4', icon: getSFSymbol('apple', 12, 'currentColor') },
-      { id: 'bunny', title: 'Big Buck Bunny (Apple 4K ProRes)', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', icon: '🎬' },
-      { id: 'tears', title: 'Tears of Steel (Sci-Fi Cinema)', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4', icon: '🚀' }
+      { id: 'bunny', title: 'Big Buck Bunny (Apple 4K ProRes)', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', icon: getSFSymbol('film', 12, 'currentColor') },
+      { id: 'tears', title: 'Tears of Steel (Sci-Fi Cinema)', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4', icon: getSFSymbol('sparkles', 12, 'currentColor') }
     ];
     let currentTrack = mediaTracks[0];
 
@@ -12152,11 +12409,17 @@ async function launchVideo() {
         <div style="position:absolute;top:12px;left:14px;right:14px;z-index:20;display:flex;align-items:center;justify-content:space-between;pointer-events:none;">
           <div style="display:flex;background:rgba(20,20,24,0.75);backdrop-filter:blur(25px);border:1px solid rgba(255,255,255,0.15);padding:3px;border-radius:12px;pointer-events:auto;gap:2px;">
             ${mediaTracks.map((t, idx) => `
-              <button class="qt-track-pill ${idx === 0 ? 'active' : ''}" data-idx="${idx}" style="border:none;background:${idx === 0 ? 'rgba(255,255,255,0.2)' : 'transparent'};color:white;padding:4px 10px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;">${t.icon} ${t.title.split(' ')[0]}</button>
+              <button class="qt-track-pill ${idx === 0 ? 'active' : ''}" data-idx="${idx}" style="border:none;background:${idx === 0 ? 'rgba(255,255,255,0.2)' : 'transparent'};color:white;padding:4px 10px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:4px;">${t.icon} ${t.title.split(' ')[0]}</button>
             `).join('')}
           </div>
-          <div style="display:flex;gap:6px;pointer-events:auto;">
-            <button id="qt-pip-${pid}" style="background:rgba(20,20,24,0.75);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.15);color:white;padding:4px 10px;border-radius:10px;font-size:11px;cursor:pointer;">⤢ PiP</button>
+          <div style="display:flex;gap:6px;pointer-events:auto;align-items:center;">
+            <input type="file" id="qt-file-input-${pid}" accept="video/*" style="display:none;" />
+            <button id="qt-open-file-${pid}" style="background:rgba(20,20,24,0.75);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.15);color:white;padding:4px 10px;border-radius:10px;font-size:11px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;">
+              ${getSFSymbol('folder', 12, '#ffffff')} <span>${currentSystemLang === 'zh' ? '打开视频...' : 'Open File...'}</span>
+            </button>
+            <button id="qt-pip-${pid}" style="background:rgba(20,20,24,0.75);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.15);color:white;padding:4px 10px;border-radius:10px;font-size:11px;cursor:pointer;display:inline-flex;align-items:center;gap:4px;">
+              ${getSFSymbol('pip', 12, '#ffffff')} PiP
+            </button>
           </div>
         </div>
 
@@ -12170,9 +12433,9 @@ async function launchVideo() {
 
         <!-- QuickTime Floating Glass HUD -->
         <div class="mac-qt-hud" id="qt-hud-${pid}">
-          <button class="mac-qt-btn" id="qt-rewind-${pid}" title="Rewind 10s">↺ 10</button>
-          <button class="mac-qt-btn" id="qt-play-btn-${pid}" style="font-size:20px;" title="Play/Pause">⏸</button>
-          <button class="mac-qt-btn" id="qt-forward-${pid}" title="Forward 10s">↻ 10</button>
+          <button class="mac-qt-btn" id="qt-rewind-${pid}" title="Rewind 10s" style="display:flex;align-items:center;justify-content:center;">${getSFSymbol('gobackward-10', 16, '#ffffff')}</button>
+          <button class="mac-qt-btn" id="qt-play-btn-${pid}" style="display:flex;align-items:center;justify-content:center;" title="Play/Pause">${getSFSymbol('pause', 18, '#ffffff')}</button>
+          <button class="mac-qt-btn" id="qt-forward-${pid}" title="Forward 10s" style="display:flex;align-items:center;justify-content:center;">${getSFSymbol('goforward-10', 16, '#ffffff')}</button>
 
           <!-- Scrubber -->
           <div style="display:flex;align-items:center;gap:8px;">
@@ -12183,7 +12446,7 @@ async function launchVideo() {
 
           <!-- Volume -->
           <div style="display:flex;align-items:center;gap:6px;">
-            <span style="font-size:12px;opacity:0.8;">🔊</span>
+            <span style="display:inline-flex;align-items:center;opacity:0.85;">${getSFSymbol('speaker', 14, '#ffffff')}</span>
             <input type="range" id="qt-vol-${pid}" min="0" max="1" step="0.05" value="0.8" style="width:60px;cursor:pointer;accent-color:#007aff;">
           </div>
 
@@ -12207,10 +12470,30 @@ async function launchVideo() {
     const volBar = win.querySelector(`#qt-vol-${pid}`);
     const speedBtn = win.querySelector(`#qt-speed-${pid}`);
     const pipBtn = win.querySelector(`#qt-pip-${pid}`);
+    const fileInput = win.querySelector(`#qt-file-input-${pid}`);
+    const openFileBtn = win.querySelector(`#qt-open-file-${pid}`);
     const trackPills = win.querySelectorAll('.qt-track-pill');
 
     let isPlaying = true;
     let fallbackAnim = null;
+
+    if (openFileBtn && fileInput) {
+      openFileBtn.addEventListener('click', () => fileInput.click());
+      fileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const objUrl = URL.createObjectURL(file);
+          videoEl.src = objUrl;
+          videoEl.style.display = 'block';
+          canvasFallback.style.display = 'none';
+          videoEl.play();
+          isPlaying = true;
+          playBtn.innerHTML = getSFSymbol('pause', 18, '#ffffff');
+          const titleEl = win.querySelector('.title');
+          if (titleEl) titleEl.innerText = `${t('app_video', 'QuickTime Player')} - ${file.name}`;
+        }
+      });
+    }
 
     function formatTime(s) {
       if (isNaN(s) || !isFinite(s)) return '0:00';
@@ -12232,7 +12515,6 @@ async function launchVideo() {
     });
 
     videoEl.addEventListener('error', () => {
-      // Remote video failed or blocked -> switch smoothly to Apple Retina visualizer animation
       videoEl.style.display = 'none';
       canvasFallback.style.display = 'block';
       const ctx = canvasFallback.getContext('2d');
@@ -12253,7 +12535,6 @@ async function launchVideo() {
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, 800, 480);
 
-        // Apple Silicon M4 3D rotating rings
         ctx.lineWidth = 3;
         for (let i = 0; i < 4; i++) {
           ctx.strokeStyle = i % 2 === 0 ? '#38bdf8' : '#a855f7';
@@ -12275,10 +12556,10 @@ async function launchVideo() {
     playBtn.addEventListener('click', () => {
       if (isPlaying) {
         videoEl.pause();
-        playBtn.innerText = '▶';
+        playBtn.innerHTML = getSFSymbol('play', 18, '#ffffff');
       } else {
         videoEl.play();
-        playBtn.innerText = '⏸';
+        playBtn.innerHTML = getSFSymbol('pause', 18, '#ffffff');
       }
       isPlaying = !isPlaying;
     });
@@ -12313,7 +12594,7 @@ async function launchVideo() {
       if (typeof openPiP === 'function') {
         openPiP(currentTrack.src, currentTrack.title, videoEl.currentTime);
         videoEl.pause();
-        playBtn.innerText = '▶';
+        playBtn.innerHTML = getSFSymbol('play', 18, '#ffffff');
         isPlaying = false;
       }
     });
@@ -13037,6 +13318,1164 @@ async function launchWeather() {
     // Initial load
     loadCityWeather(activeCity);
   }
+}
+
+// ====================================================
+// Apple Calendar App - macOS Sequoia Fidelity
+// ====================================================
+async function launchCalendar() {
+  const res = await window.aliceOS.pm.spawn('calendar');
+  if (!res.success) return;
+  const pid = res.data.pid;
+
+  const realNow = new Date();
+  let viewYear = realNow.getFullYear();
+  let viewMonth = realNow.getMonth();
+  let activeFilter = new Set(['personal', 'work', 'family', 'holidays']);
+  let searchQuery = '';
+
+  let events = [
+    { id: '1', title: 'Apple 秋季特别发布会 (Keynote)', date: '2026-09-15', time: '10:00 - 12:00', cat: 'work', color: '#ff9500', loc: 'Steve Jobs Theater' },
+    { id: '2', title: 'AliceOS 1.0 正式版上线庆功', date: '2026-09-14', time: '18:30 - 20:30', cat: 'personal', color: '#007aff', loc: 'Cupertino City Center' },
+    { id: '3', title: 'macOS Sequoia 交互设计与架构评审', date: '2026-09-18', time: '14:00 - 15:30', cat: 'work', color: '#ff9500', loc: 'Conference Room 3A' },
+    { id: '4', title: '中秋节团圆假期', date: '2026-09-25', time: '全天', cat: 'holidays', color: '#af52de', loc: '' },
+    { id: '5', title: 'Alice 生日家庭聚会', date: '2026-09-28', time: '19:00 - 22:00', cat: 'family', color: '#ff2d55', loc: 'Alice Home' }
+  ];
+
+  try {
+    const vfsRes = await window.aliceOS.vfs.readFile('/Users/alice/Calendar/calendar_events.json');
+    if (vfsRes && vfsRes.success) {
+      const parsed = JSON.parse(vfsRes.data);
+      if (Array.isArray(parsed) && parsed.length > 0) events = parsed;
+    }
+  } catch (e) {}
+
+  async function saveEventsToVFS() {
+    try {
+      await window.aliceOS.vfs.mkdir('/Users/alice/Calendar');
+      await window.aliceOS.vfs.writeFile('/Users/alice/Calendar/calendar_events.json', JSON.stringify(events, null, 2));
+    } catch (e) {}
+  }
+
+  const monthNamesZh = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
+  const monthNamesEn = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+  const win = createWindow(pid, t('app_calendar', 'Calendar'), `
+    <div class="cal-mac-app" id="cal-app-${pid}">
+      <!-- Left Sidebar -->
+      <div class="cal-sidebar">
+        <!-- Mini Month Navigator -->
+        <div class="cal-mini-month-wrap">
+          <div class="cal-mini-header">
+            <span id="cal-mini-title-${pid}" style="font-weight:700;font-size:13px;"></span>
+            <div style="display:flex;gap:4px;">
+              <button class="cal-mini-nav-btn" id="cal-mini-prev-${pid}">${getSFSymbol('chevron-left', 11)}</button>
+              <button class="cal-mini-nav-btn" id="cal-mini-next-${pid}">${getSFSymbol('chevron-right', 11)}</button>
+            </div>
+          </div>
+          <div class="cal-mini-grid" id="cal-mini-grid-${pid}"></div>
+        </div>
+
+        <!-- Calendars List -->
+        <div class="cal-layers-title">${currentSystemLang === 'zh' ? '我的日历' : 'MY CALENDARS'}</div>
+        <div class="cal-layer-item">
+          <input type="checkbox" id="cal-flt-personal-${pid}" checked data-cat="personal" class="cal-checkbox blue">
+          <span class="cal-layer-dot" style="background:#007aff;"></span>
+          <span style="flex:1;">${currentSystemLang === 'zh' ? '个人事务' : 'Personal'}</span>
+        </div>
+        <div class="cal-layer-item">
+          <input type="checkbox" id="cal-flt-work-${pid}" checked data-cat="work" class="cal-checkbox orange">
+          <span class="cal-layer-dot" style="background:#ff9500;"></span>
+          <span style="flex:1;">${currentSystemLang === 'zh' ? '工作协作' : 'Work'}</span>
+        </div>
+        <div class="cal-layer-item">
+          <input type="checkbox" id="cal-flt-family-${pid}" checked data-cat="family" class="cal-checkbox pink">
+          <span class="cal-layer-dot" style="background:#ff2d55;"></span>
+          <span style="flex:1;">${currentSystemLang === 'zh' ? '家庭与纪念日' : 'Family & Life'}</span>
+        </div>
+        <div class="cal-layer-item">
+          <input type="checkbox" id="cal-flt-holidays-${pid}" checked data-cat="holidays" class="cal-checkbox purple">
+          <span class="cal-layer-dot" style="background:#af52de;"></span>
+          <span style="flex:1;">${currentSystemLang === 'zh' ? '中国法定节假日' : 'Holidays'}</span>
+        </div>
+
+        <!-- Add Event Primary Button -->
+        <button class="cal-add-event-btn" id="cal-add-btn-${pid}">
+          ${getSFSymbol('plus', 13, '#ffffff')} <span>${currentSystemLang === 'zh' ? '新建日程' : 'New Event'}</span>
+        </button>
+      </div>
+
+      <!-- Main Calendar Panel -->
+      <div class="cal-main-col">
+        <!-- Top Toolbar -->
+        <div class="cal-topbar">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <button class="cal-today-btn" id="cal-today-btn-${pid}">${currentSystemLang === 'zh' ? '今天' : 'Today'}</button>
+            <div style="display:flex;align-items:center;gap:4px;">
+              <button class="cal-nav-arrow" id="cal-prev-btn-${pid}" title="Previous">${getSFSymbol('chevron-left', 12)}</button>
+              <button class="cal-nav-arrow" id="cal-next-btn-${pid}" title="Next">${getSFSymbol('chevron-right', 12)}</button>
+            </div>
+            <div class="cal-month-title" id="cal-month-title-${pid}">2026年 9月</div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;">
+            <!-- Segmented View Modes -->
+            <div class="cal-seg-control">
+              <button class="cal-seg-pill" data-mode="day">${currentSystemLang === 'zh' ? '日' : 'Day'}</button>
+              <button class="cal-seg-pill" data-mode="week">${currentSystemLang === 'zh' ? '周' : 'Week'}</button>
+              <button class="cal-seg-pill active" data-mode="month">${currentSystemLang === 'zh' ? '月' : 'Month'}</button>
+              <button class="cal-seg-pill" data-mode="year">${currentSystemLang === 'zh' ? '年' : 'Year'}</button>
+            </div>
+
+            <!-- Search -->
+            <div class="cal-search-box">
+              ${getSFSymbol('search', 12, '#8e8e93')}
+              <input type="text" id="cal-search-${pid}" placeholder="${currentSystemLang === 'zh' ? '搜索日程...' : 'Search...'}" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Month Grid View -->
+        <div class="cal-month-view" id="cal-month-view-${pid}">
+          <!-- Weekday Headers -->
+          <div class="cal-week-headers">
+            <div>${currentSystemLang === 'zh' ? '周日' : 'SUN'}</div>
+            <div>${currentSystemLang === 'zh' ? '周一' : 'MON'}</div>
+            <div>${currentSystemLang === 'zh' ? '周二' : 'TUE'}</div>
+            <div>${currentSystemLang === 'zh' ? '周三' : 'WED'}</div>
+            <div>${currentSystemLang === 'zh' ? '周四' : 'THU'}</div>
+            <div>${currentSystemLang === 'zh' ? '周五' : 'FRI'}</div>
+            <div>${currentSystemLang === 'zh' ? '周六' : 'SAT'}</div>
+          </div>
+          <!-- 7x5 Month Grid Cells -->
+          <div class="cal-days-grid" id="cal-days-grid-${pid}"></div>
+        </div>
+      </div>
+
+      <!-- New / Edit Event Modal Popover -->
+      <div class="cal-modal-overlay" id="cal-modal-${pid}" style="display:none;">
+        <div class="cal-modal-card">
+          <div class="cal-modal-title" id="cal-modal-hdr-${pid}">${currentSystemLang === 'zh' ? '新建日程' : 'New Event'}</div>
+          <div class="cal-form-group">
+            <label>${currentSystemLang === 'zh' ? '标题' : 'Title'}</label>
+            <input type="text" id="cal-inp-title-${pid}" placeholder="${currentSystemLang === 'zh' ? '日程名称' : 'Event Title'}" />
+          </div>
+          <div class="cal-form-row">
+            <div class="cal-form-group" style="flex:1;">
+              <label>${currentSystemLang === 'zh' ? '日期' : 'Date'}</label>
+              <input type="date" id="cal-inp-date-${pid}" />
+            </div>
+            <div class="cal-form-group" style="flex:1;">
+              <label>${currentSystemLang === 'zh' ? '分类' : 'Calendar'}</label>
+              <select id="cal-inp-cat-${pid}">
+                <option value="work">${currentSystemLang === 'zh' ? '工作协作 (橙色)' : 'Work'}</option>
+                <option value="personal">${currentSystemLang === 'zh' ? '个人事务 (蓝色)' : 'Personal'}</option>
+                <option value="family">${currentSystemLang === 'zh' ? '家庭纪念 (红色)' : 'Family'}</option>
+                <option value="holidays">${currentSystemLang === 'zh' ? '节假日 (紫色)' : 'Holidays'}</option>
+              </select>
+            </div>
+          </div>
+          <div class="cal-form-group">
+            <label>${currentSystemLang === 'zh' ? '时间' : 'Time'}</label>
+            <input type="text" id="cal-inp-time-${pid}" placeholder="例如: 14:00 - 15:30 或 全天" />
+          </div>
+          <div class="cal-form-group">
+            <label>${currentSystemLang === 'zh' ? '地点' : 'Location'}</label>
+            <input type="text" id="cal-inp-loc-${pid}" placeholder="可选地点" />
+          </div>
+          <div class="cal-modal-actions">
+            <button class="cal-btn-cancel" id="cal-modal-cancel-${pid}">${currentSystemLang === 'zh' ? '取消' : 'Cancel'}</button>
+            <button class="cal-btn-save" id="cal-modal-save-${pid}">${currentSystemLang === 'zh' ? '保存' : 'Save'}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `);
+
+  win.style.width = '880px';
+  win.style.height = '620px';
+
+  const monthTitle = win.querySelector(`#cal-month-title-${pid}`);
+  const daysGrid = win.querySelector(`#cal-days-grid-${pid}`);
+  const miniTitle = win.querySelector(`#cal-mini-title-${pid}`);
+  const miniGrid = win.querySelector(`#cal-mini-grid-${pid}`);
+  const searchInput = win.querySelector(`#cal-search-${pid}`);
+  const modalOverlay = win.querySelector(`#cal-modal-${pid}`);
+  const inpTitle = win.querySelector(`#cal-inp-title-${pid}`);
+  const inpDate = win.querySelector(`#cal-inp-date-${pid}`);
+  const inpCat = win.querySelector(`#cal-inp-cat-${pid}`);
+  const inpTime = win.querySelector(`#cal-inp-time-${pid}`);
+  const inpLoc = win.querySelector(`#cal-inp-loc-${pid}`);
+
+  let editingEventId = null;
+
+  function renderCalendar() {
+    const isZh = currentSystemLang === 'zh';
+    monthTitle.innerText = isZh ? `${viewYear}年 ${monthNamesZh[viewMonth]}` : `${monthNamesEn[viewMonth]} ${viewYear}`;
+    miniTitle.innerText = isZh ? `${viewYear}年 ${viewMonth + 1}月` : `${monthNamesEn[viewMonth].slice(0, 3)} ${viewYear}`;
+
+    const firstDay = new Date(viewYear, viewMonth, 1).getDay();
+    const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+    const daysInPrevMonth = new Date(viewYear, viewMonth, 0).getDate();
+
+    // Render Mini Grid
+    let miniHtml = '';
+    const miniWeekdays = isZh ? ['日', '一', '二', '三', '四', '五', '六'] : ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+    miniHtml += '<div class="cal-mini-weekdays">' + miniWeekdays.map(w => `<div>${w}</div>`).join('') + '</div>';
+    miniHtml += '<div class="cal-mini-days">';
+    for (let i = firstDay - 1; i >= 0; i--) {
+      miniHtml += `<div class="cal-mini-cell dimmed">${daysInPrevMonth - i}</div>`;
+    }
+    for (let d = 1; d <= daysInMonth; d++) {
+      const isToday = realNow.getFullYear() === viewYear && realNow.getMonth() === viewMonth && realNow.getDate() === d;
+      miniHtml += `<div class="cal-mini-cell ${isToday ? 'today' : ''}" data-day="${d}">${d}</div>`;
+    }
+    miniHtml += '</div>';
+    miniGrid.innerHTML = miniHtml;
+
+    // Render Main Month Grid
+    daysGrid.innerHTML = '';
+    const totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
+
+    for (let cellIdx = 0; cellIdx < totalCells; cellIdx++) {
+      const cellEl = document.createElement('div');
+      cellEl.className = 'cal-day-cell';
+
+      let dNum = 0;
+      let isCurrentMonth = true;
+      let cellDateStr = '';
+
+      if (cellIdx < firstDay) {
+        dNum = daysInPrevMonth - (firstDay - 1 - cellIdx);
+        isCurrentMonth = false;
+        cellEl.classList.add('other-month');
+        const pM = viewMonth === 0 ? 12 : viewMonth;
+        const pY = viewMonth === 0 ? viewYear - 1 : viewYear;
+        cellDateStr = `${pY}-${String(pM).padStart(2, '0')}-${String(dNum).padStart(2, '0')}`;
+      } else if (cellIdx >= firstDay + daysInMonth) {
+        dNum = cellIdx - (firstDay + daysInMonth) + 1;
+        isCurrentMonth = false;
+        cellEl.classList.add('other-month');
+        const nM = viewMonth === 11 ? 1 : viewMonth + 2;
+        const nY = viewMonth === 11 ? viewYear + 1 : viewYear;
+        cellDateStr = `${nY}-${String(nM).padStart(2, '0')}-${String(dNum).padStart(2, '0')}`;
+      } else {
+        dNum = cellIdx - firstDay + 1;
+        cellDateStr = `${viewYear}-${String(viewMonth + 1).padStart(2, '0')}-${String(dNum).padStart(2, '0')}`;
+      }
+
+      const isToday = isCurrentMonth && realNow.getFullYear() === viewYear && realNow.getMonth() === viewMonth && realNow.getDate() === dNum;
+
+      const dayEvents = events.filter(e => {
+        if (!activeFilter.has(e.cat)) return false;
+        if (searchQuery && !e.title.toLowerCase().includes(searchQuery)) return false;
+        return e.date === cellDateStr;
+      });
+
+      cellEl.innerHTML = `
+        <div class="cal-day-header">
+          <span class="cal-day-num ${isToday ? 'today-pill' : ''}">${dNum}</span>
+        </div>
+        <div class="cal-day-events">
+          ${dayEvents.slice(0, 3).map(ev => `
+            <div class="cal-event-chip" style="background:${ev.color}20;border-left:3px solid ${ev.color};color:${ev.color};" data-eid="${ev.id}">
+              <span class="cal-event-time">${ev.time}</span>
+              <span class="cal-event-title">${ev.title}</span>
+            </div>
+          `).join('')}
+          ${dayEvents.length > 3 ? `<div class="cal-more-events">+${dayEvents.length - 3} ${isZh ? '更多' : 'more'}</div>` : ''}
+        </div>
+      `;
+
+      cellEl.addEventListener('click', (e) => {
+        const chip = e.target.closest('.cal-event-chip');
+        if (chip) {
+          const eid = chip.dataset.eid;
+          const ev = events.find(x => x.id === eid);
+          if (ev) openEventModal(ev);
+        } else {
+          openEventModal(null, cellDateStr);
+        }
+      });
+
+      daysGrid.appendChild(cellEl);
+    }
+  }
+
+  function openEventModal(ev = null, defaultDate = null) {
+    editingEventId = ev ? ev.id : null;
+    win.querySelector(`#cal-modal-hdr-${pid}`).innerText = ev ? (currentSystemLang === 'zh' ? '编辑日程' : 'Edit Event') : (currentSystemLang === 'zh' ? '新建日程' : 'New Event');
+    inpTitle.value = ev ? ev.title : '';
+    inpDate.value = ev ? ev.date : (defaultDate || `${viewYear}-${String(viewMonth + 1).padStart(2, '0')}-${String(realNow.getDate()).padStart(2, '0')}`);
+    inpCat.value = ev ? ev.cat : 'work';
+    inpTime.value = ev ? ev.time : '10:00 - 11:00';
+    inpLoc.value = ev ? (ev.loc || '') : '';
+    modalOverlay.style.display = 'flex';
+    inpTitle.focus();
+  }
+
+  function closeEventModal() {
+    modalOverlay.style.display = 'none';
+  }
+
+  win.querySelector(`#cal-modal-cancel-${pid}`).addEventListener('click', closeEventModal);
+  win.querySelector(`#cal-modal-save-${pid}`).addEventListener('click', async () => {
+    const title = inpTitle.value.trim();
+    if (!title) return;
+    const cat = inpCat.value;
+    const colors = { work: '#ff9500', personal: '#007aff', family: '#ff2d55', holidays: '#af52de' };
+
+    if (editingEventId) {
+      const ev = events.find(x => x.id === editingEventId);
+      if (ev) {
+        ev.title = title;
+        ev.date = inpDate.value;
+        ev.cat = cat;
+        ev.color = colors[cat] || '#007aff';
+        ev.time = inpTime.value || '全天';
+        ev.loc = inpLoc.value;
+      }
+    } else {
+      events.push({
+        id: String(Date.now()),
+        title: title,
+        date: inpDate.value,
+        cat: cat,
+        color: colors[cat] || '#007aff',
+        time: inpTime.value || '全天',
+        loc: inpLoc.value
+      });
+    }
+
+    await saveEventsToVFS();
+    closeEventModal();
+    renderCalendar();
+  });
+
+  win.querySelector(`#cal-prev-btn-${pid}`).addEventListener('click', () => {
+    viewMonth--;
+    if (viewMonth < 0) { viewMonth = 11; viewYear--; }
+    renderCalendar();
+  });
+  win.querySelector(`#cal-next-btn-${pid}`).addEventListener('click', () => {
+    viewMonth++;
+    if (viewMonth > 11) { viewMonth = 0; viewYear++; }
+    renderCalendar();
+  });
+  win.querySelector(`#cal-mini-prev-${pid}`).addEventListener('click', () => {
+    viewMonth--;
+    if (viewMonth < 0) { viewMonth = 11; viewYear--; }
+    renderCalendar();
+  });
+  win.querySelector(`#cal-mini-next-${pid}`).addEventListener('click', () => {
+    viewMonth++;
+    if (viewMonth > 11) { viewMonth = 0; viewYear++; }
+    renderCalendar();
+  });
+  win.querySelector(`#cal-today-btn-${pid}`).addEventListener('click', () => {
+    viewYear = realNow.getFullYear();
+    viewMonth = realNow.getMonth();
+    renderCalendar();
+  });
+
+  win.querySelector(`#cal-add-btn-${pid}`).addEventListener('click', () => {
+    openEventModal();
+  });
+
+  win.querySelectorAll('.cal-checkbox').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const cat = cb.dataset.cat;
+      if (cb.checked) activeFilter.add(cat);
+      else activeFilter.delete(cat);
+      renderCalendar();
+    });
+  });
+
+  searchInput.addEventListener('input', () => {
+    searchQuery = searchInput.value.toLowerCase().trim();
+    renderCalendar();
+  });
+
+  renderCalendar();
+}
+
+// ====================================================
+// Apple Clock App - macOS Sequoia Fidelity
+// ====================================================
+async function launchClock() {
+  const res = await window.aliceOS.pm.spawn('clock');
+  if (!res.success) return;
+  const pid = res.data.pid;
+
+  let activeTab = 'world';
+
+  let worldCities = [
+    { id: 'cupertino', name: 'Cupertino', nameZh: '库比蒂诺', tz: 'America/Los_Angeles', diffZh: '今天，-15小时', diffEn: 'Today, -15HRS' },
+    { id: 'beijing', name: 'Beijing', nameZh: '北京', tz: 'Asia/Shanghai', diffZh: '今天，本地时间', diffEn: 'Today, Local Time' },
+    { id: 'tokyo', name: 'Tokyo', nameZh: '东京', tz: 'Asia/Tokyo', diffZh: '今天，+1小时', diffEn: 'Today, +1HR' },
+    { id: 'london', name: 'London', nameZh: '伦敦', tz: 'Europe/London', diffZh: '今天，-7小时', diffEn: 'Today, -7HRS' },
+    { id: 'newyork', name: 'New York', nameZh: '纽约', tz: 'America/New_York', diffZh: '今天，-12小时', diffEn: 'Today, -12HRS' },
+    { id: 'paris', name: 'Paris', nameZh: '巴黎', tz: 'Europe/Paris', diffZh: '今天，-6小时', diffEn: 'Today, -6HRS' }
+  ];
+
+  let alarms = [
+    { id: '1', time: '07:00', label: currentSystemLang === 'zh' ? '晨间闹钟' : 'Morning Alarm', repeat: currentSystemLang === 'zh' ? '工作日 (周一至周五)' : 'Weekdays', enabled: true },
+    { id: '2', time: '08:30', label: currentSystemLang === 'zh' ? '每日晨会与计划' : 'Daily Standup', repeat: currentSystemLang === 'zh' ? '每天' : 'Every Day', enabled: true },
+    { id: '3', time: '14:00', label: currentSystemLang === 'zh' ? '午后专注工作' : 'Deep Work Session', repeat: currentSystemLang === 'zh' ? '工作日' : 'Weekdays', enabled: false },
+    { id: '4', time: '22:30', label: currentSystemLang === 'zh' ? '睡眠准备' : 'Wind Down', repeat: currentSystemLang === 'zh' ? '每天' : 'Every Day', enabled: true }
+  ];
+
+  let swRunning = false;
+  let swStartTime = 0;
+  let swElapsed = 0;
+  let swTimerId = null;
+  let swLaps = [];
+
+  let timerRunning = false;
+  let timerTotalSec = 300;
+  let timerRemaining = 300;
+  let timerInterval = null;
+
+  const win = createWindow(pid, t('app_clock', 'Clock'), `
+    <div class="clock-mac-app" id="clock-app-${pid}">
+      <div class="clock-tab-bar">
+        <div class="clock-seg-wrap">
+          <button class="clock-seg-tab active" data-tab="world">${getSFSymbol('globe', 12)} <span>${currentSystemLang === 'zh' ? '世界时钟' : 'World Clock'}</span></button>
+          <button class="clock-seg-tab" data-tab="alarm">${getSFSymbol('alarm', 12)} <span>${currentSystemLang === 'zh' ? '闹钟' : 'Alarms'}</span></button>
+          <button class="clock-seg-tab" data-tab="stopwatch">${getSFSymbol('stopwatch', 12)} <span>${currentSystemLang === 'zh' ? '秒表' : 'Stopwatch'}</span></button>
+          <button class="clock-seg-tab" data-tab="timer">${getSFSymbol('timer', 12)} <span>${currentSystemLang === 'zh' ? '计时器' : 'Timer'}</span></button>
+        </div>
+      </div>
+
+      <div class="clock-content-pane" id="clock-pane-world-${pid}">
+        <div class="clock-world-grid" id="clock-world-grid-${pid}"></div>
+      </div>
+
+      <div class="clock-content-pane" id="clock-pane-alarm-${pid}" style="display:none;">
+        <div style="display:flex;justify-content:flex-end;max-width:600px;margin:0 auto 12px auto;">
+          <button id="clock-new-alarm-${pid}" style="background:#007aff;color:white;border:none;padding:6px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:4px;">
+            ${getSFSymbol('plus', 12, '#ffffff')} ${currentSystemLang === 'zh' ? '新建闹钟' : 'Add Alarm'}
+          </button>
+        </div>
+        <div class="clock-alarm-list" id="clock-alarm-list-${pid}"></div>
+      </div>
+
+      <div class="clock-content-pane" id="clock-pane-stopwatch-${pid}" style="display:none;">
+        <div class="clock-stopwatch-pane">
+          <div class="clock-stopwatch-digits" id="sw-digits-${pid}">00:00.00</div>
+          <div class="clock-stopwatch-btns">
+            <button class="clock-round-btn lap" id="sw-lap-btn-${pid}">${currentSystemLang === 'zh' ? '计圈' : 'Lap'}</button>
+            <button class="clock-round-btn start" id="sw-start-btn-${pid}">${currentSystemLang === 'zh' ? '启动' : 'Start'}</button>
+          </div>
+          <div class="clock-laps-table" id="sw-laps-${pid}"></div>
+        </div>
+      </div>
+
+      <div class="clock-content-pane" id="clock-pane-timer-${pid}" style="display:none;">
+        <div class="clock-timer-pane">
+          <div class="clock-timer-presets">
+            <button class="clock-preset-pill" data-sec="60">1m</button>
+            <button class="clock-preset-pill" data-sec="180">3m</button>
+            <button class="clock-preset-pill" data-sec="300">5m</button>
+            <button class="clock-preset-pill" data-sec="600">10m</button>
+            <button class="clock-preset-pill" data-sec="900">15m</button>
+            <button class="clock-preset-pill" data-sec="1800">30m</button>
+          </div>
+
+          <div class="clock-timer-ring-box">
+            <svg viewBox="0 0 200 200" width="200" height="200">
+              <circle cx="100" cy="100" r="90" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="8"/>
+              <circle id="timer-progress-ring-${pid}" cx="100" cy="100" r="90" fill="none" stroke="#ff9f0a" stroke-width="8" stroke-linecap="round" stroke-dasharray="565.48" stroke-dashoffset="0" transform="rotate(-90 100 100)" style="transition:stroke-dashoffset 0.5s linear;"/>
+            </svg>
+            <div class="clock-timer-digits" id="timer-digits-${pid}">05:00</div>
+          </div>
+
+          <div style="display:flex;gap:20px;margin-top:14px;">
+            <button class="clock-round-btn lap" id="timer-cancel-btn-${pid}">${currentSystemLang === 'zh' ? '取消' : 'Cancel'}</button>
+            <button class="clock-round-btn start" id="timer-start-btn-${pid}">${currentSystemLang === 'zh' ? '开始' : 'Start'}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `);
+
+  win.style.width = '780px';
+  win.style.height = '540px';
+
+  const worldGrid = win.querySelector(`#clock-world-grid-${pid}`);
+
+  function updateWorldClocks() {
+    if (!windows.has(pid)) return;
+    const now = new Date();
+    const isZh = currentSystemLang === 'zh';
+
+    worldGrid.innerHTML = worldCities.map(city => {
+      let timeStr = '00:00';
+      let sec = now.getSeconds();
+      let min = now.getMinutes();
+      let hr = now.getHours();
+
+      try {
+        const dStr = now.toLocaleTimeString('en-US', { timeZone: city.tz, hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        const parts = dStr.split(':');
+        hr = parseInt(parts[0]);
+        min = parseInt(parts[1]);
+        sec = parseInt(parts[2]);
+        timeStr = `${String(hr).padStart(2, '0')}:${String(min).padStart(2, '0')}`;
+      } catch (e) {
+        timeStr = `${String(hr).padStart(2, '0')}:${String(min).padStart(2, '0')}`;
+      }
+
+      const hrDeg = (hr % 12 + min / 60) * 30;
+      const minDeg = (min + sec / 60) * 6;
+      const secDeg = sec * 6;
+      const isNight = hr < 6 || hr >= 18;
+
+      return `
+        <div class="clock-city-card">
+          <div class="clock-analog-svg">
+            <svg viewBox="0 0 100 100" width="96" height="96">
+              <circle cx="50" cy="50" r="48" fill="${isNight ? '#000000' : '#ffffff'}" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+              <g stroke="${isNight ? '#ffffff' : '#1d1d1f'}" stroke-linecap="round">
+                <line x1="50" y1="8" x2="50" y2="14" stroke-width="2.5"/>
+                <line x1="50" y1="92" x2="50" y2="86" stroke-width="2.5"/>
+                <line x1="8" y1="50" x2="14" y2="50" stroke-width="2.5"/>
+                <line x1="92" y1="50" x2="86" y2="50" stroke-width="2.5"/>
+              </g>
+              <line x1="50" y1="50" x2="50" y2="24" stroke="${isNight ? '#ffffff' : '#1d1d1f'}" stroke-width="3.5" stroke-linecap="round" transform="rotate(${hrDeg} 50 50)"/>
+              <line x1="50" y1="50" x2="50" y2="16" stroke="${isNight ? '#ffffff' : '#1d1d1f'}" stroke-width="2.2" stroke-linecap="round" transform="rotate(${minDeg} 50 50)"/>
+              <line x1="50" y1="58" x2="50" y2="12" stroke="#ff9500" stroke-width="1.5" stroke-linecap="round" transform="rotate(${secDeg} 50 50)"/>
+              <circle cx="50" cy="50" r="3" fill="#ff9500"/>
+            </svg>
+          </div>
+          <div class="clock-card-city">${isZh ? city.nameZh : city.name}</div>
+          <div class="clock-card-diff">${isZh ? city.diffZh : city.diffEn}</div>
+          <div class="clock-card-time">${timeStr}</div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  updateWorldClocks();
+  const worldTimer = setInterval(updateWorldClocks, 1000);
+
+  const tabBtns = win.querySelectorAll('.clock-seg-tab');
+  const paneWorld = win.querySelector(`#clock-pane-world-${pid}`);
+  const paneAlarm = win.querySelector(`#clock-pane-alarm-${pid}`);
+  const paneStopwatch = win.querySelector(`#clock-pane-stopwatch-${pid}`);
+  const paneTimer = win.querySelector(`#clock-pane-timer-${pid}`);
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeTab = btn.dataset.tab;
+
+      paneWorld.style.display = activeTab === 'world' ? 'block' : 'none';
+      paneAlarm.style.display = activeTab === 'alarm' ? 'block' : 'none';
+      paneStopwatch.style.display = activeTab === 'stopwatch' ? 'block' : 'none';
+      paneTimer.style.display = activeTab === 'timer' ? 'block' : 'none';
+
+      if (activeTab === 'alarm') renderAlarms();
+    });
+  });
+
+  const alarmListEl = win.querySelector(`#clock-alarm-list-${pid}`);
+  function renderAlarms() {
+    alarmListEl.innerHTML = alarms.map((alm, idx) => `
+      <div class="clock-alarm-card">
+        <div>
+          <div class="clock-alarm-time" style="opacity:${alm.enabled ? '1' : '0.45'};">${alm.time}</div>
+          <div class="clock-alarm-label">${alm.label}，${alm.repeat}</div>
+        </div>
+        <label class="ios-switch">
+          <input type="checkbox" ${alm.enabled ? 'checked' : ''} data-idx="${idx}">
+          <span class="ios-slider"></span>
+        </label>
+      </div>
+    `).join('');
+
+    alarmListEl.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+      cb.addEventListener('change', () => {
+        const idx = parseInt(cb.dataset.idx);
+        alarms[idx].enabled = cb.checked;
+        renderAlarms();
+      });
+    });
+  }
+
+  win.querySelector(`#clock-new-alarm-${pid}`).addEventListener('click', () => {
+    const tInput = prompt(currentSystemLang === 'zh' ? '请输入闹钟时间 (例如 09:00):' : 'Enter alarm time (e.g. 09:00):', '09:00');
+    if (tInput && /^\d{1,2}:\d{2}$/.test(tInput.trim())) {
+      alarms.push({
+        id: String(Date.now()),
+        time: tInput.trim(),
+        label: currentSystemLang === 'zh' ? '新闹钟' : 'New Alarm',
+        repeat: currentSystemLang === 'zh' ? '每天' : 'Every Day',
+        enabled: true
+      });
+      renderAlarms();
+    }
+  });
+
+  const swDigits = win.querySelector(`#sw-digits-${pid}`);
+  const swStartBtn = win.querySelector(`#sw-start-btn-${pid}`);
+  const swLapBtn = win.querySelector(`#sw-lap-btn-${pid}`);
+  const swLapsTable = win.querySelector(`#sw-laps-${pid}`);
+
+  function formatSw(ms) {
+    const m = Math.floor(ms / 60000);
+    const s = Math.floor((ms % 60000) / 1000);
+    const cs = Math.floor((ms % 1000) / 10);
+    return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}.${String(cs).padStart(2, '0')}`;
+  }
+
+  function updateSw() {
+    const current = Date.now() - swStartTime + swElapsed;
+    swDigits.innerText = formatSw(current);
+  }
+
+  swStartBtn.addEventListener('click', () => {
+    if (!swRunning) {
+      swRunning = true;
+      swStartTime = Date.now();
+      swTimerId = setInterval(updateSw, 30);
+      swStartBtn.className = 'clock-round-btn stop';
+      swStartBtn.innerText = currentSystemLang === 'zh' ? '停止' : 'Stop';
+      swLapBtn.innerText = currentSystemLang === 'zh' ? '计圈' : 'Lap';
+    } else {
+      swRunning = false;
+      clearInterval(swTimerId);
+      swElapsed += Date.now() - swStartTime;
+      swStartBtn.className = 'clock-round-btn start';
+      swStartBtn.innerText = currentSystemLang === 'zh' ? '启动' : 'Start';
+      swLapBtn.innerText = currentSystemLang === 'zh' ? '复位' : 'Reset';
+    }
+  });
+
+  swLapBtn.addEventListener('click', () => {
+    if (swRunning) {
+      const current = Date.now() - swStartTime + swElapsed;
+      const prevLapTotal = swLaps.reduce((acc, cur) => acc + cur.lapTime, 0);
+      const lapTime = current - prevLapTotal;
+      swLaps.unshift({ lapNum: swLaps.length + 1, lapTime, totalTime: current });
+      renderLaps();
+    } else {
+      swElapsed = 0;
+      swLaps = [];
+      swDigits.innerText = '00:00.00';
+      swLapsTable.innerHTML = '';
+      swLapBtn.innerText = currentSystemLang === 'zh' ? '计圈' : 'Lap';
+    }
+  });
+
+  function renderLaps() {
+    if (swLaps.length === 0) return;
+    let minTime = Infinity;
+    let maxTime = -Infinity;
+    if (swLaps.length >= 2) {
+      swLaps.forEach(l => {
+        if (l.lapTime < minTime) minTime = l.lapTime;
+        if (l.lapTime > maxTime) maxTime = l.lapTime;
+      });
+    }
+
+    swLapsTable.innerHTML = swLaps.map(l => {
+      let cls = '';
+      if (swLaps.length >= 2) {
+        if (l.lapTime === minTime) cls = 'fastest';
+        else if (l.lapTime === maxTime) cls = 'slowest';
+      }
+      return `
+        <div class="clock-lap-row ${cls}">
+          <span>${currentSystemLang === 'zh' ? `计圈 ${l.lapNum}` : `Lap ${l.lapNum}`}</span>
+          <span>${formatSw(l.lapTime)}</span>
+        </div>
+      `;
+    }).join('');
+  }
+
+  const timerDigits = win.querySelector(`#timer-digits-${pid}`);
+  const timerRing = win.querySelector(`#timer-progress-ring-${pid}`);
+  const timerStartBtn = win.querySelector(`#timer-start-btn-${pid}`);
+  const timerCancelBtn = win.querySelector(`#timer-cancel-btn-${pid}`);
+  const totalDash = 565.48;
+
+  function formatTimer(sec) {
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  }
+
+  function updateTimerDisplay() {
+    timerDigits.innerText = formatTimer(timerRemaining);
+    const frac = timerTotalSec > 0 ? (timerTotalSec - timerRemaining) / timerTotalSec : 0;
+    timerRing.style.strokeDashoffset = (frac * totalDash).toFixed(2);
+  }
+
+  win.querySelectorAll('.clock-preset-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      if (timerRunning) return;
+      timerTotalSec = parseInt(pill.dataset.sec);
+      timerRemaining = timerTotalSec;
+      updateTimerDisplay();
+    });
+  });
+
+  timerStartBtn.addEventListener('click', () => {
+    if (!timerRunning) {
+      if (timerRemaining <= 0) timerRemaining = timerTotalSec;
+      timerRunning = true;
+      timerStartBtn.className = 'clock-round-btn stop';
+      timerStartBtn.innerText = currentSystemLang === 'zh' ? '暂停' : 'Pause';
+
+      timerInterval = setInterval(() => {
+        if (timerRemaining > 0) {
+          timerRemaining--;
+          updateTimerDisplay();
+        } else {
+          clearInterval(timerInterval);
+          timerRunning = false;
+          timerStartBtn.className = 'clock-round-btn start';
+          timerStartBtn.innerText = currentSystemLang === 'zh' ? '开始' : 'Start';
+          if (typeof playSystemBeep === 'function') {
+            playSystemBeep(1400, 0.2);
+            setTimeout(() => playSystemBeep(1760, 0.4), 250);
+          }
+          if (typeof showNotification === 'function') {
+            showNotification(t('app_clock', '时钟'), currentSystemLang === 'zh' ? '计时器时间到！' : 'Timer done!');
+          }
+        }
+      }, 1000);
+    } else {
+      timerRunning = false;
+      clearInterval(timerInterval);
+      timerStartBtn.className = 'clock-round-btn start';
+      timerStartBtn.innerText = currentSystemLang === 'zh' ? '继续' : 'Resume';
+    }
+  });
+
+  timerCancelBtn.addEventListener('click', () => {
+    timerRunning = false;
+    clearInterval(timerInterval);
+    timerRemaining = timerTotalSec;
+    timerStartBtn.className = 'clock-round-btn start';
+    timerStartBtn.innerText = currentSystemLang === 'zh' ? '开始' : 'Start';
+    updateTimerDisplay();
+  });
+
+  updateTimerDisplay();
+
+  const origClose = win.querySelector('.close');
+  if (origClose) {
+    origClose.addEventListener('click', () => {
+      clearInterval(worldTimer);
+      clearInterval(swTimerId);
+      clearInterval(timerInterval);
+    });
+  }
+}
+
+// ====================================================
+// Apple Reminders App - macOS Sequoia Fidelity
+// ====================================================
+async function launchReminders() {
+  const res = await window.aliceOS.pm.spawn('reminders');
+  if (!res.success) return;
+  const pid = res.data.pid;
+
+  let activeFilter = 'today';
+
+  let remindersData = {
+    lists: [
+      { id: 'reminders', name: currentSystemLang === 'zh' ? '提醒事项' : 'Reminders', color: '#007aff' },
+      { id: 'work', name: currentSystemLang === 'zh' ? '工作协作' : 'Work & Projects', color: '#af52de' },
+      { id: 'personal', name: currentSystemLang === 'zh' ? '个人待办' : 'Personal Life', color: '#ff9500' },
+      { id: 'shopping', name: currentSystemLang === 'zh' ? '采购清单' : 'Shopping List', color: '#34c759' }
+    ],
+    items: [
+      { id: '1', listId: 'work', title: '测试并发布 AliceOS 1.0 正式版系统镜像', date: '今天 18:00', flagged: true, completed: false },
+      { id: '2', listId: 'work', title: '编写 macOS Sequoia 设计与系统规范文档', date: '今天 15:30', flagged: false, completed: false },
+      { id: '3', listId: 'reminders', title: '检查 App Store 所有上架应用兼容性', date: '今天 20:00', flagged: true, completed: false },
+      { id: '4', listId: 'personal', title: '预定中秋家庭团聚晚宴餐厅', date: '明日 12:00', flagged: false, completed: false },
+      { id: '5', listId: 'shopping', title: '购买 Magic Trackpad 黑色版与 USB-C 编织线', date: '', flagged: false, completed: true }
+    ]
+  };
+
+  try {
+    const rRes = await window.aliceOS.vfs.readFile('/Users/alice/Reminders/reminders_store.json');
+    if (rRes && rRes.success) {
+      const parsed = JSON.parse(rRes.data);
+      if (parsed && Array.isArray(parsed.items)) remindersData = parsed;
+    }
+  } catch (e) {}
+
+  async function saveRemindersToVFS() {
+    try {
+      await window.aliceOS.vfs.mkdir('/Users/alice/Reminders');
+      await window.aliceOS.vfs.writeFile('/Users/alice/Reminders/reminders_store.json', JSON.stringify(remindersData, null, 2));
+    } catch (e) {}
+  }
+
+  const win = createWindow(pid, t('app_reminders', 'Reminders'), `
+    <div class="rem-mac-app" id="rem-app-${pid}">
+      <div class="rem-sidebar">
+        <div class="rem-smart-cards-grid">
+          <div class="rem-smart-card active" data-filter="today">
+            <div class="rem-card-top">
+              <div class="rem-card-badge" style="background:#007aff;">${getSFSymbol('calendar', 14, '#ffffff')}</div>
+              <div class="rem-card-count" id="rem-cnt-today-${pid}">0</div>
+            </div>
+            <div class="rem-card-label">${currentSystemLang === 'zh' ? '今天' : 'Today'}</div>
+          </div>
+          <div class="rem-smart-card" data-filter="scheduled">
+            <div class="rem-card-top">
+              <div class="rem-card-badge" style="background:#ff3b30;">${getSFSymbol('clock', 14, '#ffffff')}</div>
+              <div class="rem-card-count" id="rem-cnt-sched-${pid}">0</div>
+            </div>
+            <div class="rem-card-label">${currentSystemLang === 'zh' ? '计划' : 'Scheduled'}</div>
+          </div>
+          <div class="rem-smart-card" data-filter="all">
+            <div class="rem-card-top">
+              <div class="rem-card-badge" style="background:#636366;">${getSFSymbol('tray-fill', 14, '#ffffff')}</div>
+              <div class="rem-card-count" id="rem-cnt-all-${pid}">0</div>
+            </div>
+            <div class="rem-card-label">${currentSystemLang === 'zh' ? '全部' : 'All'}</div>
+          </div>
+          <div class="rem-smart-card" data-filter="flagged">
+            <div class="rem-card-top">
+              <div class="rem-card-badge" style="background:#ff9500;">${getSFSymbol('flag-fill', 14, '#ffffff')}</div>
+              <div class="rem-card-count" id="rem-cnt-flag-${pid}">0</div>
+            </div>
+            <div class="rem-card-label">${currentSystemLang === 'zh' ? '旗标' : 'Flagged'}</div>
+          </div>
+        </div>
+
+        <div style="font-size:11px;font-weight:700;color:#8e8e93;text-transform:uppercase;letter-spacing:0.5px;margin-top:4px;">${currentSystemLang === 'zh' ? '我的列表' : 'MY LISTS'}</div>
+        <div class="rem-lists-group" id="rem-lists-group-${pid}"></div>
+      </div>
+
+      <div class="rem-main-col">
+        <div class="rem-header-title" id="rem-view-title-${pid}" style="color:#007aff;">${currentSystemLang === 'zh' ? '今天' : 'Today'}</div>
+        <div class="rem-items-container" id="rem-items-list-${pid}"></div>
+
+        <div class="rem-add-row">
+          <span style="color:#8e8e93;display:flex;align-items:center;">${getSFSymbol('plus', 16, '#8e8e93')}</span>
+          <input type="text" class="rem-add-input" id="rem-new-inp-${pid}" placeholder="${currentSystemLang === 'zh' ? '新建提醒事项 (按回车保存)...' : 'New Reminder (Press Enter)...'}" />
+        </div>
+      </div>
+    </div>
+  `);
+
+  win.style.width = '840px';
+  win.style.height = '560px';
+
+  const viewTitle = win.querySelector(`#rem-view-title-${pid}`);
+  const itemsContainer = win.querySelector(`#rem-items-list-${pid}`);
+  const listsGroup = win.querySelector(`#rem-lists-group-${pid}`);
+  const newInp = win.querySelector(`#rem-new-inp-${pid}`);
+
+  function renderCounts() {
+    const todayCnt = remindersData.items.filter(i => !i.completed && (i.date.includes('今天') || i.date.includes('Today'))).length;
+    const schedCnt = remindersData.items.filter(i => !i.completed && i.date).length;
+    const allCnt = remindersData.items.filter(i => !i.completed).length;
+    const flagCnt = remindersData.items.filter(i => !i.completed && i.flagged).length;
+
+    win.querySelector(`#rem-cnt-today-${pid}`).innerText = todayCnt;
+    win.querySelector(`#rem-cnt-sched-${pid}`).innerText = schedCnt;
+    win.querySelector(`#rem-cnt-all-${pid}`).innerText = allCnt;
+    win.querySelector(`#rem-cnt-flag-${pid}`).innerText = flagCnt;
+  }
+
+  function renderView() {
+    renderCounts();
+
+    listsGroup.innerHTML = remindersData.lists.map(lst => {
+      const cnt = remindersData.items.filter(i => i.listId === lst.id && !i.completed).length;
+      const isActive = activeFilter === lst.id;
+      return `
+        <div class="rem-list-row ${isActive ? 'active' : ''}" data-listid="${lst.id}">
+          <span class="rem-list-dot" style="background:${lst.color};"></span>
+          <span style="flex:1;">${lst.name}</span>
+          <span class="rem-list-count">${cnt}</span>
+        </div>
+      `;
+    }).join('');
+
+    listsGroup.querySelectorAll('.rem-list-row').forEach(row => {
+      row.addEventListener('click', () => {
+        win.querySelectorAll('.rem-smart-card').forEach(c => c.classList.remove('active'));
+        activeFilter = row.dataset.listid;
+        renderView();
+      });
+    });
+
+    let filtered = [];
+    let titleText = '';
+    let titleColor = '#007aff';
+
+    if (activeFilter === 'today') {
+      titleText = currentSystemLang === 'zh' ? '今天' : 'Today';
+      titleColor = '#007aff';
+      filtered = remindersData.items.filter(i => i.date.includes('今天') || i.date.includes('Today') || !i.completed);
+    } else if (activeFilter === 'scheduled') {
+      titleText = currentSystemLang === 'zh' ? '计划' : 'Scheduled';
+      titleColor = '#ff3b30';
+      filtered = remindersData.items.filter(i => i.date);
+    } else if (activeFilter === 'all') {
+      titleText = currentSystemLang === 'zh' ? '全部' : 'All';
+      titleColor = '#1c1c1e';
+      filtered = remindersData.items;
+    } else if (activeFilter === 'flagged') {
+      titleText = currentSystemLang === 'zh' ? '旗标' : 'Flagged';
+      titleColor = '#ff9500';
+      filtered = remindersData.items.filter(i => i.flagged);
+    } else {
+      const lst = remindersData.lists.find(l => l.id === activeFilter) || remindersData.lists[0];
+      titleText = lst.name;
+      titleColor = lst.color;
+      filtered = remindersData.items.filter(i => i.listId === lst.id);
+    }
+
+    viewTitle.innerText = titleText;
+    viewTitle.style.color = titleColor;
+
+    itemsContainer.innerHTML = filtered.map(item => `
+      <div class="rem-task-item" data-id="${item.id}">
+        <div class="rem-check-circle ${item.completed ? 'checked' : ''}" data-id="${item.id}"></div>
+        <div class="rem-task-content">
+          <div class="rem-task-title ${item.completed ? 'done' : ''}">${item.title}</div>
+          ${item.date ? `<div class="rem-task-sub">${item.date}</div>` : ''}
+        </div>
+        <div class="rem-flag-toggle" data-id="${item.id}" style="cursor:pointer;opacity:${item.flagged ? '1' : '0.2'};color:#ff9500;padding:2px 4px;">
+          ${getSFSymbol('flag-fill', 14, item.flagged ? '#ff9500' : '#8e8e93')}
+        </div>
+      </div>
+    `).join('');
+
+    itemsContainer.querySelectorAll('.rem-check-circle').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const id = btn.dataset.id;
+        const itm = remindersData.items.find(x => x.id === id);
+        if (itm) {
+          itm.completed = !itm.completed;
+          if (typeof playSystemBeep === 'function' && itm.completed) playSystemBeep(1100, 0.05);
+          await saveRemindersToVFS();
+          renderView();
+        }
+      });
+    });
+
+    itemsContainer.querySelectorAll('.rem-flag-toggle').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const id = btn.dataset.id;
+        const itm = remindersData.items.find(x => x.id === id);
+        if (itm) {
+          itm.flagged = !itm.flagged;
+          await saveRemindersToVFS();
+          renderView();
+        }
+      });
+    });
+  }
+
+  win.querySelectorAll('.rem-smart-card').forEach(card => {
+    card.addEventListener('click', () => {
+      win.querySelectorAll('.rem-smart-card').forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+      activeFilter = card.dataset.filter;
+      renderView();
+    });
+  });
+
+  newInp.addEventListener('keydown', async (e) => {
+    if (e.key === 'Enter') {
+      const val = newInp.value.trim();
+      if (!val) return;
+      const targetListId = ['today', 'scheduled', 'all', 'flagged'].includes(activeFilter) ? 'reminders' : activeFilter;
+      remindersData.items.push({
+        id: String(Date.now()),
+        listId: targetListId,
+        title: val,
+        date: activeFilter === 'today' ? (currentSystemLang === 'zh' ? '今天' : 'Today') : '',
+        flagged: activeFilter === 'flagged',
+        completed: false
+      });
+      newInp.value = '';
+      await saveRemindersToVFS();
+      renderView();
+    }
+  });
+
+  renderView();
+}
+
+// ====================================================
+// Apple TextEdit App - macOS Sequoia Fidelity
+// ====================================================
+async function launchTextEdit(filePath = null) {
+  const res = await window.aliceOS.pm.spawn('textedit');
+  if (!res.success) return;
+  const pid = res.data.pid;
+
+  let currentPath = filePath;
+  let defaultContent = `
+    <h1 style="font-size:24px;margin-bottom:12px;color:#1c1c1e;">关于 macOS 文本编辑与设计系统</h1>
+    <p style="margin-bottom:12px;color:#3a3a3c;line-height:1.6;">欢迎使用 AliceOS 文本编辑 (TextEdit)！这是 macOS 经典的高保真文稿编辑工具，支持富文本排版、字体字号定制、字数即时统计，以及对虚拟文件系统 (VFS) 的原生读写支持。</p>
+    <h2 style="font-size:18px;margin:16px 0 8px 0;color:#1c1c1e;">快捷排版功能</h2>
+    <ul style="margin-left:20px;margin-bottom:12px;color:#3a3a3c;line-height:1.6;">
+      <li><b>格式工具栏</b>：加粗 (⌘B)、斜体 (⌘I)、下划线 (⌘U)、删除线与颜色快速切换。</li>
+      <li><b>文稿纸张质感</b>：居中文档页面、拟真信纸阴影与柔和边缘。</li>
+      <li><b>即时统计</b>：底部状态栏动态显示字数、字符数、行数与编码。</li>
+      <li><b>文件系统存取</b>：文稿可随时保存至 <code>/Users/alice/Documents</code> 并在访达中双击随时再次打开。</li>
+    </ul>
+  `;
+
+  if (currentPath) {
+    try {
+      const fRes = await window.aliceOS.vfs.readFile(currentPath);
+      if (fRes && fRes.success) {
+        defaultContent = fRes.data;
+      }
+    } catch (e) {}
+  }
+
+  const docTitle = currentPath ? currentPath.split('/').pop() : (currentSystemLang === 'zh' ? '未命名文稿.rtf' : 'Untitled.rtf');
+
+  const win = createWindow(pid, `${t('app_textedit', 'TextEdit')} — ${docTitle}`, `
+    <div class="te-mac-app" id="te-app-${pid}">
+      <div class="te-toolbar">
+        <button class="te-tool-btn" id="te-new-${pid}" title="新建文稿">${getSFSymbol('plus', 12)}</button>
+        <button class="te-tool-btn" id="te-open-${pid}" title="打开文稿">${getSFSymbol('folder', 12)}</button>
+        <button class="te-tool-btn" id="te-save-${pid}" title="保存文稿">${getSFSymbol('internaldrive', 12)} <span>${currentSystemLang === 'zh' ? '保存' : 'Save'}</span></button>
+        <div class="te-divider"></div>
+
+        <select class="te-select" id="te-font-family-${pid}">
+          <option value="-apple-system, BlinkMacSystemFont, sans-serif">SF Pro Text</option>
+          <option value="'PingFang SC', sans-serif">PingFang SC</option>
+          <option value="Monaco, monospace">Monaco</option>
+          <option value="Menlo, monospace">Menlo</option>
+          <option value="'Times New Roman', serif">Times New Roman</option>
+          <option value="'Courier New', monospace">Courier</option>
+        </select>
+
+        <select class="te-select" id="te-font-size-${pid}">
+          <option value="3">12 pt</option>
+          <option value="2">10 pt</option>
+          <option value="4">14 pt</option>
+          <option value="5">18 pt</option>
+          <option value="6">24 pt</option>
+          <option value="7">36 pt</option>
+        </select>
+
+        <div class="te-divider"></div>
+
+        <button class="te-tool-btn" data-cmd="bold" title="Bold (⌘B)">${getSFSymbol('bold', 12)}</button>
+        <button class="te-tool-btn" data-cmd="italic" title="Italic (⌘I)">${getSFSymbol('italic', 12)}</button>
+        <button class="te-tool-btn" data-cmd="underline" title="Underline (⌘U)">${getSFSymbol('underline', 12)}</button>
+        <button class="te-tool-btn" data-cmd="strikeThrough" title="Strikethrough">${getSFSymbol('strikethrough', 12)}</button>
+
+        <div class="te-divider"></div>
+
+        <button class="te-tool-btn" data-cmd="justifyLeft" title="Align Left">${getSFSymbol('align-left', 12)}</button>
+        <button class="te-tool-btn" data-cmd="justifyCenter" title="Align Center">${getSFSymbol('align-center', 12)}</button>
+        <button class="te-tool-btn" data-cmd="justifyRight" title="Align Right">${getSFSymbol('align-right', 12)}</button>
+
+        <div class="te-divider"></div>
+
+        <button class="te-tool-btn" data-cmd="insertUnorderedList" title="Bullet List">${getSFSymbol('list', 12)}</button>
+      </div>
+
+      <div class="te-paper-wrap">
+        <div class="te-paper-sheet" id="te-sheet-${pid}" contenteditable="true">
+          ${defaultContent}
+        </div>
+      </div>
+
+      <div class="te-status-bar">
+        <span id="te-path-label-${pid}">${currentPath || '/Users/alice/Documents/' + docTitle}</span>
+        <div style="display:flex;gap:14px;">
+          <span id="te-stats-counts-${pid}">-- 字符 • -- 词</span>
+          <span>UTF-8 • RTF</span>
+        </div>
+      </div>
+    </div>
+  `);
+
+  win.style.width = '780px';
+  win.style.height = '580px';
+
+  const sheet = win.querySelector(`#te-sheet-${pid}`);
+  const statsLabel = win.querySelector(`#te-stats-counts-${pid}`);
+  const pathLabel = win.querySelector(`#te-path-label-${pid}`);
+
+  function updateStats() {
+    const txt = sheet.innerText || '';
+    const charCount = txt.length;
+    const wordCount = (txt.trim().match(/\S+/g) || []).length;
+    const lines = txt.split('\n').length;
+    statsLabel.innerText = currentSystemLang === 'zh' 
+      ? `${charCount} 个字符 • ${wordCount} 个词 • ${lines} 行` 
+      : `${charCount} chars • ${wordCount} words • ${lines} lines`;
+  }
+
+  sheet.addEventListener('input', updateStats);
+  updateStats();
+
+  win.querySelectorAll('.te-tool-btn[data-cmd]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const cmd = btn.dataset.cmd;
+      document.execCommand(cmd, false, null);
+      sheet.focus();
+    });
+  });
+
+  win.querySelector(`#te-font-family-${pid}`).addEventListener('change', (e) => {
+    document.execCommand('fontName', false, e.target.value);
+    sheet.focus();
+  });
+
+  win.querySelector(`#te-font-size-${pid}`).addEventListener('change', (e) => {
+    document.execCommand('fontSize', false, e.target.value);
+    sheet.focus();
+  });
+
+  win.querySelector(`#te-save-${pid}`).addEventListener('click', async () => {
+    if (!currentPath) {
+      const name = prompt(currentSystemLang === 'zh' ? '请输入文稿保存文件名:' : 'Enter document filename:', '我的文稿.rtf');
+      if (!name) return;
+      currentPath = `/Users/alice/Documents/${name.trim()}`;
+    }
+    await window.aliceOS.vfs.mkdir('/Users/alice/Documents');
+    await window.aliceOS.vfs.writeFile(currentPath, sheet.innerHTML);
+    pathLabel.innerText = currentPath;
+    win.querySelector('.title').innerText = `${t('app_textedit', 'TextEdit')} — ${currentPath.split('/').pop()}`;
+    if (typeof showNotification === 'function') {
+      showNotification(t('app_textedit', 'TextEdit'), currentSystemLang === 'zh' ? `文稿已保存至 ${currentPath}` : `Saved to ${currentPath}`);
+    }
+  });
+
+  win.querySelector(`#te-new-${pid}`).addEventListener('click', () => {
+    launchTextEdit();
+  });
+
+  win.querySelector(`#te-open-${pid}`).addEventListener('click', async () => {
+    const p = prompt(currentSystemLang === 'zh' ? '请输入要打开的文稿路径 (例如 /Users/alice/welcome.txt):' : 'Enter document path to open:', '/Users/alice/welcome.txt');
+    if (p) {
+      launchTextEdit(p.trim());
+    }
+  });
+}
+
+// Live Dock Calendar Date Updater
+function updateDockCalendarIcon() {
+  const d = new Date();
+  const daysEn = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+  const daysZh = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+  const wkEl = document.getElementById('dock-cal-weekday');
+  const dayEl = document.getElementById('dock-cal-day');
+  if (wkEl) wkEl.textContent = currentSystemLang === 'zh' ? daysZh[d.getDay()] : daysEn[d.getDay()];
+  if (dayEl) dayEl.textContent = String(d.getDate());
 }
 
 // Sidecar & Host Display Mirroring (macOS Sequoia Design)
@@ -17201,5 +18640,9 @@ window.copyScreenshotThumb = copyScreenshotThumb;
 window.saveScreenshotThumb = saveScreenshotThumb;
 window.dismissScreenshotThumb = dismissScreenshotThumb;
 
-
-
+// Export Core macOS Applications & Helpers
+window.launchCalendar = launchCalendar;
+window.launchClock = launchClock;
+window.launchReminders = launchReminders;
+window.launchTextEdit = launchTextEdit;
+window.updateDockCalendarIcon = updateDockCalendarIcon;

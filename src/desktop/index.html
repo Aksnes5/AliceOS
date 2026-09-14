@@ -939,19 +939,40 @@
         <div class="dock-dot"></div>
       </div>
 
-      <!-- Terminal -->
-      <div class="dock-icon" data-app="terminal" onclick="launchTerminal()" title="终端" data-i18n-title="app_terminal">
+      <!-- Calendar -->
+      <div class="dock-icon" data-app="calendar" onclick="launchCalendar()" title="日历" data-i18n-title="app_calendar">
+        <svg viewBox="0 0 100 100" class="macos-app-icon" id="dock-calendar-svg">
+          <defs>
+            <linearGradient id="cal-dock-bg" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#f2f2f7"/></linearGradient>
+            <linearGradient id="cal-dock-hdr" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#ff3b30"/><stop offset="100%" stop-color="#e0281b"/></linearGradient>
+          </defs>
+          <rect width="100" height="100" rx="22.5" fill="url(#cal-dock-bg)"/>
+          <rect width="100" height="100" rx="22.5" fill="none" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+          <path d="M 0 22.5 C 0 10 10 0 22.5 0 L 77.5 0 C 90 0 100 10 100 22.5 L 100 30 L 0 30 Z" fill="url(#cal-dock-hdr)"/>
+          <text id="dock-cal-weekday" x="50" y="21" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="1">MON</text>
+          <text id="dock-cal-day" x="50" y="74" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif" font-size="44" font-weight="300" fill="#1c1c1e" text-anchor="middle">14</text>
+        </svg>
+        <div class="dock-dot"></div>
+      </div>
+
+      <!-- Reminders -->
+      <div class="dock-icon" data-app="reminders" onclick="launchReminders()" title="提醒事项" data-i18n-title="app_reminders">
         <svg viewBox="0 0 100 100" class="macos-app-icon">
           <defs>
-            <linearGradient id="term-bg" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#2a2a2c"/>
-              <stop offset="100%" stop-color="#141415"/>
-            </linearGradient>
+            <linearGradient id="rem-dock-bg" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#e5e5ea"/></linearGradient>
           </defs>
-          <rect width="100" height="100" rx="22.5" fill="url(#term-bg)"/>
-          <rect x="2" y="2" width="96" height="96" rx="21" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"/>
-          <path d="M 24 34 L 44 50 L 24 66" stroke="#f5f5f7" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          <rect x="52" y="59" width="24" height="7" rx="2" fill="#30d158"/>
+          <rect width="100" height="100" rx="22.5" fill="url(#rem-dock-bg)"/>
+          <rect width="100" height="100" rx="22.5" fill="none" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+          <circle cx="34" cy="34" r="11" fill="#007aff"/>
+          <circle cx="34" cy="34" r="5" fill="#ffffff"/>
+          <line x1="52" y1="34" x2="78" y2="34" stroke="#8e8e93" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="34" cy="66" r="11" fill="#ff9500"/>
+          <circle cx="34" cy="66" r="5" fill="#ffffff"/>
+          <line x1="52" y1="66" x2="72" y2="66" stroke="#8e8e93" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="68" cy="48" r="9" fill="#ff2d55"/>
+          <circle cx="68" cy="48" r="4" fill="#ffffff"/>
+          <circle cx="48" cy="50" r="8" fill="#34c759"/>
+          <circle cx="48" cy="50" r="3.5" fill="#ffffff"/>
         </svg>
         <div class="dock-dot"></div>
       </div>
@@ -981,6 +1002,34 @@
         <div class="dock-dot"></div>
       </div>
 
+      <!-- TextEdit -->
+      <div class="dock-icon" data-app="textedit" onclick="launchTextEdit()" title="文本编辑" data-i18n-title="app_textedit">
+        <svg viewBox="0 0 100 100" class="macos-app-icon">
+          <defs>
+            <linearGradient id="te-dock-bg" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#f8fafc"/></linearGradient>
+            <linearGradient id="te-pen-dock" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f59e0b"/><stop offset="50%" stop-color="#fbbf24"/><stop offset="100%" stop-color="#d97706"/></linearGradient>
+          </defs>
+          <rect width="100" height="100" rx="22.5" fill="url(#te-dock-bg)"/>
+          <rect width="100" height="100" rx="22.5" fill="none" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+          <line x1="20" y1="24" x2="20" y2="82" stroke="#fca5a5" stroke-width="1.5"/>
+          <line x1="16" y1="36" x2="84" y2="36" stroke="#cbd5e1" stroke-width="1.5"/>
+          <line x1="16" y1="48" x2="84" y2="48" stroke="#cbd5e1" stroke-width="1.5"/>
+          <line x1="16" y1="60" x2="84" y2="60" stroke="#cbd5e1" stroke-width="1.5"/>
+          <line x1="16" y1="72" x2="84" y2="72" stroke="#cbd5e1" stroke-width="1.5"/>
+          <line x1="26" y1="34" x2="65" y2="34" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="26" y1="46" x2="72" y2="46" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="26" y1="58" x2="55" y2="58" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(62, 58) rotate(-45)">
+            <rect x="-6" y="-36" width="12" height="42" rx="1.5" fill="url(#te-pen-dock)"/>
+            <rect x="-6" y="-42" width="12" height="6" rx="2" fill="#cbd5e1"/>
+            <rect x="-6" y="-46" width="12" height="5" rx="2" fill="#f43f5e"/>
+            <polygon points="-6,6 6,6 0,18" fill="#e2e8f0"/>
+            <polygon points="-2,13 2,13 0,18" fill="#1e293b"/>
+          </g>
+        </svg>
+        <div class="dock-dot"></div>
+      </div>
+
       <!-- Calculator -->
       <div class="dock-icon" data-app="calculator" onclick="launchCalculator()" title="计算器" data-i18n-title="app_calculator">
         <svg viewBox="0 0 100 100" class="macos-app-icon">
@@ -1005,6 +1054,37 @@
         <div class="dock-dot"></div>
       </div>
 
+      <!-- Clock -->
+      <div class="dock-icon" data-app="clock" onclick="launchClock()" title="时钟" data-i18n-title="app_clock">
+        <svg viewBox="0 0 100 100" class="macos-app-icon">
+          <defs>
+            <linearGradient id="clk-dock-bg" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#2c2c2e"/><stop offset="100%" stop-color="#000000"/></linearGradient>
+          </defs>
+          <rect width="100" height="100" rx="22.5" fill="url(#clk-dock-bg)"/>
+          <circle cx="50" cy="50" r="44" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+          <g stroke="#ffffff" stroke-linecap="round">
+            <line x1="50" y1="12" x2="50" y2="18" stroke-width="3"/>
+            <line x1="50" y1="88" x2="50" y2="82" stroke-width="3"/>
+            <line x1="12" y1="50" x2="18" y2="50" stroke-width="3"/>
+            <line x1="88" y1="50" x2="82" y2="50" stroke-width="3"/>
+            <line x1="31" y1="18" x2="34" y2="23" stroke-width="2" opacity="0.6"/>
+            <line x1="69" y1="18" x2="66" y2="23" stroke-width="2" opacity="0.6"/>
+            <line x1="82" y1="31" x2="77" y2="34" stroke-width="2" opacity="0.6"/>
+            <line x1="82" y1="69" x2="77" y2="66" stroke-width="2" opacity="0.6"/>
+            <line x1="69" y1="82" x2="66" y2="77" stroke-width="2" opacity="0.6"/>
+            <line x1="31" y1="82" x2="34" y2="77" stroke-width="2" opacity="0.6"/>
+            <line x1="18" y1="69" x2="23" y2="66" stroke-width="2" opacity="0.6"/>
+            <line x1="18" y1="31" x2="23" y2="34" stroke-width="2" opacity="0.6"/>
+          </g>
+          <line x1="50" y1="50" x2="32" y2="34" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round"/>
+          <line x1="50" y1="50" x2="70" y2="30" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round"/>
+          <circle cx="50" cy="50" r="3.5" fill="#ff9500"/>
+          <line x1="50" y1="60" x2="50" y2="18" stroke="#ff9500" stroke-width="1.8" stroke-linecap="round"/>
+          <circle cx="50" cy="50" r="1.5" fill="#000000"/>
+        </svg>
+        <div class="dock-dot"></div>
+      </div>
+
       <!-- Music -->
       <div class="dock-icon" data-app="music" onclick="launchMusic()" title="音乐" data-i18n-title="app_music">
         <svg viewBox="0 0 100 100" class="macos-app-icon">
@@ -1016,6 +1096,20 @@
           </defs>
           <rect width="100" height="100" rx="22.5" fill="url(#music-bg)"/>
           <path d="M 68 22 L 42 28 C 39 29 37 31 37 34 L 37 66 C 35 64 32 63 28 63 C 21 63 16 67 16 73 C 16 79 21 83 28 83 C 35 83 40 78 40 72 L 40 42 L 65 37 L 65 60 C 63 58 60 57 56 57 C 49 57 44 61 44 67 C 44 73 49 77 56 77 C 63 77 68 72 68 66 Z" fill="#ffffff"/>
+        </svg>
+        <div class="dock-dot"></div>
+      </div>
+
+      <!-- QuickTime Player -->
+      <div class="dock-icon" data-app="video" onclick="launchVideo()" title="QuickTime Player" data-i18n-title="app_video">
+        <svg viewBox="0 0 100 100" class="macos-app-icon">
+          <defs>
+            <linearGradient id="qt-dock-bg" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#1e1e24"/><stop offset="100%" stop-color="#09090b"/></linearGradient>
+            <linearGradient id="qt-dock-q" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#0284c7"/></linearGradient>
+          </defs>
+          <rect width="100" height="100" rx="22.5" fill="url(#qt-dock-bg)"/>
+          <circle cx="50" cy="50" r="30" fill="none" stroke="url(#qt-dock-q)" stroke-width="8"/>
+          <polygon points="45,36 65,50 45,64" fill="#ffffff"/>
         </svg>
         <div class="dock-dot"></div>
       </div>
@@ -1131,6 +1225,23 @@
           <path d="M 0 50 Q 50 60 100 20" stroke="#ffffff" stroke-width="8" fill="none"/>
           <path d="M 50 32 C 43 32 38 37 38 44 C 38 52 50 68 50 68 C 50 68 62 52 62 44 C 62 37 57 32 50 32 Z" fill="#ef4444"/>
           <circle cx="50" cy="43" r="4.5" fill="#ffffff"/>
+        </svg>
+        <div class="dock-dot"></div>
+      </div>
+
+      <!-- Terminal -->
+      <div class="dock-icon" data-app="terminal" onclick="launchTerminal()" title="终端" data-i18n-title="app_terminal">
+        <svg viewBox="0 0 100 100" class="macos-app-icon">
+          <defs>
+            <linearGradient id="term-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#2a2a2c"/>
+              <stop offset="100%" stop-color="#141415"/>
+            </linearGradient>
+          </defs>
+          <rect width="100" height="100" rx="22.5" fill="url(#term-bg)"/>
+          <rect x="2" y="2" width="96" height="96" rx="21" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"/>
+          <path d="M 24 34 L 44 50 L 24 66" stroke="#f5f5f7" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <rect x="52" y="59" width="24" height="7" rx="2" fill="#30d158"/>
         </svg>
         <div class="dock-dot"></div>
       </div>
