@@ -77,13 +77,18 @@ let islandGlobalTimer = null;
 window.notifyIsland = function(icon, title, valuePct) {
   if (typeof window.isIslandEnabled === 'function' && !window.isIslandEnabled()) return;
   const island = document.getElementById('dynamic-island');
+  const compactWrap = document.getElementById('island-compact-wrap');
   const content = document.getElementById('island-content');
   const iIcon = document.getElementById('island-icon');
   const iTitle = document.getElementById('island-title');
   const iBar = document.getElementById('island-bar');
+  const iPct = document.getElementById('island-pct-text');
   
   if (!island || !content) return;
   
+  // If expanded in full shelf mode, don't interrupt
+  if (island.classList.contains('expanded')) return;
+
   if (typeof icon === 'string' && (icon.includes('<svg') || icon.includes('<div') || icon.includes('<img'))) {
     if (iIcon) iIcon.innerHTML = icon;
   } else {
@@ -91,23 +96,30 @@ window.notifyIsland = function(icon, title, valuePct) {
   }
   if (iTitle) iTitle.innerText = title;
   if (iBar) iBar.style.width = `${valuePct}%`;
+  if (iPct) iPct.innerText = `${Math.round(valuePct)}%`;
   
-  // Expand with fluid morphing
-  island.style.width = '320px';
-  island.style.height = '64px';
-  island.style.borderRadius = '32px';
+  // Morph into authentic macOS Notch HUD
+  if (compactWrap) compactWrap.style.display = 'none';
+  content.style.display = 'flex';
+  island.classList.add('notch-hud-active');
+  island.style.width = '';
+  island.style.height = '';
   
-  setTimeout(() => { if (content) content.style.opacity = '1'; }, 150);
+  setTimeout(() => { if (content) content.style.opacity = '1'; }, 50);
   
   clearTimeout(islandGlobalTimer);
   islandGlobalTimer = setTimeout(() => {
     if (content) content.style.opacity = '0';
     setTimeout(() => {
-      island.style.width = '120px';
-      island.style.height = '30px';
-      island.style.borderRadius = '20px';
+      if (!island.classList.contains('expanded')) {
+        content.style.display = 'none';
+        if (compactWrap) compactWrap.style.display = 'flex';
+        island.classList.remove('notch-hud-active');
+        island.style.width = '';
+        island.style.height = '';
+      }
     }, 200);
-  }, 2000);
+  }, 1800);
 };
 
 // ====================================================
@@ -263,7 +275,7 @@ const i18nDict = {
     island_brightness: 'Brightness',
     island_music: 'Music',
     island_timer: '⏱️ Timer',
-    island_airdrop: 'AirDrop',
+    island_airdrop: 'Tray & AirDrop',
     island_focus_timer: 'Focus Timer',
     island_plus_1m: '+1 min',
     island_pause: 'Pause',
@@ -1055,7 +1067,7 @@ const i18nDict = {
     island_brightness: '屏幕亮度',
     island_music: '音乐',
     island_timer: '⏱️ 计时器',
-    island_airdrop: '隔空投送',
+    island_airdrop: '暂存盘 / 隔空投送',
     island_focus_timer: '专注计时器',
     island_plus_1m: '+1 分钟',
     island_pause: '暂停',
@@ -3014,7 +3026,8 @@ function activateOrLaunchApp(appKey) {
     return;
   }
 
-  // 3. Launch fresh instance
+  // 3. Launch fresh instance with authentic macOS dock bouncing physics
+  if (typeof startDockBounce === 'function') startDockBounce(appKey);
   launchAppByName(appKey);
 }
 
@@ -3290,41 +3303,98 @@ function updateDockRunningState(appKey, isRunning) {
 let isDockMagnificationBound = false;
 function initDockMagnification() {
   const dock = document.querySelector('.dock');
+  const tooltip = document.getElementById('dock-tooltip');
   if (!dock || isDockMagnificationBound) return;
   isDockMagnificationBound = true;
 
   dock.addEventListener('mousemove', (e) => {
     const icons = Array.from(dock.querySelectorAll('.dock-icon'));
     const mouseX = e.clientX;
-    const maxScale = 1.6;
+    const maxScale = 1.55;
     const baseScale = 1.0;
-    const influenceRadius = 150; // pixels
+    const influenceRadius = 140; // pixels
+
+    let hoveredIcon = null;
+    let minDistance = Infinity;
 
     icons.forEach(icon => {
+      // Stash native title to prevent Windows browser yellow duplicate popup
+      if (icon.hasAttribute('title') && icon.getAttribute('title')) {
+        icon.setAttribute('data-tooltip', icon.getAttribute('title'));
+        icon.removeAttribute('title');
+      }
+
       const rect = icon.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const distance = Math.abs(mouseX - centerX);
 
+      if (distance < minDistance) {
+        minDistance = distance;
+        hoveredIcon = icon;
+      }
+
       let scale = baseScale;
       if (distance < influenceRadius) {
-        // Smooth cosine water wave interpolation
         const factor = Math.cos((distance / influenceRadius) * (Math.PI / 2));
         scale = baseScale + (maxScale - baseScale) * factor;
       }
 
-      icon.style.transform = `scale(${scale}) translateY(-${(scale - 1) * 20}px)`;
-      icon.style.margin = `0 ${(scale - 1) * 15}px`;
+      if (!icon.classList.contains('dock-launching')) {
+        icon.style.transform = `scale(${scale}) translateY(-${(scale - 1) * 20}px)`;
+      }
+      icon.style.margin = `0 ${(scale - 1) * 14}px`;
     });
+
+    if (tooltip && hoveredIcon && minDistance < 45) {
+      const hRect = hoveredIcon.getBoundingClientRect();
+      const i18nKey = hoveredIcon.getAttribute('data-i18n-title');
+      let titleText = hoveredIcon.getAttribute('data-tooltip') || hoveredIcon.getAttribute('aria-label') || '';
+      if (i18nKey && typeof t === 'function') {
+        titleText = t(i18nKey, titleText);
+      }
+      if (titleText) {
+        tooltip.innerText = titleText;
+        tooltip.style.left = `${hRect.left + hRect.width / 2}px`;
+        tooltip.style.bottom = `${window.innerHeight - hRect.top + 14}px`;
+        tooltip.classList.add('visible');
+      } else {
+        tooltip.classList.remove('visible');
+      }
+    } else if (tooltip) {
+      tooltip.classList.remove('visible');
+    }
   });
 
   dock.addEventListener('mouseleave', () => {
     const icons = Array.from(dock.querySelectorAll('.dock-icon'));
     icons.forEach(icon => {
-      icon.style.transform = 'scale(1) translateY(0)';
+      if (!icon.classList.contains('dock-launching')) {
+        icon.style.transform = 'scale(1) translateY(0)';
+      }
       icon.style.margin = '0';
     });
+    if (tooltip) tooltip.classList.remove('visible');
   });
 }
+
+function startDockBounce(appKey) {
+  if (!appKey) return;
+  const icon = document.querySelector(`.dock-icon[data-app="${appKey}"], .dock-icon[onclick*="${appKey}"]`);
+  if (icon) {
+    icon.classList.add('dock-launching');
+  }
+}
+
+function stopDockBounce(appKey) {
+  if (!appKey) return;
+  const icon = document.querySelector(`.dock-icon[data-app="${appKey}"], .dock-icon[onclick*="${appKey}"]`);
+  if (icon) {
+    icon.classList.remove('dock-launching');
+    icon.style.transform = 'scale(1) translateY(0)';
+  }
+}
+window.startDockBounce = startDockBounce;
+window.stopDockBounce = stopDockBounce;
 window.addEventListener('DOMContentLoaded', () => {
   initDockMagnification();
   updateDockScale();
@@ -4345,6 +4415,7 @@ function createWindow(pid, title, contentHtml, explicitAppKey = null) {
   if (appKey) {
     win.dataset.appKey = appKey;
     updateDockRunningState(appKey, true);
+    if (typeof stopDockBounce === 'function') stopDockBounce(appKey);
   }
   win.dataset.icon = appKey || 'finder';
 
@@ -19734,75 +19805,159 @@ function switchIslandTab(tabName) {
   if (typeof playVolumeFeedbackBeep === 'function') playVolumeFeedbackBeep();
 }
 
+let notchHoverTimeout = null;
+let notchLeaveTimeout = null;
+let notchIsPinned = false;
+
 function updateIslandLiveMusic(isPlaying, track) {
   const island = document.getElementById('dynamic-island');
-  const standardContent = document.getElementById('island-content');
-  const liveContent = document.getElementById('island-live-activity');
   const label = document.getElementById('island-live-label');
   const trackTitle = document.getElementById('island-track-title');
   const trackArtist = document.getElementById('island-track-artist');
   const playToggle = document.getElementById('island-play-toggle');
-  if (!island || !standardContent || !liveContent) return;
+  const eqBars = document.getElementById('island-live-eq');
+  if (!island) return;
 
   const curTrack = track || ((typeof musicTracks !== 'undefined' && musicTracks[currentTrackIdx]) ? musicTracks[currentTrackIdx] : { title: 'Alice Symphony', artist: 'Cupertino Soundscape' });
 
   if (trackTitle) trackTitle.innerText = curTrack.title;
   if (trackArtist) trackArtist.innerText = curTrack.artist;
-  if (playToggle) playToggle.innerText = isPlaying ? '⏸' : '▶';
+  if (playToggle) {
+    playToggle.innerHTML = isPlaying
+      ? '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>'
+      : '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
+  }
 
   if (isPlaying) {
     islandLiveActive = true;
-    standardContent.style.display = 'none';
-    liveContent.style.display = 'flex';
     if (label) label.innerText = curTrack.title || 'Playing';
-    if (!islandExpanded) {
-      island.style.width = '190px';
-      island.style.height = '32px';
+    if (eqBars) eqBars.style.display = 'flex';
+    if (!islandExpanded && !island.classList.contains('notch-hud-active')) {
+      island.style.width = '210px';
+      island.style.height = '28px';
     }
   } else {
     islandLiveActive = false;
-    liveContent.style.display = 'none';
-    if (!islandExpanded) {
-      island.style.width = '120px';
-      island.style.height = '30px';
+    if (label) label.innerText = 'Alice';
+    if (!islandExpanded && !island.classList.contains('notch-hud-active')) {
+      island.style.width = '190px';
+      island.style.height = '28px';
     }
   }
 }
 
-function toggleIslandClick(e) {
-  if (e) e.stopPropagation();
+function expandNotch(isPinned = false) {
   const island = document.getElementById('dynamic-island');
   const compactWrap = document.getElementById('island-compact-wrap');
   const expContainer = document.getElementById('island-expanded-container');
-  if (!island) return;
+  if (!island || islandExpanded) return;
 
-  if (!islandExpanded) {
-    islandExpanded = true;
-    island.classList.add('expanded');
-    if (compactWrap) compactWrap.style.display = 'none';
-    if (expContainer) {
-      expContainer.style.display = 'flex';
-      setTimeout(() => { expContainer.style.opacity = '1'; }, 10);
-    }
-    if (typeof playVolumeFeedbackBeep === 'function') playVolumeFeedbackBeep();
-  } else {
-    islandExpanded = false;
-    island.classList.remove('expanded');
-    if (expContainer) {
-      expContainer.style.opacity = '0';
-      setTimeout(() => {
-        expContainer.style.display = 'none';
-        if (compactWrap) compactWrap.style.display = 'flex';
-        if (islandLiveActive) {
-          updateIslandLiveMusic(true);
-        } else {
-          island.style.width = '120px';
-          island.style.height = '30px';
-        }
-      }, 220);
-    }
-    if (typeof playVolumeFeedbackBeep === 'function') playVolumeFeedbackBeep();
+  islandExpanded = true;
+  if (isPinned) notchIsPinned = true;
+  island.classList.remove('notch-hud-active');
+  island.classList.add('expanded');
+  island.style.width = '';
+  island.style.height = '';
+
+  if (compactWrap) compactWrap.style.display = 'none';
+  if (expContainer) {
+    expContainer.style.display = 'flex';
+    setTimeout(() => { expContainer.style.opacity = '1'; }, 10);
   }
+  if (typeof playVolumeFeedbackBeep === 'function') playVolumeFeedbackBeep();
+}
+
+function collapseNotch(force = false) {
+  const island = document.getElementById('dynamic-island');
+  const compactWrap = document.getElementById('island-compact-wrap');
+  const expContainer = document.getElementById('island-expanded-container');
+  if (!island || !islandExpanded) return;
+  if (notchIsPinned && !force) return;
+
+  islandExpanded = false;
+  notchIsPinned = false;
+  island.classList.remove('expanded');
+  island.style.width = islandLiveActive ? '210px' : '190px';
+  island.style.height = '28px';
+
+  if (expContainer) {
+    expContainer.style.opacity = '0';
+    setTimeout(() => {
+      expContainer.style.display = 'none';
+      if (compactWrap) compactWrap.style.display = 'flex';
+    }, 220);
+  }
+  if (typeof playVolumeFeedbackBeep === 'function') playVolumeFeedbackBeep();
+}
+
+function toggleIslandClick(e) {
+  if (e) e.stopPropagation();
+  if (islandExpanded) {
+    collapseNotch(true);
+  } else {
+    expandNotch(true);
+  }
+}
+
+function onNotchMouseEnter() {
+  if (notchLeaveTimeout) {
+    clearTimeout(notchLeaveTimeout);
+    notchLeaveTimeout = null;
+  }
+  if (!islandExpanded) {
+    notchHoverTimeout = setTimeout(() => {
+      expandNotch(false);
+    }, 120);
+  }
+}
+
+function onNotchMouseLeave() {
+  if (notchHoverTimeout) {
+    clearTimeout(notchHoverTimeout);
+    notchHoverTimeout = null;
+  }
+  if (islandExpanded && !notchIsPinned) {
+    notchLeaveTimeout = setTimeout(() => {
+      collapseNotch(false);
+    }, 300);
+  }
+}
+
+// NotchNook File Tray Drag & Drop
+let notchTrayFiles = [];
+function onNotchTrayDragOver(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  const dz = document.getElementById('notch-tray-dropzone');
+  if (dz) dz.classList.add('dragover');
+}
+
+function onNotchTrayDragLeave(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  const dz = document.getElementById('notch-tray-dropzone');
+  if (dz) dz.classList.remove('dragover');
+}
+
+function onNotchTrayDrop(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  const dz = document.getElementById('notch-tray-dropzone');
+  if (dz) dz.classList.remove('dragover');
+
+  const files = e.dataTransfer ? e.dataTransfer.files : [];
+  if (files && files.length > 0) {
+    notchTrayFiles.push(...Array.from(files).map(f => f.name));
+  } else {
+    notchTrayFiles.push('Document_' + (notchTrayFiles.length + 1) + '.pdf');
+  }
+
+  const badge = document.getElementById('notch-tray-badge');
+  if (badge) badge.innerText = `${notchTrayFiles.length} 文件`;
+  if (typeof showNotification === 'function') {
+    showNotification('Notch 暂存盘', `已暂存 ${notchTrayFiles.length} 个文件，可随时拖出使用或隔空投送。`);
+  }
+  if (typeof playVolumeFeedbackBeep === 'function') playVolumeFeedbackBeep();
 }
 
 function seekIslandMusic(e) {
@@ -19895,6 +20050,13 @@ document.addEventListener('click', (e) => {
 
 window.switchIslandTab = switchIslandTab;
 window.toggleIslandClick = toggleIslandClick;
+window.expandNotch = expandNotch;
+window.collapseNotch = collapseNotch;
+window.onNotchMouseEnter = onNotchMouseEnter;
+window.onNotchMouseLeave = onNotchMouseLeave;
+window.onNotchTrayDragOver = onNotchTrayDragOver;
+window.onNotchTrayDragLeave = onNotchTrayDragLeave;
+window.onNotchTrayDrop = onNotchTrayDrop;
 window.seekIslandMusic = seekIslandMusic;
 window.toggleIslandPlayback = toggleIslandPlayback;
 window.toggleIslandTimer = toggleIslandTimer;

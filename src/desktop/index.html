@@ -599,29 +599,28 @@
     </div>
   </div>
 
-  <!-- iOS 17 Dynamic Island with Multi-Activity Fluid Expansion -->
-  <div id="dynamic-island" class="dynamic-island-capsule" onclick="toggleIslandClick(event)">
-    <!-- Compact Pill Mode (Default) -->
-    <div id="island-compact-wrap" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
-      <div id="island-content" style="opacity:0;transition:opacity 0.2s;display:flex;align-items:center;gap:15px;width:100%;padding:0 20px;box-sizing:border-box;">
-        <div id="island-icon" style="display:flex;align-items:center;justify-content:center;">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41m14.14-14.14l-1.41 1.41"/></svg>
-        </div>
-        <div style="flex:1;">
-          <div id="island-title" style="font-weight:bold;font-size:14px;" data-i18n="island_brightness">屏幕亮度</div>
-          <div id="island-value" style="width:100%;height:6px;background:rgba(255,255,255,0.2);border-radius:3px;margin-top:5px;overflow:hidden;">
-            <div id="island-bar" style="width:100%;height:100%;background:white;border-radius:3px;"></div>
-          </div>
-        </div>
+  <!-- macOS MacBook Pro Notch & NotchNook Dynamic Island -->
+  <div id="dynamic-island" class="dynamic-island-capsule" onclick="toggleIslandClick(event)" onmouseenter="onNotchMouseEnter()" onmouseleave="onNotchMouseLeave()">
+    <!-- 1. Resting / Compact Notch Mode (Flush with Menubar at top: 0, height: 28px) -->
+    <div id="island-compact-wrap" class="notch-compact-wrap">
+      <!-- Left side: App/Music Icon / Alice Status -->
+      <div id="notch-slot-left" class="notch-slot-left">
+        <span id="island-live-icon" class="notch-mini-icon">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+        </span>
+        <span id="island-live-label" class="notch-mini-label">Alice</span>
       </div>
-      <!-- Mini Live Activity Indicators (Compact state) -->
-      <div id="island-live-activity" style="display:none;align-items:center;justify-content:space-between;width:100%;padding:0 14px;box-sizing:border-box;">
-        <div style="display:flex;align-items:center;gap:6px;font-size:12px;">
-          <span id="island-live-icon" style="display:flex;align-items:center;">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
-          </span>
-          <span id="island-live-label" style="font-size:11px;font-weight:600;max-width:70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Alice</span>
+
+      <!-- Center: Hardware Camera Lens & Green Privacy LED Dot -->
+      <div class="notch-center-hardware">
+        <div class="notch-camera-lens">
+          <div class="notch-lens-reflex"></div>
         </div>
+        <div class="notch-privacy-led" id="notch-privacy-led"></div>
+      </div>
+
+      <!-- Right side: Mini Live Visualizer / Activity / Battery -->
+      <div id="notch-slot-right" class="notch-slot-right">
         <div class="eq-container" id="island-live-eq" style="height:12px;gap:2px;">
           <div class="island-eq-bar"></div>
           <div class="island-eq-bar"></div>
@@ -631,20 +630,38 @@
       </div>
     </div>
 
-    <!-- Expanded Live Activities Container (iOS 17 Fluid Modal) -->
-    <div id="island-expanded-container" style="display:none;width:100%;height:100%;flex-direction:column;opacity:0;transition:opacity 0.25s ease;" onclick="event.stopPropagation()">
-      <!-- Activity Switcher Header -->
-      <div class="island-activity-tabs">
-        <div class="island-act-tab active" id="act-tab-music" onclick="switchIslandTab('music')" data-i18n="island_music" style="display:flex;align-items:center;gap:5px;">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg> <span>音乐</span>
+    <!-- 2. Temporary HUD Alert View (Volume / Brightness / Quick Status) -->
+    <div id="island-content" class="notch-hud-wrap" style="display:none;opacity:0;">
+      <div id="island-icon" class="notch-hud-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41m14.14-14.14l-1.41 1.41"/></svg>
+      </div>
+      <div class="notch-hud-slider-box">
+        <div class="notch-hud-header">
+          <span id="island-title" class="notch-hud-title" data-i18n="island_brightness">屏幕亮度</span>
+          <span id="island-pct-text" class="notch-hud-pct">100%</span>
         </div>
-        <div class="island-act-tab" id="act-tab-timer" onclick="switchIslandTab('timer')" data-i18n="island_timer" style="display:flex;align-items:center;gap:5px;">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="14" r="8"/><line x1="10" y1="2" x2="14" y2="2"/><line x1="12" y1="14" x2="15" y2="11"/></svg> <span>计时器</span>
+        <div id="island-value" class="notch-hud-track">
+          <div id="island-bar" class="notch-hud-fill" style="width:100%;"></div>
         </div>
-        <div class="island-act-tab" id="act-tab-airdrop" onclick="switchIslandTab('airdrop')" data-i18n="island_airdrop" style="display:flex;align-items:center;gap:5px;">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.93 19.07a10 10 0 0 1 0-14.14"/><path d="M7.76 16.24a6 6 0 0 1 0-8.48"/><circle cx="12" cy="12" r="2" fill="currentColor"/><path d="M16.24 7.76a6 6 0 0 1 0 8.48"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg> <span>隔空投送</span>
+      </div>
+    </div>
+
+    <!-- 3. Expanded macOS Notch Shelf (NotchNook Style) -->
+    <div id="island-expanded-container" class="notch-shelf-container" style="display:none;opacity:0;" onclick="event.stopPropagation()">
+      <!-- Top Notch Header Bar with Camera Lens and Activity Tabs -->
+      <div class="notch-shelf-header">
+        <div class="notch-shelf-tabs">
+          <div class="island-act-tab active" id="act-tab-music" onclick="switchIslandTab('music')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg> <span data-i18n="island_music">音乐</span>
+          </div>
+          <div class="island-act-tab" id="act-tab-timer" onclick="switchIslandTab('timer')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="14" r="8"/><line x1="10" y1="2" x2="14" y2="2"/><line x1="12" y1="14" x2="15" y2="11"/></svg> <span data-i18n="island_timer">计时器</span>
+          </div>
+          <div class="island-act-tab" id="act-tab-airdrop" onclick="switchIslandTab('airdrop')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.93 19.07a10 10 0 0 1 0-14.14"/><path d="M7.76 16.24a6 6 0 0 1 0-8.48"/><circle cx="12" cy="12" r="2" fill="currentColor"/><path d="M16.24 7.76a6 6 0 0 1 0 8.48"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg> <span data-i18n="island_airdrop">暂存盘 / 隔空投送</span>
+          </div>
         </div>
-        <div class="island-close-btn" onclick="toggleIslandClick(event)" title="Collapse">✕</div>
+        <div class="notch-close-btn" onclick="toggleIslandClick(event)" title="收起">✕</div>
       </div>
 
       <!-- 1. Music Live Activity -->
@@ -655,7 +672,7 @@
           </div>
           <div style="flex:1;overflow:hidden;">
             <div style="display:flex;align-items:center;justify-content:space-between;">
-              <div id="island-track-title" style="font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px;">Alice Symphony</div>
+              <div id="island-track-title" style="font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:210px;">Alice Symphony</div>
               <!-- Dancing Live EQ Waveform -->
               <div class="eq-container" style="height:15px;gap:3px;">
                 <div class="island-eq-bar"></div>
@@ -720,25 +737,22 @@
         </div>
       </div>
 
-      <!-- 3. AirDrop Live Activity -->
+      <!-- 3. NotchNook File Tray & AirDrop Live Activity -->
       <div id="island-pane-airdrop" class="island-pane" style="display:none;">
-        <div style="display:flex;align-items:center;gap:16px;width:100%;">
-          <div class="island-radar-circle">
-            <div class="island-radar-ripple"></div>
-            <div class="island-radar-ripple" style="animation-delay:0.8s;"></div>
-            <span style="font-size:24px;position:relative;z-index:2;">📡</span>
+        <div class="notch-tray-dropzone" id="notch-tray-dropzone" ondragover="onNotchTrayDragOver(event)" ondragleave="onNotchTrayDragLeave(event)" ondrop="onNotchTrayDrop(event)">
+          <div class="notch-tray-icon">🗂️</div>
+          <div class="notch-tray-info">
+            <div class="notch-tray-title">Notch 暂存盘 (File Tray)</div>
+            <div class="notch-tray-subtitle">拖放任意文件至此暂存，或随时跨应用拖出投送</div>
           </div>
-          <div style="flex:1;">
-            <div style="font-weight:700;font-size:13px;" data-i18n="island_airdrop_transfer">隔空投送传输</div>
-            <div style="font-size:11px;opacity:0.7;margin-top:2px;" data-i18n="island_sending">正在发送</div>
-            <div style="width:100%;height:5px;background:rgba(255,255,255,0.15);border-radius:3px;margin-top:8px;overflow:hidden;">
-              <div id="island-airdrop-progress" style="width:68%;height:100%;background:linear-gradient(90deg,#30d158,#34c759);border-radius:3px;transition:width 0.4s;"></div>
-            </div>
-            <div style="display:flex;justify-content:space-between;font-size:10px;opacity:0.6;margin-top:4px;">
-              <span data-i18n="island_to_mac">发送至：Alice 的 MacBook Pro</span>
-              <span id="island-airdrop-pct">68% — 4s remaining</span>
-            </div>
+          <div class="notch-tray-badge" id="notch-tray-badge">0 文件</div>
+        </div>
+        <div class="notch-airdrop-row">
+          <div class="island-airplay-badge" style="gap:6px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.93 19.07a10 10 0 0 1 0-14.14"/><path d="M7.76 16.24a6 6 0 0 1 0-8.48"/><circle cx="12" cy="12" r="2" fill="currentColor"/><path d="M16.24 7.76a6 6 0 0 1 0 8.48"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+            <span>隔空投送 (AirDrop)：就绪</span>
           </div>
+          <button class="island-pill-btn" onclick="launchAirDrop()" style="font-size:11px;padding:3px 10px;">开启隔空投送</button>
         </div>
       </div>
     </div>
@@ -1078,6 +1092,9 @@
 
   <!-- macOS Stage Manager Left Shelf -->
   <div id="stage-manager-shelf" class="stage-manager-shelf"></div>
+
+  <!-- macOS Floating Dock Tooltip -->
+  <div id="dock-tooltip" class="dock-tooltip"></div>
 
   <!-- Bottom Dock -->
   <div class="dock-container">
