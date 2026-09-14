@@ -7930,13 +7930,7 @@ async function launchSettings() {
             if (val === 'dynamic-solar' || val === 'dynamic-mojave') {
               updateSolarDynamicWallpaper();
             } else {
-              const layer = document.getElementById('dynamic-wallpaper-layer');
-              const overlay = document.getElementById('dynamic-wallpaper-overlay');
-              if (layer) layer.style.display = 'none';
-              if (overlay) overlay.style.display = 'none';
-              document.body.style.backgroundImage = val;
-              document.body.style.backgroundSize = 'cover';
-              document.body.style.backgroundPosition = 'center';
+              applySystemWallpaper(val);
             }
             await saveSettings({ wallpaper: val });
             renderTab('wallpaper');
@@ -9772,8 +9766,9 @@ function updateSolarDynamicWallpaper(forceHour = null) {
   const overlay = document.getElementById('dynamic-wallpaper-overlay');
   
   if (!isDynamic) {
-    if (layer) layer.style.display = 'none';
-    if (overlay) overlay.style.display = 'none';
+    if (layer && window.aliceOS && window.aliceOS.wallpaperSetting) {
+      applySystemWallpaper(window.aliceOS.wallpaperSetting);
+    }
     return;
   }
 
@@ -11073,10 +11068,8 @@ loginUser = async function() {
         }
         if (settings.wallpaper) {
            window.aliceOS.wallpaperSetting = settings.wallpaper;
-           if (settings.wallpaper !== 'dynamic-mojave') {
-             document.body.style.backgroundImage = settings.wallpaper;
-             document.body.style.backgroundSize = 'cover';
-             document.body.style.backgroundPosition = 'center';
+           if (settings.wallpaper !== 'dynamic-mojave' && settings.wallpaper !== 'dynamic-solar') {
+             applySystemWallpaper(settings.wallpaper);
            }
         }
         if (settings.theme === 'dark') {

@@ -89,23 +89,28 @@ body {
 /* Menu Bar */
 .menubar {
   height: 28px;
-  background-color: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(30, 30, 36, 0.45);
+  backdrop-filter: blur(35px) saturate(190%);
+  -webkit-backdrop-filter: blur(35px) saturate(190%);
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 16px;
+  padding: 0 12px;
   font-size: 13px;
+  color: #ffffff;
   z-index: 1000;
   -webkit-app-region: no-drag;
   user-select: none;
   -webkit-user-select: none;
-  transform: translateZ(0);
-  will-change: transform;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  contain: paint;
+}
+
+body:not(.dark-mode) .menubar {
+  background: rgba(255, 255, 255, 0.35);
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  color: #1d1d1f;
 }
 
 .menubar-drag-spacer {
@@ -123,25 +128,34 @@ body {
 }
 
 .menu-item {
-  padding: 0 10px;
+  padding: 0 9px;
   cursor: pointer;
-  height: 28px;
-  line-height: 28px;
+  height: 22px;
+  line-height: 22px;
   border-radius: 4px;
   outline: none;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
   -webkit-user-select: none;
   -webkit-app-region: no-drag;
-  transition: background-color 0.15s ease;
+  transition: background-color 0.12s ease;
+  display: flex;
+  align-items: center;
+  color: inherit;
 }
 
 .menu-item:focus {
   outline: none;
 }
 
-.menu-item:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+.menu-item:hover,
+.menu-item.active {
+  background-color: rgba(255, 255, 255, 0.22);
+}
+
+body:not(.dark-mode) .menu-item:hover,
+body:not(.dark-mode) .menu-item.active {
+  background-color: rgba(0, 0, 0, 0.08);
 }
 
 #time-display {
@@ -159,13 +173,13 @@ body {
   position: absolute;
   top: 30px;
   left: 10px;
-  background: rgba(38, 38, 44, 0.88);
-  backdrop-filter: blur(45px) saturate(200%);
-  -webkit-backdrop-filter: blur(45px) saturate(200%);
-  border: 0.5px solid rgba(255, 255, 255, 0.18);
-  border-radius: 9px;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(0, 0, 0, 0.25);
-  padding: 5px;
+  background: rgba(36, 36, 42, 0.88) !important;
+  backdrop-filter: blur(50px) saturate(210%) !important;
+  -webkit-backdrop-filter: blur(50px) saturate(210%) !important;
+  border: 0.5px solid rgba(255, 255, 255, 0.18) !important;
+  border-radius: 9px !important;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(0, 0, 0, 0.25) !important;
+  padding: 5px !important;
   min-width: 220px;
   z-index: 9999;
   display: none;
@@ -174,14 +188,20 @@ body {
   animation: menuFadeIn 0.14s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+body:not(.dark-mode) .menu-dropdown {
+  background: rgba(246, 246, 248, 0.88) !important;
+  border: 0.5px solid rgba(0, 0, 0, 0.15) !important;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(0, 0, 0, 0.08) !important;
+}
+
 @keyframes menuFadeIn {
-  from { opacity: 0; transform: translateY(-4px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(-4px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .menu-dropdown-item {
   padding: 5px 12px;
-  color: rgba(255, 255, 255, 0.92);
+  color: rgba(255, 255, 255, 0.94);
   cursor: pointer;
   font-size: 13px;
   font-weight: 400;
@@ -193,20 +213,29 @@ body {
   transition: background-color 0.1s ease, color 0.1s ease;
 }
 
+body:not(.dark-mode) .menu-dropdown-item {
+  color: #1d1d1f;
+}
+
 .menu-dropdown-item:hover {
-  background: #007aff;
-  color: #ffffff;
+  background: #007aff !important;
+  color: #ffffff !important;
 }
 
 .menu-shortcut {
   font-size: 12px;
-  opacity: 0.55;
+  color: rgba(255, 255, 255, 0.55);
   letter-spacing: 0.5px;
   font-variant-numeric: tabular-nums;
   margin-left: auto;
 }
 
+body:not(.dark-mode) .menu-shortcut {
+  color: rgba(0, 0, 0, 0.45);
+}
+
 .menu-dropdown-item:hover .menu-shortcut {
+  color: #ffffff !important;
   opacity: 0.95;
 }
 
@@ -214,6 +243,10 @@ body {
   height: 1px;
   background: rgba(255, 255, 255, 0.12);
   margin: 4px 6px;
+}
+
+body:not(.dark-mode) .menu-dropdown-separator {
+  background: rgba(0, 0, 0, 0.08);
 }
 
 /* Desktop */
@@ -677,56 +710,7 @@ body.dark-mode .finder-sidebar-item:hover {
   background-color: white;
 }
 
-/* Dropdown Menu */
-.menu-dropdown {
-  position: absolute;
-  top: 32px;
-  left: 10px;
-  background-color: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(35px) saturate(190%);
-  -webkit-backdrop-filter: blur(35px) saturate(190%);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 9px;
-  padding: 5px;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.22);
-  display: none;
-  flex-direction: column;
-  z-index: 9500;
-  min-width: 190px;
-  color: #1d1d1f;
-  animation: menuFadeIn 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-body.dark-mode .menu-dropdown {
-  background-color: rgba(36, 36, 38, 0.88);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  color: #f5f5f7;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.5);
-}
-@keyframes menuFadeIn {
-  from { opacity: 0; transform: translateY(-4px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-.menu-dropdown-item {
-  padding: 5px 12px;
-  cursor: pointer;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 500;
-  user-select: none;
-  transition: background-color 0.1s ease, color 0.1s ease;
-}
-.menu-dropdown-item:hover {
-  background-color: #007aff !important;
-  color: white !important;
-}
-.menu-dropdown-separator {
-  height: 1px;
-  background: rgba(0, 0, 0, 0.08);
-  margin: 4px 6px;
-}
-body.dark-mode .menu-dropdown-separator {
-  background: rgba(255, 255, 255, 0.1);
-}
+/* (Duplicate dropdown section removed) */
 
 /* Calculator App */
 .calc-container {
@@ -1094,7 +1078,6 @@ body.dark-mode .menu-dropdown-separator {
 }
 
 /* System-wide Dark Mode */
-body.dark-mode .menubar,
 body.dark-mode .dock-container,
 body.dark-mode .control-center,
 body.dark-mode .context-menu,
@@ -3165,14 +3148,23 @@ body.dark-mode .finder-sidebar-tag:hover {
   inset: 0;
   width: 100vw;
   height: 100vh;
-  z-index: -2;
+  z-index: 0;
   background-size: cover;
   background-position: center;
   pointer-events: none;
   transition: opacity 1.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
+.dynamic-wallpaper-layer {
+  background-image: 
+    radial-gradient(at 10% 20%, rgba(139, 92, 246, 0.42) 0px, transparent 50%),
+    radial-gradient(at 90% 15%, rgba(244, 63, 94, 0.38) 0px, transparent 50%),
+    radial-gradient(at 50% 95%, rgba(14, 165, 233, 0.4) 0px, transparent 55%),
+    radial-gradient(at 85% 85%, rgba(251, 146, 60, 0.3) 0px, transparent 50%),
+    linear-gradient(135deg, #181824 0%, #2e2842 50%, #111424 100%),
+    url('https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?w=1920&q=80');
+}
 .dynamic-wallpaper-overlay {
-  z-index: -1;
+  z-index: 0;
   opacity: 0;
 }
 

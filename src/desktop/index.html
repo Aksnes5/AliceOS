@@ -6,7 +6,7 @@
   <title>AliceOS - 桌面操作系统</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="dark-mode">
   <!-- Boot Screen -->
   <div id="boot-screen" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background-color:black;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;transition:opacity 1s ease;">
     <div style="margin-bottom:40px;display:flex;align-items:center;justify-content:center;">
@@ -758,16 +758,16 @@
   <div class="menu-dropdown" id="file-menu" style="left: 82px;">
     <div class="menu-dropdown-item" onclick="closeAllTopMenus(); launchFinder();" style="display:flex;justify-content:space-between;align-items:center;">
       <span data-i18n="menu_new_finder">新建访达窗口</span>
-      <span style="opacity:0.5;font-size:11px;">⌘N</span>
+      <span class="menu-shortcut">⌘N</span>
     </div>
     <div class="menu-dropdown-item" onclick="closeAllTopMenus(); launchNotes();" style="display:flex;justify-content:space-between;align-items:center;">
       <span data-i18n="menu_new_note">新建备忘录</span>
-      <span style="opacity:0.5;font-size:11px;">⌘T</span>
+      <span class="menu-shortcut">⌘T</span>
     </div>
     <div class="menu-dropdown-separator"></div>
     <div class="menu-dropdown-item" onclick="closeAllTopMenus(); closeActiveWindow();" style="display:flex;justify-content:space-between;align-items:center;">
       <span data-i18n="menu_close_win">关闭窗口</span>
-      <span style="opacity:0.5;font-size:11px;">⌘W</span>
+      <span class="menu-shortcut">⌘W</span>
     </div>
   </div>
 
@@ -775,29 +775,29 @@
   <div class="menu-dropdown" id="edit-menu" style="left: 122px;">
     <div class="menu-dropdown-item" onclick="closeAllTopMenus(); document.execCommand('undo');" style="display:flex;justify-content:space-between;align-items:center;">
       <span data-i18n="menu_undo">撤销</span>
-      <span style="opacity:0.5;font-size:11px;">⌘Z</span>
+      <span class="menu-shortcut">⌘Z</span>
     </div>
     <div class="menu-dropdown-item" onclick="closeAllTopMenus(); document.execCommand('redo');" style="display:flex;justify-content:space-between;align-items:center;">
       <span data-i18n="menu_redo">重做</span>
-      <span style="opacity:0.5;font-size:11px;">⇧⌘Z</span>
+      <span class="menu-shortcut">⇧⌘Z</span>
     </div>
     <div class="menu-dropdown-separator"></div>
     <div class="menu-dropdown-item" onclick="closeAllTopMenus(); document.execCommand('cut');" style="display:flex;justify-content:space-between;align-items:center;">
       <span data-i18n="menu_cut">剪切</span>
-      <span style="opacity:0.5;font-size:11px;">⌘X</span>
+      <span class="menu-shortcut">⌘X</span>
     </div>
     <div class="menu-dropdown-item" onclick="closeAllTopMenus(); document.execCommand('copy');" style="display:flex;justify-content:space-between;align-items:center;">
       <span data-i18n="menu_copy">拷贝</span>
-      <span style="opacity:0.5;font-size:11px;">⌘C</span>
+      <span class="menu-shortcut">⌘C</span>
     </div>
     <div class="menu-dropdown-item" onclick="closeAllTopMenus(); document.execCommand('paste');" style="display:flex;justify-content:space-between;align-items:center;">
       <span data-i18n="menu_paste">粘贴</span>
-      <span style="opacity:0.5;font-size:11px;">⌘V</span>
+      <span class="menu-shortcut">⌘V</span>
     </div>
     <div class="menu-dropdown-separator"></div>
     <div class="menu-dropdown-item" onclick="closeAllTopMenus(); document.execCommand('selectAll');" style="display:flex;justify-content:space-between;align-items:center;">
       <span data-i18n="menu_select_all">全选</span>
-      <span style="opacity:0.5;font-size:11px;">⌘A</span>
+      <span class="menu-shortcut">⌘A</span>
     </div>
   </div>
 
@@ -805,7 +805,7 @@
   <div class="menu-dropdown" id="view-menu" style="left: 165px;">
     <div class="menu-dropdown-item" onclick="closeAllTopMenus(); toggleStageManager();" style="display:flex;justify-content:space-between;align-items:center;">
       <span data-i18n="cc_stage_manager">台前调度</span>
-      <span style="opacity:0.5;font-size:11px;">⌃S</span>
+      <span class="menu-shortcut">⌃S</span>
     </div>
     <div class="menu-dropdown-item" onclick="closeAllTopMenus(); toggleDesktopStacks();" style="display:flex;justify-content:space-between;align-items:center;">
       <span data-i18n="ctx_use_stacks">使用叠放</span>
@@ -813,7 +813,7 @@
     <div class="menu-dropdown-separator"></div>
     <div class="menu-dropdown-item" onclick="closeAllTopMenus(); toggleFullScreen();" style="display:flex;justify-content:space-between;align-items:center;">
       <span data-i18n="menu_fullscreen">进入全屏幕</span>
-      <span style="opacity:0.5;font-size:11px;">⌃⌘F</span>
+      <span class="menu-shortcut">⌃⌘F</span>
     </div>
   </div>
 
@@ -863,7 +863,7 @@
     <div class="menu-dropdown-separator"></div>
     <div class="menu-dropdown-item" onclick="closeAllTopMenus(); toggleAssistant();" style="display:flex;justify-content:space-between;align-items:center;">
       <span data-i18n="ai_title" style="display:inline-flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L14.4 7.6L20 10L14.4 12.4L12 18L9.6 12.4L4 10L9.6 7.6L12 2Z" fill="url(#ai-grad-menu)"/><defs><linearGradient id="ai-grad-menu" x1="2" y1="2" x2="20" y2="18"><stop stop-color="#38bdf8"/><stop offset="0.5" stop-color="#a855f7"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs></svg> Alice 智能助理</span>
-      <span style="opacity:0.5;font-size:11px;">⌃␣</span>
+      <span class="menu-shortcut">⌃␣</span>
     </div>
   </div>
 
