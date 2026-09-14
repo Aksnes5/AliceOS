@@ -2232,6 +2232,195 @@ document.addEventListener('DOMContentLoaded', () => {
   if (desktop) desktop.addEventListener('mousedown', handleDesktopClick);
 });
 
+// ====================================================
+// Apple SF Symbols Vector Graphics Engine
+// ====================================================
+function getSFSymbol(name, size = 16, color = 'currentColor') {
+  const norm = (name || '').toLowerCase().trim();
+  let svg = '';
+
+  switch (norm) {
+    case 'chevron-left':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>`;
+      break;
+    case 'chevron-right':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>`;
+      break;
+    case 'chevron-up':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>`;
+      break;
+    case 'chevron-down':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`;
+      break;
+    case 'folder':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}">
+        <defs>
+          <linearGradient id="fld-bg-${size}" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#38a5ff"/><stop offset="100%" stop-color="#0a7aff"/>
+          </linearGradient>
+          <linearGradient id="fld-tab-${size}" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#6ec2ff"/><stop offset="100%" stop-color="#2191ff"/>
+          </linearGradient>
+        </defs>
+        <path d="M2 5.5C2 4.4 2.9 3.5 4 3.5H9L11 6H20C21.1 6 22 6.9 22 8V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V5.5Z" fill="url(#fld-tab-${size})"/>
+        <path d="M2 9C2 7.9 2.9 7 4 7H20C21.1 7 22 7.9 22 9V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V9Z" fill="url(#fld-bg-${size})"/>
+      </svg>`;
+      break;
+    case 'folder-plus':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg>`;
+      break;
+    case 'doc':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}">
+        <path d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2Z" fill="#ffffff" stroke="#d1d1d6" stroke-width="1.5"/>
+        <path d="M14 2V8H20" fill="#e5e5ea"/>
+        <line x1="8" y1="13" x2="16" y2="13" stroke="#8e8e93" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="8" y1="17" x2="13" y2="17" stroke="#8e8e93" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>`;
+      break;
+    case 'doc-image':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}">
+        <rect x="3" y="3" width="18" height="18" rx="3" fill="#34c759"/>
+        <circle cx="8.5" cy="8.5" r="1.5" fill="#ffffff"/>
+        <polyline points="21 15 16 10 5 21" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+      </svg>`;
+      break;
+    case 'house':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="${color}"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>`;
+      break;
+    case 'desktop':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`;
+      break;
+    case 'doc-text':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>`;
+      break;
+    case 'arrow-down-circle':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="8 12 12 16 16 12"/><line x1="12" y1="8" x2="12" y2="16"/></svg>`;
+      break;
+    case 'internaldrive':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="6" cy="12" r="1.5" fill="${color}"/><line x1="18" y1="12" x2="18" y2="12"/></svg>`;
+      break;
+    case 'trash':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>`;
+      break;
+    case 'pencil':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`;
+      break;
+    case 'checklist':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>`;
+      break;
+    case 'table':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="12" y1="3" x2="12" y2="21"/></svg>`;
+      break;
+    case 'share':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>`;
+      break;
+    case 'magnifyingglass':
+    case 'search':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`;
+      break;
+    case 'plus':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`;
+      break;
+    case 'arrow-clockwise':
+    case 'refresh':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>`;
+      break;
+    case 'grid':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>`;
+      break;
+    case 'list':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>`;
+      break;
+    case 'column':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2"><rect x="3" y="3" width="5" height="18" rx="1"/><rect x="10" y="3" width="5" height="18" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/></svg>`;
+      break;
+    case 'lock':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>`;
+      break;
+    case 'play':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="${color}"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
+      break;
+    case 'pause':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="${color}"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>`;
+      break;
+    case 'forward':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="${color}"><polygon points="5 4 15 12 5 20 5 4"/><polygon points="13 4 23 12 13 20 13 4"/></svg>`;
+      break;
+    case 'backward':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="${color}"><polygon points="19 20 9 12 19 4 19 20"/><polygon points="11 20 1 12 11 4 11 20"/></svg>`;
+      break;
+    case 'speaker':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>`;
+      break;
+    case 'wifi':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1" fill="${color}"/></svg>`;
+      break;
+    case 'bluetooth':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6.5 6.5 17.5 17.5 12 23 12 1 17.5 6.5 6.5 17.5"/></svg>`;
+      break;
+    case 'gear':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`;
+      break;
+    case 'moon':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+      break;
+    case 'sun':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+      break;
+    case 'battery':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"><rect x="1" y="6" width="18" height="12" rx="2"/><line x1="23" y1="10" x2="23" y2="14"/><rect x="4" y="9" width="10" height="6" fill="${color}" stroke="none"/></svg>`;
+      break;
+    case 'palette':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2"><circle cx="13.5" cy="6.5" r=".5" fill="${color}"/><circle cx="17.5" cy="10.5" r=".5" fill="${color}"/><circle cx="8.5" cy="7.5" r=".5" fill="${color}"/><circle cx="6.5" cy="12.5" r=".5" fill="${color}"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.5-.75 1.5-1.5 0-.37-.13-.71-.35-1-.22-.3-.35-.68-.35-1.09 0-.83.67-1.5 1.5-1.5H16c3.31 0 6-2.69 6-6 0-4.97-4.48-9-10-9z"/></svg>`;
+      break;
+    case 'globe':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`;
+      break;
+    case 'stop':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="${color}"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/></svg>`;
+      break;
+    case 'star':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="${color}"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
+      break;
+    case 'heart':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`;
+      break;
+    case 'heart-fill':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="${color}"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
+      break;
+    case 'airdrop':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"><path d="M4.93 19.07a10 10 0 0 1 0-14.14"/><path d="M7.76 16.24a6 6 0 0 1 0-8.48"/><circle cx="12" cy="12" r="2" fill="${color}"/><path d="M16.24 7.76a6 6 0 0 1 0 8.48"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>`;
+      break;
+    case 'briefcase':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`;
+      break;
+    case 'gamecontroller':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="15" y1="13" x2="15.01" y2="13"/><line x1="18" y1="11" x2="18.01" y2="11"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>`;
+      break;
+    case 'hammer':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 12l-8.5 8.5a2.12 2.12 0 1 1-3-3L12 9"/><path d="M17.64 4.36a9 9 0 0 1 2 2L17 9l-3-3 2.64-2.64z"/><path d="M14 6l3 3"/></svg>`;
+      break;
+    case 'clock':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`;
+      break;
+    case 'waveform':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"><line x1="3" y1="10" x2="3" y2="14"/><line x1="7" y1="6" x2="7" y2="18"/><line x1="11" y1="3" x2="11" y2="21"/><line x1="15" y1="8" x2="15" y2="16"/><line x1="19" y1="5" x2="19" y2="19"/><line x1="23" y1="11" x2="23" y2="13"/></svg>`;
+      break;
+    case 'compass':
+    case 'safari':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" fill="${color}"/></svg>`;
+      break;
+    case 'apple':
+    case 'applelogo':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="${color}"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>`;
+      break;
+    default:
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>`;
+  }
+
+  return `<span class="sf-icon" style="width:${size}px;height:${size}px;">${svg}</span>`;
+}
+
 function createWindow(pid, title, contentHtml, explicitAppKey = null) {
   const desktop = document.getElementById('desktop');
   
@@ -3677,8 +3866,8 @@ async function launchSystemInfo() {
     const win = createWindow(pid, t('about_title', 'About This Mac'), `
       <div id="sys-about-${pid}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:26px 24px;text-align:center;font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;height:100%;box-sizing:border-box;background:inherit;color:inherit;user-select:none;">
         <div style="margin-bottom:12px;filter:drop-shadow(0 6px 16px rgba(0,0,0,0.25));display:flex;align-items:center;justify-content:center;">
-          <svg viewBox="0 0 384 512" width="54" height="72" fill="currentColor">
-            <path d="M318.7 268.7c-.2-36.2 16.4-61.2 41.2-90.8-23.7-34.7-59.4-48.4-100.1-49.9-42.8-1.5-82.5 25.5-102.8 25.5-20.4 0-51.9-25.2-85.3-24.5-43.7 1-84.5 25.7-107.4 64.9-46.3 79.9-11.8 196.4 32.7 261.3 21.6 31.4 47.4 66.8 81.6 65.5 32.2-1.3 44.5-20.7 83.1-20.7 38.6 0 49.9 20.7 84 20.7 35.3 0 57.1-32.9 78.9-64.4 24.9-36.3 35.1-71.5 35.5-73.4-.9-.3-52.9-20.4-53.2-80.4zM245.9 83.1c17.5-21.2 29.3-50.6 26.1-79.9-25.2 1-55.7 16.7-73.8 37.7-16.1 18.5-29.3 48.7-25.6 78 28.2 2.1 55.7-16.1 73.3-35.8z"/>
+          <svg viewBox="0 0 24 24" width="60" height="60" fill="currentColor">
+            <path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/>
           </svg>
         </div>
         <h2 style="margin:0 0 4px 0;font-size:24px;font-weight:700;letter-spacing:-0.5px;">macOS Sequoia</h2>
@@ -3784,22 +3973,22 @@ async function launchNotes(filePath = null) {
       <div class="notes-folders-sidebar">
         <div class="notes-section-hdr">iCloud</div>
         <div class="notes-folder-row active" data-folder="all">
-          <span style="font-size:14px;">📁</span>
+          <span>${getSFSymbol('folder', 14, '#ff9500')}</span>
           <span style="flex:1;">全部备忘录</span>
           <span class="notes-folder-count" id="notes-cnt-all-${pid}">${allNotes.length}</span>
         </div>
         <div class="notes-folder-row" data-folder="quick">
-          <span style="font-size:14px;">⚡</span>
+          <span>${getSFSymbol('doc-text', 14, '#ff9500')}</span>
           <span style="flex:1;">便笺</span>
           <span class="notes-folder-count" id="notes-cnt-quick-${pid}">${allNotes.filter(n => n.folder === 'quick').length}</span>
         </div>
         <div class="notes-folder-row" data-folder="work">
-          <span style="font-size:14px;">💼</span>
+          <span>${getSFSymbol('internaldrive', 14, '#ff9500')}</span>
           <span style="flex:1;">工作备忘</span>
           <span class="notes-folder-count" id="notes-cnt-work-${pid}">${allNotes.filter(n => n.folder === 'work').length}</span>
         </div>
         <div class="notes-folder-row" data-folder="personal">
-          <span style="font-size:14px;">🏠</span>
+          <span>${getSFSymbol('house', 14, '#ff9500')}</span>
           <span style="flex:1;">个人生活</span>
           <span class="notes-folder-count" id="notes-cnt-personal-${pid}">${allNotes.filter(n => n.folder === 'personal').length}</span>
         </div>
@@ -3807,8 +3996,9 @@ async function launchNotes(filePath = null) {
 
       <!-- Column 2: Notes List -->
       <div class="notes-list-col">
-        <div class="notes-search-wrap">
-          <input type="text" class="notes-search-input" id="notes-search-${pid}" placeholder="🔍 搜索备忘录...">
+        <div class="notes-search-wrap" style="display:flex;align-items:center;gap:6px;">
+          ${getSFSymbol('magnifyingglass', 12, '#888')}
+          <input type="text" class="notes-search-input" id="notes-search-${pid}" placeholder="搜索备忘录...">
         </div>
         <div class="notes-cards-list" id="notes-cards-${pid}"></div>
       </div>
@@ -3817,13 +4007,13 @@ async function launchNotes(filePath = null) {
       <div class="notes-editor-col">
         <div class="notes-mac-toolbar">
           <div style="display:flex;align-items:center;gap:6px;">
-            <button class="notes-tb-btn" id="notes-new-btn-${pid}">✏️ 新建</button>
-            <button class="notes-tb-btn" id="notes-checklist-btn-${pid}">☑️ 待办</button>
-            <button class="notes-tb-btn" id="notes-math-badge-${pid}" title="macOS Sequoia 数学备忘录">∑ 数学</button>
+            <button class="notes-tb-btn" id="notes-new-btn-${pid}">${getSFSymbol('pencil', 13)} <span>新建</span></button>
+            <button class="notes-tb-btn" id="notes-checklist-btn-${pid}">${getSFSymbol('checklist', 13)} <span>待办</span></button>
+            <button class="notes-tb-btn" id="notes-math-badge-${pid}" title="macOS Sequoia 数学备忘录">∑ <span>数学</span></button>
           </div>
           <div style="display:flex;align-items:center;gap:6px;">
-            <button class="notes-tb-btn" id="notes-save-btn-${pid}">💾 存储</button>
-            <button class="notes-tb-btn" id="notes-del-btn-${pid}" style="color:#ff3b30;">🗑️ 删除</button>
+            <button class="notes-tb-btn" id="notes-save-btn-${pid}">${getSFSymbol('doc', 13)} <span>存储</span></button>
+            <button class="notes-tb-btn" id="notes-del-btn-${pid}" style="color:#ff3b30;">${getSFSymbol('trash', 13, '#ff3b30')}</button>
           </div>
         </div>
         <div class="notes-math-toast" id="notes-math-toast-${pid}"></div>
@@ -4025,13 +4215,13 @@ async function launchFinder() {
     <div class="finder-container" id="finder-${pid}">
       <div class="finder-sidebar">
         <div style="font-size:10px;font-weight:700;color:#888;margin:8px 0 4px 8px;letter-spacing:0.5px;" data-finder-header="fav">${t('finder_favorites', 'FAVORITES')}</div>
-        <div class="finder-sidebar-item" data-path="/Users/alice" data-host="false" data-finder-label="home">🏠 ${t('finder_home', 'Alice Home')}</div>
-        <div class="finder-sidebar-item" data-path="/Users/alice/Desktop" data-host="false" data-finder-label="desktop">🖥️ ${t('finder_desktop', 'Desktop')}</div>
-        <div class="finder-sidebar-item" data-path="/Users/alice/Documents" data-host="false" data-finder-label="documents">📁 ${t('finder_documents', 'Documents')}</div>
-        <div class="finder-sidebar-item" data-path="/Users/alice/Downloads" data-host="false" data-finder-label="downloads">⬇️ ${t('finder_downloads', 'Downloads')}</div>
-        <div class="finder-sidebar-item" data-path="/" data-host="false" data-finder-label="root">💾 / (Root)</div>
+        <div class="finder-sidebar-item" data-path="/Users/alice" data-host="false" data-finder-label="home">${getSFSymbol('house', 14, '#007aff')} <span>${t('finder_home', 'Alice Home')}</span></div>
+        <div class="finder-sidebar-item" data-path="/Users/alice/Desktop" data-host="false" data-finder-label="desktop">${getSFSymbol('desktop', 14, '#007aff')} <span>${t('finder_desktop', 'Desktop')}</span></div>
+        <div class="finder-sidebar-item" data-path="/Users/alice/Documents" data-host="false" data-finder-label="documents">${getSFSymbol('doc-text', 14, '#007aff')} <span>${t('finder_documents', 'Documents')}</span></div>
+        <div class="finder-sidebar-item" data-path="/Users/alice/Downloads" data-host="false" data-finder-label="downloads">${getSFSymbol('arrow-down-circle', 14, '#007aff')} <span>${t('finder_downloads', 'Downloads')}</span></div>
+        <div class="finder-sidebar-item" data-path="/" data-host="false" data-finder-label="root">${getSFSymbol('internaldrive', 14, '#007aff')} <span>Macintosh HD</span></div>
         <div style="font-size:10px;font-weight:700;color:#888;margin:12px 0 4px 8px;letter-spacing:0.5px;" data-finder-header="loc">${t('finder_locations', 'LOCATIONS')}</div>
-        <div class="finder-sidebar-item" data-path="C:\\\\" data-host="true" data-finder-label="disk">💽 ${t('finder_local_disk', 'Local Disk (C:)')}</div>
+        <div class="finder-sidebar-item" data-path="C:\\\\" data-host="true" data-finder-label="disk">${getSFSymbol('internaldrive', 14, '#8e8e93')} <span>${t('finder_local_disk', 'Local Disk (C:)')}</span></div>
         <div style="font-size:10px;font-weight:700;color:#888;margin:12px 0 4px 8px;letter-spacing:0.5px;" data-finder-header="tags">${t('finder_tags', 'TAGS')}</div>
         <div class="finder-sidebar-tag" data-tag-color="#ff3b30" data-tag-key="red"><span class="finder-tag-dot" style="background:#ff3b30;"></span> <span>${t('finder_tag_red', 'Red')}</span></div>
         <div class="finder-sidebar-tag" data-tag-color="#ff9500" data-tag-key="orange"><span class="finder-tag-dot" style="background:#ff9500;"></span> <span>${t('finder_tag_orange', 'Orange')}</span></div>
@@ -4044,21 +4234,31 @@ async function launchFinder() {
       <div class="finder-main">
         <div class="finder-toolbar" style="align-items:center;justify-content:space-between;padding:6px 12px;gap:8px;">
           <div style="display:flex;align-items:center;gap:6px;">
-            <button id="finder-back-${pid}" title="${t('finder_back', 'Back')}" style="background:transparent;border:1px solid rgba(0,0,0,0.15);border-radius:6px;padding:2px 8px;cursor:pointer;font-size:13px;">‹</button>
-            <button id="finder-forward-${pid}" title="${t('finder_forward', 'Forward')}" style="background:transparent;border:1px solid rgba(0,0,0,0.15);border-radius:6px;padding:2px 8px;cursor:pointer;font-size:13px;">›</button>
-            <button id="finder-up-${pid}" title="${t('finder_up', 'Enclosing Folder')}" style="background:transparent;border:1px solid rgba(0,0,0,0.15);border-radius:6px;padding:2px 8px;cursor:pointer;font-size:13px;">↑</button>
-            <span id="finder-path-${pid}" style="font-size:12px;font-weight:600;margin-left:8px;opacity:0.8;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">/Users/alice</span>
+            <button id="finder-back-${pid}" title="${t('finder_back', 'Back')}" class="finder-toolbar-btn">${getSFSymbol('chevron-left', 12)}</button>
+            <button id="finder-forward-${pid}" title="${t('finder_forward', 'Forward')}" class="finder-toolbar-btn">${getSFSymbol('chevron-right', 12)}</button>
+            <button id="finder-up-${pid}" title="${t('finder_up', 'Enclosing Folder')}" class="finder-toolbar-btn">${getSFSymbol('chevron-up', 12)}</button>
+            <span id="finder-path-${pid}" style="font-size:12px;font-weight:600;margin-left:8px;opacity:0.8;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">/Users/alice</span>
           </div>
-          <div style="display:flex;align-items:center;gap:8px;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <button class="finder-toolbar-btn" id="finder-newfolder-${pid}" title="新建文件夹">${getSFSymbol('folder-plus', 13)}</button>
+            <button class="finder-toolbar-btn" id="finder-trash-${pid}" title="移到废纸篓">${getSFSymbol('trash', 13)}</button>
             <div class="finder-segmented-control">
-              <button class="finder-seg-btn" id="finder-view-icon-${pid}" title="${t('finder_view_icon', 'Icon View')}">⊞</button>
-              <button class="finder-seg-btn" id="finder-view-list-${pid}" title="${t('finder_view_list', 'List View')}">≡</button>
-              <button class="finder-seg-btn active" id="finder-view-col-${pid}" title="${t('finder_view_col', 'Column View')}">|||</button>
+              <button class="finder-seg-btn" id="finder-view-icon-${pid}" title="${t('finder_view_icon', 'Icon View')}">${getSFSymbol('grid', 12)}</button>
+              <button class="finder-seg-btn" id="finder-view-list-${pid}" title="${t('finder_view_list', 'List View')}">${getSFSymbol('list', 12)}</button>
+              <button class="finder-seg-btn active" id="finder-view-col-${pid}" title="${t('finder_view_col', 'Column View')}">${getSFSymbol('column', 12)}</button>
             </div>
-            <button id="finder-refresh-${pid}" title="${t('finder_refresh', 'Refresh')}" style="background:transparent;border:none;cursor:pointer;font-size:13px;padding:2px 6px;">🔄</button>
+            <button class="finder-toolbar-btn" id="finder-refresh-${pid}" title="${t('finder_refresh', 'Refresh')}">${getSFSymbol('arrow-clockwise', 12)}</button>
+            <div class="finder-search-wrap">
+              ${getSFSymbol('magnifyingglass', 11, '#888')}
+              <input type="text" class="finder-search-input" id="finder-search-${pid}" placeholder="搜索...">
+            </div>
           </div>
         </div>
         <div class="finder-view-wrapper" id="finder-view-${pid}" style="flex:1;overflow:hidden;display:flex;flex-direction:column;position:relative;">
+        </div>
+        <div class="finder-status-bar" id="finder-status-${pid}">
+          <span id="finder-status-count-${pid}">-- 项</span>
+          <span id="finder-status-disk-${pid}">245.8 GB 可用</span>
         </div>
       </div>
     </div>
@@ -4117,15 +4317,29 @@ async function launchFinder() {
     else if (viewMode === 'column') btnCol.classList.add('active');
   }
 
+  let searchQuery = '';
   async function getDirItems(path, host) {
+    let items = [];
     if (host) {
       if (!window.aliceOS.hostReadDir) return [];
       const res = await window.aliceOS.hostReadDir(path);
-      return res.success ? res.data : [];
+      items = res.success ? res.data : [];
     } else {
       const res = await window.aliceOS.vfs.readDir(path);
-      return res.success ? res.data : [];
+      items = res.success ? res.data : [];
     }
+    if (searchQuery) {
+      items = items.filter(i => i.name.toLowerCase().includes(searchQuery));
+    }
+    return items;
+  }
+
+  async function updateStatusBar() {
+    try {
+      const items = await getDirItems(currentDir, isHostDir);
+      const countEl = win.querySelector(`#finder-status-count-${pid}`);
+      if (countEl) countEl.innerText = `${items.length} 项`;
+    } catch(e) {}
   }
 
   async function navigateTo(path, host, pushHistory = true) {
@@ -4181,6 +4395,7 @@ async function launchFinder() {
     } else if (viewMode === 'column') {
       await renderColumnView();
     }
+    updateStatusBar();
   }
 
   async function renderIconView() {
@@ -4208,8 +4423,8 @@ async function launchFinder() {
     items.forEach(item => {
       const el = document.createElement('div');
       el.className = 'finder-item';
-      let icon = item.type === 'dir' ? '📁' : '📄';
-      if (item.type !== 'dir' && item.name.endsWith('.png')) icon = '🖼️';
+      let icon = item.type === 'dir' ? getSFSymbol('folder', 48) : getSFSymbol('doc', 44);
+      if (item.type !== 'dir' && item.name.endsWith('.png')) icon = getSFSymbol('doc-image', 44);
 
       let targetPath = isHostDir 
         ? (currentDir.endsWith('\\\\') ? currentDir + item.name : currentDir + '\\\\' + item.name)
@@ -4285,8 +4500,8 @@ async function launchFinder() {
     items.forEach(item => {
       const tr = document.createElement('tr');
       tr.className = 'finder-list-row';
-      let icon = item.type === 'dir' ? '📁' : '📄';
-      if (item.type !== 'dir' && item.name.endsWith('.png')) icon = '🖼️';
+      let icon = item.type === 'dir' ? getSFSymbol('folder', 18) : getSFSymbol('doc', 16);
+      if (item.type !== 'dir' && item.name.endsWith('.png')) icon = getSFSymbol('doc-image', 16);
       let kind = item.type === 'dir' ? t('finder_folder', 'Folder') : (item.name.endsWith('.png') ? t('finder_png_image', 'PNG Image') : t('finder_document', 'Document'));
 
       let targetPath = isHostDir 
@@ -4468,8 +4683,8 @@ async function launchFinder() {
           items.forEach(item => {
             const itemEl = document.createElement('div');
             itemEl.className = 'finder-column-item' + (colData.selectedName === item.name ? ' selected' : '');
-            let icon = item.type === 'dir' ? '📁' : '📄';
-            if (item.type !== 'dir' && item.name.endsWith('.png')) icon = '🖼️';
+            let icon = item.type === 'dir' ? getSFSymbol('folder', 16) : getSFSymbol('doc', 15);
+            if (item.type !== 'dir' && item.name.endsWith('.png')) icon = getSFSymbol('doc-image', 15);
             
             let childPath = colData.isHost 
               ? (colData.dirPath.endsWith('\\\\') ? colData.dirPath + item.name : colData.dirPath + '\\\\' + item.name)
@@ -4477,7 +4692,7 @@ async function launchFinder() {
 
             const tagColor = getFileTag(childPath);
             const tagDot = tagColor ? `<span class="finder-tag-dot" style="background:${tagColor};"></span>` : '';
-            let chevron = item.type === 'dir' ? '<span style="opacity:0.5;font-size:12px;margin-left:auto;">›</span>' : '';
+            let chevron = item.type === 'dir' ? `<span style="opacity:0.6;margin-left:auto;">${getSFSymbol('chevron-right', 11, '#8e8e93')}</span>` : '';
             
             itemEl.innerHTML = `
               <div style="display:flex;align-items:center;gap:6px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
@@ -4580,6 +4795,64 @@ async function launchFinder() {
     renderActiveView();
   });
 
+  const newFolderBtn = win.querySelector(`#finder-newfolder-${pid}`);
+  if (newFolderBtn) {
+    newFolderBtn.addEventListener('click', async () => {
+      if (isHostDir) {
+        alert("不能在物理驱动器根目录创建文件夹");
+        return;
+      }
+      let folderBase = '未命名文件夹';
+      let folderPath = currentDir === '/' ? `/${folderBase}` : `${currentDir}/${folderBase}`;
+      let counter = 1;
+      while (true) {
+        let check = await window.aliceOS.vfs.readDir(folderPath);
+        if (!check.success) break;
+        counter++;
+        let fName = `${folderBase} ${counter}`;
+        folderPath = currentDir === '/' ? `/${fName}` : `${currentDir}/${fName}`;
+      }
+      await window.aliceOS.vfs.mkdir(folderPath);
+      if (window.AppleAudioEngine) window.AppleAudioEngine.playPop();
+      await renderActiveView();
+      if (currentDir === '/Users/alice/Desktop' && typeof window.renderDesktopGrid === 'function') {
+        window.renderDesktopGrid();
+      }
+    });
+  }
+
+  const trashBtn = win.querySelector(`#finder-trash-${pid}`);
+  if (trashBtn) {
+    trashBtn.addEventListener('click', async () => {
+      if (!window.aliceOS.selectedFile) {
+        alert("请先选择要删除的项目");
+        return;
+      }
+      const sFile = window.aliceOS.selectedFile;
+      if (sFile.isHost) {
+        alert("为保障安全，暂不支持删除物理文件");
+        return;
+      }
+      if (confirm(`确定要将“${sFile.name}”移到废纸篓吗？`)) {
+        await window.aliceOS.vfs.rm(sFile.path);
+        if (window.AppleAudioEngine) window.AppleAudioEngine.playTrash();
+        window.aliceOS.selectedFile = null;
+        await renderActiveView();
+        if (sFile.path.startsWith('/Users/alice/Desktop') && typeof window.renderDesktopGrid === 'function') {
+          window.renderDesktopGrid();
+        }
+      }
+    });
+  }
+
+  const searchInput = win.querySelector(`#finder-search-${pid}`);
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.toLowerCase().trim();
+      renderActiveView();
+    });
+  }
+
   win.querySelectorAll('.finder-sidebar-item').forEach(el => {
     el.addEventListener('click', () => {
       activeTagFilter = null;
@@ -4614,15 +4887,15 @@ async function launchFinder() {
 
     // Update sidebar items
     const homeItem = win.querySelector('[data-finder-label="home"]');
-    if (homeItem) homeItem.innerText = `🏠 ${t('finder_home', 'Alice Home')}`;
+    if (homeItem) homeItem.innerHTML = `${getSFSymbol('house', 14, '#007aff')} <span>${t('finder_home', 'Alice Home')}</span>`;
     const deskItem = win.querySelector('[data-finder-label="desktop"]');
-    if (deskItem) deskItem.innerText = `🖥️ ${t('finder_desktop', 'Desktop')}`;
+    if (deskItem) deskItem.innerHTML = `${getSFSymbol('desktop', 14, '#007aff')} <span>${t('finder_desktop', 'Desktop')}</span>`;
     const docItem = win.querySelector('[data-finder-label="documents"]');
-    if (docItem) docItem.innerText = `📁 ${t('finder_documents', 'Documents')}`;
+    if (docItem) docItem.innerHTML = `${getSFSymbol('doc-text', 14, '#007aff')} <span>${t('finder_documents', 'Documents')}</span>`;
     const dlItem = win.querySelector('[data-finder-label="downloads"]');
-    if (dlItem) dlItem.innerText = `⬇️ ${t('finder_downloads', 'Downloads')}`;
+    if (dlItem) dlItem.innerHTML = `${getSFSymbol('arrow-down-circle', 14, '#007aff')} <span>${t('finder_downloads', 'Downloads')}</span>`;
     const diskItem = win.querySelector('[data-finder-label="disk"]');
-    if (diskItem) diskItem.innerText = `💽 ${t('finder_local_disk', 'Local Disk (C:)')}`;
+    if (diskItem) diskItem.innerHTML = `${getSFSymbol('internaldrive', 14, '#8e8e93')} <span>${t('finder_local_disk', 'Local Disk (C:)')}</span>`;
 
     // Update tag item labels
     win.querySelectorAll('.finder-sidebar-tag').forEach(tagEl => {
@@ -4658,9 +4931,9 @@ async function launchBrowser() {
   if (res.success) {
     const pid = res.data.pid;
     let tabs = [
-      { id: 1, title: t('safari_start_page', 'Start Page'), url: 'safari:start', icon: '🧭' },
-      { id: 2, title: 'Apple', url: 'https://apple.com', icon: '🍎' },
-      { id: 3, title: 'AliceOS Docs', url: 'https://docs.aliceos.org', icon: '💻' }
+      { id: 1, title: t('safari_start_page', 'Start Page'), url: 'safari:start', icon: getSFSymbol('safari', 13, '#007aff') },
+      { id: 2, title: 'Apple', url: 'https://apple.com', icon: getSFSymbol('desktop', 13, '#1d1d1f') },
+      { id: 3, title: 'AliceOS Docs', url: 'https://docs.aliceos.org', icon: getSFSymbol('doc-text', 13, '#007aff') }
     ];
     let activeTabId = 1;
     let tabCounter = 3;
@@ -4674,28 +4947,28 @@ async function launchBrowser() {
           <div id="safari-tabs-list-${pid}" style="display:flex;align-items:center;gap:6px;flex:1;overflow-x:auto;">
             <!-- Dynamic Tabs -->
           </div>
-          <button id="safari-new-tab-${pid}" title="${t('safari_new_tab', 'New Tab')}" style="background:rgba(0,0,0,0.06);border:none;border-radius:6px;width:24px;height:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:#555;">＋</button>
-          <button id="safari-tab-overview-btn-${pid}" title="${t('safari_tab_overview', 'Show All Tabs')}" style="background:rgba(0,0,0,0.06);border:none;border-radius:6px;width:24px;height:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;color:#555;">⊞</button>
+          <button id="safari-new-tab-${pid}" title="${t('safari_new_tab', 'New Tab')}" style="background:rgba(0,0,0,0.06);border:none;border-radius:6px;width:24px;height:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#555;">${getSFSymbol('plus', 13, '#555')}</button>
+          <button id="safari-tab-overview-btn-${pid}" title="${t('safari_tab_overview', 'Show All Tabs')}" style="background:rgba(0,0,0,0.06);border:none;border-radius:6px;width:24px;height:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#555;">${getSFSymbol('grid', 13, '#555')}</button>
         </div>
 
         <!-- Safari Navigation Toolbar -->
         <div class="browser-toolbar" style="display:flex;align-items:center;gap:10px;padding:8px 14px;background:rgba(255,255,255,0.8);backdrop-filter:blur(25px);border-bottom:1px solid rgba(0,0,0,0.08);">
           <div style="display:flex;gap:4px;">
-            <button id="browser-back-${pid}" title="${t('safari_back', 'Back')}" style="background:transparent;border:none;cursor:pointer;font-size:14px;padding:4px 6px;border-radius:6px;opacity:0.7;">◀</button>
-            <button id="browser-forward-${pid}" title="${t('safari_forward', 'Forward')}" style="background:transparent;border:none;cursor:pointer;font-size:14px;padding:4px 6px;border-radius:6px;opacity:0.7;">▶</button>
-            <button id="browser-refresh-${pid}" title="${t('safari_refresh', 'Refresh')}" style="background:transparent;border:none;cursor:pointer;font-size:14px;padding:4px 6px;border-radius:6px;opacity:0.7;">↻</button>
+            <button id="browser-back-${pid}" title="${t('safari_back', 'Back')}" style="background:transparent;border:none;cursor:pointer;padding:4px 6px;border-radius:6px;opacity:0.7;display:flex;align-items:center;">${getSFSymbol('backward', 13, 'currentColor')}</button>
+            <button id="browser-forward-${pid}" title="${t('safari_forward', 'Forward')}" style="background:transparent;border:none;cursor:pointer;padding:4px 6px;border-radius:6px;opacity:0.7;display:flex;align-items:center;">${getSFSymbol('forward', 13, 'currentColor')}</button>
+            <button id="browser-refresh-${pid}" title="${t('safari_refresh', 'Refresh')}" style="background:transparent;border:none;cursor:pointer;padding:4px 6px;border-radius:6px;opacity:0.7;display:flex;align-items:center;">${getSFSymbol('arrow-clockwise', 13, 'currentColor')}</button>
           </div>
 
           <!-- Capsule Search / URL bar -->
           <div style="flex:1;display:flex;align-items:center;background:rgba(0,0,0,0.06);border-radius:10px;padding:5px 12px;gap:8px;border:1px solid rgba(0,0,0,0.05);transition:background 0.2s;">
-            <span style="font-size:12px;opacity:0.5;">🔒</span>
+            <span style="display:flex;align-items:center;opacity:0.5;">${getSFSymbol('lock', 12, '#1d1d1f')}</span>
             <input type="text" id="browser-url-${pid}" value="safari:start" placeholder="${t('safari_search_placeholder', 'Search or enter website name')}" style="flex:1;border:none;outline:none;background:transparent;font-size:13px;color:#1d1d1f;font-family:-apple-system,sans-serif;text-align:center;">
-            <span id="browser-share-${pid}" style="font-size:12px;opacity:0.5;cursor:pointer;" title="${t('safari_share', 'Download / Share')}">↗</span>
+            <span id="browser-share-${pid}" style="display:flex;align-items:center;opacity:0.5;cursor:pointer;" title="${t('safari_share', 'Download / Share')}">${getSFSymbol('share', 13, '#1d1d1f')}</span>
           </div>
 
           <div style="display:flex;gap:6px;align-items:center;">
-            <button id="browser-reader-${pid}" title="${t('safari_reader', 'Reader View')}" style="background:transparent;border:none;cursor:pointer;font-size:14px;padding:4px 6px;border-radius:6px;opacity:0.7;">≡</button>
-            <button id="browser-pip-${pid}" title="${t('safari_pip', 'Picture in Picture')}" style="background:transparent;border:none;cursor:pointer;font-size:14px;padding:4px 6px;border-radius:6px;opacity:0.7;">⤢</button>
+            <button id="browser-reader-${pid}" title="${t('safari_reader', 'Reader View')}" style="background:transparent;border:none;cursor:pointer;padding:4px 6px;border-radius:6px;opacity:0.7;display:flex;align-items:center;">${getSFSymbol('doc-text', 14, 'currentColor')}</button>
+            <button id="browser-pip-${pid}" title="${t('safari_pip', 'Picture in Picture')}" style="background:transparent;border:none;cursor:pointer;padding:4px 6px;border-radius:6px;opacity:0.7;display:flex;align-items:center;">${getSFSymbol('desktop', 14, 'currentColor')}</button>
             
             <!-- Safari Radial Downloads Button -->
             <div id="safari-dl-btn-${pid}" title="${t('safari_downloads', 'Downloads')}" style="position:relative;cursor:pointer;display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;transition:background 0.15s;">
@@ -4703,7 +4976,7 @@ async function launchBrowser() {
                 <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="rgba(0,0,0,0.12)" stroke-width="3.5"/>
                 <path id="safari-dl-ring-${pid}" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#007aff" stroke-width="3.5" stroke-dasharray="100, 100" stroke-dashoffset="100" style="transition:stroke-dashoffset 0.6s cubic-bezier(0.16, 1, 0.3, 1);"/>
               </svg>
-              <span style="position:absolute;font-size:10px;color:#007aff;font-weight:bold;">↓</span>
+              <span style="position:absolute;display:flex;align-items:center;justify-content:center;color:#007aff;">${getSFSymbol('arrow-down-circle', 14, '#007aff')}</span>
             </div>
           </div>
         </div>
@@ -4716,20 +4989,20 @@ async function launchBrowser() {
           </div>
           <div id="safari-dl-list-${pid}" style="display:flex;flex-direction:column;gap:4px;margin-top:6px;max-height:220px;overflow-y:auto;">
             <div class="safari-dl-item">
-              <div style="font-size:22px;">🏞️</div>
+              <div style="display:flex;align-items:center;">${getSFSymbol('doc-image', 22)}</div>
               <div style="flex:1;">
                 <div style="font-size:12px;font-weight:600;">Sonoma_Coast_4K.heic</div>
                 <div style="font-size:10px;color:#34c759;">18.4 MB — ${t('safari_completed', 'Completed')}</div>
               </div>
-              <button onclick="launchFinder()" title="${t('safari_show_in_finder', 'Show in Finder')}" style="background:none;border:none;cursor:pointer;font-size:14px;opacity:0.6;">🔍</button>
+              <button onclick="launchFinder()" title="${t('safari_show_in_finder', 'Show in Finder')}" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;opacity:0.6;">${getSFSymbol('magnifyingglass', 13, 'currentColor')}</button>
             </div>
             <div class="safari-dl-item">
-              <div style="font-size:22px;">📄</div>
+              <div style="display:flex;align-items:center;">${getSFSymbol('doc', 22)}</div>
               <div style="flex:1;">
                 <div style="font-size:12px;font-weight:600;">AliceOS_Architecture.pdf</div>
                 <div style="font-size:10px;color:#34c759;">2.1 MB — ${t('safari_completed', 'Completed')}</div>
               </div>
-              <button onclick="launchFinder()" title="${t('safari_show_in_finder', 'Show in Finder')}" style="background:none;border:none;cursor:pointer;font-size:14px;opacity:0.6;">🔍</button>
+              <button onclick="launchFinder()" title="${t('safari_show_in_finder', 'Show in Finder')}" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;opacity:0.6;">${getSFSymbol('magnifyingglass', 13, 'currentColor')}</button>
             </div>
           </div>
         </div>
@@ -4746,7 +5019,7 @@ async function launchBrowser() {
               <span id="safari-overview-count-${pid}" style="font-size:11px;font-weight:600;opacity:0.65;background:rgba(0,0,0,0.06);padding:2px 8px;border-radius:10px;">${tabs.length} ${t('safari_tabs', 'Tabs')}</span>
             </div>
             <div style="display:flex;align-items:center;gap:10px;">
-              <input type="text" id="safari-overview-search-${pid}" placeholder="🔍 ${t('safari_search_tabs', 'Search Tabs...')}" style="border:1px solid rgba(0,0,0,0.1);background:white;padding:5px 12px;border-radius:14px;font-size:12px;outline:none;width:170px;">
+              <input type="text" id="safari-overview-search-${pid}" placeholder="${t('safari_search_tabs', 'Search Tabs...')}" style="border:1px solid rgba(0,0,0,0.1);background:white;padding:5px 12px;border-radius:14px;font-size:12px;outline:none;width:170px;">
               <button id="safari-overview-close-${pid}" style="background:#007aff;color:white;border:none;padding:5px 14px;border-radius:12px;font-size:12px;font-weight:600;cursor:pointer;">${t('safari_done', 'Done')}</button>
             </div>
           </div>
@@ -4791,14 +5064,14 @@ async function launchBrowser() {
     const readerCloseBtn = win.querySelector(`#safari-reader-close-${pid}`);
 
     const favoritesList = [
-      { name: 'Apple', url: 'https://apple.com', icon: '🍎' },
-      { name: 'AliceOS Docs', url: 'https://docs.aliceos.org', icon: '💻' },
-      { name: 'GitHub', url: 'https://github.com', icon: '🐙' },
-      { name: 'Wikipedia', url: 'https://en.wikipedia.org', icon: '📖' },
-      { name: 'Hacker News', url: 'https://news.ycombinator.com', icon: '📰' },
-      { name: 'YouTube', url: 'https://youtube.com', icon: '▶️' },
-      { name: 'Open-Meteo', url: 'https://open-meteo.com', icon: '🌤️' },
-      { name: 'Reddit', url: 'https://reddit.com', icon: '🤖' }
+      { name: 'Apple', url: 'https://apple.com', icon: getSFSymbol('desktop', 18, '#007aff') },
+      { name: 'AliceOS Docs', url: 'https://docs.aliceos.org', icon: getSFSymbol('doc-text', 18, '#007aff') },
+      { name: 'GitHub', url: 'https://github.com', icon: getSFSymbol('hammer', 18, '#34c759') },
+      { name: 'Wikipedia', url: 'https://en.wikipedia.org', icon: getSFSymbol('globe', 18, '#5856d6') },
+      { name: 'Hacker News', url: 'https://news.ycombinator.com', icon: getSFSymbol('waveform', 18, '#ff9500') },
+      { name: 'YouTube', url: 'https://youtube.com', icon: getSFSymbol('play', 18, '#ff3b30') },
+      { name: 'Open-Meteo', url: 'https://open-meteo.com', icon: getSFSymbol('sun', 18, '#ffcc00') },
+      { name: 'Reddit', url: 'https://reddit.com', icon: getSFSymbol('gamecontroller', 18, '#af52de') }
     ];
 
     function getStartPageHtml() {
@@ -4816,7 +5089,7 @@ async function launchBrowser() {
 
           <!-- Privacy Report -->
           <div class="safari-privacy-card">
-            <div style="font-size:32px;">🛡️</div>
+            <div style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;background:rgba(52,199,89,0.12);border-radius:10px;color:#34c759;">${getSFSymbol('lock', 24, '#34c759')}</div>
             <div style="flex:1;">
               <div style="font-size:14px;font-weight:700;color:#1d1d1f;">${t('safari_privacy_report', 'Privacy Report')}</div>
               <div style="font-size:12px;color:#6e6e73;margin-top:2px;">In the last 30 days, Safari prevented 78 trackers from profiling you. Intelligent Tracking Prevention is active.</div>
@@ -4828,15 +5101,15 @@ async function launchBrowser() {
           <div style="width:100%;max-width:680px;margin-top:24px;">
             <div class="safari-section-title">${t('safari_reading_list', 'Reading List')}</div>
             <div style="display:flex;flex-direction:column;gap:10px;">
-              <div class="safari-reading-item" style="background:white;padding:12px 16px;border-radius:12px;border:1px solid rgba(0,0,0,0.06);display:flex;align-items:center;gap:12px;cursor:pointer;" onclick="createTab('https://apple.com', 'Apple', '🍎')">
-                <div style="font-size:24px;">🍎</div>
+              <div class="safari-reading-item" style="background:white;padding:12px 16px;border-radius:12px;border:1px solid rgba(0,0,0,0.06);display:flex;align-items:center;gap:12px;cursor:pointer;" onclick="createTab('https://apple.com', 'Apple')">
+                <div style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(0,0,0,0.06);border-radius:8px;">${getSFSymbol('desktop', 20, '#007aff')}</div>
                 <div style="flex:1;">
                   <div style="font-size:13px;font-weight:600;">Apple Introduces macOS Sequoia with Groundbreaking Apple Intelligence</div>
                   <div style="font-size:11px;color:#8e8e93;">apple.com • 3 min read</div>
                 </div>
               </div>
-              <div class="safari-reading-item" style="background:white;padding:12px 16px;border-radius:12px;border:1px solid rgba(0,0,0,0.06);display:flex;align-items:center;gap:12px;cursor:pointer;" onclick="createTab('https://docs.aliceos.org', 'AliceOS Architecture', '💻')">
-                <div style="font-size:24px;">💻</div>
+              <div class="safari-reading-item" style="background:white;padding:12px 16px;border-radius:12px;border:1px solid rgba(0,0,0,0.06);display:flex;align-items:center;gap:12px;cursor:pointer;" onclick="createTab('https://docs.aliceos.org', 'AliceOS Architecture')">
+                <div style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(0,0,0,0.06);border-radius:8px;">${getSFSymbol('doc-text', 20, '#007aff')}</div>
                 <div style="flex:1;">
                   <div style="font-size:13px;font-weight:600;">AliceOS Architecture: Microkernel VFS & Hardware Compositor</div>
                   <div style="font-size:11px;color:#8e8e93;">docs.aliceos.org • 5 min read</div>
@@ -4853,9 +5126,7 @@ async function launchBrowser() {
         <div style="height:100%;overflow-y:auto;background:#000;color:#f5f5f7;font-family:-apple-system,BlinkMacSystemFont,sans-serif;user-select:none;">
           <div style="background:rgba(22,22,23,0.8);backdrop-filter:blur(20px);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.08);position:sticky;top:0;z-index:5;">
             <span style="display:inline-flex;align-items:center;opacity:0.9;">
-              <svg viewBox="0 0 384 512" width="13.5" height="18" fill="currentColor">
-                <path d="M318.7 268.7c-.2-36.2 16.4-61.2 41.2-90.8-23.7-34.7-59.4-48.4-100.1-49.9-42.8-1.5-82.5 25.5-102.8 25.5-20.4 0-51.9-25.2-85.3-24.5-43.7 1-84.5 25.7-107.4 64.9-46.3 79.9-11.8 196.4 32.7 261.3 21.6 31.4 47.4 66.8 81.6 65.5 32.2-1.3 44.5-20.7 83.1-20.7 38.6 0 49.9 20.7 84 20.7 35.3 0 57.1-32.9 78.9-64.4 24.9-36.3 35.1-71.5 35.5-73.4-.9-.3-52.9-20.4-53.2-80.4zM245.9 83.1c17.5-21.2 29.3-50.6 26.1-79.9-25.2 1-55.7 16.7-73.8 37.7-16.1 18.5-29.3 48.7-25.6 78 28.2 2.1 55.7-16.1 73.3-35.8z"/>
-              </svg>
+              ${getSFSymbol('apple', 16, 'currentColor')}
             </span>
             <div style="display:flex;gap:20px;font-size:12px;color:#a1a1a6;">
               <span>Store</span><span>Mac</span><span>iPad</span><span>iPhone</span><span>Watch</span><span>Vision</span><span>AirPods</span>
@@ -4915,7 +5186,7 @@ async function launchBrowser() {
         const tabEl = document.createElement('div');
         tabEl.className = `safari-tab ${t.id === activeTabId ? 'active' : ''}`;
         tabEl.innerHTML = `
-          <span>${t.icon || '🌐'}</span>
+          <span style="display:flex;align-items:center;">${t.icon || getSFSymbol('globe', 13, '#007aff')}</span>
           <span style="flex:1;overflow:hidden;text-overflow:ellipsis;">${t.title}</span>
           ${tabs.length > 1 ? `<span class="safari-tab-close" data-id="${t.id}">✕</span>` : ''}
         `;
@@ -4948,7 +5219,7 @@ async function launchBrowser() {
       });
     }
 
-    function createTab(url = 'safari:start', title = 'Start Page', icon = '🧭') {
+    function createTab(url = 'safari:start', title = 'Start Page', icon = getSFSymbol('safari', 13, '#007aff')) {
       tabCounter++;
       const newId = tabCounter;
       tabs.push({ id: newId, title, url, icon });
@@ -5006,10 +5277,10 @@ async function launchBrowser() {
         tab.url = url;
         if (title) tab.title = title;
         else tab.title = url.replace(/^https?:\/\//, '').split('/')[0] || 'Website';
-        if (url.includes('apple.com')) tab.icon = '🍎';
-        else if (url.includes('github.com')) tab.icon = '🐙';
-        else if (url.includes('aliceos')) tab.icon = '💻';
-        else tab.icon = '🌐';
+        if (url.includes('apple.com')) tab.icon = getSFSymbol('apple', 13, '#1d1d1f');
+        else if (url.includes('github.com')) tab.icon = getSFSymbol('hammer', 13, '#34c759');
+        else if (url.includes('aliceos')) tab.icon = getSFSymbol('doc-text', 13, '#007aff');
+        else tab.icon = getSFSymbol('globe', 13, '#5856d6');
       }
       const frameWrapper = framesContainer.querySelector(`.browser-tab-frame[data-tab-id="${tabId}"]`);
       if (frameWrapper) {
@@ -5296,7 +5567,7 @@ async function launchCalculator() {
           <button class="calc-seg-btn active" id="calc-mode-basic-${pid}">基本</button>
           <button class="calc-seg-btn" id="calc-mode-sci-${pid}">科学</button>
         </div>
-        <button class="calc-tape-btn" id="calc-tape-toggle-${pid}">📜 历史</button>
+        <button class="calc-tape-btn" id="calc-tape-toggle-${pid}">${getSFSymbol('clock', 13, 'currentColor')} 历史</button>
       </div>
 
       <div style="display:flex;flex:1;overflow:hidden;position:relative;">
@@ -5360,6 +5631,7 @@ async function launchCalculator() {
 
   win.style.width = '320px';
   win.style.height = '460px';
+  win.setAttribute('tabindex', '0');
 
   const display = win.querySelector(`#calc-result-${pid}`);
   const exprLine = win.querySelector(`#calc-expr-${pid}`);
@@ -5369,6 +5641,8 @@ async function launchCalculator() {
   const modeBasicBtn = win.querySelector(`#calc-mode-basic-${pid}`);
   const modeSciBtn = win.querySelector(`#calc-mode-sci-${pid}`);
   const tapeToggleBtn = win.querySelector(`#calc-tape-toggle-${pid}`);
+  const opBtns = win.querySelectorAll('.calc-mac-btn.op');
+  const acBtn = win.querySelector('.calc-mac-btn.func[data-val="AC"]');
 
   let current = '0';
   let previous = null;
@@ -5376,8 +5650,13 @@ async function launchCalculator() {
   let justEvaluated = false;
   let historyTape = [];
 
+  function clearActiveOps() {
+    opBtns.forEach(b => b.classList.remove('active'));
+  }
+
   function updateDisplay() {
     display.textContent = current;
+    if (acBtn) acBtn.textContent = (current !== '0' && !justEvaluated) ? 'C' : 'AC';
     // Auto shrink long numbers
     if (current.length > 12) display.style.fontSize = '22px';
     else if (current.length > 8) display.style.fontSize = '28px';
@@ -5398,6 +5677,7 @@ async function launchCalculator() {
     if (window.AppleAudioEngine) window.AppleAudioEngine.playPop();
 
     if (val >= '0' && val <= '9') {
+      clearActiveOps();
       if (current === '0' || justEvaluated) {
         current = val;
         justEvaluated = false;
@@ -5406,6 +5686,7 @@ async function launchCalculator() {
       }
       updateDisplay();
     } else if (val === '.') {
+      clearActiveOps();
       if (justEvaluated) {
         current = '0.';
         justEvaluated = false;
@@ -5414,6 +5695,7 @@ async function launchCalculator() {
       }
       updateDisplay();
     } else if (val === 'AC') {
+      clearActiveOps();
       current = '0';
       previous = null;
       operation = null;
@@ -5429,6 +5711,10 @@ async function launchCalculator() {
       current = String(parseFloat(current) / 100);
       updateDisplay();
     } else if (['+', '-', '*', '/'].includes(val)) {
+      clearActiveOps();
+      const activeBtn = Array.from(opBtns).find(b => b.dataset.val === val);
+      if (activeBtn) activeBtn.classList.add('active');
+
       const sym = { '+': '+', '-': '−', '*': '×', '/': '÷' }[val];
       previous = current;
       operation = val;
@@ -5436,6 +5722,7 @@ async function launchCalculator() {
       current = '0';
       justEvaluated = false;
     } else if (val === '=') {
+      clearActiveOps();
       if (operation && previous !== null) {
         const sym = { '+': '+', '-': '−', '*': '×', '/': '÷' }[operation];
         const fullExpr = `${previous} ${sym} ${current}`;
@@ -5462,14 +5749,17 @@ async function launchCalculator() {
         }
       }
     } else if (val === 'pi') {
+      clearActiveOps();
       current = String(Math.PI.toFixed(8));
       justEvaluated = true;
       updateDisplay();
     } else if (val === 'e') {
+      clearActiveOps();
       current = String(Math.E.toFixed(8));
       justEvaluated = true;
       updateDisplay();
     } else if (val === 'sq') {
+      clearActiveOps();
       const v = parseFloat(current);
       const resVal = String(parseFloat((v * v).toFixed(8)));
       addHistory(`${current}²`, resVal);
@@ -5477,6 +5767,7 @@ async function launchCalculator() {
       justEvaluated = true;
       updateDisplay();
     } else if (val === 'sqrt') {
+      clearActiveOps();
       const v = parseFloat(current);
       const resVal = v >= 0 ? String(parseFloat(Math.sqrt(v).toFixed(8))) : '错误';
       addHistory(`√(${current})`, resVal);
@@ -5484,24 +5775,28 @@ async function launchCalculator() {
       justEvaluated = true;
       updateDisplay();
     } else if (val === 'sin') {
+      clearActiveOps();
       const resVal = String(parseFloat(Math.sin(parseFloat(current)).toFixed(8)));
       addHistory(`sin(${current})`, resVal);
       current = resVal;
       justEvaluated = true;
       updateDisplay();
     } else if (val === 'cos') {
+      clearActiveOps();
       const resVal = String(parseFloat(Math.cos(parseFloat(current)).toFixed(8)));
       addHistory(`cos(${current})`, resVal);
       current = resVal;
       justEvaluated = true;
       updateDisplay();
     } else if (val === 'tan') {
+      clearActiveOps();
       const resVal = String(parseFloat(Math.tan(parseFloat(current)).toFixed(8)));
       addHistory(`tan(${current})`, resVal);
       current = resVal;
       justEvaluated = true;
       updateDisplay();
     } else if (val === 'ln') {
+      clearActiveOps();
       const v = parseFloat(current);
       const resVal = v > 0 ? String(parseFloat(Math.log(v).toFixed(8))) : '错误';
       addHistory(`ln(${current})`, resVal);
@@ -5541,8 +5836,9 @@ async function launchCalculator() {
     win.style.width = (baseW + (isShown ? 0 : 140)) + 'px';
   });
 
-  // Physical Keyboard Listener
-  win.addEventListener('keydown', (e) => {
+  // Physical Keyboard Listener (Window + Document reactive)
+  const calcKeyHandler = (e) => {
+    if (!win.classList.contains('active-window') && document.activeElement !== win && !win.contains(document.activeElement)) return;
     if (e.key >= '0' && e.key <= '9') handleInput(e.key);
     else if (e.key === '.') handleInput('.');
     else if (e.key === '+') handleInput('+');
@@ -5556,7 +5852,17 @@ async function launchCalculator() {
       else current = '0';
       updateDisplay();
     }
-  });
+  };
+  document.addEventListener('keydown', calcKeyHandler);
+
+  const closeBtn = win.querySelector('.win-control-btn.close');
+  if (closeBtn) {
+    const origClick = closeBtn.onclick;
+    closeBtn.onclick = (e) => {
+      document.removeEventListener('keydown', calcKeyHandler);
+      if (origClick) origClick.call(closeBtn, e);
+    };
+  }
 }
 
 // Control Center Dropdown
@@ -5651,9 +5957,9 @@ async function launchSettings() {
     const win = createWindow(pid, t('app_settings', 'System Settings'), `
       <div class="ventura-settings">
         <!-- Sidebar -->
-        <div class="ventura-sidebar">
+        <div class="ventura-sidebar" style="overflow-y:auto;max-height:100%;">
           <div class="ventura-profile">
-            <div class="ventura-avatar">👩‍💻</div>
+            <div class="ventura-avatar" style="background:linear-gradient(135deg,#007aff,#5856d6);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;">A</div>
             <div style="overflow:hidden;">
               <div style="font-weight:600;font-size:13px;white-space:nowrap;text-overflow:ellipsis;">Alice</div>
               <div style="font-size:11px;opacity:0.6;" data-i18n="settings_admin">${t('settings_admin', 'Administrator')}</div>
@@ -5661,27 +5967,39 @@ async function launchSettings() {
           </div>
 
           <div class="ventura-nav-item active" data-tab="appearance">
-            <div class="ventura-badge" style="background:linear-gradient(135deg,#007aff,#5856d6);">🎨</div>
+            <div class="ventura-badge" style="background:linear-gradient(135deg,#007aff,#5856d6);">${getSFSymbol('palette', 12, '#fff')}</div>
             <span data-i18n="settings_appearance">${t('settings_appearance', 'Appearance')}</span>
           </div>
           <div class="ventura-nav-item" data-tab="wallpaper">
-            <div class="ventura-badge" style="background:linear-gradient(135deg,#af52de,#ff2d55);">🖥️</div>
+            <div class="ventura-badge" style="background:linear-gradient(135deg,#af52de,#ff2d55);">${getSFSymbol('doc-image', 12, '#fff')}</div>
             <span data-i18n="settings_wallpaper">${t('settings_wallpaper', 'Wallpaper')}</span>
           </div>
+          <div class="ventura-nav-item" data-tab="displays">
+            <div class="ventura-badge" style="background:linear-gradient(135deg,#007aff,#30b0c7);">${getSFSymbol('desktop', 12, '#fff')}</div>
+            <span>显示器 (Displays)</span>
+          </div>
           <div class="ventura-nav-item" data-tab="desktop">
-            <div class="ventura-badge" style="background:linear-gradient(135deg,#30b0c7,#34c759);">🪟</div>
+            <div class="ventura-badge" style="background:linear-gradient(135deg,#30b0c7,#34c759);">${getSFSymbol('grid', 12, '#fff')}</div>
             <span data-i18n="settings_desktop">${t('settings_desktop', 'Desktop & Stage')}</span>
           </div>
           <div class="ventura-nav-item" data-tab="sound">
-            <div class="ventura-badge" style="background:linear-gradient(135deg,#ff2d55,#ff375f);">🔊</div>
+            <div class="ventura-badge" style="background:linear-gradient(135deg,#ff2d55,#ff375f);">${getSFSymbol('speaker', 12, '#fff')}</div>
             <span data-i18n="settings_sound">${t('settings_sound', 'Sound')}</span>
           </div>
+          <div class="ventura-nav-item" data-tab="battery">
+            <div class="ventura-badge" style="background:linear-gradient(135deg,#34c759,#30b0c7);">${getSFSymbol('battery', 12, '#fff')}</div>
+            <span>电池 (Battery)</span>
+          </div>
+          <div class="ventura-nav-item" data-tab="wifi">
+            <div class="ventura-badge" style="background:linear-gradient(135deg,#007aff,#0a84ff);">${getSFSymbol('wifi', 12, '#fff')}</div>
+            <span>无线局域网 (Wi-Fi)</span>
+          </div>
           <div class="ventura-nav-item" data-tab="language">
-            <div class="ventura-badge" style="background:linear-gradient(135deg,#5856d6,#007aff);">🌐</div>
+            <div class="ventura-badge" style="background:linear-gradient(135deg,#5856d6,#007aff);">${getSFSymbol('globe', 12, '#fff')}</div>
             <span data-i18n="settings_lang_region">${t('settings_lang_region', 'Language & Region')}</span>
           </div>
           <div class="ventura-nav-item" data-tab="about">
-            <div class="ventura-badge" style="background:linear-gradient(135deg,#8e8e93,#636366);">ℹ️</div>
+            <div class="ventura-badge" style="background:linear-gradient(135deg,#8e8e93,#636366);">${getSFSymbol('gear', 12, '#fff')}</div>
             <span data-i18n="settings_about">${t('settings_about', 'General & About')}</span>
           </div>
         </div>
@@ -5731,11 +6049,11 @@ async function launchSettings() {
             <div style="font-size:12px;font-weight:600;opacity:0.6;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px;">${t('settings_theme_mode', 'Theme Mode')}</div>
             <div style="display:flex;gap:20px;">
               <div id="theme-light-card" style="flex:1;cursor:pointer;border-radius:10px;padding:12px;border:2px solid ${document.body.classList.contains('dark-mode') ? 'transparent' : '#007aff'};background:rgba(255,255,255,0.7);text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
-                <div style="width:100%;height:60px;background:#f0f0f5;border-radius:6px;margin-bottom:8px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;color:#333;font-size:22px;">☀️</div>
+                <div style="width:100%;height:60px;background:#f0f0f5;border-radius:6px;margin-bottom:8px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;color:#ff9500;">${getSFSymbol('sun', 26, '#ff9500')}</div>
                 <div style="font-weight:600;font-size:13px;color:#333;">${t('settings_light', 'Light')}</div>
               </div>
               <div id="theme-dark-card" style="flex:1;cursor:pointer;border-radius:10px;padding:12px;border:2px solid ${document.body.classList.contains('dark-mode') ? '#007aff' : 'transparent'};background:rgba(0,0,0,0.4);text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
-                <div style="width:100%;height:60px;background:#1e1e24;border-radius:6px;margin-bottom:8px;border:1px solid #444;display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;">🌙</div>
+                <div style="width:100%;height:60px;background:#1e1e24;border-radius:6px;margin-bottom:8px;border:1px solid #444;display:flex;align-items:center;justify-content:center;color:#af52de;">${getSFSymbol('moon', 26, '#af52de')}</div>
                 <div style="font-weight:600;font-size:13px;color:#fff;">${t('settings_dark', 'Dark')}</div>
               </div>
             </div>
@@ -6082,28 +6400,28 @@ async function launchSettings() {
             
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
               <button class="sound-preview-btn" data-sfx="haptic" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);padding:10px 14px;border-radius:10px;color:inherit;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:space-between;">
-                <span>👆 Trackpad Taptic Click</span>
-                <span style="opacity:0.6;">▶</span>
+                <span style="display:flex;align-items:center;gap:8px;">${getSFSymbol('desktop', 14, '#007aff')} Trackpad Taptic Click</span>
+                <span style="opacity:0.6;display:flex;align-items:center;">${getSFSymbol('play', 11, 'currentColor')}</span>
               </button>
               <button class="sound-preview-btn" data-sfx="pop" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);padding:10px 14px;border-radius:10px;color:inherit;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:space-between;">
-                <span>🫧 macOS Pop (Volume)</span>
-                <span style="opacity:0.6;">▶</span>
+                <span style="display:flex;align-items:center;gap:8px;">${getSFSymbol('speaker', 14, '#34c759')} macOS Pop (Volume)</span>
+                <span style="opacity:0.6;display:flex;align-items:center;">${getSFSymbol('play', 11, 'currentColor')}</span>
               </button>
               <button class="sound-preview-btn" data-sfx="tink" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);padding:10px 14px;border-radius:10px;color:inherit;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:space-between;">
-                <span>🔔 macOS Tink (Glass Bell)</span>
-                <span style="opacity:0.6;">▶</span>
+                <span style="display:flex;align-items:center;gap:8px;">${getSFSymbol('speaker', 14, '#ff9500')} macOS Tink (Glass Bell)</span>
+                <span style="opacity:0.6;display:flex;align-items:center;">${getSFSymbol('play', 11, 'currentColor')}</span>
               </button>
               <button class="sound-preview-btn" data-sfx="switch" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);padding:10px 14px;border-radius:10px;color:inherit;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:space-between;">
-                <span>🔘 macOS Switch Click</span>
-                <span style="opacity:0.6;">▶</span>
+                <span style="display:flex;align-items:center;gap:8px;">${getSFSymbol('gear', 14, '#af52de')} macOS Switch Click</span>
+                <span style="opacity:0.6;display:flex;align-items:center;">${getSFSymbol('play', 11, 'currentColor')}</span>
               </button>
               <button class="sound-preview-btn" data-sfx="airdrop" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);padding:10px 14px;border-radius:10px;color:inherit;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:space-between;">
-                <span>📡 macOS AirDrop Chime</span>
-                <span style="opacity:0.6;">▶</span>
+                <span style="display:flex;align-items:center;gap:8px;">${getSFSymbol('airdrop', 14, '#007aff')} macOS AirDrop Chime</span>
+                <span style="opacity:0.6;display:flex;align-items:center;">${getSFSymbol('play', 11, 'currentColor')}</span>
               </button>
               <button class="sound-preview-btn" data-sfx="trash" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);padding:10px 14px;border-radius:10px;color:inherit;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:space-between;">
-                <span>🗑️ macOS Paper Crumple</span>
-                <span style="opacity:0.6;">▶</span>
+                <span style="display:flex;align-items:center;gap:8px;">${getSFSymbol('trash', 14, '#ff3b30')} macOS Paper Crumple</span>
+                <span style="opacity:0.6;display:flex;align-items:center;">${getSFSymbol('play', 11, 'currentColor')}</span>
               </button>
             </div>
           </div>
@@ -6172,13 +6490,101 @@ async function launchSettings() {
           };
         });
       }
+      else if (tab === 'displays') {
+        contentArea.innerHTML = `
+          <h2 style="font-size:20px;margin:0 0 16px 0;font-weight:600;">显示器 (Displays)</h2>
+          <div class="ventura-card">
+            <div style="display:flex;align-items:center;gap:16px;margin-bottom:12px;">
+              <div style="width:48px;height:40px;background:#007aff;border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;">
+                ${getSFSymbol('desktop', 24, '#fff')}
+              </div>
+              <div>
+                <div style="font-weight:600;font-size:14px;">内置 Liquid Retina XDR 显示屏</div>
+                <div style="font-size:11px;opacity:0.6;">3024 × 1964 视网膜极限画质 · ProMotion 120Hz 极速自适应刷新率</div>
+              </div>
+            </div>
+            <div class="ventura-row">
+              <div>
+                <div style="font-weight:600;font-size:13px;">刷新率 (Refresh Rate)</div>
+                <div style="font-size:11px;opacity:0.6;">支持 Apple ProMotion 120Hz 极速平滑流动画质</div>
+              </div>
+              <select style="background:rgba(255,255,255,0.15);border:1px solid rgba(0,0,0,0.15);border-radius:6px;padding:4px 8px;color:inherit;font-size:12px;outline:none;">
+                <option>ProMotion (120Hz 极速刷新)</option>
+                <option>60Hz (标准省电)</option>
+              </select>
+            </div>
+            <div class="ventura-row">
+              <div>
+                <div style="font-weight:600;font-size:13px;">原彩显示 (True Tone)</div>
+                <div style="font-size:11px;opacity:0.6;">根据周围环境光线条件自动调整屏幕色温</div>
+              </div>
+              <input type="checkbox" checked style="accent-color:#007aff;cursor:pointer;width:16px;height:16px;">
+            </div>
+          </div>
+        `;
+      }
+      else if (tab === 'battery') {
+        contentArea.innerHTML = `
+          <h2 style="font-size:20px;margin:0 0 16px 0;font-weight:600;">电池 (Battery)</h2>
+          <div class="ventura-card">
+            <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+              <div style="color:#34c759;">
+                ${getSFSymbol('battery', 36, '#34c759')}
+              </div>
+              <div>
+                <div style="font-size:26px;font-weight:700;line-height:1;">100%</div>
+                <div style="font-size:11px;opacity:0.6;margin-top:4px;">电源：已连接电源适配器 (140W USB-C 极速闪充)</div>
+              </div>
+            </div>
+            <div class="ventura-row">
+              <div>
+                <div style="font-weight:600;font-size:13px;">电池健康 (Battery Health)</div>
+                <div style="font-size:11px;opacity:0.6;">最大容量 100% · 状态极佳 · 循环计数 12 次</div>
+              </div>
+              <span style="color:#34c759;font-weight:600;font-size:12px;">正常 (Normal)</span>
+            </div>
+            <div class="ventura-row">
+              <div>
+                <div style="font-weight:600;font-size:13px;">低电量模式 (Low Power Mode)</div>
+                <div style="font-size:11px;opacity:0.6;">降低后台功耗以延长综合电池续航</div>
+              </div>
+              <input type="checkbox" style="accent-color:#34c759;cursor:pointer;width:16px;height:16px;">
+            </div>
+          </div>
+        `;
+      }
+      else if (tab === 'wifi') {
+        contentArea.innerHTML = `
+          <h2 style="font-size:20px;margin:0 0 16px 0;font-weight:600;">无线局域网 (Wi-Fi)</h2>
+          <div class="ventura-card">
+            <div class="ventura-row" style="padding-bottom:12px;border-bottom:1px solid rgba(0,0,0,0.06);">
+              <div style="display:flex;align-items:center;gap:10px;">
+                ${getSFSymbol('wifi', 20, '#007aff')}
+                <div>
+                  <div style="font-weight:600;font-size:13px;">Wi-Fi 局域网广播</div>
+                  <div style="font-size:11px;opacity:0.6;">已开启</div>
+                </div>
+              </div>
+              <input type="checkbox" checked style="accent-color:#007aff;cursor:pointer;width:16px;height:16px;">
+            </div>
+            <div style="margin-top:12px;">
+              <div style="font-size:11px;font-weight:700;color:#888;margin-bottom:8px;letter-spacing:0.5px;">已连接的网络</div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:rgba(0,122,255,0.08);border-radius:8px;border:1px solid rgba(0,122,255,0.2);">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  ${getSFSymbol('wifi', 15, '#007aff')}
+                  <span style="font-weight:600;font-size:13px;">Apple_Park_5G</span>
+                </div>
+                <span style="font-size:11px;color:#007aff;font-weight:600;">✓ 已连接 · IP: 192.168.1.108</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }
       else if (tab === 'about') {
         contentArea.innerHTML = `
           <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:20px 0;">
             <div style="margin-bottom:12px;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.2));display:flex;align-items:center;justify-content:center;">
-              <svg viewBox="0 0 384 512" width="54" height="72" fill="currentColor">
-                <path d="M318.7 268.7c-.2-36.2 16.4-61.2 41.2-90.8-23.7-34.7-59.4-48.4-100.1-49.9-42.8-1.5-82.5 25.5-102.8 25.5-20.4 0-51.9-25.2-85.3-24.5-43.7 1-84.5 25.7-107.4 64.9-46.3 79.9-11.8 196.4 32.7 261.3 21.6 31.4 47.4 66.8 81.6 65.5 32.2-1.3 44.5-20.7 83.1-20.7 38.6 0 49.9 20.7 84 20.7 35.3 0 57.1-32.9 78.9-64.4 24.9-36.3 35.1-71.5 35.5-73.4-.9-.3-52.9-20.4-53.2-80.4zM245.9 83.1c17.5-21.2 29.3-50.6 26.1-79.9-25.2 1-55.7 16.7-73.8 37.7-16.1 18.5-29.3 48.7-25.6 78 28.2 2.1 55.7-16.1 73.3-35.8z"/>
-              </svg>
+              ${getSFSymbol('apple', 64, 'currentColor')}
             </div>
             <h1 style="margin:0;font-size:24px;font-weight:700;">AliceOS</h1>
             <div style="font-size:13px;opacity:0.7;margin-top:4px;">Sonoma Edition 1.0.0</div>
@@ -7562,36 +7968,36 @@ async function launchMusic() {
         </div>
         <div class="music-nav-group">
           <div class="music-nav-hdr">Apple Music</div>
-          <div class="music-nav-item active"><span>🎧</span> 现在就听</div>
-          <div class="music-nav-item"><span>🌍</span> 浏览</div>
-          <div class="music-nav-item"><span>📻</span> 广播</div>
+          <div class="music-nav-item active"><span style="display:flex;align-items:center;">${getSFSymbol('play', 14, '#fc3c44')}</span> 现在就听</div>
+          <div class="music-nav-item"><span style="display:flex;align-items:center;">${getSFSymbol('globe', 14, 'currentColor')}</span> 浏览</div>
+          <div class="music-nav-item"><span style="display:flex;align-items:center;">${getSFSymbol('waveform', 14, 'currentColor')}</span> 广播</div>
         </div>
         <div class="music-nav-group">
           <div class="music-nav-hdr">资料库</div>
-          <div class="music-nav-item"><span>🕒</span> 最近播放</div>
-          <div class="music-nav-item"><span>🎤</span> 艺人</div>
-          <div class="music-nav-item"><span>💿</span> 专辑</div>
+          <div class="music-nav-item"><span style="display:flex;align-items:center;">${getSFSymbol('clock', 14, 'currentColor')}</span> 最近播放</div>
+          <div class="music-nav-item"><span style="display:flex;align-items:center;">${getSFSymbol('speaker', 14, 'currentColor')}</span> 艺人</div>
+          <div class="music-nav-item"><span style="display:flex;align-items:center;">${getSFSymbol('internaldrive', 14, 'currentColor')}</span> 专辑</div>
         </div>
         <div class="music-nav-group">
           <div class="music-nav-hdr">播放列表</div>
-          <div class="music-nav-item"><span>☕</span> Apple Chill Lo-Fi</div>
-          <div class="music-nav-item"><span>💻</span> Cupertino Code</div>
-          <div class="music-nav-item"><span>🌌</span> Sequoia Sunset</div>
+          <div class="music-nav-item"><span style="display:flex;align-items:center;">${getSFSymbol('list', 14, '#fc3c44')}</span> Apple Chill Lo-Fi</div>
+          <div class="music-nav-item"><span style="display:flex;align-items:center;">${getSFSymbol('list', 14, '#007aff')}</span> Cupertino Code</div>
+          <div class="music-nav-item"><span style="display:flex;align-items:center;">${getSFSymbol('list', 14, '#ff9500')}</span> Sequoia Sunset</div>
         </div>
       </div>
 
       <div class="music-main-wrap">
         <div class="music-hero-banner">
-          <div class="music-hero-cover">
-            <span>🎵</span>
+          <div class="music-hero-cover" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#fc3c44,#ff2d55);border-radius:12px;color:white;">
+            ${getSFSymbol('waveform', 42, '#ffffff')}
           </div>
           <div class="music-hero-info">
             <div class="music-hero-tag">精选歌单 · APPLE MUSIC</div>
             <div class="music-hero-title">Apple Chill Lo-Fi Beats</div>
             <div class="music-hero-desc">柔和细腻的爵士和弦、慢节拍律动与温暖黑胶底噪，为专注代码与深度思考量身打造。</div>
             <div class="music-hero-btns">
-              <button class="music-play-btn" id="music-hero-play-${pid}">▶ 播放全部</button>
-              <button class="music-shuffle-btn" id="music-hero-shuffle-${pid}">🔀 随机播放</button>
+              <button class="music-play-btn" id="music-hero-play-${pid}" style="display:flex;align-items:center;gap:6px;">${getSFSymbol('play', 12, '#ffffff')} 播放全部</button>
+              <button class="music-shuffle-btn" id="music-hero-shuffle-${pid}" style="display:flex;align-items:center;gap:6px;">${getSFSymbol('arrow-clockwise', 12, 'currentColor')} 随机播放</button>
             </div>
           </div>
         </div>
@@ -7603,7 +8009,7 @@ async function launchMusic() {
             <div style="flex:1.5;">艺人</div>
             <div style="flex:1.5;">专辑</div>
             <div style="width:60px;text-align:right;">时长</div>
-            <div style="width:40px;text-align:center;">❤️</div>
+            <div style="width:40px;display:flex;align-items:center;justify-content:center;">${getSFSymbol('heart', 13, '#fc3c44')}</div>
           </div>
           <div class="music-table-body" id="music-table-body-${pid}"></div>
         </div>
@@ -7611,21 +8017,21 @@ async function launchMusic() {
 
       <div class="music-player-bar">
         <div class="music-current-meta">
-          <div class="music-mini-thumb" id="music-mini-thumb-${pid}">🎵</div>
+          <div class="music-mini-thumb" id="music-mini-thumb-${pid}" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#fc3c44,#ff2d55);border-radius:6px;color:white;">${getSFSymbol('waveform', 15, '#ffffff')}</div>
           <div style="overflow:hidden;">
             <div class="music-mini-title" id="music-mini-title-${pid}">Midnight in Cupertino</div>
             <div class="music-mini-artist" id="music-mini-artist-${pid}">Alice Lo-Fi Ensemble</div>
           </div>
-          <button class="music-mini-heart" id="music-mini-heart-${pid}">♡</button>
+          <button class="music-mini-heart" id="music-mini-heart-${pid}" style="display:flex;align-items:center;justify-content:center;background:transparent;border:none;cursor:pointer;">${getSFSymbol('heart', 15, '#999')}</button>
         </div>
 
         <div class="music-center-controls">
           <div class="music-btn-row">
-            <button class="music-ctrl-btn" id="music-shuffle-toggle-${pid}">🔀</button>
-            <button class="music-ctrl-btn" id="music-prev-btn-${pid}">⏮</button>
-            <button class="music-play-circle-btn" id="music-play-toggle-${pid}">▶</button>
-            <button class="music-ctrl-btn" id="music-next-btn-${pid}">⏭</button>
-            <button class="music-ctrl-btn" id="music-repeat-toggle-${pid}">🔁</button>
+            <button class="music-ctrl-btn" id="music-shuffle-toggle-${pid}" title="随机播放">${getSFSymbol('arrow-clockwise', 14, 'currentColor')}</button>
+            <button class="music-ctrl-btn" id="music-prev-btn-${pid}" title="上一首">${getSFSymbol('backward', 15, 'currentColor')}</button>
+            <button class="music-play-circle-btn" id="music-play-toggle-${pid}" title="播放/暂停">${getSFSymbol('play', 15, 'currentColor')}</button>
+            <button class="music-ctrl-btn" id="music-next-btn-${pid}" title="下一首">${getSFSymbol('forward', 15, 'currentColor')}</button>
+            <button class="music-ctrl-btn" id="music-repeat-toggle-${pid}" title="单曲循环">${getSFSymbol('arrow-clockwise', 14, 'currentColor')}</button>
           </div>
           <div class="music-progress-row">
             <span class="music-time-lbl" id="music-time-cur-${pid}">0:00</span>
@@ -7637,9 +8043,9 @@ async function launchMusic() {
         </div>
 
         <div class="music-volume-controls">
-          <span style="font-size:13px;opacity:0.6;">🔊</span>
+          <span style="display:flex;align-items:center;opacity:0.6;">${getSFSymbol('speaker', 14, 'currentColor')}</span>
           <input type="range" class="music-vol-slider" id="music-vol-${pid}" min="0" max="100" value="75">
-          <span style="font-size:13px;opacity:0.6;margin-left:8px;" title="隔空播放">📡</span>
+          <span style="display:flex;align-items:center;opacity:0.6;margin-left:8px;cursor:pointer;" title="隔空播放">${getSFSymbol('airdrop', 14, 'currentColor')}</span>
         </div>
       </div>
     </div>
@@ -7702,12 +8108,12 @@ async function launchMusic() {
   function renderTable() {
     tableBody.innerHTML = tracks.map((t, idx) => `
       <div class="music-track-row ${idx === currentTrackIdx ? 'playing' : ''}" data-idx="${idx}">
-        <div style="width:36px;opacity:0.6;">${idx === currentTrackIdx && isPlaying ? '🔊' : (idx + 1)}</div>
+        <div style="width:36px;opacity:0.6;display:flex;align-items:center;">${idx === currentTrackIdx && isPlaying ? getSFSymbol('speaker', 14, '#fc3c44') : (idx + 1)}</div>
         <div style="flex:2;font-weight:${idx === currentTrackIdx ? '700' : '500'};">${t.title}</div>
         <div style="flex:1.5;opacity:0.7;">${t.artist}</div>
         <div style="flex:1.5;opacity:0.7;">${t.album}</div>
         <div style="width:60px;text-align:right;opacity:0.6;font-family:monospace;">${t.durStr}</div>
-        <div style="width:40px;text-align:center;cursor:pointer;">♡</div>
+        <div style="width:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;">${getSFSymbol('heart', 13, '#999')}</div>
       </div>
     `).join('');
 
@@ -7733,8 +8139,8 @@ async function launchMusic() {
     timeTot.textContent = cur.durStr;
     playProgressSec = 0;
     isPlaying = true;
-    playToggle.textContent = '⏸';
-    heroPlay.textContent = '⏸ 暂停';
+    playToggle.innerHTML = getSFSymbol('pause', 15, 'currentColor');
+    heroPlay.innerHTML = `${getSFSymbol('pause', 12, '#ffffff')} 暂停`;
     renderTable();
 
     startSynthChord(cur.chordFreqs);
@@ -7756,8 +8162,8 @@ async function launchMusic() {
   function togglePlayPause() {
     if (isPlaying) {
       isPlaying = false;
-      playToggle.textContent = '▶';
-      heroPlay.textContent = '▶ 播放全部';
+      playToggle.innerHTML = getSFSymbol('play', 15, 'currentColor');
+      heroPlay.innerHTML = `${getSFSymbol('play', 12, '#ffffff')} 播放全部`;
       stopSynth();
     } else {
       playTrack(currentTrackIdx);
@@ -7783,8 +8189,10 @@ async function launchMusic() {
     playTrack(rnd);
   });
 
+  let isLiked = false;
   heartBtn.addEventListener('click', () => {
-    heartBtn.textContent = heartBtn.textContent === '♡' ? '❤️' : '♡';
+    isLiked = !isLiked;
+    heartBtn.innerHTML = isLiked ? getSFSymbol('heart-fill', 15, '#fc3c44') : getSFSymbol('heart', 15, '#999');
   });
 
   volSlider.addEventListener('input', () => {
@@ -8113,7 +8521,7 @@ function playNotificationChime() {
 }
 
 const ncHistory = [];
-function showNotification(title, message, appName = 'AliceOS', appIcon = '🍎') {
+function showNotification(title, message, appName = 'AliceOS', appIcon = null) {
   if (!message && title) {
     message = title;
     title = 'AliceOS';
@@ -8131,7 +8539,7 @@ function showNotification(title, message, appName = 'AliceOS', appIcon = '🍎')
   }
 
   // Infer app icon and app name if default
-  let displayIcon = appIcon;
+  let displayIcon = appIcon || getSFSymbol('apple', 14, 'currentColor');
   let displayApp = appName;
   const lowerTitle = (title || '').toLowerCase();
   const lowerApp = (appName || '').toLowerCase();
@@ -8161,7 +8569,7 @@ function showNotification(title, message, appName = 'AliceOS', appIcon = '🍎')
   toast.innerHTML = `
     <div class="toast-header">
       <div class="toast-app-badge">
-        <span style="font-size:13px;">${displayIcon}</span>
+        <span style="display:flex;align-items:center;font-size:13px;">${displayIcon}</span>
         <span>${displayApp}</span>
       </div>
       <div class="toast-time">now</div>
@@ -8234,8 +8642,8 @@ async function launchActivityMonitor() {
             <button class="am-tab-btn" data-tab="network">${currentSystemLang === 'zh' ? '网络' : 'Network'}</button>
           </div>
           <div style="display:flex;align-items:center;gap:10px;">
-            <button class="am-tool-btn danger" id="am-force-quit-${pid}" title="${currentSystemLang === 'zh' ? '强制退出选中的进程' : 'Force Quit Process'}">
-              🛑 ${currentSystemLang === 'zh' ? '强制退出' : 'Force Quit'}
+            <button class="am-tool-btn danger" id="am-force-quit-${pid}" title="${currentSystemLang === 'zh' ? '强制退出选中的进程' : 'Force Quit Process'}" style="display:flex;align-items:center;gap:6px;">
+              ${getSFSymbol('stop', 13, '#ff3b30')} ${currentSystemLang === 'zh' ? '强制退出' : 'Force Quit'}
             </button>
             <input type="text" class="am-search-input" id="am-search-${pid}" placeholder="${currentSystemLang === 'zh' ? '搜索进程...' : 'Filter...'}" />
           </div>
@@ -11056,7 +11464,7 @@ async function launchVideo() {
   if (res.success) {
     const pid = res.data.pid;
     const mediaTracks = [
-      { id: 'sequoia', title: 'macOS Sequoia Keynote & Intelligence', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4', icon: '<svg viewBox="0 0 384 512" width="10.5" height="14" fill="currentColor" style="display:inline-block;vertical-align:-1.5px;margin-right:2px;"><path d="M318.7 268.7c-.2-36.2 16.4-61.2 41.2-90.8-23.7-34.7-59.4-48.4-100.1-49.9-42.8-1.5-82.5 25.5-102.8 25.5-20.4 0-51.9-25.2-85.3-24.5-43.7 1-84.5 25.7-107.4 64.9-46.3 79.9-11.8 196.4 32.7 261.3 21.6 31.4 47.4 66.8 81.6 65.5 32.2-1.3 44.5-20.7 83.1-20.7 38.6 0 49.9 20.7 84 20.7 35.3 0 57.1-32.9 78.9-64.4 24.9-36.3 35.1-71.5 35.5-73.4-.9-.3-52.9-20.4-53.2-80.4zM245.9 83.1c17.5-21.2 29.3-50.6 26.1-79.9-25.2 1-55.7 16.7-73.8 37.7-16.1 18.5-29.3 48.7-25.6 78 28.2 2.1 55.7-16.1 73.3-35.8z"/></svg>' },
+      { id: 'sequoia', title: 'macOS Sequoia Keynote & Intelligence', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4', icon: getSFSymbol('apple', 12, 'currentColor') },
       { id: 'bunny', title: 'Big Buck Bunny (Apple 4K ProRes)', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', icon: '🎬' },
       { id: 'tears', title: 'Tears of Steel (Sci-Fi Cinema)', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4', icon: '🚀' }
     ];
@@ -13668,25 +14076,25 @@ async function launchStore() {
         <!-- App Store Sidebar -->
         <div class="mac-store-sidebar">
           <div style="padding:4px 8px 12px;display:flex;align-items:center;gap:8px;">
-            <input type="text" id="store-search-${pid}" placeholder="🔍 ${t('store_search', 'Search')}" style="width:100%;border:none;background:rgba(0,0,0,0.06);padding:6px 12px;border-radius:10px;font-size:12px;outline:none;">
+            <input type="text" id="store-search-${pid}" placeholder="${t('store_search', 'Search')}" style="width:100%;border:none;background:rgba(0,0,0,0.06);padding:6px 12px;border-radius:10px;font-size:12px;outline:none;">
           </div>
           <div class="mac-store-nav-item active" data-tab="discover">
-            <span>🌟</span> <span class="nav-text">${t('store_nav_discover', 'Discover')}</span>
+            <span style="display:flex;align-items:center;">${getSFSymbol('star', 15, '#007aff')}</span> <span class="nav-text">${t('store_nav_discover', 'Discover')}</span>
           </div>
           <div class="mac-store-nav-item" data-tab="create">
-            <span>🎨</span> <span class="nav-text">${t('store_nav_create', 'Create')}</span>
+            <span style="display:flex;align-items:center;">${getSFSymbol('palette', 15, '#ff2d55')}</span> <span class="nav-text">${t('store_nav_create', 'Create')}</span>
           </div>
           <div class="mac-store-nav-item" data-tab="work">
-            <span>💼</span> <span class="nav-text">${t('store_nav_work', 'Work')}</span>
+            <span style="display:flex;align-items:center;">${getSFSymbol('briefcase', 15, '#ff9500')}</span> <span class="nav-text">${t('store_nav_work', 'Work')}</span>
           </div>
           <div class="mac-store-nav-item" data-tab="play">
-            <span>🎮</span> <span class="nav-text">${t('store_nav_play', 'Play')}</span>
+            <span style="display:flex;align-items:center;">${getSFSymbol('gamecontroller', 15, '#af52de')}</span> <span class="nav-text">${t('store_nav_play', 'Play')}</span>
           </div>
           <div class="mac-store-nav-item" data-tab="develop">
-            <span>🛠️</span> <span class="nav-text">${t('store_nav_develop', 'Develop')}</span>
+            <span style="display:flex;align-items:center;">${getSFSymbol('hammer', 15, '#34c759')}</span> <span class="nav-text">${t('store_nav_develop', 'Develop')}</span>
           </div>
           <div class="mac-store-nav-item" data-tab="updates">
-            <span>🔄</span> <span class="nav-text">${t('store_nav_updates', 'Updates')}</span>
+            <span style="display:flex;align-items:center;">${getSFSymbol('arrow-clockwise', 15, '#5856d6')}</span> <span class="nav-text">${t('store_nav_updates', 'Updates')}</span>
           </div>
         </div>
 
