@@ -153,7 +153,7 @@
     <div class="context-menu-item" onclick="toggleDesktopWidgets()"><span id="ctx-toggle-widgets-label" data-i18n="ctx_toggle_widgets">隐藏桌面小组件</span></div>
     <div class="context-menu-item" onclick="openAirDrop()" data-i18n="ctx_airdrop">隔空投送...</div>
     <div class="context-separator"></div>
-    <div class="context-menu-item" onclick="launchSettings()" data-i18n="ctx_wallpaper">更改壁纸...</div>
+    <div class="context-menu-item" onclick="activateOrLaunchApp('settings')" data-i18n="ctx_wallpaper">更改壁纸...</div>
     <div class="context-separator"></div>
     <div class="context-menu-item" onclick="launchSystemInfo()" data-i18n="ctx_about">关于 AliceOS</div>
   </div>
@@ -364,10 +364,12 @@
           <path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/>
         </svg>
       </div>
-      <div class="menu-item bold" id="app-name-btn" onclick="toggleTopMenu(event, 'apple-menu')" style="font-weight:700;">AliceOS</div>
+      <div class="menu-item bold" id="app-name-btn" onclick="toggleTopMenu(event, 'app-menu')" style="font-weight:700;">访达</div>
       <div class="menu-item" id="menu-file-btn" onclick="toggleTopMenu(event, 'file-menu')" data-i18n="menu_file">文件</div>
       <div class="menu-item" id="menu-edit-btn" onclick="toggleTopMenu(event, 'edit-menu')" data-i18n="menu_edit">编辑</div>
       <div class="menu-item" id="menu-view-btn" onclick="toggleTopMenu(event, 'view-menu')" data-i18n="menu_view">显示</div>
+      <div class="menu-item" id="menu-go-btn" onclick="toggleTopMenu(event, 'go-menu')" data-i18n="menu_go" style="display:block;">前往</div>
+      <div class="menu-item" id="menu-window-btn" onclick="toggleTopMenu(event, 'window-menu')" data-i18n="menu_window">窗口</div>
       <div class="menu-item" id="menu-help-btn" onclick="toggleTopMenu(event, 'help-menu')" data-i18n="menu_help">帮助</div>
     </div>
     <div class="menubar-drag-spacer" id="menubar-drag-spacer"></div>
@@ -695,22 +697,61 @@
     </div>
   </div>
 
-  <!-- Apple Menu Dropdown -->
-  <div class="menu-dropdown" id="apple-menu">
-    <div class="menu-dropdown-item" onclick="launchSystemInfo()" data-i18n="apple_about">关于本系统</div>
+  <!-- Apple System Menu Dropdown -->
+  <div class="menu-dropdown" id="apple-menu" style="left: 10px;">
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); launchHostMonitor();" data-i18n="apple_about">关于本机</div>
     <div class="menu-dropdown-separator"></div>
-    <div class="menu-dropdown-item" onclick="launchSettings()" data-i18n="apple_settings">系统设置...</div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); launchSettings();" data-i18n="apple_settings">系统设置...</div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); launchStore();" data-i18n="apple_appstore">App Store...</div>
     <div class="menu-dropdown-separator"></div>
-    <div class="menu-dropdown-item" onclick="lockScreen()" style="display:flex;justify-content:space-between;align-items:center;">
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); launchActivityMonitor();" style="display:flex;justify-content:space-between;align-items:center;">
+      <span data-i18n="apple_force_quit">强制退出...</span>
+      <span class="menu-shortcut">⌥⌘⎋</span>
+    </div>
+    <div class="menu-dropdown-separator"></div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); enterStandByMode();" style="display:flex;justify-content:space-between;align-items:center;">
+      <span data-i18n="apple_sleep">睡眠</span>
+    </div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); location.reload();" style="display:flex;justify-content:space-between;align-items:center;">
+      <span data-i18n="apple_restart">重新启动...</span>
+    </div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); window.aliceOS.closeWindow();" data-i18n="apple_shutdown">关机...</div>
+    <div class="menu-dropdown-separator"></div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); lockScreen();" style="display:flex;justify-content:space-between;align-items:center;">
       <span data-i18n="apple_lock">锁定屏幕</span>
-      <span style="opacity:0.5;font-size:11px;">⌃⌥L</span>
+      <span class="menu-shortcut">⌃⌘Q</span>
     </div>
-    <div class="menu-dropdown-item" onclick="enterStandByMode()" style="display:flex;justify-content:space-between;align-items:center;">
-      <span data-i18n="apple_standby">待机显示...</span>
-      <span style="opacity:0.5;font-size:11px;">⌃⌥S</span>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); logoutUser();" style="display:flex;justify-content:space-between;align-items:center;">
+      <span data-i18n="apple_logout">退出登录...</span>
+      <span class="menu-shortcut">⇧⌘Q</span>
     </div>
-    <div class="menu-dropdown-item" onclick="logoutUser()" data-i18n="apple_logout">退出登录...</div>
-    <div class="menu-dropdown-item" onclick="window.aliceOS.closeWindow()" data-i18n="apple_shutdown">关机</div>
+  </div>
+
+  <!-- Dynamic macOS App Menu Dropdown -->
+  <div class="menu-dropdown" id="app-menu" style="left: 45px;">
+    <div class="menu-dropdown-item" id="app-menu-about" onclick="closeAllTopMenus(); showCurrentAppAbout();">关于应用</div>
+    <div class="menu-dropdown-separator"></div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); launchSettings();" style="display:flex;justify-content:space-between;align-items:center;">
+      <span data-i18n="menu_settings_app">设置...</span>
+      <span class="menu-shortcut">⌘,</span>
+    </div>
+    <div class="menu-dropdown-separator"></div>
+    <div class="menu-dropdown-item" id="app-menu-hide" onclick="closeAllTopMenus(); hideCurrentApp();" style="display:flex;justify-content:space-between;align-items:center;">
+      <span id="app-menu-hide-label">隐藏应用</span>
+      <span class="menu-shortcut">⌘H</span>
+    </div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); hideOtherApps();" style="display:flex;justify-content:space-between;align-items:center;">
+      <span data-i18n="menu_hide_others">隐藏其他</span>
+      <span class="menu-shortcut">⌥⌘H</span>
+    </div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); showAllApps();" style="display:flex;justify-content:space-between;align-items:center;">
+      <span data-i18n="menu_show_all">全部显示</span>
+    </div>
+    <div class="menu-dropdown-separator"></div>
+    <div class="menu-dropdown-item" id="app-menu-quit" onclick="closeAllTopMenus(); quitCurrentApp();" style="display:flex;justify-content:space-between;align-items:center;">
+      <span id="app-menu-quit-label">退出应用</span>
+      <span class="menu-shortcut">⌘Q</span>
+    </div>
   </div>
 
   <!-- File Menu Dropdown -->
@@ -773,6 +814,46 @@
     <div class="menu-dropdown-item" onclick="closeAllTopMenus(); toggleFullScreen();" style="display:flex;justify-content:space-between;align-items:center;">
       <span data-i18n="menu_fullscreen">进入全屏幕</span>
       <span style="opacity:0.5;font-size:11px;">⌃⌘F</span>
+    </div>
+  </div>
+
+    <!-- Go Menu Dropdown (Finder) -->
+  <div class="menu-dropdown" id="go-menu" style="left: 210px;">
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); activateOrLaunchApp('finder'); finderNavigate('/Applications');" style="display:flex;justify-content:space-between;align-items:center;">
+      <span data-i18n="finder_applications">应用程序</span>
+      <span class="menu-shortcut">⇧⌘A</span>
+    </div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); activateOrLaunchApp('finder'); finderNavigate('/Users/alice/Desktop');" style="display:flex;justify-content:space-between;align-items:center;">
+      <span data-i18n="finder_desktop">桌面</span>
+      <span class="menu-shortcut">⇧⌘D</span>
+    </div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); activateOrLaunchApp('finder'); finderNavigate('/Users/alice/Documents');" style="display:flex;justify-content:space-between;align-items:center;">
+      <span data-i18n="finder_documents">文稿</span>
+      <span class="menu-shortcut">⇧⌘O</span>
+    </div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); activateOrLaunchApp('finder'); finderNavigate('/Users/alice/Downloads');" style="display:flex;justify-content:space-between;align-items:center;">
+      <span data-i18n="finder_downloads">下载</span>
+      <span class="menu-shortcut">⌥⌘L</span>
+    </div>
+    <div class="menu-dropdown-separator"></div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); activateOrLaunchApp('finder'); finderNavigate('/');" style="display:flex;justify-content:space-between;align-items:center;">
+      <span>Macintosh HD</span>
+      <span class="menu-shortcut">⇧⌘C</span>
+    </div>
+  </div>
+
+  <!-- Window Menu Dropdown -->
+  <div class="menu-dropdown" id="window-menu" style="left: 250px;">
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); minimizeActiveWindow();" style="display:flex;justify-content:space-between;align-items:center;">
+      <span data-i18n="menu_minimize">最小化</span>
+      <span class="menu-shortcut">⌘M</span>
+    </div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); zoomActiveWindow();" style="display:flex;justify-content:space-between;align-items:center;">
+      <span data-i18n="menu_zoom">缩放</span>
+    </div>
+    <div class="menu-dropdown-separator"></div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); bringAllToFront();" style="display:flex;justify-content:space-between;align-items:center;">
+      <span data-i18n="menu_bring_all_front">前置全部窗口</span>
     </div>
   </div>
 
@@ -953,7 +1034,7 @@
   <div class="dock-container">
     <div class="dock" id="dock-ui">
       <!-- Finder -->
-      <div class="dock-icon" data-app="finder" onclick="launchFinder()" title="访达" data-i18n-title="app_finder">
+      <div class="dock-icon" data-app="finder" onclick="activateOrLaunchApp('finder')" title="访达" data-i18n-title="app_finder">
         <svg viewBox="0 0 100 100" class="macos-app-icon">
           <defs>
             <linearGradient id="finder-bg" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -1008,7 +1089,7 @@
       </div>
 
       <!-- Safari -->
-      <div class="dock-icon" data-app="browser" onclick="launchBrowser()" title="Safari 浏览器" data-i18n-title="app_browser">
+      <div class="dock-icon" data-app="browser" onclick="activateOrLaunchApp('browser')" title="Safari 浏览器" data-i18n-title="app_browser">
         <svg viewBox="0 0 100 100" class="macos-app-icon">
           <defs>
             <linearGradient id="safari-bg" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -1035,7 +1116,7 @@
       </div>
 
       <!-- Calendar -->
-      <div class="dock-icon" data-app="calendar" onclick="launchCalendar()" title="日历" data-i18n-title="app_calendar">
+      <div class="dock-icon" data-app="calendar" onclick="activateOrLaunchApp('calendar')" title="日历" data-i18n-title="app_calendar">
         <svg viewBox="0 0 100 100" class="macos-app-icon" id="dock-calendar-svg">
           <defs>
             <linearGradient id="cal-dock-bg" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#f2f2f7"/></linearGradient>
@@ -1051,7 +1132,7 @@
       </div>
 
       <!-- Reminders -->
-      <div class="dock-icon" data-app="reminders" onclick="launchReminders()" title="提醒事项" data-i18n-title="app_reminders">
+      <div class="dock-icon" data-app="reminders" onclick="activateOrLaunchApp('reminders')" title="提醒事项" data-i18n-title="app_reminders">
         <svg viewBox="0 0 100 100" class="macos-app-icon">
           <defs>
             <linearGradient id="rem-dock-bg" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#e5e5ea"/></linearGradient>
@@ -1073,7 +1154,7 @@
       </div>
 
       <!-- Notes -->
-      <div class="dock-icon" data-app="notes" onclick="launchNotes()" title="备忘录" data-i18n-title="app_notes">
+      <div class="dock-icon" data-app="notes" onclick="activateOrLaunchApp('notes')" title="备忘录" data-i18n-title="app_notes">
         <svg viewBox="0 0 100 100" class="macos-app-icon">
           <defs>
             <linearGradient id="notes-bg" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -1098,7 +1179,7 @@
       </div>
 
       <!-- Music -->
-      <div class="dock-icon" data-app="music" onclick="launchMusic()" title="音乐" data-i18n-title="app_music">
+      <div class="dock-icon" data-app="music" onclick="activateOrLaunchApp('music')" title="音乐" data-i18n-title="app_music">
         <svg viewBox="0 0 100 100" class="macos-app-icon">
           <defs>
             <linearGradient id="music-bg" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -1113,7 +1194,7 @@
       </div>
 
       <!-- Photos / Paint -->
-      <div class="dock-icon" data-app="paint" onclick="launchPaint()" title="照片" data-i18n-title="app_paint">
+      <div class="dock-icon" data-app="paint" onclick="activateOrLaunchApp('paint')" title="照片" data-i18n-title="app_paint">
         <svg viewBox="0 0 100 100" class="macos-app-icon">
           <defs>
             <linearGradient id="photos-bg" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -1138,7 +1219,7 @@
       </div>
 
       <!-- App Store -->
-      <div class="dock-icon" data-app="store" onclick="launchStore()" title="App Store" data-i18n-title="app_store">
+      <div class="dock-icon" data-app="store" onclick="activateOrLaunchApp('store')" title="App Store" data-i18n-title="app_store">
         <svg viewBox="0 0 100 100" class="macos-app-icon">
           <defs>
             <linearGradient id="appstore-bg" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#1ba7f9"/><stop offset="100%" stop-color="#0870d8"/></linearGradient>
@@ -1154,7 +1235,7 @@
       </div>
 
       <!-- Terminal -->
-      <div class="dock-icon" data-app="terminal" onclick="launchTerminal()" title="终端" data-i18n-title="app_terminal">
+      <div class="dock-icon" data-app="terminal" onclick="activateOrLaunchApp('terminal')" title="终端" data-i18n-title="app_terminal">
         <svg viewBox="0 0 100 100" class="macos-app-icon">
           <defs>
             <linearGradient id="term-bg" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -1171,7 +1252,7 @@
       </div>
 
       <!-- Settings -->
-      <div class="dock-icon" data-app="settings" onclick="launchSettings()" title="系统设置" data-i18n-title="app_settings">
+      <div class="dock-icon" data-app="settings" onclick="activateOrLaunchApp('settings')" title="系统设置" data-i18n-title="app_settings">
         <svg viewBox="0 0 100 100" class="macos-app-icon">
           <defs>
             <linearGradient id="settings-bg" x1="0%" y1="0%" x2="0%" y2="100%">

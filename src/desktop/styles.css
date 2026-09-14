@@ -157,32 +157,63 @@ body {
 
 .menu-dropdown {
   position: absolute;
-  top: 28px;
+  top: 30px;
   left: 10px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
-  border-radius: 6px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-  padding: 5px 0;
-  min-width: 200px;
+  background: rgba(38, 38, 44, 0.88);
+  backdrop-filter: blur(45px) saturate(200%);
+  -webkit-backdrop-filter: blur(45px) saturate(200%);
+  border: 0.5px solid rgba(255, 255, 255, 0.18);
+  border-radius: 9px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(0, 0, 0, 0.25);
+  padding: 5px;
+  min-width: 220px;
   z-index: 9999;
   display: none;
   flex-direction: column;
+  user-select: none;
+  animation: menuFadeIn 0.14s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+@keyframes menuFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .menu-dropdown-item {
-  padding: 6px 15px;
-  color: #333;
+  padding: 5px 12px;
+  color: rgba(255, 255, 255, 0.92);
   cursor: pointer;
   font-size: 13px;
+  font-weight: 400;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  transition: background-color 0.1s ease, color 0.1s ease;
 }
+
 .menu-dropdown-item:hover {
   background: #007aff;
-  color: white;
+  color: #ffffff;
 }
+
+.menu-shortcut {
+  font-size: 12px;
+  opacity: 0.55;
+  letter-spacing: 0.5px;
+  font-variant-numeric: tabular-nums;
+  margin-left: auto;
+}
+
+.menu-dropdown-item:hover .menu-shortcut {
+  opacity: 0.95;
+}
+
 .menu-dropdown-separator {
   height: 1px;
-  background: #ccc;
-  margin: 4px 0;
+  background: rgba(255, 255, 255, 0.12);
+  margin: 4px 6px;
 }
 
 /* Desktop */
@@ -7750,4 +7781,82 @@ body.dark-mode .finder-status-bar {
 
 
 
-
+
+/* ====================================================
+   macOS Mission Control: Spaces Bar & Floating Badges
+   ==================================================== */
+.mc-window-badge {
+  position: absolute;
+  top: -34px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(30, 30, 35, 0.88);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 14px;
+  padding: 4px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 6000;
+  animation: fadeIn 0.25s ease;
+}
+
+.mc-spaces-bar {
+  position: fixed;
+  top: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 72px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(30, 30, 35, 0.72);
+  backdrop-filter: blur(35px);
+  -webkit-backdrop-filter: blur(35px);
+  border-radius: 16px;
+  padding: 0 16px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.45);
+  z-index: 5500;
+  animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mc-space-thumb {
+  width: 90px;
+  height: 54px;
+  border-radius: 8px;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  display: flex;
+  align-items: flex-end;
+  padding: 4px 6px;
+  box-sizing: border-box;
+}
+
+.mc-space-thumb.active {
+  border-color: #007aff;
+  box-shadow: 0 0 12px rgba(0, 122, 255, 0.6);
+}
+
+.mc-space-thumb:hover {
+  transform: scale(1.06);
+}
+
+.mc-space-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: white;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+}

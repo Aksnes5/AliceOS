@@ -14,6 +14,21 @@ const i18nDict = {
     apple_standby: 'StandBy Display...',
     apple_logout: 'Log Out...',
     apple_shutdown: 'Shut Down',
+    menu_window: 'Window',
+    menu_go: 'Go',
+    menu_about_app: 'About',
+    menu_settings_app: 'Settings...',
+    menu_hide_app: 'Hide',
+    menu_hide_others: 'Hide Others',
+    menu_show_all: 'Show All',
+    menu_quit_app: 'Quit',
+    menu_minimize: 'Minimize',
+    menu_zoom: 'Zoom',
+    menu_bring_all_front: 'Bring All to Front',
+    apple_force_quit: 'Force Quit...',
+    apple_sleep: 'Sleep',
+    apple_restart: 'Restart...',
+    apple_appstore: 'App Store...',
 
     // Language switcher
     lang_popover_title: 'PREFERRED LANGUAGE',
@@ -786,6 +801,21 @@ const i18nDict = {
     apple_standby: '待机显示...',
     apple_logout: '退出登录...',
     apple_shutdown: '关机',
+    menu_window: '窗口',
+    menu_go: '前往',
+    menu_about_app: '关于',
+    menu_settings_app: '设置...',
+    menu_hide_app: '隐藏',
+    menu_hide_others: '隐藏其他',
+    menu_show_all: '全部显示',
+    menu_quit_app: '退出',
+    menu_minimize: '最小化',
+    menu_zoom: '缩放',
+    menu_bring_all_front: '前置全部窗口',
+    apple_force_quit: '强制退出...',
+    apple_sleep: '睡眠',
+    apple_restart: '重新启动...',
+    apple_appstore: 'App Store...',
 
     // 语言切换器
     lang_popover_title: '首选语言',
@@ -1558,6 +1588,21 @@ const i18nDict = {
     apple_standby: 'スタンバイ表示...',
     apple_logout: 'ログアウト...',
     apple_shutdown: 'システム終了',
+    menu_window: 'ウインドウ',
+    menu_go: '移動',
+    menu_about_app: 'について',
+    menu_settings_app: '設定...',
+    menu_hide_app: 'を非表示',
+    menu_hide_others: 'ほかを非表示',
+    menu_show_all: 'すべてを表示',
+    menu_quit_app: 'を終了',
+    menu_minimize: 'しまう',
+    menu_zoom: '拡大/縮小',
+    menu_bring_all_front: 'すべてを手前に移動',
+    apple_force_quit: '強制終了...',
+    apple_sleep: 'スリープ',
+    apple_restart: '再起動...',
+    apple_appstore: 'App Store...',
 
     // 言語切り替え
     lang_popover_title: '優先する言語',
@@ -2466,6 +2511,12 @@ function setSystemLanguage(lang, save = true) {
     refreshDesktop();
   }
 
+  // Update Menu Bar active app title & App Menu
+  const activeWin = document.querySelector('.window.is-active');
+  if (typeof syncMenubarActiveApp === 'function') {
+    syncMenubarActiveApp(activeWin);
+  }
+
   // Close language popover and top menus if open
   closeLanguagePopover();
   if (typeof closeAllTopMenus === 'function') closeAllTopMenus();
@@ -2717,6 +2768,277 @@ function getAppDockSvg(appKey) {
   if (DOCK_APP_ICONS[appKey]) return DOCK_APP_ICONS[appKey];
   return `<div class="macos-app-icon" style="background:linear-gradient(135deg,#6366f1,#3b82f6);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:20px;border-radius:22.5%;">${(appKey || 'A').charAt(0).toUpperCase()}</div>`;
 }
+
+
+// ====================================================
+// macOS Genuine Window Genie Restore & App Activator
+// ====================================================
+function restoreGenieWindow(win, optionalDockIcon = null) {
+  if (!win) return;
+  const appKey = win.dataset.appKey;
+  const dockIcon = optionalDockIcon || (appKey ? document.querySelector(`.dock-icon[data-app="${appKey}"]`) : document.getElementById(`dock-min-${win.dataset.pid}`));
+
+  // Tactile Dock bounce
+  if (dockIcon) {
+    dockIcon.classList.remove('dock-bouncing');
+    void dockIcon.offsetWidth;
+    dockIcon.classList.add('dock-bouncing');
+    setTimeout(() => dockIcon.classList.remove('dock-bouncing'), 800);
+  }
+
+  // Audio Pop
+  if (window.appleAudio && window.appleAudio.playPop) {
+    window.appleAudio.playPop();
+  } else if (typeof playClickSound === 'function') {
+    playClickSound();
+  }
+
+  let targetX = window.innerWidth / 2;
+  if (dockIcon) {
+    const rect = dockIcon.getBoundingClientRect();
+    targetX = rect.left + rect.width / 2;
+  }
+
+  const origWidth = parseFloat(win.style.width) || parseFloat(win.dataset.preMaxWidth) || 600;
+  const origHeight = parseFloat(win.style.height) || parseFloat(win.dataset.preMaxHeight) || 400;
+  const origLeft = parseFloat(win.dataset.preMinLeft) || win.offsetLeft;
+  const origTop = parseFloat(win.dataset.preMinTop) || win.offsetTop;
+
+  const winCenterX = origLeft + origWidth / 2;
+  const deltaX = targetX - winCenterX;
+  const deltaY = window.innerHeight - origTop - 65;
+
+  win.style.display = 'flex';
+  win.style.transformOrigin = 'bottom center';
+  win.style.transition = 'none';
+  win.style.transform = `translate3d(${deltaX}px, ${deltaY}px, 0) scale(0.04, 0.02)`;
+  win.style.opacity = '0';
+  win.style.filter = 'blur(4px) saturate(1.3)';
+
+  void win.offsetWidth; // force reflow
+
+  win.style.transition = 'transform 0.42s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, filter 0.35s ease';
+  win.style.transform = win.dataset.preMinTransform || 'scale(1)';
+  win.style.opacity = '1';
+  win.style.filter = 'none';
+
+  delete win.dataset.isMinimized;
+
+  setTimeout(() => {
+    win.style.transition = 'none';
+    win.style.filter = '';
+    focusWindow(win);
+    
+    if (optionalDockIcon && optionalDockIcon.id && optionalDockIcon.id.startsWith('dock-min-')) {
+      optionalDockIcon.style.transition = 'all 0.2s ease';
+      optionalDockIcon.style.transform = 'scale(0)';
+      optionalDockIcon.style.opacity = '0';
+      setTimeout(() => optionalDockIcon.remove(), 200);
+    }
+  }, 420);
+}
+
+function activateOrLaunchApp(appKey) {
+  if (!appKey) return;
+  if (appKey === 'launchpad') {
+    toggleLaunchpad();
+    return;
+  }
+  if (appKey === 'trash') {
+    openTrash();
+    return;
+  }
+
+  // Search existing windows
+  const appWindows = [];
+  windows.forEach((win) => {
+    if (win.dataset.appKey === appKey) {
+      appWindows.push(win);
+    }
+  });
+
+  if (appWindows.length > 0) {
+    // 1. If any minimized window exists, restore it!
+    const minimized = appWindows.find(w => w.dataset.isMinimized === 'true');
+    if (minimized) {
+      restoreGenieWindow(minimized);
+      return;
+    }
+
+    // 2. Focus top window
+    appWindows.sort((a, b) => (parseInt(b.style.zIndex || 0) - parseInt(a.style.zIndex || 0)));
+    const targetWin = appWindows[0];
+    focusWindow(targetWin);
+
+    const icon = document.querySelector(`.dock-icon[data-app="${appKey}"]`);
+    if (icon) {
+      icon.classList.remove('dock-bouncing');
+      void icon.offsetWidth;
+      icon.classList.add('dock-bouncing');
+      setTimeout(() => icon.classList.remove('dock-bouncing'), 600);
+    }
+    return;
+  }
+
+  // 3. Launch fresh instance
+  launchAppByName(appKey);
+}
+
+window.restoreGenieWindow = restoreGenieWindow;
+window.activateOrLaunchApp = activateOrLaunchApp;
+
+
+// ====================================================
+// macOS Dynamic Menubar & App Menu Engine
+// ====================================================
+let currentActiveAppKey = 'finder';
+
+function syncMenubarActiveApp(activeWin = null) {
+  const appNameBtn = document.getElementById('app-name-btn');
+  const goBtn = document.getElementById('menu-go-btn');
+
+  let appKey = 'finder';
+  let appTitle = (i18nDict[currentSystemLang] && i18nDict[currentSystemLang].app_finder) || '访达';
+
+  if (activeWin && !activeWin.dataset.isMinimized) {
+    appKey = activeWin.dataset.appKey || 'finder';
+    appTitle = activeWin.dataset.title || (i18nDict[currentSystemLang] && i18nDict[currentSystemLang][`app_${appKey}`]) || activeWin.querySelector('.title')?.innerText || appKey;
+  }
+
+  currentActiveAppKey = appKey;
+
+  if (appNameBtn) {
+    appNameBtn.innerText = appTitle;
+    appNameBtn.dataset.appKey = appKey;
+  }
+
+  if (goBtn) {
+    goBtn.style.display = (appKey === 'finder') ? 'block' : 'none';
+  }
+
+  const aboutItem = document.getElementById('app-menu-about');
+  if (aboutItem) {
+    aboutItem.innerText = `${t('menu_about_app', '关于')} ${appTitle}`;
+  }
+
+  const hideLabel = document.getElementById('app-menu-hide-label');
+  if (hideLabel) {
+    hideLabel.innerText = `${t('menu_hide_app', '隐藏')} ${appTitle}`;
+  }
+
+  const quitLabel = document.getElementById('app-menu-quit-label');
+  if (quitLabel) {
+    quitLabel.innerText = `${t('menu_quit_app', '退出')} ${appTitle}`;
+  }
+}
+
+function hideCurrentApp() {
+  const appKey = currentActiveAppKey;
+  if (!appKey) return;
+  windows.forEach((win) => {
+    if (win.dataset.appKey === appKey && !win.dataset.isMinimized) {
+      const minBtn = win.querySelector('.control.minimize');
+      if (minBtn) minBtn.click();
+    }
+  });
+  syncMenubarActiveApp(null);
+}
+
+function hideOtherApps() {
+  const appKey = currentActiveAppKey;
+  windows.forEach((win) => {
+    if (win.dataset.appKey !== appKey && !win.dataset.isMinimized) {
+      const minBtn = win.querySelector('.control.minimize');
+      if (minBtn) minBtn.click();
+    }
+  });
+}
+
+function showAllApps() {
+  windows.forEach((win) => {
+    if (win.dataset.isMinimized === 'true') {
+      restoreGenieWindow(win);
+    }
+  });
+}
+
+function quitCurrentApp() {
+  const appKey = currentActiveAppKey;
+  if (!appKey) return;
+  const toKill = [];
+  windows.forEach((win, pid) => {
+    if (win.dataset.appKey === appKey) {
+      toKill.push(pid);
+    }
+  });
+  toKill.forEach(async (pid) => {
+    const win = windows.get(pid);
+    if (win) {
+      const closeBtn = win.querySelector('.control.close');
+      if (closeBtn) closeBtn.click();
+      else {
+        await window.aliceOS.pm.kill(pid);
+        win.remove();
+        windows.delete(pid);
+      }
+    }
+  });
+  syncMenubarActiveApp(null);
+}
+
+function minimizeActiveWindow() {
+  const activeWin = document.querySelector('.window.is-active');
+  if (activeWin) {
+    const minBtn = activeWin.querySelector('.control.minimize');
+    if (minBtn) minBtn.click();
+  }
+}
+
+function zoomActiveWindow() {
+  const activeWin = document.querySelector('.window.is-active');
+  if (activeWin) {
+    const maxBtn = activeWin.querySelector('.control.maximize');
+    if (maxBtn) maxBtn.click();
+  }
+}
+
+function bringAllToFront() {
+  windows.forEach((win) => {
+    if (win.dataset.isMinimized === 'true') {
+      restoreGenieWindow(win);
+    } else {
+      zIndexCounter++;
+      win.style.zIndex = zIndexCounter;
+    }
+  });
+}
+
+function showCurrentAppAbout() {
+  const appKey = currentActiveAppKey;
+  const appTitle = document.getElementById('app-name-btn')?.innerText || 'AliceOS';
+  const iconSvg = getAppIconSvg(appKey, 64);
+  showNotification(appTitle, `macOS Sequoia Native App (${appTitle})`, 'About', iconSvg);
+}
+
+function finderNavigate(targetPath) {
+  const finderWin = Array.from(windows.values()).find(w => w.dataset.appKey === 'finder');
+  if (finderWin) {
+    focusWindow(finderWin);
+    const item = finderWin.querySelector(`.finder-sidebar-item[data-path="${targetPath}"]`);
+    if (item) item.click();
+  }
+}
+
+window.syncMenubarActiveApp = syncMenubarActiveApp;
+window.hideCurrentApp = hideCurrentApp;
+window.hideOtherApps = hideOtherApps;
+window.showAllApps = showAllApps;
+window.quitCurrentApp = quitCurrentApp;
+window.minimizeActiveWindow = minimizeActiveWindow;
+window.zoomActiveWindow = zoomActiveWindow;
+window.bringAllToFront = bringAllToFront;
+window.showCurrentAppAbout = showCurrentAppAbout;
+window.finderNavigate = finderNavigate;
 
 function launchAppByName(appKey) {
   switch (appKey) {
@@ -3090,14 +3412,16 @@ function updateStageManager(targetWin) {
     const card = document.createElement('div');
     card.className = 'stage-card';
     const title = win.dataset.title || win.querySelector('.title')?.innerText || 'App';
-    const icon = win.dataset.icon || '🪟';
+    const appKey = win.dataset.appKey || '';
+    const iconSvg = getAppIconSvg(appKey, 18);
+    const previewSvg = getAppIconSvg(appKey, 44);
 
     card.innerHTML = `
       <div class="stage-card-header">
-        <span>${icon}</span>
+        <span>${iconSvg}</span>
         <span style="overflow:hidden;text-overflow:ellipsis;">${title}</span>
       </div>
-      <div class="stage-card-preview">${icon}</div>
+      <div class="stage-card-preview">${previewSvg}</div>
     `;
 
     card.onclick = (e) => {
@@ -3132,6 +3456,11 @@ function focusWindow(win) {
     widgets.style.filter = 'grayscale(100%)';
   }
 
+  // macOS Dynamic Menubar sync
+  if (typeof syncMenubarActiveApp === 'function') {
+    syncMenubarActiveApp(win);
+  }
+
   // macOS Stage Manager support
   if (window.aliceOS && window.aliceOS.stageManagerEnabled) {
     updateStageManager(win);
@@ -3155,6 +3484,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (widgets) {
         widgets.style.opacity = '1';
         widgets.style.filter = 'grayscale(0%)';
+      }
+
+      // Revert Menu Bar to Finder on desktop click
+      if (typeof syncMenubarActiveApp === 'function') {
+        syncMenubarActiveApp(null);
       }
 
       // Stage Manager Desktop Peek
@@ -3731,7 +4065,8 @@ function createWindow(pid, title, contentHtml, explicitAppKey = null) {
   }, 500);
   
   if (window.aliceOS && window.aliceOS.notifyIsland) {
-    window.aliceOS.notifyIsland('🚀', title, 100);
+    const iconSvg = getAppIconSvg(appKey || 'finder', 24);
+    window.aliceOS.notifyIsland(iconSvg, localizedTitle, 100);
   }
 
   // Setup dragging
@@ -3968,6 +4303,11 @@ function createWindow(pid, title, contentHtml, explicitAppKey = null) {
     win.style.transform = 'scale(0.8)';
     win.style.opacity = '0';
     setTimeout(() => {
+      const minIcon = document.getElementById(`dock-min-${pid}`);
+      if (minIcon) {
+        minIcon.remove();
+        if (typeof updateDockScale === 'function') updateDockScale();
+      }
       win.remove();
       windows.delete(pid);
       if (window.aliceOS && window.aliceOS.stageManagerEnabled) {
@@ -3984,6 +4324,21 @@ function createWindow(pid, title, contentHtml, explicitAppKey = null) {
         if (!hasOtherWin) {
           updateDockRunningState(appKey, false);
         }
+      }
+      // Re-sync menubar to remaining frontmost window or Finder
+      let nextTop = null;
+      let maxZ = -1;
+      windows.forEach(w => {
+        if (!w.dataset.isMinimized) {
+          const z = parseInt(w.style.zIndex || 0);
+          if (z > maxZ) {
+            maxZ = z;
+            nextTop = w;
+          }
+        }
+      });
+      if (typeof syncMenubarActiveApp === 'function') {
+        syncMenubarActiveApp(nextTop);
       }
     }, 300);
   });
@@ -4039,9 +4394,10 @@ function createWindow(pid, title, contentHtml, explicitAppKey = null) {
         const minIcon = document.createElement('div');
         minIcon.className = 'dock-icon';
         minIcon.id = `dock-min-${pid}`;
-        minIcon.innerHTML = `<div class="icon-placeholder" style="background:#333;font-size:24px;">🗔</div><div class="dock-dot" style="background:#ffbd2e;"></div>`;
+        minIcon.innerHTML = `${getAppIconSvg(appKey || 'finder', 48)}<div class="dock-dot active" style="background:#ffbd2e;"></div>`;
         minIcon.onclick = () => restoreGenieWindow(win, minIcon);
         dock.appendChild(minIcon);
+        if (typeof updateDockScale === 'function') updateDockScale();
       }
     }, 440);
   });
@@ -7341,14 +7697,18 @@ window.aliceOS.notifyIsland = (icon, title, valuePct) => {
   
   if (!island) return;
   
-  iIcon.innerText = icon;
+  if (typeof icon === 'string' && (icon.includes('<svg') || icon.includes('<div') || icon.includes('<img'))) {
+    iIcon.innerHTML = icon;
+  } else {
+    iIcon.innerText = icon;
+  }
   iTitle.innerText = title;
   iBar.style.width = `${valuePct}%`;
   
-  // Expand
-  island.style.width = '300px';
-  island.style.height = '60px';
-  island.style.borderRadius = '30px';
+  // Expand with fluid morphing
+  island.style.width = '320px';
+  island.style.height = '64px';
+  island.style.borderRadius = '32px';
   
   setTimeout(() => content.style.opacity = '1', 150);
   
@@ -7368,7 +7728,7 @@ if (brightnessSlider) {
     const val = parseInt(e.target.value);
     const opacity = (100 - val) * 0.8 / 100;
     brightnessOverlay.style.opacity = opacity.toString();
-    window.aliceOS.notifyIsland('☀️', 'Brightness', val);
+    window.aliceOS.notifyIsland(getSFSymbol('sun', 20, '#ff9500'), t('island_brightness', 'Brightness'), val);
   });
 }
 
@@ -7376,7 +7736,7 @@ const volumeSlider = document.getElementById('cc-volume');
 if (volumeSlider) {
   volumeSlider.addEventListener('input', (e) => {
     const val = parseInt(e.target.value);
-    window.aliceOS.notifyIsland('🔊', 'Volume', val);
+    window.aliceOS.notifyIsland(getSFSymbol('volume-3', 20, '#ffffff'), t('island_volume', 'Volume'), val);
   });
 }
 
@@ -8130,14 +8490,30 @@ function toggleMissionControl() {
   if (missionControlActive) {
     desktop.classList.add('mission-control');
     
+    // Spaces Bar across top
+    let spacesBar = document.getElementById('mc-spaces-bar');
+    if (!spacesBar) {
+      spacesBar = document.createElement('div');
+      spacesBar.id = 'mc-spaces-bar';
+      spacesBar.className = 'mc-spaces-bar';
+      spacesBar.innerHTML = `
+        <div class="mc-space-thumb active" style="background-image:url('https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?w=300&q=80');">
+          <span class="mc-space-label">Desktop 1</span>
+        </div>
+        <div class="mc-space-thumb" style="background-image:linear-gradient(135deg, #181824, #3a2b5a);">
+          <span class="mc-space-label">Desktop 2</span>
+        </div>
+      `;
+      desktop.appendChild(spacesBar);
+    }
+
     // Calculate grid
     const cols = Math.ceil(Math.sqrt(allWindows.length));
     const rows = Math.ceil(allWindows.length / cols);
     const winW = window.innerWidth / cols;
-    const winH = window.innerHeight / rows;
+    const winH = (window.innerHeight - 80) / rows;
     
     allWindows.forEach((win, index) => {
-      // Save state
       if (!win.dataset.origTop) {
         win.dataset.origTop = win.style.top;
         win.dataset.origLeft = win.style.left;
@@ -8148,15 +8524,25 @@ function toggleMissionControl() {
       const col = index % cols;
       
       const targetX = col * winW + (winW / 2) - (win.offsetWidth / 2);
-      const targetY = row * winH + (winH / 2) - (win.offsetHeight / 2) + 30; // +30 for menu bar offset
+      const targetY = row * winH + (winH / 2) - (win.offsetHeight / 2) + 80;
       
-      win.style.transition = 'all 0.5s cubic-bezier(0.25, 1, 0.3, 1)';
+      win.style.transition = 'all 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
       win.style.top = `${targetY}px`;
       win.style.left = `${targetX}px`;
-      win.style.transform = 'scale(0.5)';
+      win.style.transform = 'scale(0.55)';
       win.style.zIndex = 5000 + index;
       
-      // Hook up click to exit mission control and focus
+      // Add floating App Badge above window
+      let badge = win.querySelector('.mc-window-badge');
+      if (!badge) {
+        badge = document.createElement('div');
+        badge.className = 'mc-window-badge';
+        const appKey = win.dataset.appKey || '';
+        const title = win.dataset.title || win.querySelector('.title')?.innerText || 'App';
+        badge.innerHTML = `${getAppIconSvg(appKey, 18)} <span>${title}</span>`;
+        win.appendChild(badge);
+      }
+
       win.onclick = function _mcClick(e) {
         if (!missionControlActive) return;
         e.stopPropagation();
@@ -8168,16 +8554,21 @@ function toggleMissionControl() {
     
   } else {
     desktop.classList.remove('mission-control');
+    const spacesBar = document.getElementById('mc-spaces-bar');
+    if (spacesBar) spacesBar.remove();
+
     allWindows.forEach((win) => {
+      const badge = win.querySelector('.mc-window-badge');
+      if (badge) badge.remove();
+
       win.style.top = win.dataset.origTop;
       win.style.left = win.dataset.origLeft;
       win.style.transform = win.dataset.origTransform || 'none';
       win.onclick = null;
       
-      // Clear transition after it's done so dragging doesn't lag
       setTimeout(() => {
         if (!missionControlActive) win.style.transition = 'none';
-      }, 500);
+      }, 450);
     });
   }
 }
@@ -9148,7 +9539,7 @@ function logoutUser() {
 }
 
 // macOS Top Menubar Menus Logic
-const topMenuIds = ['apple-menu', 'file-menu', 'edit-menu', 'view-menu', 'help-menu'];
+const topMenuIds = ['apple-menu', 'app-menu', 'file-menu', 'edit-menu', 'view-menu', 'go-menu', 'window-menu', 'help-menu'];
 
 function closeAllTopMenus() {
   topMenuIds.forEach(id => {
@@ -9184,11 +9575,14 @@ document.querySelectorAll('.menubar-left .menu-item').forEach(item => {
     if (anyOpen) {
       const btnId = item.id;
       let targetId = 'apple-menu';
-      if (btnId === 'menu-file-btn') targetId = 'file-menu';
+      if (btnId === 'apple-menu-btn') targetId = 'apple-menu';
+      else if (btnId === 'app-name-btn') targetId = 'app-menu';
+      else if (btnId === 'menu-file-btn') targetId = 'file-menu';
       else if (btnId === 'menu-edit-btn') targetId = 'edit-menu';
       else if (btnId === 'menu-view-btn') targetId = 'view-menu';
+      else if (btnId === 'menu-go-btn') targetId = 'go-menu';
+      else if (btnId === 'menu-window-btn') targetId = 'window-menu';
       else if (btnId === 'menu-help-btn') targetId = 'help-menu';
-      else if (btnId === 'apple-menu-btn' || btnId === 'app-name-btn') targetId = 'apple-menu';
       toggleTopMenu(e, targetId);
     }
   });
@@ -9203,7 +9597,7 @@ if (appleBtn) {
 const appNameBtn = document.getElementById('app-name-btn');
 if (appNameBtn) {
   appNameBtn.addEventListener('click', (e) => {
-    toggleTopMenu(e, 'apple-menu');
+    toggleTopMenu(e, 'app-menu');
   });
 }
 
@@ -12658,6 +13052,43 @@ document.addEventListener('keydown', async (e) => {
     toggleSpotlight();
   }
   
+  // macOS Standard Window & App Hotkeys
+  const isCmdOrCtrl = e.metaKey || e.ctrlKey;
+  if (isCmdOrCtrl && !e.shiftKey && !e.altKey) {
+    if (e.code === 'KeyW' && !(document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')) {
+      e.preventDefault();
+      closeActiveWindow();
+      return;
+    }
+    if (e.code === 'KeyM') {
+      e.preventDefault();
+      minimizeActiveWindow();
+      return;
+    }
+    if (e.code === 'KeyH') {
+      e.preventDefault();
+      hideCurrentApp();
+      return;
+    }
+    if (e.code === 'KeyQ') {
+      e.preventDefault();
+      quitCurrentApp();
+      return;
+    }
+    if (e.code === 'Comma') {
+      e.preventDefault();
+      activateOrLaunchApp('settings');
+      return;
+    }
+  }
+
+  // Hide Others (Opt+Cmd+H)
+  if (isCmdOrCtrl && e.altKey && !e.shiftKey && e.code === 'KeyH') {
+    e.preventDefault();
+    hideOtherApps();
+    return;
+  }
+
   // macOS Lock Screen Hotkey (Ctrl+Alt+L or Cmd+Ctrl+Q)
   if ((e.ctrlKey && e.altKey && e.code === 'KeyL') || (e.metaKey && e.ctrlKey && e.code === 'KeyQ')) {
     lockScreen();
@@ -13060,12 +13491,13 @@ document.addEventListener('keyup', (e) => {
 
 function renderSwitcherHUD(hud) {
   hud.innerHTML = openAppList.map((win, idx) => {
-    const icon = win.dataset.icon || '🪟';
+    const appKey = win.dataset.appKey || '';
+    const iconSvg = getAppIconSvg(appKey, 48);
     const title = win.dataset.title || win.querySelector('.title')?.innerText || 'App';
     const isActive = idx === switcherIndex;
     return `
-      <div class="switcher-item ${isActive ? 'active' : ''}">
-        <div class="switcher-item-icon">${icon}</div>
+      <div class="switcher-item ${isActive ? 'active' : ''}" onclick="focusWindow(openAppList[${idx}]); switcherActive = false; document.getElementById('app-switcher-hud').style.display = 'none';">
+        <div class="switcher-item-icon">${iconSvg}</div>
         <div class="switcher-item-name">${title}</div>
       </div>
     `;
