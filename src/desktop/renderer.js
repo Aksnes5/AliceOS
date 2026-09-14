@@ -3640,7 +3640,11 @@ async function launchSystemInfo() {
     const pid = res.data.pid;
     const win = createWindow(pid, t('about_title', 'About This Mac'), `
       <div id="sys-about-${pid}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:26px 24px;text-align:center;font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;height:100%;box-sizing:border-box;background:inherit;color:inherit;user-select:none;">
-        <div style="font-size:56px;margin-bottom:12px;filter:drop-shadow(0 6px 16px rgba(0,0,0,0.25));line-height:1;"></div>
+        <div style="margin-bottom:12px;filter:drop-shadow(0 6px 16px rgba(0,0,0,0.25));display:flex;align-items:center;justify-content:center;">
+          <svg viewBox="0 0 170 170" width="56" height="56" fill="currentColor">
+            <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.7-3.08-7.71-7.96-12.02-14.64-5.87-9.14-10.45-19.46-13.73-30.98-3.28-11.51-4.92-22.18-4.92-32 0-14.15 3.73-26.05 11.2-35.7 7.46-9.65 16.9-14.54 28.32-14.68 5.44 0 11.21 1.45 17.32 4.35 6.11 2.91 10.13 4.41 12.07 4.5 1.74 0 6.09-1.61 13.06-4.82 6.96-3.21 13.1-4.66 18.42-4.35 13.72.68 24.64 5.75 32.74 15.22-11.97 7.24-17.84 17.06-17.6 29.47.24 9.98 4.09 18.25 11.55 24.81 7.46 6.56 16.42 10.37 26.88 11.44-2.58 8.16-5.77 16.59-9.58 25.3l.26-.26zM119.22 31.84c0-7.72 2.76-14.89 8.27-21.52 5.52-6.62 12.3-10.32 20.35-11.1 0 1.09.07 2.12.2 3.1.26 7.64-2.55 14.69-8.43 21.15-5.88 6.46-12.92 10.12-20.39 10.98 0-.87 0-1.74 0-2.61z"/>
+          </svg>
+        </div>
         <h2 style="margin:0 0 4px 0;font-size:24px;font-weight:700;letter-spacing:-0.5px;">macOS Sequoia</h2>
         <div style="font-size:12px;opacity:0.65;margin-bottom:18px;">Version 15.1 (Build 24B83)</div>
 
@@ -4812,7 +4816,11 @@ async function launchBrowser() {
       return `
         <div style="height:100%;overflow-y:auto;background:#000;color:#f5f5f7;font-family:-apple-system,BlinkMacSystemFont,sans-serif;user-select:none;">
           <div style="background:rgba(22,22,23,0.8);backdrop-filter:blur(20px);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.08);position:sticky;top:0;z-index:5;">
-            <span style="font-size:18px;"></span>
+            <span style="display:inline-flex;align-items:center;opacity:0.9;">
+              <svg viewBox="0 0 170 170" width="16" height="16" fill="currentColor">
+                <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.7-3.08-7.71-7.96-12.02-14.64-5.87-9.14-10.45-19.46-13.73-30.98-3.28-11.51-4.92-22.18-4.92-32 0-14.15 3.73-26.05 11.2-35.7 7.46-9.65 16.9-14.54 28.32-14.68 5.44 0 11.21 1.45 17.32 4.35 6.11 2.91 10.13 4.41 12.07 4.5 1.74 0 6.09-1.61 13.06-4.82 6.96-3.21 13.1-4.66 18.42-4.35 13.72.68 24.64 5.75 32.74 15.22-11.97 7.24-17.84 17.06-17.6 29.47.24 9.98 4.09 18.25 11.55 24.81 7.46 6.56 16.42 10.37 26.88 11.44-2.58 8.16-5.77 16.59-9.58 25.3l.26-.26zM119.22 31.84c0-7.72 2.76-14.89 8.27-21.52 5.52-6.62 12.3-10.32 20.35-11.1 0 1.09.07 2.12.2 3.1.26 7.64-2.55 14.69-8.43 21.15-5.88 6.46-12.92 10.12-20.39 10.98 0-.87 0-1.74 0-2.61z"/>
+              </svg>
+            </span>
             <div style="display:flex;gap:20px;font-size:12px;color:#a1a1a6;">
               <span>Store</span><span>Mac</span><span>iPad</span><span>iPhone</span><span>Watch</span><span>Vision</span><span>AirPods</span>
             </div>
@@ -5977,7 +5985,11 @@ async function launchSettings() {
       else if (tab === 'about') {
         contentArea.innerHTML = `
           <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:20px 0;">
-            <div style="font-size:64px;margin-bottom:10px;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.2));"></div>
+            <div style="margin-bottom:12px;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.2));display:flex;align-items:center;justify-content:center;">
+              <svg viewBox="0 0 170 170" width="64" height="64" fill="currentColor">
+                <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.7-3.08-7.71-7.96-12.02-14.64-5.87-9.14-10.45-19.46-13.73-30.98-3.28-11.51-4.92-22.18-4.92-32 0-14.15 3.73-26.05 11.2-35.7 7.46-9.65 16.9-14.54 28.32-14.68 5.44 0 11.21 1.45 17.32 4.35 6.11 2.91 10.13 4.41 12.07 4.5 1.74 0 6.09-1.61 13.06-4.82 6.96-3.21 13.1-4.66 18.42-4.35 13.72.68 24.64 5.75 32.74 15.22-11.97 7.24-17.84 17.06-17.6 29.47.24 9.98 4.09 18.25 11.55 24.81 7.46 6.56 16.42 10.37 26.88 11.44-2.58 8.16-5.77 16.59-9.58 25.3l.26-.26zM119.22 31.84c0-7.72 2.76-14.89 8.27-21.52 5.52-6.62 12.3-10.32 20.35-11.1 0 1.09.07 2.12.2 3.1.26 7.64-2.55 14.69-8.43 21.15-5.88 6.46-12.92 10.12-20.39 10.98 0-.87 0-1.74 0-2.61z"/>
+              </svg>
+            </div>
             <h1 style="margin:0;font-size:24px;font-weight:700;">AliceOS</h1>
             <div style="font-size:13px;opacity:0.7;margin-top:4px;">Sonoma Edition 1.0.0</div>
             
@@ -6971,7 +6983,12 @@ function toggleTopMenu(e, menuId) {
   
   if (!isCurrentlyOpen) {
     targetMenu.style.display = 'flex';
-    if (e && e.currentTarget) e.currentTarget.classList.add('active');
+    if (e && e.currentTarget) {
+      e.currentTarget.classList.add('active');
+      const rect = e.currentTarget.getBoundingClientRect();
+      targetMenu.style.left = Math.max(4, Math.round(rect.left)) + 'px';
+      targetMenu.style.top = Math.round(rect.bottom + 2) + 'px';
+    }
     if (typeof playVolumeFeedbackBeep === 'function') playVolumeFeedbackBeep();
   }
 }
@@ -6987,6 +7004,7 @@ document.querySelectorAll('.menubar-left .menu-item').forEach(item => {
       else if (btnId === 'menu-edit-btn') targetId = 'edit-menu';
       else if (btnId === 'menu-view-btn') targetId = 'view-menu';
       else if (btnId === 'menu-help-btn') targetId = 'help-menu';
+      else if (btnId === 'apple-menu-btn' || btnId === 'app-name-btn') targetId = 'apple-menu';
       toggleTopMenu(e, targetId);
     }
   });
@@ -6995,6 +7013,12 @@ document.querySelectorAll('.menubar-left .menu-item').forEach(item => {
 const appleBtn = document.getElementById('apple-menu-btn');
 if (appleBtn) {
   appleBtn.addEventListener('click', (e) => {
+    toggleTopMenu(e, 'apple-menu');
+  });
+}
+const appNameBtn = document.getElementById('app-name-btn');
+if (appNameBtn) {
+  appNameBtn.addEventListener('click', (e) => {
     toggleTopMenu(e, 'apple-menu');
   });
 }
@@ -10660,7 +10684,7 @@ async function launchVideo() {
   if (res.success) {
     const pid = res.data.pid;
     const mediaTracks = [
-      { id: 'sequoia', title: 'macOS Sequoia Keynote & Intelligence', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4', icon: '' },
+      { id: 'sequoia', title: 'macOS Sequoia Keynote & Intelligence', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4', icon: '<svg viewBox="0 0 170 170" width="11" height="11" fill="currentColor" style="display:inline-block;vertical-align:-1px;margin-right:2px;"><path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.7-3.08-7.71-7.96-12.02-14.64-5.87-9.14-10.45-19.46-13.73-30.98-3.28-11.51-4.92-22.18-4.92-32 0-14.15 3.73-26.05 11.2-35.7 7.46-9.65 16.9-14.54 28.32-14.68 5.44 0 11.21 1.45 17.32 4.35 6.11 2.91 10.13 4.41 12.07 4.5 1.74 0 6.09-1.61 13.06-4.82 6.96-3.21 13.1-4.66 18.42-4.35 13.72.68 24.64 5.75 32.74 15.22-11.97 7.24-17.84 17.06-17.6 29.47.24 9.98 4.09 18.25 11.55 24.81 7.46 6.56 16.42 10.37 26.88 11.44-2.58 8.16-5.77 16.59-9.58 25.3l.26-.26zM119.22 31.84c0-7.72 2.76-14.89 8.27-21.52 5.52-6.62 12.3-10.32 20.35-11.1 0 1.09.07 2.12.2 3.1.26 7.64-2.55 14.69-8.43 21.15-5.88 6.46-12.92 10.12-20.39 10.98 0-.87 0-1.74 0-2.61z"/></svg>' },
       { id: 'bunny', title: 'Big Buck Bunny (Apple 4K ProRes)', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', icon: '🎬' },
       { id: 'tears', title: 'Tears of Steel (Sci-Fi Cinema)', src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4', icon: '🚀' }
     ];
@@ -10785,7 +10809,7 @@ async function launchVideo() {
         ctx.font = 'bold 24px -apple-system, sans-serif';
         ctx.fillStyle = '#ffffff';
         ctx.textAlign = 'center';
-        ctx.fillText(' macOS Sequoia Keynote & Intelligence', 400, 245);
+        ctx.fillText('macOS Sequoia Keynote & Intelligence', 400, 245);
         ctx.font = '13px -apple-system, sans-serif';
         ctx.fillStyle = '#a1a1aa';
         ctx.fillText('Apple ProRes Cinema • 4K HDR High Quality Render', 400, 275);
