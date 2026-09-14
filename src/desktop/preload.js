@@ -1,5 +1,7 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
+let _selectedFile = null;
+
 contextBridge.exposeInMainWorld('aliceOS', {
   // Window controls
   closeWindow: () => ipcRenderer.send('window-close'),
@@ -39,5 +41,9 @@ contextBridge.exposeInMainWorld('aliceOS', {
     uname: () => ipcRenderer.invoke('linux-uname'),
     sysinfo: () => ipcRenderer.invoke('linux-sysinfo'),
     getTasks: () => ipcRenderer.invoke('linux-get-tasks')
-  }
+  },
+  
+  // Selection State Bridge
+  setSelectedFile: (file) => { _selectedFile = file; },
+  getSelectedFile: () => _selectedFile
 });

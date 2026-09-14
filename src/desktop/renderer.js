@@ -1,3 +1,22 @@
+// Global Selected File Management (syncing with contextBridge & Quick Look)
+window.selectedFile = null;
+window.setSystemSelectedFile = function(file) {
+  window.selectedFile = file;
+  if (window.aliceOS && typeof window.aliceOS.setSelectedFile === 'function') {
+    try { window.aliceOS.setSelectedFile(file); } catch (e) {}
+  }
+};
+window.getSystemSelectedFile = function() {
+  if (window.selectedFile) return window.selectedFile;
+  if (window.aliceOS && typeof window.aliceOS.getSelectedFile === 'function') {
+    try {
+      const f = window.aliceOS.getSelectedFile();
+      if (f !== null && f !== undefined) return f;
+    } catch (e) {}
+  }
+  return null;
+};
+
 // ====================================================
 // Phase 68: Multi-Language (i18n) Engine
 // ====================================================
@@ -3467,6 +3486,189 @@ function focusWindow(win) {
   }
 }
 
+// ====================================================
+// macOS Sonoma "Click Wallpaper to Reveal Desktop" Engine
+// ====================================================
+let isDesktopRevealed = false;
+
+function toggleRevealDesktop(forceState = null) {
+  const allWins = Array.from(document.querySelectorAll('.window')).filter(w => !w.classList.contains('minimized') && w.style.display !== 'none');
+  if (allWins.length === 0) return;
+
+  isDesktopRevealed = forceState !== null ? forceState : !isDesktopRevealed;
+  const wW = window.innerWidth;
+  const wH = window.innerHeight;
+
+  allWins.forEach((win) => {
+    win.style.transition = 'transform 0.42s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease';
+    if (isDesktopRevealed) {
+      win.classList.add('desktop-revealed');
+      const rect = win.getBoundingClientRect();
+      const winCenterX = rect.left + rect.width / 2;
+      const winCenterY = rect.top + rect.height / 2;
+
+      // Displace towards nearest screen edge
+      let pushX = 0;
+      let pushY = 0;
+      if (winCenterX < wW / 2) {
+        pushX = -(rect.right - 45);
+      } else {
+        pushX = (wW - rect.left - 45);
+      }
+
+      if (winCenterY < wH / 2) {
+        pushY = -(rect.bottom - 60);
+      } else {
+        pushY = (wH - rect.top - 70);
+      }
+
+      win.style.transform = `translate(${pushX}px, ${pushY}px) scale(0.96)`;
+
+      const restoreOnWinClick = (we) => {
+        we.stopPropagation();
+        toggleRevealDesktop(false);
+      };
+      win.addEventListener('click', restoreOnWinClick, { once: true });
+    } else {
+      win.classList.remove('desktop-revealed');
+      win.style.transform = '';
+    }
+  });
+
+  if (typeof playVolumeFeedbackBeep === 'function') playVolumeFeedbackBeep();
+}
+window.toggleRevealDesktop = toggleRevealDesktop;
+
+// ====================================================
+// macOS Rubber-Band Marquee Selection Box Engine
+// ====================================================
+function initDesktopSelectionAndMarquee() {
+  const desktop = document.getElementById('desktop');
+  const grid = document.getElementById('desktop-grid');
+  if (!desktop && !grid) return;
+
+  let isMarquee = false;
+  let marqueeStartX = 0, marqueeStartY = 0;
+  let selectionBox = null;
+  let moved = false;
+
+  const onMouseDown = (e) => {
+    if (e.target !== desktop && e.target !== grid && !e.target.classList.contains('dynamic-wallpaper-layer')) {
+      return;
+    }
+    if (e.button !== 0) return;
+
+    isMarquee = true;
+    moved = false;
+    marqueeStartX = e.clientX;
+    marqueeStartY = e.clientY;
+
+    if (!e.shiftKey && !e.metaKey && !e.ctrlKey) {
+      document.querySelectorAll('.desktop-icon-wrapper.selected').forEach(el => el.classList.remove('selected'));
+      if (typeof window.setSystemSelectedFile === 'function') window.setSystemSelectedFile(null);
+      else window.selectedFile = null;
+    }
+
+    if (selectionBox) selectionBox.remove();
+    selectionBox = document.createElement('div');
+    selectionBox.id = 'desktop-selection-box';
+    selectionBox.style.left = `${marqueeStartX}px`;
+    selectionBox.style.top = `${marqueeStartY}px`;
+    selectionBox.style.width = '0px';
+    selectionBox.style.height = '0px';
+    selectionBox.style.display = 'none';
+    desktop.appendChild(selectionBox);
+  };
+
+  const onMouseMove = (e) => {
+    if (!isMarquee || !selectionBox) return;
+
+    const currentX = e.clientX;
+    const currentY = e.clientY;
+    const dx = currentX - marqueeStartX;
+    const dy = currentY - marqueeStartY;
+
+    if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
+      moved = true;
+      selectionBox.style.display = 'block';
+    }
+
+    if (!moved) return;
+
+    const left = Math.min(marqueeStartX, currentX);
+    const top = Math.min(marqueeStartY, currentY);
+    const width = Math.abs(dx);
+    const height = Math.abs(dy);
+
+    selectionBox.style.left = `${left}px`;
+    selectionBox.style.top = `${top}px`;
+    selectionBox.style.width = `${width}px`;
+    selectionBox.style.height = `${height}px`;
+
+    const boxRect = { left, top, right: left + width, bottom: top + height };
+    let lastSelected = null;
+
+    document.querySelectorAll('.desktop-icon-wrapper').forEach(iconEl => {
+      const rect = iconEl.getBoundingClientRect();
+      const intersects = !(
+        rect.right < boxRect.left ||
+        rect.left > boxRect.right ||
+        rect.bottom < boxRect.top ||
+        rect.top > boxRect.bottom
+      );
+      if (intersects) {
+        iconEl.classList.add('selected');
+        lastSelected = iconEl;
+      } else if (!e.shiftKey && !e.metaKey) {
+        iconEl.classList.remove('selected');
+      }
+    });
+
+    if (lastSelected) {
+      const fileData = {
+        name: lastSelected.dataset.fileName,
+        path: `/Users/${(typeof currentUser !== 'undefined' ? currentUser : 'alice')}/Desktop/${lastSelected.dataset.fileName}`,
+        isDirectory: lastSelected.dataset.isDir === 'true'
+      };
+      if (typeof window.setSystemSelectedFile === 'function') window.setSystemSelectedFile(fileData);
+      else window.selectedFile = fileData;
+    }
+  };
+
+  const onMouseUp = (e) => {
+    if (!isMarquee) return;
+    isMarquee = false;
+
+    if (selectionBox) {
+      selectionBox.style.opacity = '0';
+      selectionBox.style.transition = 'opacity 0.15s ease';
+      setTimeout(() => {
+        if (selectionBox) {
+          selectionBox.remove();
+          selectionBox = null;
+        }
+      }, 150);
+    }
+
+    // If it was a simple click on empty wallpaper (not a drag selection)
+    if (!moved && (e.target === desktop || e.target === grid || e.target.classList.contains('dynamic-wallpaper-layer'))) {
+      const openWins = Array.from(document.querySelectorAll('.window')).filter(w => !w.classList.contains('minimized') && w.style.display !== 'none');
+      if (openWins.length > 0) {
+        toggleRevealDesktop();
+      }
+    }
+  };
+
+  if (desktop) {
+    desktop.addEventListener('mousedown', onMouseDown);
+  }
+  if (grid) {
+    grid.addEventListener('mousedown', onMouseDown);
+  }
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
+}
+
 // Restore widgets & handle Stage Manager desktop peek
 document.addEventListener('DOMContentLoaded', () => {
   const grid = document.getElementById('desktop-grid');
@@ -3509,6 +3711,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (grid) grid.addEventListener('mousedown', handleDesktopClick);
   if (desktop) desktop.addEventListener('mousedown', handleDesktopClick);
+
+  // Initialize Marquee selection
+  initDesktopSelectionAndMarquee();
 });
 
 // ====================================================
@@ -4690,7 +4895,7 @@ async function launchIPhoneMirroring() {
 
           <div class="settings-card">
             <div class="settings-row">
-              <div class="settings-row-label"><span>🪞</span> <span>iPhone 镜像</span></div>
+              <div class="settings-row-label"><span style="display:flex;align-items:center;">${getSFSymbol('iphone', 14, '#007aff')}</span> <span>${t('app_iphonemirror', 'iPhone 镜像')}</span></div>
               <div class="settings-row-val" style="color:#007aff;font-weight:600;">已连接至 Mac</div>
             </div>
             <div class="settings-row">
@@ -4724,20 +4929,75 @@ async function launchIPhoneMirroring() {
     });
     if (targetView) {
       targetView.style.display = 'flex';
+      targetView.style.animation = 'iphoneAppEnter 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards';
       homeScreen.style.display = 'none';
     }
   }
 
   function goHome() {
-    allViews.forEach(v => {
-      if (v) v.style.display = 'none';
-    });
+    const currentView = allViews.find(v => v && v.style.display === 'flex');
+    if (!currentView) return;
+
+    currentView.style.animation = 'none';
+    currentView.style.transition = 'transform 0.32s cubic-bezier(0.32, 0.72, 0, 1), opacity 0.25s ease';
+    currentView.style.transform = 'translateY(80%) scale(0.85)';
+    currentView.style.opacity = '0';
+
     homeScreen.style.display = 'flex';
+    homeScreen.style.opacity = '0';
+    homeScreen.style.transform = 'scale(0.96)';
+    homeScreen.style.transition = 'transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.32s ease';
+
+    setTimeout(() => {
+      homeScreen.style.opacity = '1';
+      homeScreen.style.transform = 'scale(1)';
+    }, 20);
+
+    setTimeout(() => {
+      if (currentView) {
+        currentView.style.display = 'none';
+        currentView.style.transform = '';
+        currentView.style.opacity = '';
+        currentView.style.transition = '';
+      }
+    }, 320);
   }
 
-  // Home bar click returns home
+  // Home bar click returns home with iOS 18 spring collapse
   const homeBar = win.querySelector(`#iphone-home-bar-${pid}`);
   if (homeBar) homeBar.addEventListener('click', goHome);
+
+  // iOS 18 Handoff to Mac pill banner
+  function triggerIPhoneHandoff(appKey, appTitle) {
+    const screen = win.querySelector(`#iphone-screen-${pid}`);
+    if (!screen) return;
+    let pill = screen.querySelector('.iphone-handoff-pill');
+    if (!pill) {
+      pill = document.createElement('div');
+      pill.className = 'iphone-handoff-pill';
+      screen.appendChild(pill);
+    }
+    pill.innerHTML = `
+      <span style="display:flex;align-items:center;">${getSFSymbol('airplay', 14, '#007aff')}</span>
+      <span>${t('handoff_to_mac', '接力到 Mac')}: ${appTitle}</span>
+    `;
+    pill.style.display = 'flex';
+    pill.style.opacity = '1';
+    pill.style.transform = 'translateX(-50%) translateY(0) scale(1)';
+
+    setTimeout(() => {
+      if (pill) {
+        pill.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        pill.style.opacity = '0';
+        pill.style.transform = 'translateX(-50%) translateY(-10px) scale(0.9)';
+        setTimeout(() => { if (pill && pill.parentElement) pill.remove(); }, 300);
+      }
+    }, 2200);
+
+    if (typeof activateOrLaunchApp === 'function') {
+      activateOrLaunchApp(appKey);
+    }
+  }
 
   // App icon clicks
   win.querySelector(`#iphone-icon-messages-${pid}`)?.addEventListener('click', () => openSubApp(viewMessages));
@@ -4747,22 +5007,22 @@ async function launchIPhoneMirroring() {
   win.querySelector(`#iphone-icon-settings-${pid}`)?.addEventListener('click', () => openSubApp(viewSettings));
   
   win.querySelector(`#iphone-icon-music-${pid}`)?.addEventListener('click', () => {
-    launchMusic();
+    triggerIPhoneHandoff('music', t('app_music', '音乐'));
   });
   win.querySelector(`#iphone-dock-music-${pid}`)?.addEventListener('click', () => {
-    launchMusic();
+    triggerIPhoneHandoff('music', t('app_music', '音乐'));
   });
   win.querySelector(`#iphone-icon-safari-${pid}`)?.addEventListener('click', () => {
-    launchBrowser();
+    triggerIPhoneHandoff('browser', t('app_browser', 'Safari 浏览器'));
   });
   win.querySelector(`#iphone-dock-safari-${pid}`)?.addEventListener('click', () => {
-    launchBrowser();
+    triggerIPhoneHandoff('browser', t('app_browser', 'Safari 浏览器'));
   });
   win.querySelector(`#iphone-icon-notes-${pid}`)?.addEventListener('click', () => {
-    launchNotes();
+    triggerIPhoneHandoff('notes', t('app_notes', '备忘录'));
   });
   win.querySelector(`#iphone-icon-camera-${pid}`)?.addEventListener('click', () => {
-    launchCamera();
+    triggerIPhoneHandoff('camera', t('app_camera', 'Photo Booth'));
   });
   win.querySelector(`#iphone-dock-phone-${pid}`)?.addEventListener('click', () => {
     openSubApp(viewMessages);
@@ -6153,12 +6413,14 @@ async function launchFinder() {
       el.addEventListener('click', () => {
         content.querySelectorAll('.finder-item').forEach(i => i.classList.remove('selected'));
         el.classList.add('selected');
-        window.aliceOS.selectedFile = {
+        const fData = {
           path: targetPath,
           isHost: isHostDir,
           type: item.type,
           name: item.name
         };
+        if (typeof window.setSystemSelectedFile === 'function') window.setSystemSelectedFile(fData);
+        else window.selectedFile = fData;
       });
 
       el.addEventListener('dblclick', () => {
@@ -6553,11 +6815,11 @@ async function launchFinder() {
   const trashBtn = win.querySelector(`#finder-trash-${pid}`);
   if (trashBtn) {
     trashBtn.addEventListener('click', async () => {
-      if (!window.aliceOS.selectedFile) {
+      const sFile = (typeof window.getSystemSelectedFile === 'function' ? window.getSystemSelectedFile() : null) || window.selectedFile;
+      if (!sFile) {
         alert("请先选择要删除的项目");
         return;
       }
-      const sFile = window.aliceOS.selectedFile;
       if (sFile.isHost) {
         alert("为保障安全，暂不支持删除物理文件");
         return;
@@ -6565,7 +6827,8 @@ async function launchFinder() {
       if (confirm(`确定要将“${sFile.name}”移到废纸篓吗？`)) {
         await window.aliceOS.vfs.rm(sFile.path);
         if (window.AppleAudioEngine) window.AppleAudioEngine.playTrash();
-        window.aliceOS.selectedFile = null;
+        if (typeof window.setSystemSelectedFile === 'function') window.setSystemSelectedFile(null);
+        else window.selectedFile = null;
         await renderActiveView();
         if (sFile.path.startsWith('/Users/alice/Desktop') && typeof window.renderDesktopGrid === 'function') {
           window.renderDesktopGrid();
@@ -12282,11 +12545,11 @@ async function refreshDesktop() {
   desktopGrid.innerHTML = '';
 
   if (desktopStacksEnabled) {
-    // Group items into Stacks
+    // Group items into Stacks with pure vector symbols
     const stacks = {
-      documents: { label: t('stacks_documents', 'Documents'), icon: '📄', items: [] },
-      images: { label: t('stacks_images', 'Images'), icon: '🖼️', items: [] },
-      folders: { label: t('stacks_folders', 'Folders'), icon: '📁', items: [] }
+      documents: { label: t('stacks_documents', 'Documents'), iconSvg: getSFSymbol('doc-text', 32, '#ffffff'), items: [] },
+      images: { label: t('stacks_images', 'Images'), iconSvg: getSFSymbol('doc-image', 32, '#34c759'), items: [] },
+      folders: { label: t('stacks_folders', 'Folders'), iconSvg: getSFSymbol('folder', 34, '#0a84ff'), items: [] }
     };
 
     res.data.forEach(item => {
@@ -12318,7 +12581,7 @@ async function refreshDesktop() {
         <div class="desktop-stack-cards">
           <div class="stack-layer stack-layer-1"></div>
           <div class="stack-layer stack-layer-2"></div>
-          <div class="stack-layer-top">${stack.icon}</div>
+          <div class="stack-layer-top" style="display:flex;align-items:center;justify-content:center;">${stack.iconSvg}</div>
           <div class="desktop-stack-badge">${stack.items.length}</div>
         </div>
         <div class="desktop-stack-label">${stack.label}</div>
@@ -12346,15 +12609,18 @@ async function refreshDesktop() {
           itemEl.style.alignItems = 'center';
           itemEl.style.cursor = 'pointer';
           itemEl.style.width = '64px';
+          const childIconSvg = child.isDirectory 
+            ? getSFSymbol('folder', 34, '#0a84ff') 
+            : (child.name.endsWith('.png') || child.name.endsWith('.jpg') ? getSFSymbol('doc-image', 30, '#34c759') : getSFSymbol('doc-text', 30, '#ffffff'));
           itemEl.innerHTML = `
-            <div style="font-size:28px;">${stack.icon}</div>
+            <div style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;">${childIconSvg}</div>
             <div style="font-size:10px;color:white;text-align:center;overflow:hidden;text-overflow:ellipsis;width:100%;white-space:nowrap;margin-top:4px;">${child.name}</div>
           `;
           itemEl.ondblclick = () => {
             const targetPath = `/Users/${currentUser}/Desktop/${child.name}`;
             if (child.isDirectory) {
               launchFinder();
-            } else if (child.name.endsWith('.png')) {
+            } else if (child.name.endsWith('.png') || child.name.endsWith('.jpg')) {
               launchGallery(targetPath);
             } else {
               launchNotes(targetPath);
@@ -12372,36 +12638,71 @@ async function refreshDesktop() {
     return;
   }
 
-  // Regular free-form draggable icons
+  // Regular free-form draggable icons with Apple SF Symbols vector graphics & macOS selection
   let startX = 20;
   let startY = 20;
   res.data.forEach((item, idx) => {
     const isDir = item.isDirectory;
-    let icon = isDir ? '📁' : '📄';
-    if (!isDir && item.name.endsWith('.png')) icon = '🖼️';
+    const isImage = !isDir && (item.name.endsWith('.png') || item.name.endsWith('.jpg'));
+    const iconSvg = isDir 
+      ? getSFSymbol('folder', 48, '#0a84ff') 
+      : (isImage ? getSFSymbol('doc-image', 44, '#34c759') : getSFSymbol('doc-text', 44, '#ffffff'));
     
     const div = document.createElement('div');
     div.className = 'desktop-icon-wrapper';
+    div.dataset.fileName = item.name;
+    div.dataset.isDir = isDir ? 'true' : 'false';
     
     // Basic grid layout placement for initial load
     div.style.left = `${startX}px`;
     div.style.top = `${startY}px`;
-    startY += 100;
+    startY += 105;
     if (startY > window.innerHeight - 200) {
       startY = 20;
-      startX += 100;
+      startX += 105;
     }
     
     div.innerHTML = `
-      <div class="icon">${icon}</div>
+      <div class="icon">${iconSvg}</div>
       <div class="label">${item.name}</div>
     `;
+
+    // macOS Desktop Icon Click Selection & Quick Look file binding
+    div.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isMulti = e.shiftKey || e.metaKey || e.ctrlKey;
+      if (!isMulti) {
+        document.querySelectorAll('.desktop-icon-wrapper.selected').forEach(el => {
+          if (el !== div) el.classList.remove('selected');
+        });
+      }
+      div.classList.toggle('selected');
+      const targetPath = `/Users/${currentUser}/Desktop/${item.name}`;
+      if (div.classList.contains('selected')) {
+        const fileData = {
+          name: item.name,
+          path: targetPath,
+          isDirectory: isDir,
+          size: item.size || 4096,
+          mtime: item.mtime || Date.now()
+        };
+        if (typeof window.setSystemSelectedFile === 'function') window.setSystemSelectedFile(fileData);
+        else window.selectedFile = fileData;
+      } else {
+        const cur = typeof window.getSystemSelectedFile === 'function' ? window.getSystemSelectedFile() : window.selectedFile;
+        if (cur && cur.name === item.name) {
+          if (typeof window.setSystemSelectedFile === 'function') window.setSystemSelectedFile(null);
+          else window.selectedFile = null;
+        }
+      }
+    });
+
     div.ondblclick = () => {
       if (isDir) {
         launchFinder();
       } else {
         const targetPath = `/Users/${currentUser}/Desktop/${item.name}`;
-        if (item.name.endsWith('.png')) {
+        if (item.name.endsWith('.png') || item.name.endsWith('.jpg')) {
           launchGallery(targetPath);
         } else {
           launchNotes(targetPath);
@@ -12410,9 +12711,10 @@ async function refreshDesktop() {
     };
     
     // Draggable logic
-    let isDragging = false, dragStartX, dragStartY, initialX, initialY;
+    let isDragging = false, dragStartX, dragStartY, initialX, initialY, hasMoved = false;
     div.addEventListener('mousedown', (e) => {
       isDragging = true;
+      hasMoved = false;
       dragStartX = e.clientX;
       dragStartY = e.clientY;
       initialX = parseInt(div.style.left || 0);
@@ -12422,6 +12724,7 @@ async function refreshDesktop() {
       if (!isDragging) return;
       const dx = e.clientX - dragStartX;
       const dy = e.clientY - dragStartY;
+      if (Math.abs(dx) > 3 || Math.abs(dy) > 3) hasMoved = true;
       div.style.left = `${initialX + dx}px`;
       div.style.top = `${initialY + dy}px`;
     });
@@ -12431,7 +12734,7 @@ async function refreshDesktop() {
       
       // Trash collision check
       const trash = document.getElementById('dock-trash');
-      if (trash) {
+      if (trash && hasMoved) {
         const rect = trash.getBoundingClientRect();
         if (e.clientX >= rect.left && e.clientX <= rect.right &&
             e.clientY >= rect.top && e.clientY <= rect.bottom) {
@@ -13077,9 +13380,10 @@ document.addEventListener('keydown', async (e) => {
       toggleQuickLook();
       return;
     }
-    if (window.aliceOS && window.aliceOS.selectedFile) {
+    const currentSelection = (typeof window.getSystemSelectedFile === 'function' ? window.getSystemSelectedFile() : null) || window.selectedFile;
+    if (currentSelection) {
       e.preventDefault();
-      toggleQuickLook();
+      toggleQuickLook(currentSelection);
     }
   }
 
@@ -13160,7 +13464,7 @@ async function toggleQuickLook(targetFile) {
     return;
   }
 
-  const activeFile = targetFile || (window.aliceOS && window.aliceOS.selectedFile);
+  const activeFile = targetFile || (typeof window.getSystemSelectedFile === 'function' ? window.getSystemSelectedFile() : null) || window.selectedFile;
   if (!activeFile) return;
 
   // Retrieve sibling files in directory
