@@ -9655,53 +9655,123 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-function renderLaunchpad() {
-  if (!launchpad) return;
-  launchpad.innerHTML = launchpadItems.map((item, idx) => {
+// ====================================================
+// Phase 74: macOS Sequoia Launchpad Engine & Live Search
+// ====================================================
+function renderLaunchpad(filterQuery = '') {
+  const grid = document.getElementById('launchpad-grid');
+  if (!grid) return;
+  const q = (filterQuery || '').trim().toLowerCase();
+
+  grid.innerHTML = launchpadItems.map((item, idx) => {
     if (item.type === 'app') {
+      const match = !q || item.name.toLowerCase().includes(q) || item.id.toLowerCase().includes(q);
       return `
-        <div style="display:flex;flex-direction:column;align-items:center;cursor:pointer;width:104px;margin:18px;" onclick="toggleLaunchpad(); ${item.action}">
-          <div style="width:82px;height:82px;margin-bottom:10px;display:flex;justify-content:center;align-items:center;transition:transform 0.15s ease;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
-            ${getAppIconSvg(item.id, 82)}
+        <div class="launchpad-item ${match ? '' : 'hidden-by-filter'}" data-name="${item.name.toLowerCase()}" onclick="handleLaunchpadAppClick('${item.action}')">
+          <div class="launchpad-item-icon">
+            ${getAppIconSvg(item.id, 76)}
           </div>
-          <div style="color:white;text-shadow:0 1px 3px rgba(0,0,0,0.8);font-size:14px;font-weight:500;text-align:center;">${item.name}</div>
+          <div class="launchpad-item-label">${item.name}</div>
         </div>
       `;
     } else {
+      const match = !q || item.name.toLowerCase().includes(q) || item.apps.some(a => a.name.toLowerCase().includes(q) || a.id.toLowerCase().includes(q));
       const miniIcons = item.apps.slice(0, 4).map(a => `
-        <div style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;">
-          ${getAppIconSvg(a.id, 28)}
+        <div style="width:26px;height:26px;display:flex;align-items:center;justify-content:center;">
+          ${getAppIconSvg(a.id, 26)}
         </div>
       `).join('');
       return `
-        <div style="display:flex;flex-direction:column;align-items:center;cursor:pointer;width:104px;margin:18px;" onclick="openLaunchpadFolder(${idx})">
+        <div class="launchpad-item ${match ? '' : 'hidden-by-filter'}" data-name="${item.name.toLowerCase()}" onclick="openLaunchpadFolder(${idx})">
           <div class="launchpad-folder-tile">
             ${miniIcons}
           </div>
-          <div style="color:white;text-shadow:0 1px 3px rgba(0,0,0,0.8);font-size:14px;font-weight:500;margin-top:10px;text-align:center;">${item.name}</div>
+          <div class="launchpad-item-label" style="margin-top:6px;">${item.name}</div>
         </div>
       `;
     }
   }).join('');
 }
 
-function toggleLaunchpad() {
-  closeLaunchpadFolder();
-  if (launchpad.style.display === 'flex') {
-    launchpad.style.opacity = '0';
-    setTimeout(() => launchpad.style.display = 'none', 300);
-  } else {
-    renderLaunchpad();
-    launchpad.style.display = 'flex';
-    setTimeout(() => launchpad.style.opacity = '1', 10);
+function handleLaunchpadAppClick(actionStr) {
+  if (window.AppleAudioEngine && window.AppleAudioEngine.playPop) {
+    try { window.AppleAudioEngine.playPop(); } catch (e) {}
+  }
+  closeLaunchpad();
+  try {
+    const fn = new Function(actionStr);
+    fn();
+  } catch (e) {
+    console.error('Launchpad action error:', e);
   }
 }
 
+function openLaunchpad() {
+  const lp = document.getElementById('launchpad');
+  if (!lp) return;
+  renderLaunchpad('');
+  lp.style.display = 'flex';
+  void lp.offsetWidth;
+  lp.classList.add('open');
+  const searchInput = document.getElementById('launchpad-search-input');
+  if (searchInput) {
+    searchInput.value = '';
+    setTimeout(() => searchInput.focus(), 60);
+  }
+  const clearBtn = document.getElementById('launchpad-search-clear');
+  if (clearBtn) clearBtn.style.display = 'none';
+}
 
+function closeLaunchpad() {
+  closeLaunchpadFolder();
+  const lp = document.getElementById('launchpad');
+  if (!lp) return;
+  lp.classList.remove('open');
+  setTimeout(() => {
+    if (!lp.classList.contains('open')) {
+      lp.style.display = 'none';
+    }
+  }, 320);
+}
 
-launchpad.addEventListener('click', (e) => {
-  if (e.target === launchpad) {
-    toggleLaunchpad();
+function toggleLaunchpad() {
+  const lp = document.getElementById('launchpad');
+  if (!lp) return;
+  if (lp.classList.contains('open') || lp.style.display === 'flex') {
+    closeLaunchpad();
+  } else {
+    openLaunchpad();
+  }
+}
+
+// Background click closes Launchpad
+document.addEventListener('DOMContentLoaded', () => {
+  const lp = document.getElementById('launchpad');
+  if (lp) {
+    lp.addEventListener('click', (e) => {
+      if (e.target === lp || e.target.classList.contains('launchpad-body') || e.target.classList.contains('launchpad-header') || e.target.classList.contains('launchpad-footer')) {
+        closeLaunchpad();
+      }
+    });
+  }
+
+  const searchInput = document.getElementById('launchpad-search-input');
+  const clearBtn = document.getElementById('launchpad-search-clear');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      const q = e.target.value;
+      if (clearBtn) clearBtn.style.display = q ? 'flex' : 'none';
+      renderLaunchpad(q);
+    });
+  }
+  if (clearBtn && searchInput) {
+    clearBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      searchInput.value = '';
+      clearBtn.style.display = 'none';
+      renderLaunchpad('');
+      searchInput.focus();
+    });
   }
 });
 
@@ -13538,8 +13608,25 @@ document.addEventListener('keydown', async (e) => {
     if (typeof playVolumeFeedbackBeep === 'function') playVolumeFeedbackBeep();
   }
   
-  // Close quick look & StandBy on escape
+  // macOS Launchpad Toggle (F4)
+  if (e.code === 'F4') {
+    e.preventDefault();
+    toggleLaunchpad();
+    return;
+  }
+
+  // Close quick look, Launchpad, and StandBy on escape
   if (e.code === 'Escape') {
+    const folderModal = document.getElementById('launchpad-folder-modal');
+    if (folderModal && folderModal.style.display === 'flex') {
+      closeLaunchpadFolder();
+      return;
+    }
+    const lp = document.getElementById('launchpad');
+    if (lp && (lp.classList.contains('open') || lp.style.display === 'flex')) {
+      closeLaunchpad();
+      return;
+    }
     const overlay = document.getElementById('quick-look-overlay');
     if (overlay && overlay.style.display === 'flex') {
       overlay.style.opacity = '0';
@@ -20309,20 +20396,25 @@ let isNightShiftActive = false;
 function toggleNightShift(btn) {
   isNightShiftActive = !isNightShiftActive;
   if (btn) btn.classList.toggle('active', isNightShiftActive);
-  const overlay = document.getElementById('brightness-overlay');
-  if (overlay) {
-    overlay.style.background = isNightShiftActive ? 'rgba(255, 140, 0, 0.16)' : 'black';
-    overlay.style.opacity = isNightShiftActive ? '1' : (1 - (parseInt(document.getElementById('cc-brightness')?.value || 100) / 100)).toString();
+  const nsOverlay = document.getElementById('night-shift-overlay');
+  if (nsOverlay) {
+    nsOverlay.style.opacity = isNightShiftActive ? '1' : '0';
   }
   if (typeof showNotification === 'function') {
     showNotification(t('cc_night_shift', 'Night Shift'), isNightShiftActive ? t('notif_night_shift_on', 'Night Shift Warmer Temperature: On') : t('notif_night_shift_off', 'Night Shift: Off'));
   }
 }
 
+let isTrueToneActive = false;
 function toggleTrueTone(btn) {
-  if (btn) btn.classList.toggle('active');
+  isTrueToneActive = !isTrueToneActive;
+  if (btn) btn.classList.toggle('active', isTrueToneActive);
+  const ttOverlay = document.getElementById('true-tone-overlay');
+  if (ttOverlay) {
+    ttOverlay.style.opacity = isTrueToneActive ? '1' : '0';
+  }
   if (typeof showNotification === 'function') {
-    showNotification(t('cc_true_tone', 'True Tone'), t('notif_true_tone', 'Display dynamically adapting to ambient lighting'));
+    showNotification(t('cc_true_tone', 'True Tone'), isTrueToneActive ? t('notif_true_tone', 'Display dynamically adapting to ambient lighting') : t('notif_true_tone_off', 'True Tone: Off'));
   }
 }
 

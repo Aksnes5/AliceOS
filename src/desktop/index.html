@@ -278,9 +278,25 @@
   <!-- iOS Flashlight Torch Overlay -->
   <div id="flashlight-overlay" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(255,255,255,0.98);z-index:9998;display:none;opacity:0;transition:opacity 0.3s ease;pointer-events:none;"></div>
 
-  <!-- Launchpad Overlay -->
-  <div id="launchpad" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background-color:rgba(0,0,0,0.6);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);z-index:3000;display:none;flex-wrap:wrap;align-content:flex-start;justify-content:center;padding:100px;gap:40px;opacity:0;transition:opacity 0.3s ease;">
-    <!-- Filled via JS -->
+  <!-- macOS Sequoia Launchpad Overlay with Live Search Bar & Pagination -->
+  <div id="launchpad" class="launchpad-overlay">
+    <div class="launchpad-header">
+      <div class="launchpad-search-box">
+        <span class="launchpad-search-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <input type="text" id="launchpad-search-input" class="launchpad-search-input" placeholder="搜索" data-i18n-placeholder="search_placeholder" autocomplete="off" spellcheck="false" />
+        <button id="launchpad-search-clear" class="launchpad-search-clear" style="display:none;" title="Clear">✕</button>
+      </div>
+    </div>
+    <div class="launchpad-body">
+      <div id="launchpad-grid" class="launchpad-grid">
+        <!-- Filled dynamically via JS -->
+      </div>
+    </div>
+    <div class="launchpad-footer">
+      <div class="launchpad-dots">
+        <span class="launchpad-dot active"></span>
+      </div>
+    </div>
   </div>
 
   <!-- iOS / macOS Launchpad Folder Expansion View -->
@@ -1004,7 +1020,9 @@
     </div>
   </div>
 
-  <div id="brightness-overlay" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:black;opacity:0;pointer-events:none;z-index:9999;transition:opacity 0.1s;"></div>
+  <div id="brightness-overlay" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:black;opacity:0;pointer-events:none;z-index:9996;transition:opacity 0.1s;"></div>
+  <div id="night-shift-overlay" style="position:fixed;top:0;left:0;width:100vw;height:100vh;backdrop-filter:sepia(40%) hue-rotate(-22deg) saturate(110%);pointer-events:none;z-index:9997;opacity:0;transition:opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);"></div>
+  <div id="true-tone-overlay" style="position:fixed;top:0;left:0;width:100vw;height:100vh;backdrop-filter:sepia(14%);pointer-events:none;z-index:9998;opacity:0;transition:opacity 0.5s ease;"></div>
 
   <!-- AI Assistant Panel -->
   <div id="ai-panel" style="position:absolute;top:32px;right:45px;width:300px;background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);border-radius:12px;padding:15px;box-shadow:0 5px 20px rgba(0,0,0,0.3);display:none;flex-direction:column;z-index:2000;">
