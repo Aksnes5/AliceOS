@@ -48,6 +48,27 @@ function setupIPC(ipcMain, mainWindow) {
       return { success: false, error: err.message };
     }
   });
+
+  ipcMain.handle('capture-screen', async (event, rect) => {
+    try {
+      if (!mainWindow || mainWindow.isDestroyed()) {
+        return { success: false, error: 'Window not available' };
+      }
+      let opts;
+      if (rect && rect.width > 0 && rect.height > 0) {
+        opts = {
+          x: Math.round(rect.x),
+          y: Math.round(rect.y),
+          width: Math.round(rect.width),
+          height: Math.round(rect.height)
+        };
+      }
+      const image = await mainWindow.webContents.capturePage(opts);
+      return { success: true, data: image.toDataURL() };
+    } catch (err) {
+      return { success: false, error: err.message };
+    }
+  });
   
   const http = require('http');
   let activeServer = null;

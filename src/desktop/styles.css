@@ -154,19 +154,37 @@ body {
 }
 
 .dock-icon {
-  width: 50px;
-  height: 50px;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  width: 52px;
+  height: 52px;
+  background-color: transparent;
+  border-radius: 14px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 24px;
   cursor: pointer;
   position: relative;
-  transition: transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94), margin 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: transform 0.18s cubic-bezier(0.25, 0.46, 0.45, 0.94), margin 0.18s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   transform-origin: bottom center;
   will-change: transform;
+}
+
+.dock-icon:hover {
+  transform: translateY(-8px) scale(1.15);
+}
+
+.dock-icon:active {
+  transform: translateY(-2px) scale(1.04);
+}
+
+.macos-app-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 22.5%;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.32));
+  pointer-events: none;
+  display: block;
+  user-select: none;
+  transition: transform 0.18s ease;
 }
 
 .dock-dot {
@@ -4119,4 +4137,986 @@ body.dark-mode .finder-col-divider::after {
 
 .dock-icon.dock-bounce {
   animation: dockBounce 0.75s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+/* ====================================================
+   macOS Sequoia Built-in Apps: High-Fidelity Styling
+   ==================================================== */
+
+/* --- 1. Apple Notes (3-Pane Layout) --- */
+.notes-app-wrap {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  color: #1d1d1f;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+  overflow: hidden;
+}
+body.dark-mode .notes-app-wrap {
+  background: rgba(30, 30, 32, 0.9);
+  color: #f5f5f7;
+}
+
+.notes-folders-sidebar {
+  width: 170px;
+  background: rgba(0, 0, 0, 0.03);
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  padding: 10px 8px;
+  box-sizing: border-box;
+  user-select: none;
+}
+body.dark-mode .notes-folders-sidebar {
+  background: rgba(255, 255, 255, 0.03);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.notes-section-hdr {
+  font-size: 10px;
+  font-weight: 700;
+  color: #86868b;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin: 8px 0 6px 8px;
+}
+
+.notes-folder-row {
+  display: flex;
+  align-items: center;
+  padding: 6px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  gap: 8px;
+  transition: background 0.12s ease;
+  margin-bottom: 2px;
+}
+.notes-folder-row:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+body.dark-mode .notes-folder-row:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+.notes-folder-row.active {
+  background: rgba(0, 122, 255, 0.15);
+  color: #007aff;
+  font-weight: 600;
+}
+.notes-folder-count {
+  margin-left: auto;
+  font-size: 11px;
+  opacity: 0.6;
+}
+
+.notes-list-col {
+  width: 220px;
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.015);
+  user-select: none;
+}
+body.dark-mode .notes-list-col {
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.notes-search-wrap {
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+body.dark-mode .notes-search-wrap {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.notes-search-input {
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.06);
+  border: none;
+  border-radius: 8px;
+  padding: 5px 8px;
+  font-size: 12px;
+  outline: none;
+  color: inherit;
+}
+body.dark-mode .notes-search-input {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.notes-cards-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 6px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.notes-card-item {
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+.notes-card-item:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+body.dark-mode .notes-card-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+.notes-card-item.active {
+  background: #ffcc00;
+  color: #1d1d1f !important;
+}
+.notes-card-item.active .notes-card-snippet,
+.notes-card-item.active .notes-card-date {
+  color: #3a3a3c !important;
+}
+
+.notes-card-title {
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 2px;
+}
+.notes-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+}
+.notes-card-date {
+  opacity: 0.75;
+  white-space: nowrap;
+}
+.notes-card-snippet {
+  opacity: 0.6;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.notes-editor-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  position: relative;
+}
+.notes-mac-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 14px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  background: rgba(0, 0, 0, 0.02);
+}
+body.dark-mode .notes-mac-toolbar {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.02);
+}
+.notes-tb-btn {
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: background 0.12s;
+}
+body.dark-mode .notes-tb-btn {
+  border-color: rgba(255, 255, 255, 0.15);
+}
+.notes-tb-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+body.dark-mode .notes-tb-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.notes-editor-body {
+  flex: 1;
+  padding: 18px 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.notes-date-stamp {
+  font-size: 11px;
+  color: #86868b;
+  text-align: center;
+  margin-bottom: 14px;
+}
+.notes-rich-textarea {
+  flex: 1;
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.6;
+  resize: none;
+  white-space: pre-wrap;
+}
+
+/* --- 2. macOS Sequoia Calculator --- */
+.calc-mac-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background: rgba(36, 36, 40, 0.88);
+  backdrop-filter: blur(35px);
+  -webkit-backdrop-filter: blur(35px);
+  color: white;
+  user-select: none;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
+  overflow: hidden;
+}
+.calc-mac-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.calc-mode-seg {
+  display: flex;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  padding: 2px;
+  gap: 2px;
+}
+.calc-seg-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.calc-seg-btn.active {
+  background: rgba(255, 255, 255, 0.22);
+  color: white;
+}
+.calc-tape-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+.calc-tape-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.calc-main-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 14px 16px;
+}
+.calc-mac-display {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  min-height: 76px;
+  margin-bottom: 12px;
+  padding: 4px 6px;
+}
+.calc-expr-line {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  min-height: 18px;
+}
+.calc-result-line {
+  font-size: 40px;
+  font-weight: 300;
+  color: white;
+  line-height: 1.1;
+  word-break: break-all;
+  max-width: 100%;
+  text-align: right;
+  transition: font-size 0.1s ease;
+}
+
+.calc-grid-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+.calc-sci-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin-bottom: 6px;
+}
+.calc-std-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  flex: 1;
+}
+
+.calc-mac-btn {
+  border: none;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  transition: filter 0.1s, transform 0.08s;
+}
+.calc-mac-btn:active {
+  transform: scale(0.95);
+  filter: brightness(1.25);
+}
+.calc-mac-btn.num {
+  background: #505052;
+}
+.calc-mac-btn.num:hover {
+  background: #646466;
+}
+.calc-mac-btn.zero-btn {
+  grid-column: span 2;
+  border-radius: 24px;
+  justify-content: flex-start;
+  padding-left: 20px;
+}
+.calc-mac-btn.func {
+  background: #a5a5a7;
+  color: #1c1c1e;
+  font-weight: 600;
+}
+.calc-mac-btn.func:hover {
+  background: #c7c7c9;
+}
+.calc-mac-btn.op {
+  background: #ff9f0a;
+  font-size: 22px;
+}
+.calc-mac-btn.op:hover {
+  background: #ffb340;
+}
+.calc-mac-btn.op.active {
+  background: white;
+  color: #ff9f0a;
+}
+.calc-mac-btn.sci {
+  background: #36363a;
+  font-size: 13px;
+  border-radius: 10px;
+  height: 32px;
+}
+
+.calc-tape-drawer {
+  width: 140px;
+  background: rgba(20, 20, 22, 0.95);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px;
+  overflow-y: auto;
+  font-size: 12px;
+  font-family: monospace;
+}
+.calc-tape-item {
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* --- 3. Apple Music App --- */
+.apple-music-app {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  background: #1e1e24;
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+.music-sidebar {
+  width: 190px;
+  background: rgba(0, 0, 0, 0.35);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  padding: 14px 10px 70px 10px;
+  user-select: none;
+  overflow-y: auto;
+}
+.music-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  font-size: 16px;
+  padding: 0 8px 14px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 12px;
+}
+.music-nav-group {
+  margin-bottom: 16px;
+}
+.music-nav-hdr {
+  font-size: 11px;
+  font-weight: 700;
+  color: #a1a1aa;
+  margin: 6px 8px;
+  letter-spacing: 0.5px;
+}
+.music-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #e4e4e7;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+.music-nav-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+.music-nav-item.active {
+  background: #fa233b;
+  color: white;
+  font-weight: 600;
+}
+
+.music-main-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding-bottom: 74px;
+}
+.music-hero-banner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 24px;
+  background: linear-gradient(135deg, rgba(250, 35, 59, 0.3) 0%, rgba(139, 92, 246, 0.15) 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.music-hero-cover {
+  width: 140px;
+  height: 140px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 54px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  flex-shrink: 0;
+}
+.music-hero-tag {
+  font-size: 11px;
+  font-weight: 700;
+  color: #fa233b;
+  letter-spacing: 0.8px;
+  margin-bottom: 4px;
+}
+.music-hero-title {
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+.music-hero-desc {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.4;
+  margin-bottom: 14px;
+}
+.music-hero-btns {
+  display: flex;
+  gap: 10px;
+}
+.music-play-btn {
+  background: #fa233b;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+.music-play-btn:hover {
+  transform: scale(1.04);
+}
+.music-shuffle-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.music-shuffle-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.music-tracklist {
+  padding: 16px 24px;
+}
+.music-table-hdr {
+  display: flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #a1a1aa;
+  padding: 6px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  text-transform: uppercase;
+}
+.music-track-row {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+.music-track-row:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+.music-track-row.playing {
+  color: #fa233b;
+  font-weight: 600;
+}
+
+.music-player-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
+  background: rgba(24, 24, 28, 0.95);
+  backdrop-filter: blur(25px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  box-sizing: border-box;
+  z-index: 10;
+}
+.music-current-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 220px;
+}
+.music-mini-thumb {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  background: #fa233b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.music-mini-title {
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.music-mini-artist {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+}
+.music-mini-heart {
+  background: transparent;
+  border: none;
+  color: #fa233b;
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 6px;
+}
+
+.music-center-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  max-width: 440px;
+}
+.music-btn-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.music-ctrl-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  font-size: 14px;
+}
+.music-play-circle-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: white;
+  color: black;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: bold;
+}
+.music-progress-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+.music-time-lbl {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: monospace;
+}
+.music-scrub-bar {
+  flex: 1;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  position: relative;
+  cursor: pointer;
+}
+.music-scrub-fill {
+  height: 100%;
+  background: #fa233b;
+  border-radius: 2px;
+}
+
+.music-volume-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 140px;
+  justify-content: flex-end;
+}
+.music-vol-slider {
+  width: 80px;
+  accent-color: #fa233b;
+}
+
+/* --- 4. Apple Weather App --- */
+.weather-mac-app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(180deg, #2563eb 0%, #38bdf8 100%);
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+  overflow: hidden;
+  user-select: none;
+}
+.weather-city-bar {
+  display: flex;
+  gap: 6px;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.15);
+  overflow-x: auto;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.weather-city-pill {
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  border-radius: 12px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.weather-city-pill.active {
+  background: white;
+  color: #1e3a8a;
+}
+.weather-scroll-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.weather-hero-card {
+  text-align: center;
+  padding: 8px 0;
+}
+.weather-city-name {
+  font-size: 26px;
+  font-weight: 700;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+.weather-big-temp {
+  font-size: 64px;
+  font-weight: 200;
+  line-height: 1;
+  margin: 4px 0;
+}
+.weather-condition-txt {
+  font-size: 16px;
+  font-weight: 500;
+  opacity: 0.9;
+}
+.weather-hl-range {
+  font-size: 13px;
+  opacity: 0.8;
+  margin-top: 2px;
+}
+
+.weather-frosted-card {
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 12px 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+.weather-card-hdr {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.75;
+  margin-bottom: 10px;
+}
+.weather-hourly-row {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.weather-hour-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 44px;
+  font-size: 12px;
+}
+
+.weather-daily-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.weather-day-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+}
+.weather-temp-bar-bg {
+  flex: 1;
+  height: 5px;
+  background: rgba(0, 0, 0, 0.18);
+  border-radius: 3px;
+  margin: 0 12px;
+  overflow: hidden;
+  position: relative;
+}
+.weather-temp-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #38bdf8, #fbbf24, #f97316);
+  border-radius: 3px;
+}
+
+.weather-metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.weather-metric-box {
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(20px);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 12px 14px;
+}
+.weather-metric-hdr {
+  font-size: 11px;
+  font-weight: 700;
+  opacity: 0.7;
+  margin-bottom: 4px;
+}
+.weather-metric-val {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.weather-metric-sub {
+  font-size: 11px;
+  opacity: 0.75;
+  line-height: 1.3;
+}
+
+/* --- 5. Activity Monitor (活动监视器) --- */
+.am-mac-app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background: #1e1e24;
+  color: #f5f5f7;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  overflow: hidden;
+  user-select: none;
+}
+.am-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.am-tabs-group {
+  display: flex;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  padding: 2px;
+  gap: 2px;
+}
+.am-tab-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.am-tab-btn.active {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+.am-tool-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+}
+.am-tool-btn.danger:hover {
+  background: #ff453a;
+  border-color: #ff453a;
+}
+.am-search-input {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 12px;
+  color: white;
+  outline: none;
+  width: 110px;
+}
+
+.am-table-wrap {
+  flex: 1;
+  overflow-y: auto;
+}
+.am-mac-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.am-mac-table th {
+  background: rgba(255, 255, 255, 0.04);
+  padding: 6px 10px;
+  text-align: left;
+  font-weight: 600;
+  color: #a1a1aa;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+.am-mac-table td {
+  padding: 5px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+.am-mac-table tr:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+.am-mac-table tr.selected {
+  background: #007aff !important;
+  color: white !important;
+}
+
+.am-bottom-panel {
+  height: 120px;
+  background: rgba(14, 14, 16, 0.95);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  padding: 10px 14px;
+  gap: 16px;
+}
+.am-graph-box {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+}
+.am-stats-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  font-size: 11px;
+}
+.am-stat-row {
+  display: flex;
+  justify-content: space-between;
 }

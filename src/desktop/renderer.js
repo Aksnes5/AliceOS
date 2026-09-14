@@ -3318,6 +3318,255 @@ async function launchTerminal() {
         } catch (err) {
           output.innerHTML += `free: failed to read /proc/meminfo<br>`;
         }
+      } else if (baseCmd === 'apt' || baseCmd === 'apt-get') {
+        const subCmd = args[1];
+        const pkg = args[2];
+        const availablePkgs = {
+          'cmatrix': { desc: 'Matrix digital rain terminal animation', size: '142 kB' },
+          'cowsay': { desc: 'Configurable talking cow in ASCII art', size: '38 kB' },
+          'figlet': { desc: 'Make large character ASCII banners', size: '86 kB' },
+          'sl': { desc: 'Steam Locomotive ASCII animation', size: '64 kB' },
+          'fortune': { desc: 'Prints witty and pithy geek aphorisms', size: '52 kB' }
+        };
+
+        if (subCmd === 'update') {
+          output.innerHTML += `<span style="color:#007aff;">Hit:1</span> http://archive.aliceos.dev/linux/ubuntu sequoia InRelease<br>` +
+            `<span style="color:#34c759;">Get:2</span> http://archive.aliceos.dev/linux/ubuntu sequoia-updates InRelease [119 kB]<br>` +
+            `<span style="color:#34c759;">Get:3</span> http://archive.aliceos.dev/linux/ubuntu sequoia-security InRelease [119 kB]<br>` +
+            `Fetched 238 kB in 0.6s (396 kB/s)<br>` +
+            `Reading package lists... <span style="color:#34c759;">Done</span><br>` +
+            `Building dependency tree... <span style="color:#34c759;">Done</span><br>` +
+            `Reading state information... <span style="color:#34c759;">Done</span><br>` +
+            `<span style="color:#34c759;">All packages are up to date.</span><br>`;
+        } else if (subCmd === 'list' || subCmd === 'search') {
+          output.innerHTML += `Listing available packages in AliceOS repository...<br>`;
+          for (const [k, v] of Object.entries(availablePkgs)) {
+            const isInst = await window.aliceOS.vfs.readFile(`/usr/bin/${k}`);
+            const tag = isInst.success ? '<span style="color:#34c759;">[installed]</span>' : '<span style="color:#888;">[available]</span>';
+            output.innerHTML += `<span style="color:#64b5f6;font-weight:700;">${k}</span>/sequoia 1.0.0-aliceos amd64 ${tag}<br>&nbsp;&nbsp;${v.desc}<br>`;
+          }
+        } else if (subCmd === 'install') {
+          if (!pkg) {
+            output.innerHTML += `<span style="color:#ff3b30;">apt install: missing package name.</span><br>Try: apt install cmatrix<br>`;
+          } else if (!availablePkgs[pkg]) {
+            output.innerHTML += `Reading package lists... Done<br>Building dependency tree... Done<br><span style="color:#ff3b30;">E: Unable to locate package ${pkg}</span><br>Type <span style="color:#64b5f6;">apt list</span> to see available packages.<br>`;
+          } else {
+            const meta = availablePkgs[pkg];
+            output.innerHTML += `Reading package lists... Done<br>Building dependency tree... Done<br>` +
+              `The following NEW packages will be installed:<br>&nbsp;&nbsp;<span style="color:#64b5f6;font-weight:700;">${pkg}</span><br>` +
+              `0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.<br>` +
+              `Need to get ${meta.size} of archives.<br>` +
+              `Get:1 http://archive.aliceos.dev/linux/ubuntu sequoia/main ${pkg} amd64 [${meta.size}]<br>` +
+              `Fetched ${meta.size} in 0.3s<br>` +
+              `Selecting previously unselected package ${pkg}.<br>` +
+              `Preparing to unpack .../${pkg}_amd64.deb ...<br>` +
+              `Unpacking ${pkg} (1.0.0-aliceos) ...<br>` +
+              `Setting up ${pkg} (1.0.0-aliceos) ...<br>` +
+              `Processing triggers for man-db (2.10.2) ...<br>` +
+              `<span style="color:#34c759;font-weight:700;">✓ Successfully installed ${pkg}!</span> Run '<span style="color:#ffcc00;">${pkg}</span>' to launch.<br>`;
+            
+            await window.aliceOS.vfs.writeFile(`/usr/bin/${pkg}`, `#!/bin/sh\n# AliceOS Binary: ${pkg}`);
+          }
+        } else if (subCmd === 'remove') {
+          if (!pkg) {
+            output.innerHTML += `<span style="color:#ff3b30;">apt remove: missing package name.</span><br>`;
+          } else {
+            const rmRes = await window.aliceOS.vfs.rm(`/usr/bin/${pkg}`);
+            if (rmRes.success) {
+              output.innerHTML += `Removing ${pkg} (1.0.0-aliceos) ...<br><span style="color:#34c759;">Package ${pkg} removed.</span><br>`;
+            } else {
+              output.innerHTML += `<span style="color:#ff3b30;">Package '${pkg}' is not installed.</span><br>`;
+            }
+          }
+        } else {
+          output.innerHTML += `apt 2.6.1 (x86_64-linux-gnu)<br>Usage: apt [command] [package]<br><br>Commands:<br>` +
+            `&nbsp;&nbsp;<span style="color:#64b5f6;">update</span>&nbsp;&nbsp;&nbsp;&nbsp;- Update list of available packages<br>` +
+            `&nbsp;&nbsp;<span style="color:#64b5f6;">list</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- List available packages (cmatrix, cowsay, figlet, sl, fortune)<br>` +
+            `&nbsp;&nbsp;<span style="color:#64b5f6;">install</span>&nbsp;&nbsp;&nbsp;- Install package (e.g. apt install cmatrix)<br>` +
+            `&nbsp;&nbsp;<span style="color:#64b5f6;">remove</span>&nbsp;&nbsp;&nbsp;&nbsp;- Remove package<br>`;
+        }
+      } else if (baseCmd === 'cmatrix') {
+        const chk = await window.aliceOS.vfs.readFile('/usr/bin/cmatrix');
+        if (!chk.success) {
+          output.innerHTML += `Command 'cmatrix' not found, but can be installed with:<br><span style="color:#34c759;font-weight:700;">apt install cmatrix</span><br>`;
+        } else {
+          // Launch interactive full-terminal digital rain
+          const termBox = win.querySelector(`#term-${pid}`);
+          const canvas = document.createElement('canvas');
+          canvas.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;z-index:20;background:#050805;border-radius:0 0 10px 10px;';
+          termBox.appendChild(canvas);
+          const ctx = canvas.getContext('2d');
+          
+          canvas.width = termBox.clientWidth || 640;
+          canvas.height = termBox.clientHeight || 400;
+
+          const chars = '0123456789ABCDEFｦｱｳｴｵｶｷｹｺｻｼｽｾｿﾀﾂﾃﾅﾆﾇﾈﾊﾋﾎﾏﾐﾑﾒﾓﾔﾕﾗﾘﾜ'.split('');
+          const fontSize = 14;
+          const columns = Math.floor(canvas.width / fontSize);
+          const drops = [];
+          for (let i = 0; i < columns; i++) {
+            drops[i] = Math.floor(Math.random() * -50);
+          }
+
+          let animId;
+          const renderMatrix = () => {
+            ctx.fillStyle = 'rgba(5, 8, 5, 0.08)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#00ff7f';
+            ctx.font = `${fontSize}px monospace`;
+
+            for (let i = 0; i < drops.length; i++) {
+              const text = chars[Math.floor(Math.random() * chars.length)];
+              const x = i * fontSize;
+              const y = drops[i] * fontSize;
+
+              // Lead char is glowing white/cyan
+              ctx.fillStyle = '#ffffff';
+              ctx.fillText(text, x, y);
+
+              ctx.fillStyle = '#00ff7f';
+              if (y > 0) {
+                ctx.fillText(chars[Math.floor(Math.random() * chars.length)], x, y - fontSize);
+              }
+
+              if (y > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
+              }
+              drops[i]++;
+            }
+
+            // Top exit hint
+            ctx.fillStyle = 'rgba(255,255,255,0.7)';
+            ctx.font = '11px -apple-system, monospace';
+            ctx.fillText('AliceOS CMatrix — Press "q" or "Ctrl+C" to exit', 12, 20);
+
+            animId = requestAnimationFrame(renderMatrix);
+          };
+          animId = requestAnimationFrame(renderMatrix);
+
+          const cleanupCMatrix = (e) => {
+            if (e.key === 'q' || e.key === 'Q' || (e.ctrlKey && e.key === 'c')) {
+              cancelAnimationFrame(animId);
+              canvas.remove();
+              window.removeEventListener('keydown', cleanupCMatrix);
+              input.focus();
+              output.innerHTML += `<span style="color:#aaa;">[cmatrix terminated by user]</span><br>`;
+              output.parentElement.scrollTop = output.parentElement.scrollHeight;
+            }
+          };
+          window.addEventListener('keydown', cleanupCMatrix);
+        }
+      } else if (baseCmd === 'cowsay') {
+        const chk = await window.aliceOS.vfs.readFile('/usr/bin/cowsay');
+        if (!chk.success) {
+          output.innerHTML += `Command 'cowsay' not found, but can be installed with:<br><span style="color:#34c759;font-weight:700;">apt install cowsay</span><br>`;
+        } else {
+          const cowText = args.slice(1).join(' ') || 'Hello from AliceOS Linux Subsystem!';
+          const lineLen = Math.max(cowText.length + 2, 20);
+          const topBorder = ' ' + '_'.repeat(lineLen);
+          const bottomBorder = ' ' + '-'.repeat(lineLen);
+          const paddedText = `< ${cowText} >`;
+          output.innerHTML += `<pre style="margin:6px 0;font-family:monospace;font-size:12px;line-height:1.2;color:#34c759;">${topBorder}\n${paddedText}\n${bottomBorder}\n        \\   ^__^\n         \\  (oo)\\_______\n            (__)\\       )\\/\\\n                ||----w |\n                ||     ||\n</pre>`;
+        }
+      } else if (baseCmd === 'figlet') {
+        const chk = await window.aliceOS.vfs.readFile('/usr/bin/figlet');
+        if (!chk.success) {
+          output.innerHTML += `Command 'figlet' not found, but can be installed with:<br><span style="color:#34c759;font-weight:700;">apt install figlet</span><br>`;
+        } else {
+          const figText = (args.slice(1).join(' ') || 'AliceOS').toUpperCase();
+          // Mini dynamic banner generator
+          const bannerFont = {
+            'A': ['  █████  ', ' ██   ██ ', ' ███████ ', ' ██   ██ ', ' ██   ██ '],
+            'B': [' ██████  ', ' ██   ██ ', ' ██████  ', ' ██   ██ ', ' ██████  '],
+            'C': ['  ██████ ', ' ██      ', ' ██      ', ' ██      ', '  ██████ '],
+            'D': [' ██████  ', ' ██   ██ ', ' ██   ██ ', ' ██   ██ ', ' ██████  '],
+            'E': [' ███████ ', ' ██      ', ' █████   ', ' ██      ', ' ███████ '],
+            'F': [' ███████ ', ' ██      ', ' █████   ', ' ██      ', ' ██      '],
+            'G': ['  ██████ ', ' ██      ', ' ██   ███', ' ██    ██', '  ██████ '],
+            'H': [' ██   ██ ', ' ██   ██ ', ' ███████ ', ' ██   ██ ', ' ██   ██ '],
+            'I': ['  █████  ', '   ███   ', '   ███   ', '   ███   ', '  █████  '],
+            'J': ['    ████ ', '      ██ ', '      ██ ', ' ██   ██ ', '  █████  '],
+            'K': [' ██   ██ ', ' ██  ██  ', ' █████   ', ' ██  ██  ', ' ██   ██ '],
+            'L': [' ██      ', ' ██      ', ' ██      ', ' ██      ', ' ███████ '],
+            'M': [' ███   ███ ', ' ████ ████ ', ' ██ █ █ ██ ', ' ██  █  ██ ', ' ██     ██ '],
+            'N': [' ██   ██ ', ' ████ ██ ', ' ██ ████ ', ' ██   ██ ', ' ██   ██ '],
+            'O': ['  █████  ', ' ██   ██ ', ' ██   ██ ', ' ██   ██ ', '  █████  '],
+            'P': [' ██████  ', ' ██   ██ ', ' ██████  ', ' ██      ', ' ██      '],
+            'Q': ['  █████  ', ' ██   ██ ', ' ██   ██ ', '  ██████ ', '      ██ '],
+            'R': [' ██████  ', ' ██   ██ ', ' ██████  ', ' ██   ██ ', ' ██   ██ '],
+            'S': ['  ██████ ', ' ██      ', '  █████  ', '      ██ ', ' ██████  '],
+            'T': [' ███████ ', '   ███   ', '   ███   ', '   ███   ', '   ███   '],
+            'U': [' ██   ██ ', ' ██   ██ ', ' ██   ██ ', ' ██   ██ ', '  █████  '],
+            'V': [' ██   ██ ', ' ██   ██ ', '  ██ ██  ', '  ██ ██  ', '   ███   '],
+            'W': [' ██     ██ ', ' ██  █  ██ ', ' ██ █ █ ██ ', ' ████ ████ ', ' ███   ███ '],
+            'X': [' ██   ██ ', '  ██ ██  ', '   ███   ', '  ██ ██  ', ' ██   ██ '],
+            'Y': [' ██   ██ ', '  ██ ██  ', '   ███   ', '   ███   ', '   ███   '],
+            'Z': [' ███████ ', '     ██  ', '   ███   ', '  ██     ', ' ███████ '],
+            ' ': ['   ', '   ', '   ', '   ', '   ']
+          };
+          const lines = ['', '', '', '', ''];
+          for (const ch of figText) {
+            const glyph = bannerFont[ch] || bannerFont[' '];
+            for (let r = 0; r < 5; r++) {
+              lines[r] += (glyph[r] || '   ');
+            }
+          }
+          output.innerHTML += `<pre style="margin:8px 0;font-family:monospace;font-size:11px;line-height:1.15;color:#ff9500;font-weight:700;">${lines.join('\n')}</pre>`;
+        }
+      } else if (baseCmd === 'sl') {
+        const chk = await window.aliceOS.vfs.readFile('/usr/bin/sl');
+        if (!chk.success) {
+          output.innerHTML += `Command 'sl' not found, but can be installed with:<br><span style="color:#34c759;font-weight:700;">apt install sl</span><br>`;
+        } else {
+          // Play classic steam train animation running across terminal
+          const trainDiv = document.createElement('div');
+          trainDiv.style.cssText = 'overflow:hidden;white-space:pre;font-family:monospace;font-size:11px;line-height:1.15;color:#64b5f6;font-weight:700;margin:6px 0;';
+          output.appendChild(trainDiv);
+          
+          const trainArt = [
+            '      ====        ________                ___________ ',
+            '  _D _|  |_______/        \\__I_I_____===__|_________| ',
+            '   |(_)---  |   H\\________/ _____ \\   (|_|_|_|_|_|_|) ',
+            '   /     |==||   H         |_____|     |         |    ',
+            '  |      |  ||   H         |_____|     |         |    ',
+            '   \\_____/  ||   H_________|_____|     |_________|    ',
+            '    (O)(O)  (O)(O)        (O)(O)       (O)(O) (O)(O)  '
+          ];
+          
+          let offset = 80;
+          const trainTimer = setInterval(() => {
+            offset -= 4;
+            if (offset < -50) {
+              clearInterval(trainTimer);
+              trainDiv.remove();
+              output.innerHTML += `<span style="color:#34c759;">Choo Choo! Steam Locomotive has passed!</span><br>`;
+              output.parentElement.scrollTop = output.parentElement.scrollHeight;
+            } else {
+              const sp = ' '.repeat(Math.max(0, offset));
+              trainDiv.textContent = trainArt.map(l => sp + l).join('\n');
+            }
+          }, 45);
+        }
+      } else if (baseCmd === 'fortune') {
+        const chk = await window.aliceOS.vfs.readFile('/usr/bin/fortune');
+        if (!chk.success) {
+          output.innerHTML += `Command 'fortune' not found, but can be installed with:<br><span style="color:#34c759;font-weight:700;">apt install fortune</span><br>`;
+        } else {
+          const quotes = [
+            "\"Talk is cheap. Show me the code.\" — Linus Torvalds",
+            "\"Stay hungry, stay foolish.\" — Steve Jobs",
+            "\"Simplicity is prerequisite for reliability.\" — Edsger W. Dijkstra",
+            "\"The best way to predict the future is to invent it.\" — Alan Kay",
+            "\"Any fool can write code that a computer can understand. Good programmers write code that humans can understand.\" — Martin Fowler",
+            "\"Walking on water and developing software from a specification are easy if both are frozen.\" — Edward V. Berard",
+            "\"Linux is only free if your time has no value.\" — Jamie Zawinski",
+            "\"There are 10 types of people in the world: those who understand binary, and those who don't.\"",
+            "\"Programs must be written for people to read, and only incidentally for machines to execute.\" — Hal Abelson"
+          ];
+          const pick = quotes[Math.floor(Math.random() * quotes.length)];
+          output.innerHTML += `<div style="margin:6px 0;padding:8px 12px;background:rgba(255,255,255,0.06);border-left:3px solid #ff9500;border-radius:4px;font-style:italic;color:#e5e5ea;">${pick}</div>`;
+        }
       } else if (baseCmd !== '') {
         output.innerHTML += `zsh: command not found: ${baseCmd}<br>`;
       }
@@ -3364,107 +3613,285 @@ async function launchSystemInfo() {
 async function launchNotes(filePath = null) {
   if (window.aliceOS && window.aliceOS.setDockBadge) window.aliceOS.setDockBadge('notes', 0);
   const res = await window.aliceOS.pm.spawn('notes');
-  if (res.success) {
-    const pid = res.data.pid;
-    const defaultPath = filePath || `/Users/${currentUser}/Desktop/note.txt`;
-    const win = createWindow(pid, t('app_notes', 'Notes'), `
-      <div class="notes-container">
-        <div class="notes-toolbar">
-          <input type="text" id="notes-path-${pid}" value="${defaultPath}" placeholder="${t('notes_path_placeholder', 'File path...')}">
-          <button id="notes-save-${pid}">${t('notes_save', 'Save')}</button>
-          <button id="notes-load-${pid}">${t('notes_load', 'Load')}</button>
-          <div class="notes-math-chip" id="notes-math-chip-${pid}" title="macOS Sequoia Math Notes">
-            <span>∑</span> <span id="notes-math-txt-${pid}">${t('notes_math_notes', 'Math Notes')}</span>
+  if (!res.success) return;
+  const pid = res.data.pid;
+
+  let allNotes = [
+    {
+      id: '1',
+      folder: 'all',
+      title: '欢迎使用 AliceOS 备忘录',
+      date: '上午 9:41',
+      snippet: '体验全新设计的 macOS Sequoia 风格 3 栏式备忘录...',
+      content: '欢迎使用 AliceOS 备忘录\n\n这是一款采用全新 macOS Sequoia 风格打造的原生级备忘录应用。\n\n功能特色：\n- [x] 原生 3 栏式 macOS 界面布局\n- [x] 支持交互式待办清单复选框\n- [ ] 试用 Sequoia 数学备忘录计算功能\n\n数学计算演示：\n输入任何数学算式后跟一个等号，系统将自动进行高精度计算：\n250 + 750 = \n1280 * 720 = \n15% * 800 = \n\n享受愉悦的记录体验！'
+    },
+    {
+      id: '2',
+      folder: 'quick',
+      title: '今日待办事项',
+      date: '昨天',
+      snippet: '系统内核优化与动效完善...',
+      content: '今日待办事项\n\n- [x] 迁移至 Linux 仿生内核架构\n- [x] 注入 macOS 神奇移动 Genie 动效\n- [x] 合成 Apple 高保真快门与清倒废纸篓声学音效\n- [ ] 测试全新终端 APT 包管理器'
+    },
+    {
+      id: '3',
+      folder: 'work',
+      title: 'AliceOS 架构路线图',
+      date: '9月10日',
+      snippet: '轻量化 Electron + VFS + 磨砂玻璃...',
+      content: 'AliceOS 架构路线图\n\n1. 内核虚拟化层：进程管理 (pm.js) 与文件系统 (vfs.js)\n2. 视觉呈现层：100% 还原 macOS Sequoia 磨砂玻璃质感与拟真图标\n3. 系统应用层：提供功能完备的访达、终端、备忘录与计算器'
+    }
+  ];
+
+  // Try loading existing notes from VFS
+  try {
+    const storeRes = await window.aliceOS.vfs.readFile(`/Users/${currentUser}/Notes/notes_store.json`);
+    if (storeRes.success) {
+      const parsed = JSON.parse(storeRes.data);
+      if (Array.isArray(parsed) && parsed.length > 0) allNotes = parsed;
+    }
+  } catch (e) {}
+
+  let currentFolder = 'all';
+  let activeNoteId = allNotes[0].id;
+
+  const win = createWindow(pid, t('app_notes', 'Notes'), `
+    <div class="notes-app-wrap" id="notes-wrap-${pid}">
+      <!-- Column 1: Folders Sidebar -->
+      <div class="notes-folders-sidebar">
+        <div class="notes-section-hdr">iCloud</div>
+        <div class="notes-folder-row active" data-folder="all">
+          <span style="font-size:14px;">📁</span>
+          <span style="flex:1;">全部备忘录</span>
+          <span class="notes-folder-count" id="notes-cnt-all-${pid}">${allNotes.length}</span>
+        </div>
+        <div class="notes-folder-row" data-folder="quick">
+          <span style="font-size:14px;">⚡</span>
+          <span style="flex:1;">便笺</span>
+          <span class="notes-folder-count" id="notes-cnt-quick-${pid}">${allNotes.filter(n => n.folder === 'quick').length}</span>
+        </div>
+        <div class="notes-folder-row" data-folder="work">
+          <span style="font-size:14px;">💼</span>
+          <span style="flex:1;">工作备忘</span>
+          <span class="notes-folder-count" id="notes-cnt-work-${pid}">${allNotes.filter(n => n.folder === 'work').length}</span>
+        </div>
+        <div class="notes-folder-row" data-folder="personal">
+          <span style="font-size:14px;">🏠</span>
+          <span style="flex:1;">个人生活</span>
+          <span class="notes-folder-count" id="notes-cnt-personal-${pid}">${allNotes.filter(n => n.folder === 'personal').length}</span>
+        </div>
+      </div>
+
+      <!-- Column 2: Notes List -->
+      <div class="notes-list-col">
+        <div class="notes-search-wrap">
+          <input type="text" class="notes-search-input" id="notes-search-${pid}" placeholder="🔍 搜索备忘录...">
+        </div>
+        <div class="notes-cards-list" id="notes-cards-${pid}"></div>
+      </div>
+
+      <!-- Column 3: Editor -->
+      <div class="notes-editor-col">
+        <div class="notes-mac-toolbar">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <button class="notes-tb-btn" id="notes-new-btn-${pid}">✏️ 新建</button>
+            <button class="notes-tb-btn" id="notes-checklist-btn-${pid}">☑️ 待办</button>
+            <button class="notes-tb-btn" id="notes-math-badge-${pid}" title="macOS Sequoia 数学备忘录">∑ 数学</button>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <button class="notes-tb-btn" id="notes-save-btn-${pid}">💾 存储</button>
+            <button class="notes-tb-btn" id="notes-del-btn-${pid}" style="color:#ff3b30;">🗑️ 删除</button>
           </div>
         </div>
         <div class="notes-math-toast" id="notes-math-toast-${pid}"></div>
-        <textarea id="notes-content-${pid}" class="notes-textarea" placeholder="${t('notes_placeholder', 'Start typing... (Try: 250 + 150 =)')}"></textarea>
+        <div class="notes-editor-body">
+          <div class="notes-date-stamp" id="notes-date-stamp-${pid}"></div>
+          <textarea class="notes-rich-textarea" id="notes-textarea-${pid}" spellcheck="false" placeholder="在此键入文字... (输入算式如 250 + 750 = 自动求解)"></textarea>
+        </div>
       </div>
-    `);
+    </div>
+  `, 'notes');
 
-    const saveBtn = win.querySelector(`#notes-save-${pid}`);
-    const loadBtn = win.querySelector(`#notes-load-${pid}`);
-    const pathInput = win.querySelector(`#notes-path-${pid}`);
-    const textarea = win.querySelector(`#notes-content-${pid}`);
-    const mathToast = win.querySelector(`#notes-math-toast-${pid}`);
-    let mathToastTimer = null;
+  win.style.width = '780px';
+  win.style.height = '520px';
+
+  const cardsContainer = win.querySelector(`#notes-cards-${pid}`);
+  const textarea = win.querySelector(`#notes-textarea-${pid}`);
+  const dateStamp = win.querySelector(`#notes-date-stamp-${pid}`);
+  const searchInput = win.querySelector(`#notes-search-${pid}`);
+  const newBtn = win.querySelector(`#notes-new-btn-${pid}`);
+  const delBtn = win.querySelector(`#notes-del-btn-${pid}`);
+  const saveBtn = win.querySelector(`#notes-save-btn-${pid}`);
+  const checklistBtn = win.querySelector(`#notes-checklist-btn-${pid}`);
+  const mathToast = win.querySelector(`#notes-math-toast-${pid}`);
+  let mathToastTimer = null;
+
+  async function persistNotes() {
+    try {
+      await window.aliceOS.vfs.mkdir(`/Users/${currentUser}/Notes`);
+      await window.aliceOS.vfs.writeFile(`/Users/${currentUser}/Notes/notes_store.json`, JSON.stringify(allNotes, null, 2));
+    } catch (e) {}
+  }
+
+  function getActiveNote() {
+    return allNotes.find(n => n.id === activeNoteId) || allNotes[0];
+  }
+
+  function renderCards(filterQuery = '') {
+    const q = filterQuery.toLowerCase();
+    const filtered = allNotes.filter(n => {
+      const matchFolder = (currentFolder === 'all') || (n.folder === currentFolder);
+      const matchQuery = !q || n.title.toLowerCase().includes(q) || n.content.toLowerCase().includes(q);
+      return matchFolder && matchQuery;
+    });
+
+    cardsContainer.innerHTML = filtered.map(n => `
+      <div class="notes-card-item ${n.id === activeNoteId ? 'active' : ''}" data-id="${n.id}">
+        <div class="notes-card-title">${n.title || '无标题备忘录'}</div>
+        <div class="notes-card-meta">
+          <span class="notes-card-date">${n.date}</span>
+          <span class="notes-card-snippet">${n.snippet}</span>
+        </div>
+      </div>
+    `).join('');
+
+    cardsContainer.querySelectorAll('.notes-card-item').forEach(el => {
+      el.addEventListener('click', () => {
+        selectNote(el.dataset.id);
+      });
+    });
+
+    // Update counts
+    const cntAll = win.querySelector(`#notes-cnt-all-${pid}`);
+    if (cntAll) cntAll.textContent = allNotes.length;
+    ['quick', 'work', 'personal'].forEach(f => {
+      const c = win.querySelector(`#notes-cnt-${f}-${pid}`);
+      if (c) c.textContent = allNotes.filter(n => n.folder === f).length;
+    });
+  }
+
+  function selectNote(id) {
+    activeNoteId = id;
+    const note = getActiveNote();
+    if (note) {
+      textarea.value = note.content;
+      dateStamp.textContent = `${note.date} · ${note.folder === 'all' ? '备忘录' : note.folder}`;
+    }
+    renderCards(searchInput ? searchInput.value : '');
+  }
+
+  // Folder switching
+  win.querySelectorAll('.notes-folder-row').forEach(row => {
+    row.addEventListener('click', () => {
+      win.querySelectorAll('.notes-folder-row').forEach(r => r.classList.remove('active'));
+      row.classList.add('active');
+      currentFolder = row.dataset.folder;
+      renderCards();
+    });
+  });
+
+  // Note content editing
+  textarea.addEventListener('input', () => {
+    const note = getActiveNote();
+    if (!note) return;
+
+    note.content = textarea.value;
+    const lines = note.content.split('\n').map(l => l.trim()).filter(l => l);
+    note.title = lines[0] ? lines[0].replace(/^[-#*]\s*(\[[ x]\]\s*)?/i, '') : '无标题备忘录';
+    note.snippet = lines[1] || '无附加文本';
     
-    // Auto load if filePath was provided
-    if (filePath) {
-      const readRes = await window.aliceOS.vfs.readFile(filePath);
-      if (readRes.success) {
-        textarea.value = readRes.data;
+    // Sequoia Math Notes Evaluator
+    const text = textarea.value;
+    const cursorPos = textarea.selectionStart;
+    const beforeCursor = text.substring(0, cursorPos);
+    const lastLine = beforeCursor.split('\n').pop();
+    const match = lastLine.match(/([\d\.\s\+\-\*\/\(\)\^\%]+)\=\s*$/);
+    if (match) {
+      let rawExpr = match[1].trim();
+      if (rawExpr && /[\+\-\*\/\^\%]/.test(rawExpr)) {
+        try {
+          let evalExpr = rawExpr.replace(/\^/g, '**').replace(/(\d+)%/g, '($1/100)');
+          if (/^[0-9+\-*/().\s*]+$/.test(evalExpr)) {
+            const calcVal = Function('"use strict";return (' + evalExpr + ')')();
+            if (calcVal !== undefined && !isNaN(calcVal) && isFinite(calcVal)) {
+              const formatted = Number.isInteger(calcVal) ? calcVal.toString() : parseFloat(calcVal.toFixed(4)).toString();
+              const afterCursor = text.substring(cursorPos);
+              const inserted = ' ' + formatted;
+              textarea.value = beforeCursor + inserted + afterCursor;
+              textarea.selectionStart = textarea.selectionEnd = cursorPos + inserted.length;
+              note.content = textarea.value;
+
+              if (mathToast) {
+                mathToast.innerHTML = `<span>✨</span> <span>数学求解: <b>${rawExpr} = ${formatted}</b></span>`;
+                mathToast.classList.add('show');
+                if (mathToastTimer) clearTimeout(mathToastTimer);
+                mathToastTimer = setTimeout(() => mathToast.classList.remove('show'), 2800);
+              }
+            }
+          }
+        } catch(e) {}
       }
     }
 
-    // macOS Sequoia Math Notes Equation Evaluator
-    textarea.addEventListener('input', () => {
-      const text = textarea.value;
-      const cursorPos = textarea.selectionStart;
-      const beforeCursor = text.substring(0, cursorPos);
-      const lastLine = beforeCursor.split('\n').pop();
+    renderCards(searchInput.value);
+    persistNotes();
+  });
 
-      const match = lastLine.match(/([\d\.\s\+\-\*\/\(\)\^\%]+)\=\s*$/);
-      if (match) {
-        let rawExpr = match[1].trim();
-        if (rawExpr && /[\+\-\*\/\^\%]/.test(rawExpr)) {
-          try {
-            let evalExpr = rawExpr.replace(/\^/g, '**').replace(/(\d+)%/g, '($1/100)');
-            if (/^[0-9+\-*/().\s*]+$/.test(evalExpr)) {
-              const calcVal = Function('"use strict";return (' + evalExpr + ')')();
-              if (calcVal !== undefined && !isNaN(calcVal) && isFinite(calcVal)) {
-                const formatted = Number.isInteger(calcVal) ? calcVal.toString() : parseFloat(calcVal.toFixed(4)).toString();
-                const afterCursor = text.substring(cursorPos);
-                const inserted = ' ' + formatted;
-                textarea.value = beforeCursor + inserted + afterCursor;
-                textarea.selectionStart = textarea.selectionEnd = cursorPos + inserted.length;
-
-                if (mathToast) {
-                  mathToast.innerHTML = `<span>✨</span> <span>${t('notes_math_notes', 'Math Notes')}: <b>${rawExpr} = ${formatted}</b></span>`;
-                  mathToast.classList.add('show');
-                  if (mathToastTimer) clearTimeout(mathToastTimer);
-                  mathToastTimer = setTimeout(() => mathToast.classList.remove('show'), 3000);
-                }
-              }
-            }
-          } catch(e) {}
-        }
-      }
-    });
-
-    saveBtn.addEventListener('click', async () => {
-      const path = pathInput.value.trim();
-      if (!path) return;
-      const content = textarea.value;
-      const res = await window.aliceOS.vfs.writeFile(path, content);
-      if (res.success) {
-        saveBtn.innerText = t('notes_saved', 'Saved!');
-        setTimeout(() => saveBtn.innerText = t('notes_save', 'Save'), 2000);
-      } else {
-        alert('Save failed: ' + res.error);
-      }
-    });
-
-    loadBtn.addEventListener('click', async () => {
-      const path = pathInput.value.trim();
-      if (!path) return;
-      const res = await window.aliceOS.vfs.readFile(path);
-      if (res.success) {
-        textarea.value = res.data;
-      } else {
-        alert('Load failed: ' + res.error);
-      }
-    });
-
-    win._onLanguageChange = () => {
-      if (pathInput) pathInput.placeholder = t('notes_path_placeholder', 'File path...');
-      if (saveBtn) saveBtn.innerText = t('notes_save', 'Save');
-      if (loadBtn) loadBtn.innerText = t('notes_load', 'Load');
-      if (textarea) textarea.placeholder = t('notes_placeholder', 'Start typing... (Try: 250 + 150 =)');
-      const mathTxt = win.querySelector(`#notes-math-txt-${pid}`);
-      if (mathTxt) mathTxt.innerText = t('notes_math_notes', 'Math Notes');
+  // New Note
+  newBtn.addEventListener('click', () => {
+    const newId = String(Date.now());
+    const now = new Date();
+    const pad = (n) => String(n).padStart(2, '0');
+    const timeStr = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+    const newNote = {
+      id: newId,
+      folder: currentFolder === 'all' ? 'quick' : currentFolder,
+      title: '新备忘录',
+      date: `今天 ${timeStr}`,
+      snippet: '无附加文本',
+      content: '新备忘录\n\n在此开始键入内容...'
     };
-  }
+    allNotes.unshift(newNote);
+    selectNote(newId);
+    textarea.focus();
+    persistNotes();
+  });
+
+  // Delete Note
+  delBtn.addEventListener('click', () => {
+    if (allNotes.length <= 1) return;
+    allNotes = allNotes.filter(n => n.id !== activeNoteId);
+    activeNoteId = allNotes[0].id;
+    selectNote(activeNoteId);
+    persistNotes();
+  });
+
+  // Insert Checklist
+  checklistBtn.addEventListener('click', () => {
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const val = textarea.value;
+    const insertion = '\n- [ ] ';
+    textarea.value = val.substring(0, start) + insertion + val.substring(end);
+    textarea.selectionStart = textarea.selectionEnd = start + insertion.length;
+    textarea.focus();
+    textarea.dispatchEvent(new Event('input'));
+  });
+
+  // Manual Save feedback
+  saveBtn.addEventListener('click', async () => {
+    await persistNotes();
+    saveBtn.innerText = '✓ 已存储';
+    setTimeout(() => saveBtn.innerText = '💾 存储', 1500);
+  });
+
+  // Search
+  searchInput.addEventListener('input', () => {
+    renderCards(searchInput.value);
+  });
+
+  // Initial load
+  selectNote(activeNoteId);
 }
 
 async function launchFinder() {
@@ -4550,72 +4977,277 @@ async function launchBrowser() {
 
 async function launchCalculator() {
   const res = await window.aliceOS.pm.spawn('calculator');
-  if (res.success) {
-    const pid = res.data.pid;
-    const win = createWindow(pid, t('app_calculator', 'Calculator'), `
-      <div class="calc-container">
-        <div class="calc-display" id="calc-display-${pid}">0</div>
-        <div class="calc-buttons">
-          <button class="calc-btn top" data-val="C">AC</button>
-          <button class="calc-btn top" data-val="+/-">+/-</button>
-          <button class="calc-btn top" data-val="%">%</button>
-          <button class="calc-btn op" data-val="/">/</button>
+  if (!res.success) return;
+  const pid = res.data.pid;
+
+  const win = createWindow(pid, t('app_calculator', 'Calculator'), `
+    <div class="calc-mac-container" id="calc-container-${pid}">
+      <div class="calc-mac-topbar">
+        <div class="calc-mode-seg">
+          <button class="calc-seg-btn active" id="calc-mode-basic-${pid}">基本</button>
+          <button class="calc-seg-btn" id="calc-mode-sci-${pid}">科学</button>
+        </div>
+        <button class="calc-tape-btn" id="calc-tape-toggle-${pid}">📜 历史</button>
+      </div>
+
+      <div style="display:flex;flex:1;overflow:hidden;position:relative;">
+        <div class="calc-main-col">
+          <div class="calc-mac-display">
+            <div class="calc-expr-line" id="calc-expr-${pid}">&nbsp;</div>
+            <div class="calc-result-line" id="calc-result-${pid}">0</div>
+          </div>
           
-          <button class="calc-btn num" data-val="7">7</button>
-          <button class="calc-btn num" data-val="8">8</button>
-          <button class="calc-btn num" data-val="9">9</button>
-          <button class="calc-btn op" data-val="*">x</button>
-          
-          <button class="calc-btn num" data-val="4">4</button>
-          <button class="calc-btn num" data-val="5">5</button>
-          <button class="calc-btn num" data-val="6">6</button>
-          <button class="calc-btn op" data-val="-">-</button>
-          
-          <button class="calc-btn num" data-val="1">1</button>
-          <button class="calc-btn num" data-val="2">2</button>
-          <button class="calc-btn num" data-val="3">3</button>
-          <button class="calc-btn op" data-val="+">+</button>
-          
-          <button class="calc-btn num zero" data-val="0">0</button>
-          <button class="calc-btn num" data-val=".">.</button>
-          <button class="calc-btn op" data-val="=">=</button>
+          <div class="calc-grid-wrap">
+            <div class="calc-sci-grid" id="calc-sci-grid-${pid}" style="display:none;">
+              <button class="calc-mac-btn sci" data-val="sin">sin</button>
+              <button class="calc-mac-btn sci" data-val="cos">cos</button>
+              <button class="calc-mac-btn sci" data-val="tan">tan</button>
+              <button class="calc-mac-btn sci" data-val="pi">π</button>
+              <button class="calc-mac-btn sci" data-val="e">e</button>
+              <button class="calc-mac-btn sci" data-val="sq">x²</button>
+              <button class="calc-mac-btn sci" data-val="sqrt">√</button>
+              <button class="calc-mac-btn sci" data-val="ln">ln</button>
+              <button class="calc-mac-btn sci" data-val="(">(</button>
+              <button class="calc-mac-btn sci" data-val=")">)</button>
+            </div>
+
+            <div class="calc-std-grid">
+              <button class="calc-mac-btn func" data-val="AC">AC</button>
+              <button class="calc-mac-btn func" data-val="+/-">±</button>
+              <button class="calc-mac-btn func" data-val="%">%</button>
+              <button class="calc-mac-btn op" data-val="/">÷</button>
+
+              <button class="calc-mac-btn num" data-val="7">7</button>
+              <button class="calc-mac-btn num" data-val="8">8</button>
+              <button class="calc-mac-btn num" data-val="9">9</button>
+              <button class="calc-mac-btn op" data-val="*">×</button>
+
+              <button class="calc-mac-btn num" data-val="4">4</button>
+              <button class="calc-mac-btn num" data-val="5">5</button>
+              <button class="calc-mac-btn num" data-val="6">6</button>
+              <button class="calc-mac-btn op" data-val="-">−</button>
+
+              <button class="calc-mac-btn num" data-val="1">1</button>
+              <button class="calc-mac-btn num" data-val="2">2</button>
+              <button class="calc-mac-btn num" data-val="3">3</button>
+              <button class="calc-mac-btn op" data-val="+">+</button>
+
+              <button class="calc-mac-btn num zero-btn" data-val="0">0</button>
+              <button class="calc-mac-btn num" data-val=".">.</button>
+              <button class="calc-mac-btn op" data-val="=">=</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-tape-drawer" id="calc-tape-drawer-${pid}" style="display:none;">
+          <div style="font-weight:700;font-size:11px;opacity:0.6;margin-bottom:8px;text-transform:uppercase;">历史纸带</div>
+          <div class="calc-tape-list" id="calc-tape-list-${pid}">
+            <div style="opacity:0.4;font-size:11px;text-align:center;margin-top:20px;">暂无历史</div>
+          </div>
         </div>
       </div>
-    `);
+    </div>
+  `, 'calculator');
 
-    // Basic calc logic
-    const display = win.querySelector(`#calc-display-${pid}`);
-    let current = '0';
-    let previous = null;
-    let operation = null;
+  win.style.width = '320px';
+  win.style.height = '460px';
 
-    win.querySelectorAll('.calc-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const val = btn.dataset.val;
-        if (btn.classList.contains('num')) {
-          if (current === '0') current = val;
-          else current += val;
-          display.innerText = current;
-        } else if (val === 'C') {
-          current = '0';
+  const display = win.querySelector(`#calc-result-${pid}`);
+  const exprLine = win.querySelector(`#calc-expr-${pid}`);
+  const sciGrid = win.querySelector(`#calc-sci-grid-${pid}`);
+  const tapeDrawer = win.querySelector(`#calc-tape-drawer-${pid}`);
+  const tapeList = win.querySelector(`#calc-tape-list-${pid}`);
+  const modeBasicBtn = win.querySelector(`#calc-mode-basic-${pid}`);
+  const modeSciBtn = win.querySelector(`#calc-mode-sci-${pid}`);
+  const tapeToggleBtn = win.querySelector(`#calc-tape-toggle-${pid}`);
+
+  let current = '0';
+  let previous = null;
+  let operation = null;
+  let justEvaluated = false;
+  let historyTape = [];
+
+  function updateDisplay() {
+    display.textContent = current;
+    // Auto shrink long numbers
+    if (current.length > 12) display.style.fontSize = '22px';
+    else if (current.length > 8) display.style.fontSize = '28px';
+    else display.style.fontSize = '40px';
+  }
+
+  function addHistory(expr, resVal) {
+    historyTape.unshift({ expr, resVal });
+    tapeList.innerHTML = historyTape.slice(0, 20).map(item => `
+      <div class="calc-tape-item">
+        <div style="color:rgba(255,255,255,0.5);">${item.expr} =</div>
+        <div style="font-weight:700;color:#ff9f0a;text-align:right;">${item.resVal}</div>
+      </div>
+    `).join('');
+  }
+
+  function handleInput(val) {
+    if (window.AppleAudioEngine) window.AppleAudioEngine.playPop();
+
+    if (val >= '0' && val <= '9') {
+      if (current === '0' || justEvaluated) {
+        current = val;
+        justEvaluated = false;
+      } else {
+        if (current.length < 16) current += val;
+      }
+      updateDisplay();
+    } else if (val === '.') {
+      if (justEvaluated) {
+        current = '0.';
+        justEvaluated = false;
+      } else if (!current.includes('.')) {
+        current += '.';
+      }
+      updateDisplay();
+    } else if (val === 'AC') {
+      current = '0';
+      previous = null;
+      operation = null;
+      justEvaluated = false;
+      exprLine.innerHTML = '&nbsp;';
+      updateDisplay();
+    } else if (val === '+/-') {
+      if (current !== '0') {
+        current = current.startsWith('-') ? current.slice(1) : '-' + current;
+        updateDisplay();
+      }
+    } else if (val === '%') {
+      current = String(parseFloat(current) / 100);
+      updateDisplay();
+    } else if (['+', '-', '*', '/'].includes(val)) {
+      const sym = { '+': '+', '-': '−', '*': '×', '/': '÷' }[val];
+      previous = current;
+      operation = val;
+      exprLine.textContent = `${previous} ${sym}`;
+      current = '0';
+      justEvaluated = false;
+    } else if (val === '=') {
+      if (operation && previous !== null) {
+        const sym = { '+': '+', '-': '−', '*': '×', '/': '÷' }[operation];
+        const fullExpr = `${previous} ${sym} ${current}`;
+        try {
+          const num1 = parseFloat(previous);
+          const num2 = parseFloat(current);
+          let resVal = 0;
+          if (operation === '+') resVal = num1 + num2;
+          else if (operation === '-') resVal = num1 - num2;
+          else if (operation === '*') resVal = num1 * num2;
+          else if (operation === '/') resVal = num2 !== 0 ? num1 / num2 : '错误';
+
+          const formatted = typeof resVal === 'number' ? (Number.isInteger(resVal) ? String(resVal) : parseFloat(resVal.toFixed(8)).toString()) : resVal;
+          exprLine.textContent = `${fullExpr} =`;
+          addHistory(fullExpr, formatted);
+          current = formatted;
           previous = null;
           operation = null;
-          display.innerText = current;
-        } else if (val === '=') {
-          if (operation && previous !== null) {
-            current = String(eval(`${previous} ${operation} ${current}`));
-            display.innerText = current;
-            previous = null;
-            operation = null;
-          }
-        } else if (['+', '-', '*', '/'].includes(val)) {
-          previous = current;
-          current = '0';
-          operation = val;
+          justEvaluated = true;
+          updateDisplay();
+        } catch (e) {
+          current = '错误';
+          updateDisplay();
         }
-      });
-    });
+      }
+    } else if (val === 'pi') {
+      current = String(Math.PI.toFixed(8));
+      justEvaluated = true;
+      updateDisplay();
+    } else if (val === 'e') {
+      current = String(Math.E.toFixed(8));
+      justEvaluated = true;
+      updateDisplay();
+    } else if (val === 'sq') {
+      const v = parseFloat(current);
+      const resVal = String(parseFloat((v * v).toFixed(8)));
+      addHistory(`${current}²`, resVal);
+      current = resVal;
+      justEvaluated = true;
+      updateDisplay();
+    } else if (val === 'sqrt') {
+      const v = parseFloat(current);
+      const resVal = v >= 0 ? String(parseFloat(Math.sqrt(v).toFixed(8))) : '错误';
+      addHistory(`√(${current})`, resVal);
+      current = resVal;
+      justEvaluated = true;
+      updateDisplay();
+    } else if (val === 'sin') {
+      const resVal = String(parseFloat(Math.sin(parseFloat(current)).toFixed(8)));
+      addHistory(`sin(${current})`, resVal);
+      current = resVal;
+      justEvaluated = true;
+      updateDisplay();
+    } else if (val === 'cos') {
+      const resVal = String(parseFloat(Math.cos(parseFloat(current)).toFixed(8)));
+      addHistory(`cos(${current})`, resVal);
+      current = resVal;
+      justEvaluated = true;
+      updateDisplay();
+    } else if (val === 'tan') {
+      const resVal = String(parseFloat(Math.tan(parseFloat(current)).toFixed(8)));
+      addHistory(`tan(${current})`, resVal);
+      current = resVal;
+      justEvaluated = true;
+      updateDisplay();
+    } else if (val === 'ln') {
+      const v = parseFloat(current);
+      const resVal = v > 0 ? String(parseFloat(Math.log(v).toFixed(8))) : '错误';
+      addHistory(`ln(${current})`, resVal);
+      current = resVal;
+      justEvaluated = true;
+      updateDisplay();
+    }
   }
+
+  // Button clicks
+  win.querySelectorAll('.calc-mac-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      handleInput(btn.dataset.val);
+    });
+  });
+
+  // Mode Switch
+  modeBasicBtn.addEventListener('click', () => {
+    modeBasicBtn.classList.add('active');
+    modeSciBtn.classList.remove('active');
+    sciGrid.style.display = 'none';
+    win.style.width = '320px';
+  });
+
+  modeSciBtn.addEventListener('click', () => {
+    modeSciBtn.classList.add('active');
+    modeBasicBtn.classList.remove('active');
+    sciGrid.style.display = 'grid';
+    win.style.width = '440px';
+  });
+
+  // Tape Drawer Toggle
+  tapeToggleBtn.addEventListener('click', () => {
+    const isShown = tapeDrawer.style.display !== 'none';
+    tapeDrawer.style.display = isShown ? 'none' : 'block';
+    const baseW = modeSciBtn.classList.contains('active') ? 440 : 320;
+    win.style.width = (baseW + (isShown ? 0 : 140)) + 'px';
+  });
+
+  // Physical Keyboard Listener
+  win.addEventListener('keydown', (e) => {
+    if (e.key >= '0' && e.key <= '9') handleInput(e.key);
+    else if (e.key === '.') handleInput('.');
+    else if (e.key === '+') handleInput('+');
+    else if (e.key === '-') handleInput('-');
+    else if (e.key === '*') handleInput('*');
+    else if (e.key === '/') handleInput('/');
+    else if (e.key === 'Enter' || e.key === '=') { e.preventDefault(); handleInput('='); }
+    else if (e.key === 'Escape' || e.key === 'c' || e.key === 'C') handleInput('AC');
+    else if (e.key === 'Backspace') {
+      if (current.length > 1) current = current.slice(0, -1);
+      else current = '0';
+      updateDisplay();
+    }
+  });
 }
 
 // Control Center Dropdown
@@ -5229,6 +5861,461 @@ function toggleMissionControl() {
 
 const launchpad = document.getElementById('launchpad');
 
+// High-Fidelity macOS Sequoia Vector SVG Application Icons
+function getAppIconSvg(id, size = 64) {
+  const normId = (id || '').toLowerCase().trim();
+  const uid = `${normId}-${Math.floor(Math.random() * 1000000)}`;
+
+  if (normId === 'finder') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="f-bg-${uid}" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#1ea0f2"/><stop offset="100%" stop-color="#0567db"/>
+        </linearGradient>
+        <linearGradient id="f-hl-${uid}" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#55c0fb"/><stop offset="100%" stop-color="#238df4"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#f-bg-${uid})"/>
+      <path d="M 22.5 0 L 50 0 C 47 28 53 45 44 65 C 38 78 40 88 50 100 L 22.5 100 C 10 100 0 90 0 77.5 L 0 22.5 C 0 10 10 0 22.5 0 Z" fill="url(#f-hl-${uid})"/>
+      <path d="M 50 0 C 47 28 53 45 44 65 C 38 78 40 88 50 100" stroke="#003582" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <circle cx="28" cy="38" r="4.5" fill="#003582"/>
+      <circle cx="72" cy="38" r="4.5" fill="#003582"/>
+      <path d="M 28 64 C 40 78 60 78 72 64" stroke="#003582" stroke-width="4" stroke-linecap="round" fill="none"/>
+    </svg>`;
+  }
+
+  if (normId === 'launchpad') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="lp-bg-${uid}" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#2c1654"/><stop offset="50%" stop-color="#3b1b6c"/><stop offset="100%" stop-color="#141c3a"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#lp-bg-${uid})"/>
+      <circle cx="20" cy="25" r="1.5" fill="rgba(255,255,255,0.7)"/>
+      <circle cx="82" cy="32" r="1" fill="rgba(255,255,255,0.6)"/>
+      <circle cx="30" cy="78" r="1.2" fill="rgba(255,255,255,0.5)"/>
+      <circle cx="78" cy="80" r="1.8" fill="rgba(255,255,255,0.7)"/>
+      <path d="M 36 64 C 28 72 24 86 24 86 C 24 86 38 82 46 74 Z" fill="#ff453a"/>
+      <path d="M 33 67 C 28 73 26 82 26 82 C 26 82 35 80 41 75 Z" fill="#ff9f0a"/>
+      <path d="M 68 18 C 50 24 38 42 35 58 L 52 75 C 68 72 86 60 92 42 C 94 28 82 16 68 18 Z" fill="#ffffff"/>
+      <path d="M 40 44 L 22 50 L 32 62 Z" fill="#e11d48"/>
+      <path d="M 66 70 L 60 88 L 48 78 Z" fill="#be123c"/>
+      <circle cx="62" cy="46" r="8" fill="#0284c7"/>
+      <circle cx="62" cy="46" r="6" fill="#38bdf8"/>
+      <circle cx="64" cy="44" r="2.5" fill="#ffffff"/>
+    </svg>`;
+  }
+
+  if (normId === 'browser' || normId === 'safari') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="saf-bg-${uid}" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#e8ecf2"/>
+        </linearGradient>
+        <linearGradient id="saf-dial-${uid}" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#188dfb"/><stop offset="100%" stop-color="#0062d2"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#saf-bg-${uid})"/>
+      <rect width="100" height="100" rx="22.5" fill="none" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+      <circle cx="50" cy="50" r="38" fill="url(#saf-dial-${uid})"/>
+      <circle cx="50" cy="50" r="34" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-dasharray="2, 6.89"/>
+      <circle cx="50" cy="50" r="35" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-dasharray="3, 24.5"/>
+      <polygon points="50,15 56,50 50,47 44,50" fill="#ff3b30"/>
+      <polygon points="50,85 56,50 50,53 44,50" fill="#f5f5f7"/>
+      <circle cx="50" cy="50" r="4.5" fill="#e5e5ea" stroke="#8e8e93" stroke-width="1.5"/>
+    </svg>`;
+  }
+
+  if (normId === 'terminal') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="term-bg-${uid}" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#2a2a2c"/><stop offset="100%" stop-color="#141415"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#term-bg-${uid})"/>
+      <rect x="2" y="2" width="96" height="96" rx="21" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"/>
+      <path d="M 24 34 L 44 50 L 24 66" stroke="#f5f5f7" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <rect x="52" y="59" width="24" height="7" rx="2" fill="#30d158"/>
+    </svg>`;
+  }
+
+  if (normId === 'notes') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="notes-bg-${uid}" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#f5f5f7"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#notes-bg-${uid})"/>
+      <path d="M 0 22.5 C 0 10 10 0 22.5 0 L 77.5 0 C 90 0 100 10 100 22.5 L 100 28 L 0 28 Z" fill="#f59e0b"/>
+      <line x1="16" y1="42" x2="84" y2="42" stroke="#e2e8f0" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="16" y1="56" x2="84" y2="56" stroke="#e2e8f0" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="16" y1="70" x2="65" y2="70" stroke="#e2e8f0" stroke-width="2.5" stroke-linecap="round"/>
+      <g transform="translate(68, 62) rotate(-42)">
+        <rect x="-6" y="-30" width="12" height="36" rx="2" fill="#fbbf24"/>
+        <polygon points="-6,6 6,6 0,18" fill="#fde68a"/>
+        <polygon points="-2,14 2,14 0,18" fill="#1e293b"/>
+        <rect x="-6" y="-34" width="12" height="6" rx="1" fill="#f43f5e"/>
+      </g>
+    </svg>`;
+  }
+
+  if (normId === 'calculator') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="calc-bg-${uid}" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#323236"/><stop offset="100%" stop-color="#1c1c1e"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#calc-bg-${uid})"/>
+      <rect x="16" y="14" width="68" height="18" rx="6" fill="#242426"/>
+      <text x="76" y="27" font-family="-apple-system, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="end">42</text>
+      <circle cx="32" cy="50" r="13" fill="#a5a5a5"/>
+      <text x="32" y="55" font-family="-apple-system, sans-serif" font-size="14" font-weight="700" fill="#1c1c1e" text-anchor="middle">C</text>
+      <circle cx="68" cy="50" r="13" fill="#ff9f0a"/>
+      <text x="68" y="55" font-family="-apple-system, sans-serif" font-size="18" font-weight="600" fill="#ffffff" text-anchor="middle">÷</text>
+      <circle cx="32" cy="80" r="13" fill="#505050"/>
+      <text x="32" y="85" font-family="-apple-system, sans-serif" font-size="14" font-weight="600" fill="#ffffff" text-anchor="middle">7</text>
+      <circle cx="68" cy="80" r="13" fill="#ff9f0a"/>
+      <text x="68" y="85" font-family="-apple-system, sans-serif" font-size="18" font-weight="600" fill="#ffffff" text-anchor="middle">=</text>
+    </svg>`;
+  }
+
+  if (normId === 'music') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="music-bg-${uid}" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#fc3c44"/><stop offset="100%" stop-color="#f9233b"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#music-bg-${uid})"/>
+      <path d="M 68 22 L 42 28 C 39 29 37 31 37 34 L 37 66 C 35 64 32 63 28 63 C 21 63 16 67 16 73 C 16 79 21 83 28 83 C 35 83 40 78 40 72 L 40 42 L 65 37 L 65 60 C 63 58 60 57 56 57 C 49 57 44 61 44 67 C 44 73 49 77 56 77 C 63 77 68 72 68 66 Z" fill="#ffffff"/>
+    </svg>`;
+  }
+
+  if (normId === 'weather') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="w-bg-${uid}" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#0284c7"/>
+        </linearGradient>
+        <linearGradient id="sun-g-${uid}" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#fde047"/><stop offset="100%" stop-color="#eab308"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#w-bg-${uid})"/>
+      <circle cx="64" cy="38" r="16" fill="url(#sun-g-${uid})"/>
+      <path d="M 26 72 C 18 72 12 66 12 58 C 12 51 17 45 24 44 C 27 34 36 27 47 27 C 59 27 69 36 71 47 C 76 48 80 52 80 58 C 80 66 74 72 66 72 Z" fill="#ffffff"/>
+    </svg>`;
+  }
+
+  if (normId === 'camera') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="cam-bg-${uid}" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#3a3a3c"/><stop offset="100%" stop-color="#1c1c1e"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#cam-bg-${uid})"/>
+      <circle cx="50" cy="50" r="36" fill="#6b7280"/>
+      <circle cx="50" cy="50" r="32" fill="#111827"/>
+      <circle cx="50" cy="50" r="28" fill="#1e1b4b"/>
+      <circle cx="50" cy="50" r="14" fill="#030712"/>
+      <ellipse cx="40" cy="40" rx="9" ry="5" transform="rotate(-30 40 40)" fill="rgba(255,255,255,0.4)"/>
+    </svg>`;
+  }
+
+  if (normId === 'iphonemirror') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="ipm-bg-${uid}" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#1e293b"/><stop offset="100%" stop-color="#0f172a"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#ipm-bg-${uid})"/>
+      <rect x="25" y="12" width="50" height="76" rx="12" fill="#18181b" stroke="#64748b" stroke-width="2.5"/>
+      <rect x="42" y="16" width="16" height="5" rx="2.5" fill="#000000"/>
+      <rect x="28" y="24" width="44" height="60" rx="4" fill="#3b82f6" opacity="0.35"/>
+      <circle cx="50" cy="54" r="10" fill="#60a5fa" opacity="0.6"/>
+    </svg>`;
+  }
+
+  if (normId === 'paint' || normId === 'photos') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="pht-bg-${uid}" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#f1f5f9"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#pht-bg-${uid})"/>
+      <g transform="translate(50, 50)">
+        <ellipse cx="0" cy="-20" rx="9" ry="15" fill="#f43f5e" opacity="0.85"/>
+        <ellipse cx="14" cy="-14" rx="9" ry="15" transform="rotate(45)" fill="#f97316" opacity="0.85"/>
+        <ellipse cx="20" cy="0" rx="9" ry="15" transform="rotate(90)" fill="#eab308" opacity="0.85"/>
+        <ellipse cx="14" cy="14" rx="9" ry="15" transform="rotate(135)" fill="#22c55e" opacity="0.85"/>
+        <ellipse cx="0" cy="20" rx="9" ry="15" transform="rotate(180)" fill="#06b6d4" opacity="0.85"/>
+        <ellipse cx="-14" cy="14" rx="9" ry="15" transform="rotate(225)" fill="#3b82f6" opacity="0.85"/>
+        <ellipse cx="-20" cy="0" rx="9" ry="15" transform="rotate(270)" fill="#8b5cf6" opacity="0.85"/>
+        <ellipse cx="-14" cy="-14" rx="9" ry="15" transform="rotate(315)" fill="#ec4899" opacity="0.85"/>
+        <circle cx="0" cy="0" r="6" fill="#ffffff"/>
+      </g>
+    </svg>`;
+  }
+
+  if (normId === 'maps') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="mps-bg-${uid}" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#f8fafc"/><stop offset="100%" stop-color="#e2e8f0"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#mps-bg-${uid})"/>
+      <path d="M 0 35 Q 40 30 60 0 L 100 0 L 100 45 Q 60 70 0 60 Z" fill="#86efac"/>
+      <path d="M 0 55 Q 50 65 100 35 L 100 65 Q 50 95 0 85 Z" fill="#fed7aa"/>
+      <path d="M 20 100 Q 50 40 85 0" stroke="#f97316" stroke-width="6" fill="none"/>
+      <path d="M 0 50 Q 50 60 100 20" stroke="#ffffff" stroke-width="8" fill="none"/>
+      <path d="M 50 32 C 43 32 38 37 38 44 C 38 52 50 68 50 68 C 50 68 62 52 62 44 C 62 37 57 32 50 32 Z" fill="#ef4444"/>
+      <circle cx="50" cy="43" r="4.5" fill="#ffffff"/>
+    </svg>`;
+  }
+
+  if (normId === 'activity') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="am-bg-${uid}" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#1c1c1e"/><stop offset="100%" stop-color="#0a0a0c"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#am-bg-${uid})"/>
+      <line x1="15" y1="30" x2="85" y2="30" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <line x1="15" y1="50" x2="85" y2="50" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <line x1="15" y1="70" x2="85" y2="70" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <line x1="30" y1="15" x2="30" y2="85" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <line x1="50" y1="15" x2="50" y2="85" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <line x1="70" y1="15" x2="70" y2="85" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <path d="M 12 50 L 32 50 L 38 24 L 46 76 L 54 36 L 60 58 L 66 50 L 88 50" fill="none" stroke="#30d158" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>`;
+  }
+
+  if (normId === 'settings') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="set-bg-${uid}" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#9ca3af"/><stop offset="100%" stop-color="#4b5563"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#set-bg-${uid})"/>
+      <g transform="translate(50, 50)">
+        <circle cx="0" cy="0" r="30" fill="#e5e7eb"/>
+        <path d="M-5,-34 h10 v5 h-10 z M-5,29 h10 v5 h-10 z M-34,-5 h5 v10 h-5 z M29,-5 h5 v10 h-5 z" fill="#e5e7eb"/>
+        <path d="M-5,-34 h10 v5 h-10 z" transform="rotate(45)" fill="#e5e7eb"/>
+        <path d="M-5,29 h10 v5 h-10 z" transform="rotate(45)" fill="#e5e7eb"/>
+        <circle cx="0" cy="0" r="14" fill="#4b5563"/>
+        <circle cx="0" cy="0" r="10" fill="#374151"/>
+      </g>
+    </svg>`;
+  }
+
+  if (normId === 'ide') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="ide-bg-${uid}" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0369a1"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#ide-bg-${uid})"/>
+      <line x1="20" y1="20" x2="80" y2="20" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+      <line x1="20" y1="50" x2="80" y2="50" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+      <line x1="20" y1="80" x2="80" y2="80" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+      <line x1="20" y1="20" x2="20" y2="80" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+      <line x1="50" y1="20" x2="50" y2="80" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+      <line x1="80" y1="20" x2="80" y2="80" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+      <g transform="translate(50, 46) rotate(-45)">
+        <rect x="-5" y="-5" width="10" height="38" rx="2" fill="#d97706"/>
+        <rect x="-14" y="-18" width="28" height="14" rx="3" fill="#cbd5e1"/>
+      </g>
+      <text x="50" y="80" font-family="-apple-system, monospace" font-size="18" font-weight="800" fill="#ffffff" text-anchor="middle">&lt; /&gt;</text>
+    </svg>`;
+  }
+
+  if (normId === 'store') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="str-bg-${uid}" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#0a84ff"/><stop offset="100%" stop-color="#0062d2"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#str-bg-${uid})"/>
+      <line x1="30" y1="78" x2="50" y2="22" stroke="#ffffff" stroke-width="8" stroke-linecap="round"/>
+      <line x1="70" y1="78" x2="50" y2="22" stroke="#ffffff" stroke-width="8" stroke-linecap="round"/>
+      <line x1="24" y1="60" x2="76" y2="60" stroke="#ffffff" stroke-width="8" stroke-linecap="round"/>
+    </svg>`;
+  }
+
+  if (normId === 'video') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="vid-bg-${uid}" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#1e1e24"/><stop offset="100%" stop-color="#09090b"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#vid-bg-${uid})"/>
+      <polygon points="40,32 72,50 40,68" fill="#38bdf8"/>
+    </svg>`;
+  }
+
+  if (normId === 'synth') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="syn-bg-${uid}" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#ea580c"/><stop offset="100%" stop-color="#9a3412"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#syn-bg-${uid})"/>
+      <rect x="20" y="30" width="12" height="42" rx="2" fill="#ffffff"/>
+      <rect x="34" y="30" width="12" height="42" rx="2" fill="#ffffff"/>
+      <rect x="48" y="30" width="12" height="42" rx="2" fill="#ffffff"/>
+      <rect x="62" y="30" width="12" height="42" rx="2" fill="#ffffff"/>
+      <rect x="28" y="30" width="8" height="26" rx="1" fill="#18181b"/>
+      <rect x="42" y="30" width="8" height="26" rx="1" fill="#18181b"/>
+      <rect x="56" y="30" width="8" height="26" rx="1" fill="#18181b"/>
+    </svg>`;
+  }
+
+  if (normId === 'snake') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="snk-bg-${uid}" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#10b981"/><stop offset="100%" stop-color="#047857"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#snk-bg-${uid})"/>
+      <path d="M 28 72 C 28 60 42 60 42 50 C 42 40 28 40 28 28 C 28 20 36 16 46 16 C 56 16 68 22 68 34 C 68 46 54 46 54 56 C 54 66 68 66 68 76 C 68 84 58 88 48 88 C 36 88 28 82 28 72 Z" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>
+      <circle cx="70" cy="74" r="3" fill="#fbbf24"/>
+    </svg>`;
+  }
+
+  if (normId === 'flappy') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="flp-bg-${uid}" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#4ade80"/><stop offset="100%" stop-color="#22c55e"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#flp-bg-${uid})"/>
+      <circle cx="48" cy="50" r="22" fill="#fbbf24"/>
+      <circle cx="58" cy="44" r="7" fill="#ffffff"/>
+      <circle cx="61" cy="44" r="3" fill="#18181b"/>
+      <path d="M 64 50 L 76 53 L 64 56 Z" fill="#ea580c"/>
+      <ellipse cx="36" cy="54" rx="9" ry="6" fill="#ffffff"/>
+    </svg>`;
+  }
+
+  if (normId === 'universe') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="uni-bg-${uid}" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#312e81"/><stop offset="50%" stop-color="#581c87"/><stop offset="100%" stop-color="#0f172a"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#uni-bg-${uid})"/>
+      <circle cx="50" cy="50" r="20" fill="#f59e0b"/>
+      <ellipse cx="50" cy="50" rx="36" ry="10" fill="none" stroke="#fde68a" stroke-width="3" transform="rotate(-24 50 50)"/>
+      <circle cx="25" cy="28" r="1.5" fill="#ffffff"/>
+      <circle cx="75" cy="22" r="1.2" fill="#ffffff"/>
+      <circle cx="78" cy="74" r="1.8" fill="#ffffff"/>
+    </svg>`;
+  }
+
+  if (normId === 'radar') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="rad-bg-${uid}" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#064e3b"/><stop offset="100%" stop-color="#022c22"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#rad-bg-${uid})"/>
+      <circle cx="50" cy="50" r="34" fill="none" stroke="#10b981" stroke-width="1.5"/>
+      <circle cx="50" cy="50" r="22" fill="none" stroke="#10b981" stroke-width="1.2"/>
+      <circle cx="50" cy="50" r="10" fill="none" stroke="#10b981" stroke-width="1"/>
+      <line x1="50" y1="16" x2="50" y2="84" stroke="#10b981" stroke-width="1"/>
+      <line x1="16" y1="50" x2="84" y2="50" stroke="#10b981" stroke-width="1"/>
+      <path d="M 50 50 L 76 24 A 34 34 0 0 0 50 16 Z" fill="rgba(16, 185, 129, 0.4)"/>
+    </svg>`;
+  }
+
+  if (normId === 'hostinfo') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="chp-bg-${uid}" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#27272a"/><stop offset="100%" stop-color="#09090b"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#chp-bg-${uid})"/>
+      <rect x="26" y="26" width="48" height="48" rx="8" fill="#18181b" stroke="#71717a" stroke-width="2"/>
+      <text x="50" y="56" font-family="-apple-system, sans-serif" font-size="20" font-weight="800" fill="#e4e4e7" text-anchor="middle">M3</text>
+    </svg>`;
+  }
+
+  if (normId === 'hostscreen') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="hsc-bg-${uid}" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#1d4ed8"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#hsc-bg-${uid})"/>
+      <rect x="22" y="26" width="42" height="30" rx="4" fill="#1e293b" stroke="#ffffff" stroke-width="2"/>
+      <rect x="36" y="44" width="42" height="30" rx="4" fill="#0f172a" stroke="#ffffff" stroke-width="2"/>
+    </svg>`;
+  }
+
+  if (normId === 'webhost') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="wbh-bg-${uid}" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#4338ca"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#webhost-bg-${uid})"/>
+      <circle cx="50" cy="50" r="28" fill="none" stroke="#ffffff" stroke-width="2"/>
+      <ellipse cx="50" cy="50" rx="14" ry="28" fill="none" stroke="#ffffff" stroke-width="1.8"/>
+      <line x1="22" y1="50" x2="78" y2="50" stroke="#ffffff" stroke-width="1.8"/>
+    </svg>`;
+  }
+
+  if (normId === 'trash') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="trsh-bg-${uid}" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="rgba(255,255,255,0.7)"/><stop offset="100%" stop-color="rgba(200,210,225,0.4)"/>
+        </linearGradient>
+      </defs>
+      <ellipse cx="50" cy="22" rx="34" ry="10" fill="rgba(255,255,255,0.85)" stroke="#94a3b8" stroke-width="2"/>
+      <path d="M 20 25 L 28 85 C 29 89 38 92 50 92 C 62 92 71 89 72 85 L 80 25 Z" fill="url(#trsh-bg-${uid})" stroke="#cbd5e1" stroke-width="2"/>
+      <line x1="35" y1="28" x2="40" y2="87" stroke="rgba(148,163,184,0.6)" stroke-width="1.8"/>
+      <line x1="50" y1="31" x2="50" y2="90" stroke="rgba(148,163,184,0.6)" stroke-width="1.8"/>
+      <line x1="65" y1="28" x2="60" y2="87" stroke="rgba(148,163,184,0.6)" stroke-width="1.8"/>
+    </svg>`;
+  }
+
+  // Fallback icon
+  return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+    <defs>
+      <linearGradient id="def-bg-${uid}" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#1d4ed8"/>
+      </linearGradient>
+    </defs>
+    <rect width="100" height="100" rx="22.5" fill="url(#def-bg-${uid})"/>
+    <circle cx="50" cy="50" r="22" fill="rgba(255,255,255,0.2)"/>
+    <text x="50" y="58" font-family="-apple-system, sans-serif" font-size="24" font-weight="700" fill="#ffffff" text-anchor="middle">★</text>
+  </svg>`;
+}
+
 // Base App Ecosystem
 const baseAppDefs = [
   { id: 'finder', icon: '📁', action: 'launchFinder()' },
@@ -5268,53 +6355,53 @@ function updateLocalizedApps() {
   }));
 
   launchpadItems = [
-    { type: 'app', id: 'browser', name: dict.app_browser, icon: '🌐', action: 'launchBrowser()' },
-    { type: 'app', id: 'iphonemirror', name: dict.app_iphonemirror || 'iPhone Mirroring', icon: '📱', action: 'launchIPhoneMirroring()' },
-    { type: 'app', id: 'maps', name: dict.app_maps, icon: '🗺️', action: 'launchMaps()' },
-    { type: 'app', id: 'weather', name: dict.app_weather, icon: '⛅', action: 'launchWeather()' },
-    { type: 'app', id: 'settings', name: dict.app_settings, icon: '⚙️', action: 'launchSettings()' },
+    { type: 'app', id: 'browser', name: dict.app_browser, action: 'launchBrowser()' },
+    { type: 'app', id: 'iphonemirror', name: dict.app_iphonemirror || 'iPhone Mirroring', action: 'launchIPhoneMirroring()' },
+    { type: 'app', id: 'maps', name: dict.app_maps, action: 'launchMaps()' },
+    { type: 'app', id: 'weather', name: dict.app_weather, action: 'launchWeather()' },
+    { type: 'app', id: 'settings', name: dict.app_settings, action: 'launchSettings()' },
     {
       type: 'folder',
       name: dict.folder_productivity,
       apps: [
-        { id: 'finder', name: dict.app_finder, icon: '📁', action: 'launchFinder()' },
-        { id: 'terminal', name: dict.app_terminal, icon: '＞_', action: 'launchTerminal()' },
-        { id: 'notes', name: dict.app_notes, icon: '📝', action: 'launchNotes()' },
-        { id: 'calculator', name: dict.app_calculator, icon: '🧮', action: 'launchCalculator()' },
-        { id: 'iphonemirror', name: dict.app_iphonemirror || 'iPhone Mirroring', icon: '📱', action: 'launchIPhoneMirroring()' },
-        { id: 'ide', name: dict.app_ide, icon: '🧑‍💻', action: 'launchIDE()' }
+        { id: 'finder', name: dict.app_finder, action: 'launchFinder()' },
+        { id: 'terminal', name: dict.app_terminal, action: 'launchTerminal()' },
+        { id: 'notes', name: dict.app_notes, action: 'launchNotes()' },
+        { id: 'calculator', name: dict.app_calculator, action: 'launchCalculator()' },
+        { id: 'iphonemirror', name: dict.app_iphonemirror || 'iPhone Mirroring', action: 'launchIPhoneMirroring()' },
+        { id: 'ide', name: dict.app_ide, action: 'launchIDE()' }
       ]
     },
     {
       type: 'folder',
       name: dict.folder_media,
       apps: [
-        { id: 'paint', name: dict.app_paint, icon: '🎨', action: 'launchPaint()' },
-        { id: 'camera', name: dict.app_camera, icon: '📷', action: 'launchCamera()' },
-        { id: 'music', name: dict.app_music, icon: '🎵', action: 'launchMusic()' },
-        { id: 'video', name: dict.app_video, icon: '🎬', action: 'launchVideo()' },
-        { id: 'synth', name: dict.app_synth, icon: '🎹', action: 'launchSynth()' }
+        { id: 'paint', name: dict.app_paint, action: 'launchPaint()' },
+        { id: 'camera', name: dict.app_camera, action: 'launchCamera()' },
+        { id: 'music', name: dict.app_music, action: 'launchMusic()' },
+        { id: 'video', name: dict.app_video, action: 'launchVideo()' },
+        { id: 'synth', name: dict.app_synth, action: 'launchSynth()' }
       ]
     },
     {
       type: 'folder',
       name: dict.folder_games,
       apps: [
-        { id: 'snake', name: dict.app_snake, icon: '🐍', action: 'launchSnake()' },
-        { id: 'flappy', name: dict.app_flappy, icon: '🎮', action: 'launchFlappy()' },
-        { id: 'universe', name: dict.app_universe, icon: '🌌', action: 'launchUniverse()' },
-        { id: 'radar', name: dict.app_radar, icon: '👽', action: 'launchRadar()' }
+        { id: 'snake', name: dict.app_snake, action: 'launchSnake()' },
+        { id: 'flappy', name: dict.app_flappy, action: 'launchFlappy()' },
+        { id: 'universe', name: dict.app_universe, action: 'launchUniverse()' },
+        { id: 'radar', name: dict.app_radar, action: 'launchRadar()' }
       ]
     },
     {
       type: 'folder',
       name: dict.folder_utilities,
       apps: [
-        { id: 'activity', name: dict.app_activity, icon: '📈', action: 'launchActivityMonitor()' },
-        { id: 'hostinfo', name: dict.app_hostinfo, icon: '💻', action: 'launchHostMonitor()' },
-        { id: 'hostscreen', name: dict.app_hostscreen, icon: '🪞', action: 'launchHostScreen()' },
-        { id: 'webhost', name: dict.app_webhost, icon: '🌐', action: 'launchWebHost()' },
-        { id: 'store', name: dict.app_store, icon: '🛍️', action: 'launchStore()' }
+        { id: 'activity', name: dict.app_activity, action: 'launchActivityMonitor()' },
+        { id: 'hostinfo', name: dict.app_hostinfo, action: 'launchHostMonitor()' },
+        { id: 'hostscreen', name: dict.app_hostscreen, action: 'launchHostScreen()' },
+        { id: 'webhost', name: dict.app_webhost, action: 'launchWebHost()' },
+        { id: 'store', name: dict.app_store, action: 'launchStore()' }
       ]
     }
   ];
@@ -5337,9 +6424,9 @@ function openLaunchpadFolder(folderIndex) {
 
   title.innerText = folder.name;
   grid.innerHTML = folder.apps.map(app => `
-    <div style="display:flex;flex-direction:column;align-items:center;cursor:pointer;width:84px;" onclick="closeLaunchpadFolder(); toggleLaunchpad(); ${app.action}">
-      <div style="font-size:46px;margin-bottom:8px;background:rgba(255,255,255,0.25);border-radius:18px;width:76px;height:76px;display:flex;justify-content:center;align-items:center;box-shadow:0 4px 15px rgba(0,0,0,0.25);transition:transform 0.15s ease;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
-        ${app.icon}
+    <div style="display:flex;flex-direction:column;align-items:center;cursor:pointer;width:88px;" onclick="closeLaunchpadFolder(); toggleLaunchpad(); ${app.action}">
+      <div style="width:68px;height:68px;margin-bottom:8px;display:flex;justify-content:center;align-items:center;transition:transform 0.15s ease;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+        ${getAppIconSvg(app.id, 68)}
       </div>
       <div style="color:white;text-shadow:0 1px 3px rgba(0,0,0,0.8);font-size:13px;font-weight:500;text-align:center;">${app.name}</div>
     </div>
@@ -5377,21 +6464,25 @@ function renderLaunchpad() {
   launchpad.innerHTML = launchpadItems.map((item, idx) => {
     if (item.type === 'app') {
       return `
-        <div style="display:flex;flex-direction:column;align-items:center;cursor:pointer;width:100px;margin:20px;" onclick="toggleLaunchpad(); ${item.action}">
-          <div style="font-size:55px;margin-bottom:10px;background:rgba(255,255,255,0.2);backdrop-filter:blur(20px);border-radius:22px;border:1px solid rgba(255,255,255,0.25);box-shadow:0 8px 24px rgba(0,0,0,0.25);width:90px;height:90px;display:flex;justify-content:center;align-items:center;transition:transform 0.15s ease;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
-            ${item.icon}
+        <div style="display:flex;flex-direction:column;align-items:center;cursor:pointer;width:104px;margin:18px;" onclick="toggleLaunchpad(); ${item.action}">
+          <div style="width:82px;height:82px;margin-bottom:10px;display:flex;justify-content:center;align-items:center;transition:transform 0.15s ease;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+            ${getAppIconSvg(item.id, 82)}
           </div>
-          <div style="color:white;text-shadow:0 1px 3px rgba(0,0,0,0.8);font-size:14px;font-weight:500;">${item.name}</div>
+          <div style="color:white;text-shadow:0 1px 3px rgba(0,0,0,0.8);font-size:14px;font-weight:500;text-align:center;">${item.name}</div>
         </div>
       `;
     } else {
-      const miniIcons = item.apps.slice(0, 4).map(a => `<span>${a.icon}</span>`).join('');
+      const miniIcons = item.apps.slice(0, 4).map(a => `
+        <div style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;">
+          ${getAppIconSvg(a.id, 28)}
+        </div>
+      `).join('');
       return `
-        <div style="display:flex;flex-direction:column;align-items:center;cursor:pointer;width:100px;margin:20px;" onclick="openLaunchpadFolder(${idx})">
+        <div style="display:flex;flex-direction:column;align-items:center;cursor:pointer;width:104px;margin:18px;" onclick="openLaunchpadFolder(${idx})">
           <div class="launchpad-folder-tile">
             ${miniIcons}
           </div>
-          <div style="color:white;text-shadow:0 1px 3px rgba(0,0,0,0.8);font-size:14px;font-weight:500;margin-top:10px;">${item.name}</div>
+          <div style="color:white;text-shadow:0 1px 3px rgba(0,0,0,0.8);font-size:14px;font-weight:500;margin-top:10px;text-align:center;">${item.name}</div>
         </div>
       `;
     }
@@ -5409,6 +6500,8 @@ function toggleLaunchpad() {
     setTimeout(() => launchpad.style.opacity = '1', 10);
   }
 }
+
+
 
 launchpad.addEventListener('click', (e) => {
   if (e.target === launchpad) {
@@ -5672,6 +6765,7 @@ function toggleFullScreen() {
 }
 
 function openTrash() {
+  if (window.AppleAudioEngine) window.AppleAudioEngine.playTrash();
   if (typeof showNotification === 'function') {
     showNotification(t('app_trash', 'Trash'), t('trash_empty_desc', 'No deleted items found.'), 'Trash', '🗑️');
   }
@@ -5959,30 +7053,284 @@ updateClock();
 // Multimedia Apps Logic
 async function launchMusic() {
   const res = await window.aliceOS.pm.spawn('music');
-  if (res.success) {
-    const pid = res.data.pid;
-    const win = createWindow(pid, t('app_music', 'Music'), `
-      <div style="background:#111;height:100%;color:white;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;">
-        <div style="font-size:60px;margin-bottom:20px;animation:spin 4s linear infinite;">💿</div>
-        <h2 id="music-title-${pid}" style="margin:0 0 10px 0;">${t('music_radio_title', 'Lofi Chill Radio')}</h2>
-        <p id="music-sub-${pid}" style="color:#aaa;font-size:12px;margin-bottom:20px;">${t('music_live_stream', 'Live Stream')}</p>
-        <audio controls autoplay style="width:100%;">
-          <source src="https://stream.zeno.fm/f3wvbbqmdg8uv" type="audio/mpeg">
-          Your browser does not support the audio element.
-        </audio>
-      </div>
-      <style>
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-      </style>
-    `, 'music');
+  if (!res.success) return;
+  const pid = res.data.pid;
 
-    win._onLanguageChange = () => {
-      const titleEl = win.querySelector(`#music-title-${pid}`);
-      if (titleEl) titleEl.innerText = t('music_radio_title', 'Lofi Chill Radio');
-      const subEl = win.querySelector(`#music-sub-${pid}`);
-      if (subEl) subEl.innerText = t('music_live_stream', 'Live Stream');
-    };
+  const tracks = [
+    { id: 1, title: 'Midnight in Cupertino', artist: 'Alice Lo-Fi Ensemble', album: 'Sequoia Sessions', dur: 204, durStr: '3:24', chordFreqs: [261.63, 329.63, 392.00, 493.88] }, // Cmaj7
+    { id: 2, title: 'Glass & Silicon', artist: 'Infinite Loop Beats', album: '1 Apple Park Way', dur: 178, durStr: '2:58', chordFreqs: [220.00, 261.63, 329.63, 440.00] }, // Am7
+    { id: 3, title: 'AirDrop Sunset', artist: 'Cyber Synthwave', album: 'California Coast', dur: 225, durStr: '3:45', chordFreqs: [174.61, 220.00, 261.63, 329.63] }, // Fmaj7
+    { id: 4, title: 'M3 Max Horizon', artist: 'Ambient Code', album: 'Neural Core', dur: 192, durStr: '3:12', chordFreqs: [196.00, 246.94, 293.66, 392.00] }, // G7
+    { id: 5, title: 'Rainy Days in Shibuya', artist: 'Tokyo Lo-Fi Studio', album: 'Shibuya Crossing', dur: 165, durStr: '2:45', chordFreqs: [293.66, 349.23, 440.00, 523.25] }, // Dm7
+    { id: 6, title: 'Cosmic Terminal', artist: 'AliceOS Sound Lab', album: 'Sequoia 15', dur: 190, durStr: '3:10', chordFreqs: [329.63, 392.00, 493.88, 587.33] }  // Em7
+  ];
+
+  let currentTrackIdx = 0;
+  let isPlaying = false;
+  let playProgressSec = 0;
+  let progressInterval = null;
+  let synthNodes = [];
+
+  const win = createWindow(pid, t('app_music', 'Music'), `
+    <div class="apple-music-app" id="music-app-${pid}">
+      <div class="music-sidebar">
+        <div class="music-brand">
+          <svg width="22" height="22" viewBox="0 0 100 100">
+            <rect width="100" height="100" rx="22" fill="#fc3c44"/>
+            <path d="M 68 22 L 42 28 C 39 29 37 31 37 34 L 37 66 C 35 64 32 63 28 63 C 21 63 16 67 16 73 C 16 79 21 83 28 83 C 35 83 40 78 40 72 L 40 42 L 65 37 L 65 60 C 63 58 60 57 56 57 C 49 57 44 61 44 67 C 44 73 49 77 56 77 C 63 77 68 72 68 66 Z" fill="#ffffff"/>
+          </svg>
+          <span>Music</span>
+        </div>
+        <div class="music-nav-group">
+          <div class="music-nav-hdr">Apple Music</div>
+          <div class="music-nav-item active"><span>🎧</span> 现在就听</div>
+          <div class="music-nav-item"><span>🌍</span> 浏览</div>
+          <div class="music-nav-item"><span>📻</span> 广播</div>
+        </div>
+        <div class="music-nav-group">
+          <div class="music-nav-hdr">资料库</div>
+          <div class="music-nav-item"><span>🕒</span> 最近播放</div>
+          <div class="music-nav-item"><span>🎤</span> 艺人</div>
+          <div class="music-nav-item"><span>💿</span> 专辑</div>
+        </div>
+        <div class="music-nav-group">
+          <div class="music-nav-hdr">播放列表</div>
+          <div class="music-nav-item"><span>☕</span> Apple Chill Lo-Fi</div>
+          <div class="music-nav-item"><span>💻</span> Cupertino Code</div>
+          <div class="music-nav-item"><span>🌌</span> Sequoia Sunset</div>
+        </div>
+      </div>
+
+      <div class="music-main-wrap">
+        <div class="music-hero-banner">
+          <div class="music-hero-cover">
+            <span>🎵</span>
+          </div>
+          <div class="music-hero-info">
+            <div class="music-hero-tag">精选歌单 · APPLE MUSIC</div>
+            <div class="music-hero-title">Apple Chill Lo-Fi Beats</div>
+            <div class="music-hero-desc">柔和细腻的爵士和弦、慢节拍律动与温暖黑胶底噪，为专注代码与深度思考量身打造。</div>
+            <div class="music-hero-btns">
+              <button class="music-play-btn" id="music-hero-play-${pid}">▶ 播放全部</button>
+              <button class="music-shuffle-btn" id="music-hero-shuffle-${pid}">🔀 随机播放</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="music-tracklist">
+          <div class="music-table-hdr">
+            <div style="width:36px;">#</div>
+            <div style="flex:2;">标题</div>
+            <div style="flex:1.5;">艺人</div>
+            <div style="flex:1.5;">专辑</div>
+            <div style="width:60px;text-align:right;">时长</div>
+            <div style="width:40px;text-align:center;">❤️</div>
+          </div>
+          <div class="music-table-body" id="music-table-body-${pid}"></div>
+        </div>
+      </div>
+
+      <div class="music-player-bar">
+        <div class="music-current-meta">
+          <div class="music-mini-thumb" id="music-mini-thumb-${pid}">🎵</div>
+          <div style="overflow:hidden;">
+            <div class="music-mini-title" id="music-mini-title-${pid}">Midnight in Cupertino</div>
+            <div class="music-mini-artist" id="music-mini-artist-${pid}">Alice Lo-Fi Ensemble</div>
+          </div>
+          <button class="music-mini-heart" id="music-mini-heart-${pid}">♡</button>
+        </div>
+
+        <div class="music-center-controls">
+          <div class="music-btn-row">
+            <button class="music-ctrl-btn" id="music-shuffle-toggle-${pid}">🔀</button>
+            <button class="music-ctrl-btn" id="music-prev-btn-${pid}">⏮</button>
+            <button class="music-play-circle-btn" id="music-play-toggle-${pid}">▶</button>
+            <button class="music-ctrl-btn" id="music-next-btn-${pid}">⏭</button>
+            <button class="music-ctrl-btn" id="music-repeat-toggle-${pid}">🔁</button>
+          </div>
+          <div class="music-progress-row">
+            <span class="music-time-lbl" id="music-time-cur-${pid}">0:00</span>
+            <div class="music-scrub-bar" id="music-scrub-${pid}">
+              <div class="music-scrub-fill" id="music-fill-${pid}" style="width:0%;"></div>
+            </div>
+            <span class="music-time-lbl" id="music-time-tot-${pid}">3:24</span>
+          </div>
+        </div>
+
+        <div class="music-volume-controls">
+          <span style="font-size:13px;opacity:0.6;">🔊</span>
+          <input type="range" class="music-vol-slider" id="music-vol-${pid}" min="0" max="100" value="75">
+          <span style="font-size:13px;opacity:0.6;margin-left:8px;" title="隔空播放">📡</span>
+        </div>
+      </div>
+    </div>
+  `, 'music');
+
+  win.style.width = '820px';
+  win.style.height = '520px';
+
+  const tableBody = win.querySelector(`#music-table-body-${pid}`);
+  const playToggle = win.querySelector(`#music-play-toggle-${pid}`);
+  const prevBtn = win.querySelector(`#music-prev-btn-${pid}`);
+  const nextBtn = win.querySelector(`#music-next-btn-${pid}`);
+  const heroPlay = win.querySelector(`#music-hero-play-${pid}`);
+  const heroShuffle = win.querySelector(`#music-hero-shuffle-${pid}`);
+  const miniTitle = win.querySelector(`#music-mini-title-${pid}`);
+  const miniArtist = win.querySelector(`#music-mini-artist-${pid}`);
+  const timeCur = win.querySelector(`#music-time-cur-${pid}`);
+  const timeTot = win.querySelector(`#music-time-tot-${pid}`);
+  const scrubFill = win.querySelector(`#music-fill-${pid}`);
+  const scrubBar = win.querySelector(`#music-scrub-${pid}`);
+  const volSlider = win.querySelector(`#music-vol-${pid}`);
+  const heartBtn = win.querySelector(`#music-mini-heart-${pid}`);
+
+  let volGainNode = null;
+
+  function stopSynth() {
+    synthNodes.forEach(n => {
+      try { n.stop(); n.disconnect(); } catch (e) {}
+    });
+    synthNodes = [];
   }
+
+  function startSynthChord(freqs) {
+    stopSynth();
+    try {
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const masterGain = audioCtx.createGain();
+      const vol = (parseInt(volSlider.value, 10) || 75) / 100;
+      masterGain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+      masterGain.gain.linearRampToValueAtTime(vol * 0.16, audioCtx.currentTime + 0.8);
+      masterGain.connect(audioCtx.destination);
+      volGainNode = masterGain;
+
+      freqs.forEach(f => {
+        const osc = audioCtx.createOscillator();
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(800, audioCtx.currentTime);
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(f, audioCtx.currentTime);
+
+        osc.connect(filter);
+        filter.connect(masterGain);
+        osc.start();
+        synthNodes.push(osc);
+      });
+    } catch (e) {}
+  }
+
+  function renderTable() {
+    tableBody.innerHTML = tracks.map((t, idx) => `
+      <div class="music-track-row ${idx === currentTrackIdx ? 'playing' : ''}" data-idx="${idx}">
+        <div style="width:36px;opacity:0.6;">${idx === currentTrackIdx && isPlaying ? '🔊' : (idx + 1)}</div>
+        <div style="flex:2;font-weight:${idx === currentTrackIdx ? '700' : '500'};">${t.title}</div>
+        <div style="flex:1.5;opacity:0.7;">${t.artist}</div>
+        <div style="flex:1.5;opacity:0.7;">${t.album}</div>
+        <div style="width:60px;text-align:right;opacity:0.6;font-family:monospace;">${t.durStr}</div>
+        <div style="width:40px;text-align:center;cursor:pointer;">♡</div>
+      </div>
+    `).join('');
+
+    tableBody.querySelectorAll('.music-track-row').forEach(row => {
+      row.addEventListener('click', () => {
+        const idx = parseInt(row.dataset.idx, 10);
+        playTrack(idx);
+      });
+    });
+  }
+
+  function formatSec(s) {
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60);
+    return `${m}:${sec < 10 ? '0' : ''}${sec}`;
+  }
+
+  function playTrack(idx) {
+    currentTrackIdx = idx;
+    const cur = tracks[currentTrackIdx];
+    miniTitle.textContent = cur.title;
+    miniArtist.textContent = cur.artist;
+    timeTot.textContent = cur.durStr;
+    playProgressSec = 0;
+    isPlaying = true;
+    playToggle.textContent = '⏸';
+    heroPlay.textContent = '⏸ 暂停';
+    renderTable();
+
+    startSynthChord(cur.chordFreqs);
+
+    if (progressInterval) clearInterval(progressInterval);
+    progressInterval = setInterval(() => {
+      if (!isPlaying) return;
+      playProgressSec++;
+      if (playProgressSec > cur.dur) {
+        playTrack((currentTrackIdx + 1) % tracks.length);
+      } else {
+        timeCur.textContent = formatSec(playProgressSec);
+        const pct = (playProgressSec / cur.dur) * 100;
+        scrubFill.style.width = `${pct}%`;
+      }
+    }, 1000);
+  }
+
+  function togglePlayPause() {
+    if (isPlaying) {
+      isPlaying = false;
+      playToggle.textContent = '▶';
+      heroPlay.textContent = '▶ 播放全部';
+      stopSynth();
+    } else {
+      playTrack(currentTrackIdx);
+    }
+    renderTable();
+  }
+
+  playToggle.addEventListener('click', togglePlayPause);
+  heroPlay.addEventListener('click', togglePlayPause);
+
+  prevBtn.addEventListener('click', () => {
+    const nextIdx = (currentTrackIdx - 1 + tracks.length) % tracks.length;
+    playTrack(nextIdx);
+  });
+
+  nextBtn.addEventListener('click', () => {
+    const nextIdx = (currentTrackIdx + 1) % tracks.length;
+    playTrack(nextIdx);
+  });
+
+  heroShuffle.addEventListener('click', () => {
+    const rnd = Math.floor(Math.random() * tracks.length);
+    playTrack(rnd);
+  });
+
+  heartBtn.addEventListener('click', () => {
+    heartBtn.textContent = heartBtn.textContent === '♡' ? '❤️' : '♡';
+  });
+
+  volSlider.addEventListener('input', () => {
+    if (volGainNode) {
+      const vol = (parseInt(volSlider.value, 10) || 75) / 100;
+      volGainNode.gain.setValueAtTime(vol * 0.16, audioCtx.currentTime);
+    }
+  });
+
+  scrubBar.addEventListener('click', (e) => {
+    const rect = scrubBar.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const ratio = Math.max(0, Math.min(1, clickX / rect.width));
+    playProgressSec = Math.floor(ratio * tracks[currentTrackIdx].dur);
+    timeCur.textContent = formatSec(playProgressSec);
+    scrubFill.style.width = `${ratio * 100}%`;
+  });
+
+  // Cleanup on close
+  win.addEventListener('remove', () => {
+    stopSynth();
+    if (progressInterval) clearInterval(progressInterval);
+  });
+
+  renderTable();
 }
 
 async function launchCamera() {
@@ -6215,139 +7563,368 @@ function showNotification(title, message, appName = 'AliceOS', appIcon = '🍎')
 }
 window.showNotification = showNotification;
 window.playNotificationChime = playNotificationChime;
-// Activity Monitor Logic
+// Activity Monitor - Full macOS Sequoia Fidelity
 async function launchActivityMonitor() {
   const res = await window.aliceOS.pm.spawn('activity');
   if (res.success) {
     const pid = res.data.pid;
-    const win = createWindow(pid, t('app_activity', 'Activity Monitor'), `
-      <div class="am-container" style="display:flex;flex-direction:column;height:100%;">
-        <div style="height:150px;background:#1a1a1a;padding:10px;position:relative;">
-          <div style="color:lime;font-size:12px;margin-bottom:5px;" id="am-ram-lbl-${pid}">${t('am_ram_usage', 'Host RAM Usage (GB)')}</div>
-          <canvas id="am-canvas-${pid}" width="400" height="100" style="width:100%;height:100px;border-bottom:1px solid #333;"></canvas>
+    let currentTab = 'cpu';
+    let selectedPid = null;
+    let searchQuery = '';
+
+    const win = createWindow(pid, t('app_activity', '活动监视器'), `
+      <div class="am-mac-app" id="am-app-${pid}">
+        <!-- Top Toolbar -->
+        <div class="am-topbar">
+          <div class="am-tabs-group" id="am-tabs-${pid}">
+            <button class="am-tab-btn active" data-tab="cpu">CPU</button>
+            <button class="am-tab-btn" data-tab="memory">${currentSystemLang === 'zh' ? '内存' : 'Memory'}</button>
+            <button class="am-tab-btn" data-tab="energy">${currentSystemLang === 'zh' ? '能耗' : 'Energy'}</button>
+            <button class="am-tab-btn" data-tab="disk">${currentSystemLang === 'zh' ? '磁盘' : 'Disk'}</button>
+            <button class="am-tab-btn" data-tab="network">${currentSystemLang === 'zh' ? '网络' : 'Network'}</button>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <button class="am-tool-btn danger" id="am-force-quit-${pid}" title="${currentSystemLang === 'zh' ? '强制退出选中的进程' : 'Force Quit Process'}">
+              🛑 ${currentSystemLang === 'zh' ? '强制退出' : 'Force Quit'}
+            </button>
+            <input type="text" class="am-search-input" id="am-search-${pid}" placeholder="${currentSystemLang === 'zh' ? '搜索进程...' : 'Filter...'}" />
+          </div>
         </div>
-        <div style="flex-grow:1;overflow-y:auto;">
-          <table class="am-table">
+
+        <!-- Main Process Table -->
+        <div class="am-table-wrap">
+          <table class="am-mac-table" id="am-table-${pid}">
             <thead>
               <tr>
-                <th>${t('am_pid', 'PID')}</th>
-                <th>${t('am_name', 'Process Name')}</th>
-                <th>${t('am_status', 'Status')}</th>
-                <th>${t('am_action', 'Action')}</th>
+                <th style="min-width:170px;">${currentSystemLang === 'zh' ? '进程名称' : 'Process Name'}</th>
+                <th style="width:70px;text-align:right;">% CPU</th>
+                <th style="width:90px;text-align:right;">${currentSystemLang === 'zh' ? 'CPU 时间' : 'CPU Time'}</th>
+                <th style="width:60px;text-align:right;">${currentSystemLang === 'zh' ? '线程' : 'Threads'}</th>
+                <th style="width:85px;text-align:right;">${currentSystemLang === 'zh' ? '内存' : 'Memory'}</th>
+                <th style="width:55px;text-align:right;">PID</th>
+                <th style="width:90px;">${currentSystemLang === 'zh' ? '用户' : 'User'}</th>
               </tr>
             </thead>
             <tbody id="am-tbody-${pid}">
             </tbody>
           </table>
         </div>
+
+        <!-- Bottom Tab Panel with Live Oscilloscope -->
+        <div class="am-bottom-panel" id="am-bottom-${pid}">
+          <div class="am-graph-box">
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:11px;font-weight:600;opacity:0.85;">
+              <span id="am-chart-title-${pid}">CPU 负载历史</span>
+              <span id="am-chart-legend-${pid}" style="color:#38bdf8;">■ 用户   <span style="color:#f43f5e;">■ 系统</span></span>
+            </div>
+            <canvas id="am-canvas-${pid}" width="420" height="75" style="width:100%;height:75px;border-radius:6px;background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.08);"></canvas>
+          </div>
+          <div class="am-stats-box" id="am-stats-${pid}">
+            <!-- Dynamic stats populated by JS -->
+          </div>
+        </div>
       </div>
-    `);
+    `, 'activity');
+
+    win.style.width = '780px';
+    win.style.height = '520px';
 
     const tbody = win.querySelector(`#am-tbody-${pid}`);
     const canvas = win.querySelector(`#am-canvas-${pid}`);
     const ctx = canvas.getContext('2d');
-    
-    // RAM History
-    const ramHistory = new Array(40).fill(0);
-    let totalRam = 16; // Default scale until loaded
+    const searchInput = win.querySelector(`#am-search-${pid}`);
+    const forceQuitBtn = win.querySelector(`#am-force-quit-${pid}`);
+    const chartTitle = win.querySelector(`#am-chart-title-${pid}`);
+    const chartLegend = win.querySelector(`#am-chart-legend-${pid}`);
+    const statsBox = win.querySelector(`#am-stats-${pid}`);
+
+    // History ring buffers for oscilloscope
+    const cpuUserHistory = new Array(50).fill(8);
+    const cpuSysHistory = new Array(50).fill(3);
+    const memHistory = new Array(50).fill(40);
+    const ioHistory = new Array(50).fill(5);
+
+    const baseSystemProcs = [
+      { name: 'kernel_task', cpu: 3.2, time: '2:14:02.18', threads: 284, mem: 1240, pid: 0, user: 'root', system: true },
+      { name: 'launchd', cpu: 0.1, time: '0:01:14.30', threads: 4, mem: 18, pid: 1, user: 'root', system: true },
+      { name: 'WindowServer', cpu: 7.4, time: '1:45:18.92', threads: 18, mem: 350, pid: 184, user: '_windowserver', system: true },
+      { name: 'Dock', cpu: 0.8, time: '0:12:04.11', threads: 12, mem: 85, pid: 322, user: 'alice', system: true },
+      { name: 'Finder', cpu: 1.2, time: '0:18:22.04', threads: 16, mem: 120, pid: 325, user: 'alice', system: true },
+      { name: 'coreaudiod', cpu: 0.4, time: '0:04:32.88', threads: 8, mem: 45, pid: 210, user: '_coreaudiod', system: true },
+      { name: 'mds_stores', cpu: 1.6, time: '0:35:10.55', threads: 14, mem: 95, pid: 198, user: 'root', system: true },
+      { name: 'AliceOS Kernel', cpu: 2.1, time: '0:28:19.42', threads: 24, mem: 210, pid: 2, user: 'alice', system: true }
+    ];
+
+    // Search query listener
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.toLowerCase().trim();
+      refreshProcesses();
+    });
+
+    // Tab switcher
+    win.querySelectorAll('.am-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        win.querySelectorAll('.am-tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentTab = btn.dataset.tab;
+        updateTabHeadings();
+        refreshProcesses();
+      });
+    });
+
+    function updateTabHeadings() {
+      const isZh = currentSystemLang === 'zh';
+      if (currentTab === 'cpu') {
+        chartTitle.innerText = isZh ? 'CPU 负载历史' : 'CPU Load History';
+        chartLegend.innerHTML = '<span style="color:#38bdf8;">■ 用户</span>   <span style="color:#f43f5e;">■ 系统</span>';
+      } else if (currentTab === 'memory') {
+        chartTitle.innerText = isZh ? '内存压力图' : 'Memory Pressure';
+        chartLegend.innerHTML = '<span style="color:#30d158;">■ 内存压力 (正常)</span>';
+      } else if (currentTab === 'energy') {
+        chartTitle.innerText = isZh ? '系统能耗趋势' : 'Energy Impact';
+        chartLegend.innerHTML = '<span style="color:#fbbf24;">■ 动态能耗指标</span>';
+      } else if (currentTab === 'disk') {
+        chartTitle.innerText = isZh ? '磁盘 I/O 吞吐' : 'Disk Activity';
+        chartLegend.innerHTML = '<span style="color:#38bdf8;">■ 读入</span>   <span style="color:#f97316;">■ 写出</span>';
+      } else if (currentTab === 'network') {
+        chartTitle.innerText = isZh ? '网络数据通信量' : 'Network Activity';
+        chartLegend.innerHTML = '<span style="color:#30d158;">■ 数据接收</span>   <span style="color:#a855f7;">■ 数据发送</span>';
+      }
+    }
+
+    // Force Quit Process Handler
+    forceQuitBtn.addEventListener('click', async () => {
+      if (selectedPid === null) {
+        showNotification(t('app_activity', '活动监视器'), currentSystemLang === 'zh' ? '请先在列表中选中要结束的进程。' : 'Please select a process in the list first.');
+        return;
+      }
+      if (selectedPid === pid) {
+        showNotification(t('app_activity', '活动监视器'), t('notif_cannot_kill_self', '无法直接终止活动监视器自身。'));
+        return;
+      }
+      const isSys = baseSystemProcs.find(p => p.pid === selectedPid);
+      if (isSys) {
+        showNotification(t('app_activity', '活动监视器'), currentSystemLang === 'zh' ? `“${isSys.name}”是核心守护进程，无法强制退出。` : `"${isSys.name}" is a critical system service and cannot be quit.`);
+        return;
+      }
+
+      await window.aliceOS.pm.kill(selectedPid);
+      const targetWin = document.getElementById(`win-${selectedPid}`) || document.getElementById(`window-${selectedPid}`);
+      if (targetWin) targetWin.remove();
+
+      showNotification(t('app_activity', '活动监视器'), currentSystemLang === 'zh' ? `PID ${selectedPid} 进程已被强制退出。` : `PID ${selectedPid} was terminated.`);
+      selectedPid = null;
+      refreshProcesses();
+    });
 
     async function refreshProcesses() {
-      if (!windows.has(pid)) return; // closed
-      
-      // Plot RAM
-      const hostInfo = await window.aliceOS.getHostInfo();
-      if (hostInfo.success) {
-        const memGb = hostInfo.data.totalmem / (1024 * 1024 * 1024);
-        const usedGb = memGb - (hostInfo.data.freemem / (1024 * 1024 * 1024));
-        totalRam = memGb;
-        
-        ramHistory.push(usedGb);
-        ramHistory.shift();
-        
-        // Draw Chart
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        // Grid
-        ctx.strokeStyle = '#333';
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        for(let i=0; i<4; i++) {
-          const y = (i/4) * canvas.height;
-          ctx.moveTo(0, y); ctx.lineTo(canvas.width, y);
-        }
-        ctx.stroke();
+      if (!windows.has(pid)) return; // App closed
 
-        // Line
-        ctx.strokeStyle = '#0f0';
-        ctx.lineWidth = 2;
+      const isZh = currentSystemLang === 'zh';
+      const hostInfo = await window.aliceOS.getHostInfo();
+      let totalMemGb = 16.0;
+      let usedMemGb = 8.2;
+
+      if (hostInfo && hostInfo.success) {
+        totalMemGb = (hostInfo.data.totalmem / (1024 * 1024 * 1024)).toFixed(1);
+        usedMemGb = (totalMemGb - (hostInfo.data.freemem / (1024 * 1024 * 1024))).toFixed(1);
+      }
+
+      // Fetch dynamic active AliceOS apps
+      let realProcs = [];
+      const pRes = await window.aliceOS.pm.listProcesses();
+      if (pRes.success) {
+        realProcs = pRes.data.map(p => ({
+          name: p.name.charAt(0).toUpperCase() + p.name.slice(1),
+          cpu: parseFloat((Math.sin(p.pid + Date.now() / 3000) * 1.5 + 2.2).toFixed(1)),
+          time: `0:0${(p.pid % 5) + 1}:${(p.pid * 7 % 50 + 10)}.${(p.pid * 13 % 80 + 10)}`,
+          threads: (p.pid % 8) + 6,
+          mem: Math.round(45 + (p.pid * 17 % 80)),
+          pid: p.pid,
+          user: 'alice',
+          system: false
+        }));
+      }
+
+      const allList = [...baseSystemProcs, ...realProcs];
+      const filtered = searchQuery
+        ? allList.filter(p => p.name.toLowerCase().includes(searchQuery) || String(p.pid).includes(searchQuery))
+        : allList;
+
+      // Render table rows
+      tbody.innerHTML = filtered.map(p => {
+        const isSel = p.pid === selectedPid;
+        const iconHtml = (typeof getAppIconSvg === 'function' ? getAppIconSvg(p.name.toLowerCase(), 16) : '') || '⚙️';
+        return `
+          <tr class="${isSel ? 'selected' : ''}" data-pid="${p.pid}" style="cursor:pointer;">
+            <td style="display:flex;align-items:center;gap:8px;font-weight:500;">
+              <span style="width:16px;height:16px;display:flex;align-items:center;justify-content:center;">${iconHtml}</span>
+              <span>${p.name}</span>
+            </td>
+            <td style="text-align:right;font-family:monospace;">${p.cpu.toFixed(1)}</td>
+            <td style="text-align:right;font-family:monospace;opacity:0.8;">${p.time}</td>
+            <td style="text-align:right;font-family:monospace;">${p.threads}</td>
+            <td style="text-align:right;font-family:monospace;">${p.mem >= 1000 ? (p.mem / 1024).toFixed(2) + ' GB' : p.mem + ' MB'}</td>
+            <td style="text-align:right;font-family:monospace;opacity:0.75;">${p.pid}</td>
+            <td style="opacity:0.85;">${p.user}</td>
+          </tr>
+        `;
+      }).join('');
+
+      // Row Selection
+      tbody.querySelectorAll('tr').forEach(tr => {
+        tr.addEventListener('click', () => {
+          tbody.querySelectorAll('tr').forEach(r => r.classList.remove('selected'));
+          tr.classList.add('selected');
+          selectedPid = parseInt(tr.dataset.pid);
+        });
+        tr.addEventListener('dblclick', () => {
+          selectedPid = parseInt(tr.dataset.pid);
+          forceQuitBtn.click();
+        });
+      });
+
+      // Update Oscilloscope Buffers
+      const userCpuAvg = (Math.random() * 6 + 10).toFixed(1);
+      const sysCpuAvg = (Math.random() * 3 + 4).toFixed(1);
+      cpuUserHistory.push(parseFloat(userCpuAvg));
+      cpuUserHistory.shift();
+      cpuSysHistory.push(parseFloat(sysCpuAvg));
+      cpuSysHistory.shift();
+
+      const memUsagePct = ((usedMemGb / totalMemGb) * 100).toFixed(1);
+      memHistory.push(parseFloat(memUsagePct));
+      memHistory.shift();
+
+      const ioSample = (Math.random() * 8 + 4).toFixed(1);
+      ioHistory.push(parseFloat(ioSample));
+      ioHistory.shift();
+
+      // Draw Oscilloscope Canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Grid
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (let i = 1; i <= 3; i++) {
+        const y = (i / 4) * canvas.height;
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+      }
+      ctx.stroke();
+
+      if (currentTab === 'cpu') {
+        // Draw User CPU Line (Blue)
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 1.8;
         ctx.beginPath();
-        const step = canvas.width / (ramHistory.length - 1);
-        
-        ramHistory.forEach((val, i) => {
+        const step = canvas.width / (cpuUserHistory.length - 1);
+        cpuUserHistory.forEach((val, i) => {
           const x = i * step;
-          const y = canvas.height - ((val / totalRam) * canvas.height);
+          const y = canvas.height - (val / 100) * canvas.height;
           if (i === 0) ctx.moveTo(x, y);
           else ctx.lineTo(x, y);
         });
         ctx.stroke();
-        
-        // Fill
+
+        // Draw System CPU Line (Red)
+        ctx.strokeStyle = '#f43f5e';
+        ctx.lineWidth = 1.8;
+        ctx.beginPath();
+        cpuSysHistory.forEach((val, i) => {
+          const x = i * step;
+          const y = canvas.height - (val / 100) * canvas.height;
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+
+        // Bottom Stats Box
+        statsBox.innerHTML = `
+          <div class="am-stat-row"><span>${isZh ? '% 系统:' : '% System:'}</span><span style="font-weight:600;color:#f43f5e;">${sysCpuAvg}%</span></div>
+          <div class="am-stat-row"><span>${isZh ? '% 用户:' : '% User:'}</span><span style="font-weight:600;color:#38bdf8;">${userCpuAvg}%</span></div>
+          <div class="am-stat-row"><span>${isZh ? '% 空闲:' : '% Idle:'}</span><span style="font-weight:600;">${(100 - userCpuAvg - sysCpuAvg).toFixed(1)}%</span></div>
+          <div class="am-stat-row"><span>${isZh ? '线程总数:' : 'Threads:'}</span><span>${allList.reduce((acc, p) => acc + p.threads, 0)}</span></div>
+          <div class="am-stat-row"><span>${isZh ? '进程总数:' : 'Processes:'}</span><span>${allList.length}</span></div>
+        `;
+      } else if (currentTab === 'memory') {
+        // Draw Memory Wave (Green with fill)
+        ctx.strokeStyle = '#30d158';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        const step = canvas.width / (memHistory.length - 1);
+        memHistory.forEach((val, i) => {
+          const x = i * step;
+          const y = canvas.height - (val / 100) * canvas.height;
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
         ctx.lineTo(canvas.width, canvas.height);
         ctx.lineTo(0, canvas.height);
-        ctx.fillStyle = 'rgba(0, 255, 0, 0.2)';
+        ctx.fillStyle = 'rgba(48, 209, 88, 0.15)';
         ctx.fill();
+
+        statsBox.innerHTML = `
+          <div class="am-stat-row"><span>${isZh ? '物理内存:' : 'Physical Memory:'}</span><span style="font-weight:600;">${totalMemGb} GB</span></div>
+          <div class="am-stat-row"><span>${isZh ? '已使用内存:' : 'Memory Used:'}</span><span style="font-weight:600;color:#30d158;">${usedMemGb} GB</span></div>
+          <div class="am-stat-row"><span>${isZh ? 'App 内存:' : 'App Memory:'}</span><span>${(usedMemGb * 0.6).toFixed(2)} GB</span></div>
+          <div class="am-stat-row"><span>${isZh ? '联动内存:' : 'Wired Memory:'}</span><span>${(usedMemGb * 0.25).toFixed(2)} GB</span></div>
+          <div class="am-stat-row"><span>${isZh ? '已压缩:' : 'Compressed:'}</span><span>0.84 GB</span></div>
+        `;
+      } else if (currentTab === 'disk') {
+        // Draw Disk Throughput
+        ctx.strokeStyle = '#f97316';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        const step = canvas.width / (ioHistory.length - 1);
+        ioHistory.forEach((val, i) => {
+          const x = i * step;
+          const y = canvas.height - (val / 20) * canvas.height;
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+
+        statsBox.innerHTML = `
+          <div class="am-stat-row"><span>${isZh ? '读取速度:' : 'Reads in/sec:'}</span><span style="font-weight:600;">14.2 MB/s</span></div>
+          <div class="am-stat-row"><span>${isZh ? '写入速度:' : 'Writes out/sec:'}</span><span style="font-weight:600;color:#f97316;">${ioSample} MB/s</span></div>
+          <div class="am-stat-row"><span>${isZh ? '已读取数据:' : 'Data Read:'}</span><span>52.4 GB</span></div>
+          <div class="am-stat-row"><span>${isZh ? '已写入数据:' : 'Data Written:'}</span><span>28.1 GB</span></div>
+        `;
+      } else {
+        // Energy / Network
+        ctx.strokeStyle = '#a855f7';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        const step = canvas.width / (ioHistory.length - 1);
+        ioHistory.forEach((val, i) => {
+          const x = i * step;
+          const y = canvas.height - (val / 20) * canvas.height;
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+
+        statsBox.innerHTML = `
+          <div class="am-stat-row"><span>${isZh ? '入站包/秒:' : 'Packets in/sec:'}</span><span style="font-weight:600;">840 pkts/s</span></div>
+          <div class="am-stat-row"><span>${isZh ? '出站包/秒:' : 'Packets out/sec:'}</span><span style="font-weight:600;">320 pkts/s</span></div>
+          <div class="am-stat-row"><span>${isZh ? '接收数据量:' : 'Data received:'}</span><span>4.12 GB</span></div>
+          <div class="am-stat-row"><span>${isZh ? '发送数据量:' : 'Data sent:'}</span><span>1.48 GB</span></div>
+        `;
       }
 
-      // Update Process Table
-      const pRes = await window.aliceOS.pm.listProcesses();
-      if (pRes.success) {
-        tbody.innerHTML = '';
-        pRes.data.forEach(p => {
-          const tr = document.createElement('tr');
-          const localizedStatus = p.status === 'running' ? t('am_running', 'Running') : p.status;
-          tr.innerHTML = `
-            <td>${p.pid}</td>
-            <td>${p.name}</td>
-            <td>${localizedStatus}</td>
-            <td><button class="am-btn-kill" data-pid="${p.pid}">${t('am_kill', 'End Process')}</button></td>
-          `;
-          tbody.appendChild(tr);
-        });
-
-        tbody.querySelectorAll('.am-btn-kill').forEach(btn => {
-          btn.addEventListener('click', async (e) => {
-            const targetPid = parseInt(e.target.dataset.pid);
-            if (targetPid === pid) {
-              showNotification(t('app_activity', 'Activity Monitor'), t('notif_cannot_kill_self', 'Cannot kill itself directly.'));
-              return;
-            }
-            await window.aliceOS.pm.kill(targetPid);
-            
-            // Clean up DOM window
-            const targetWin = document.getElementById(`window-${targetPid}`);
-            if (targetWin) targetWin.remove();
-            
-            showNotification(t('app_activity', 'Activity Monitor'), t('notif_pid_terminated', 'PID %s terminated.').replace('%s', targetPid));
-            refreshProcesses();
-          });
-        });
-      }
-      setTimeout(refreshProcesses, 2000); // poll every 2s
+      setTimeout(refreshProcesses, 1800);
     }
 
     win._onLanguageChange = () => {
-      const ramLbl = win.querySelector(`#am-ram-lbl-${pid}`);
-      if (ramLbl) ramLbl.innerText = t('am_ram_usage', 'Host RAM Usage (GB)');
-      const ths = win.querySelectorAll('.am-table thead th');
-      if (ths.length >= 4) {
-        ths[0].innerText = t('am_pid', 'PID');
-        ths[1].innerText = t('am_name', 'Process Name');
-        ths[2].innerText = t('am_status', 'Status');
-        ths[3].innerText = t('am_action', 'Action');
-      }
+      win.querySelector('.title').innerText = t('app_activity', '活动监视器');
+      updateTabHeadings();
       refreshProcesses();
     };
 
+    updateTabHeadings();
     refreshProcesses();
   }
 }
@@ -7038,8 +8615,140 @@ function startVoiceRecognition() {
   };
 }
 
-// System Audio Engine
+// System Audio Engine (Apple High-Fidelity Synthetic Acoustics)
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+const AppleAudioEngine = {
+  ensureCtx() {
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume().catch(() => {});
+    }
+  },
+
+  playShutter() {
+    try {
+      this.ensureCtx();
+      const t = audioCtx.currentTime;
+      const bufferSize = Math.floor(audioCtx.sampleRate * 0.05);
+      const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (audioCtx.sampleRate * 0.009));
+      }
+      const noise = audioCtx.createBufferSource();
+      noise.buffer = buffer;
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.setValueAtTime(3200, t);
+      filter.Q.setValueAtTime(2.0, t);
+      
+      const gain = audioCtx.createGain();
+      gain.gain.setValueAtTime(0.35, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.045);
+      
+      noise.connect(filter);
+      filter.connect(gain);
+      gain.connect(audioCtx.destination);
+      noise.start(t);
+      
+      // Secondary snap
+      const t2 = t + 0.05;
+      const noise2 = audioCtx.createBufferSource();
+      noise2.buffer = buffer;
+      const filter2 = audioCtx.createBiquadFilter();
+      filter2.type = 'highpass';
+      filter2.frequency.setValueAtTime(2400, t2);
+      
+      const gain2 = audioCtx.createGain();
+      gain2.gain.setValueAtTime(0.4, t2);
+      gain2.gain.exponentialRampToValueAtTime(0.001, t2 + 0.06);
+      
+      noise2.connect(filter2);
+      filter2.connect(gain2);
+      gain2.connect(audioCtx.destination);
+      noise2.start(t2);
+    } catch (e) {}
+  },
+
+  playTrash() {
+    try {
+      this.ensureCtx();
+      const t = audioCtx.currentTime;
+      const bufferSize = Math.floor(audioCtx.sampleRate * 0.18);
+      const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (audioCtx.sampleRate * 0.035));
+      }
+      const noise = audioCtx.createBufferSource();
+      noise.buffer = buffer;
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.setValueAtTime(1400, t);
+      filter.frequency.exponentialRampToValueAtTime(350, t + 0.17);
+      
+      const gain = audioCtx.createGain();
+      gain.gain.setValueAtTime(0.3, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.17);
+      
+      noise.connect(filter);
+      filter.connect(gain);
+      gain.connect(audioCtx.destination);
+      noise.start(t);
+    } catch (e) {}
+  },
+
+  playAirDrop() {
+    try {
+      this.ensureCtx();
+      const t = audioCtx.currentTime;
+      [
+        { freq: 587.33, start: 0, dur: 0.18 },
+        { freq: 880.00, start: 0.14, dur: 0.3 }
+      ].forEach(note => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(note.freq, t + note.start);
+        
+        gain.gain.setValueAtTime(0.001, t + note.start);
+        gain.gain.linearRampToValueAtTime(0.2, t + note.start + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + note.start + note.dur);
+        
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(t + note.start);
+        osc.stop(t + note.start + note.dur);
+      });
+    } catch (e) {}
+  },
+
+  playGlassChime() {
+    try {
+      this.ensureCtx();
+      const t = audioCtx.currentTime;
+      [1318.5, 2637.0].forEach((freq, idx) => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, t);
+        const initVol = idx === 0 ? 0.22 : 0.08;
+        gain.gain.setValueAtTime(initVol, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.6);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(t);
+        osc.stop(t + 0.6);
+      });
+    } catch (e) {}
+  },
+
+  playPop() {
+    playClickSound();
+  }
+};
+window.AppleAudioEngine = AppleAudioEngine;
+
 function playClickSound() {
   if (audioCtx.state === 'suspended') audioCtx.resume();
   const osc = audioCtx.createOscillator();
@@ -7049,7 +8758,7 @@ function playClickSound() {
   osc.type = 'sine';
   osc.frequency.setValueAtTime(800, audioCtx.currentTime);
   osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.05);
-  gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+  gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
   gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
   osc.start();
   osc.stop(audioCtx.currentTime + 0.05);
@@ -7421,7 +9130,8 @@ function closeAirDrop() {
 }
 
 function sendAirDrop(deviceName, deviceIcon) {
-  if (typeof playClickSound === 'function') playClickSound();
+  if (window.AppleAudioEngine) window.AppleAudioEngine.playAirDrop();
+  else if (typeof playClickSound === 'function') playClickSound();
   showNotification(t('airdrop_title', 'AirDrop'), t('notif_airdrop_sent', 'Sent file to %s').replace('%s', `${deviceName} ${deviceIcon}`));
   if (window.aliceOS && window.aliceOS.notifyIsland) {
     window.aliceOS.notifyIsland(deviceIcon, `AirDrop to ${deviceName}`, 100);
@@ -7697,7 +9407,7 @@ spotlightInput.addEventListener('input', async () => {
   // 2. Search Launchpad Apps
   apps.forEach(app => {
     if (app.name.toLowerCase().includes(query)) {
-      addResult(app.icon, app.name, spotDict.spotlight_app || 'Application', () => eval(app.action));
+      addResult(getAppIconSvg(app.id, 28), app.name, spotDict.spotlight_app || 'Application', () => eval(app.action));
     }
   });
 
@@ -8048,90 +9758,334 @@ async function launchGallery(filePath = null) {
   }
 }
 
-// Weather App using real fetch
+// Apple Weather App - Full macOS Sequoia Fidelity
 async function launchWeather() {
   const res = await window.aliceOS.pm.spawn('weather');
   if (res.success) {
     const pid = res.data.pid;
-    const win = createWindow(pid, t('app_weather', 'Weather Forecast'), `
-      <div style="background:linear-gradient(to bottom, #4facfe 0%, #00f2fe 100%);color:white;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:sans-serif;text-align:center;">
-        <div id="weather-status-${pid}" style="font-size:18px;">${t('weather_requesting', 'Requesting satellite data...')}</div>
-        <div id="weather-temp-${pid}" style="font-size:64px;font-weight:bold;margin:20px 0;display:none;"></div>
-        <div id="weather-desc-${pid}" style="font-size:24px;display:none;"></div>
+    const cities = [
+      { id: 'cupertino', name: 'Cupertino', nameZh: '库比蒂诺', lat: 37.323, lon: -122.032, tz: 'America/Los_Angeles' },
+      { id: 'beijing', name: 'Beijing', nameZh: '北京', lat: 39.904, lon: 116.407, tz: 'Asia/Shanghai' },
+      { id: 'shanghai', name: 'Shanghai', nameZh: '上海', lat: 31.230, lon: 121.473, tz: 'Asia/Shanghai' },
+      { id: 'tokyo', name: 'Tokyo', nameZh: '东京', lat: 35.676, lon: 139.650, tz: 'Asia/Tokyo' },
+      { id: 'london', name: 'London', nameZh: '伦敦', lat: 51.507, lon: -0.127, tz: 'Europe/London' },
+      { id: 'newyork', name: 'New York', nameZh: '纽约', lat: 40.712, lon: -74.006, tz: 'America/New_York' },
+      { id: 'paris', name: 'Paris', nameZh: '巴黎', lat: 48.856, lon: 2.352, tz: 'Europe/Paris' }
+    ];
+
+    let activeCity = cities[0];
+    let isCurrentGeo = false;
+
+    const win = createWindow(pid, t('app_weather', '天气'), `
+      <div class="weather-mac-app" id="weather-mac-app-${pid}">
+        <!-- City Pills Selector -->
+        <div class="weather-city-bar" id="weather-city-bar-${pid}">
+          <button class="weather-city-pill" id="weather-my-loc-${pid}">📍 ${currentSystemLang === 'zh' ? '我的位置' : 'My Location'}</button>
+          ${cities.map((c, i) => `
+            <button class="weather-city-pill ${i === 0 ? 'active' : ''}" data-idx="${i}">
+              ${currentSystemLang === 'zh' ? c.nameZh : c.name}
+            </button>
+          `).join('')}
+        </div>
+
+        <!-- Scrollable Weather Content -->
+        <div class="weather-scroll-content" id="weather-scroll-${pid}">
+          <!-- Hero Section -->
+          <div class="weather-hero-card">
+            <div class="weather-city-name" id="weather-city-title-${pid}">Cupertino</div>
+            <div class="weather-big-temp" id="weather-big-temp-${pid}">--°</div>
+            <div class="weather-condition-txt" id="weather-condition-${pid}">${t('weather_requesting', '正在获取天气...')}</div>
+            <div class="weather-hl-range" id="weather-hl-${pid}">--</div>
+          </div>
+
+          <!-- 24-Hour Forecast Card -->
+          <div class="weather-frosted-card">
+            <div class="weather-card-hdr">
+              ⏱️ ${currentSystemLang === 'zh' ? '24小时逐时预报' : 'Hourly Forecast'}
+            </div>
+            <div class="weather-hourly-row" id="weather-hourly-row-${pid}">
+              <div style="font-size:12px;opacity:0.6;padding:10px 0;">${t('weather_requesting', '加载逐时预报中...')}</div>
+            </div>
+          </div>
+
+          <!-- 10-Day Forecast Card -->
+          <div class="weather-frosted-card">
+            <div class="weather-card-hdr">
+              📅 ${currentSystemLang === 'zh' ? '10天天气预报' : '10-Day Forecast'}
+            </div>
+            <div class="weather-daily-list" id="weather-daily-list-${pid}">
+              <div style="font-size:12px;opacity:0.6;padding:10px 0;">${t('weather_requesting', '加载多日预报中...')}</div>
+            </div>
+          </div>
+
+          <!-- 2x3 Weather Metrics Grid -->
+          <div class="weather-metrics-grid" id="weather-metrics-${pid}">
+            <div class="weather-metric-box">
+              <div class="weather-metric-hdr">☀️ ${currentSystemLang === 'zh' ? '紫外线指数' : 'UV INDEX'}</div>
+              <div class="weather-metric-val" id="weather-uv-val-${pid}">--</div>
+              <div class="weather-metric-sub" id="weather-uv-sub-${pid}">${currentSystemLang === 'zh' ? '今日保持良好防晒防护' : 'Take protective measures'}</div>
+            </div>
+            <div class="weather-metric-box">
+              <div class="weather-metric-hdr">💨 ${currentSystemLang === 'zh' ? '风向与风速' : 'WIND'}</div>
+              <div class="weather-metric-val" id="weather-wind-val-${pid}">-- km/h</div>
+              <div class="weather-metric-sub" id="weather-wind-sub-${pid}">${currentSystemLang === 'zh' ? '微风拂面' : 'Light breeze'}</div>
+            </div>
+            <div class="weather-metric-box">
+              <div class="weather-metric-hdr">💧 ${currentSystemLang === 'zh' ? '相对湿度' : 'HUMIDITY'}</div>
+              <div class="weather-metric-val" id="weather-hum-val-${pid}">--%</div>
+              <div class="weather-metric-sub" id="weather-hum-sub-${pid}">${currentSystemLang === 'zh' ? '舒适室内环境' : 'Comfortable dew point'}</div>
+            </div>
+            <div class="weather-metric-box">
+              <div class="weather-metric-hdr">👁️ ${currentSystemLang === 'zh' ? '能见度' : 'VISIBILITY'}</div>
+              <div class="weather-metric-val" id="weather-vis-val-${pid}">16 km</div>
+              <div class="weather-metric-sub" id="weather-vis-sub-${pid}">${currentSystemLang === 'zh' ? '视野极佳，一览无余' : 'Completely clear horizon'}</div>
+            </div>
+            <div class="weather-metric-box">
+              <div class="weather-metric-hdr">🧭 ${currentSystemLang === 'zh' ? '气压' : 'PRESSURE'}</div>
+              <div class="weather-metric-val" id="weather-press-val-${pid}">1013 hPa</div>
+              <div class="weather-metric-sub" id="weather-press-sub-${pid}">${currentSystemLang === 'zh' ? '标准海平面大气压' : 'Normal atmospheric pressure'}</div>
+            </div>
+            <div class="weather-metric-box">
+              <div class="weather-metric-hdr">🌅 ${currentSystemLang === 'zh' ? '日出与日落' : 'SUN'}</div>
+              <div class="weather-metric-val" id="weather-sun-val-${pid}">--:--</div>
+              <div class="weather-metric-sub" id="weather-sun-sub-${pid}">${currentSystemLang === 'zh' ? '日落即将来临' : 'Sunset upcoming'}</div>
+            </div>
+          </div>
+        </div>
       </div>
     `, 'weather');
 
-    const statusEl = win.querySelector(`#weather-status-${pid}`);
-    const tempEl = win.querySelector(`#weather-temp-${pid}`);
-    const descEl = win.querySelector(`#weather-desc-${pid}`);
+    win.style.width = '460px';
+    win.style.height = '620px';
 
-    let lastCity = '';
-    let lastCountry = '';
-    let lastCode = null;
-    let fetchState = 'requesting';
+    const appEl = win.querySelector(`#weather-mac-app-${pid}`);
+    const cityTitle = win.querySelector(`#weather-city-title-${pid}`);
+    const bigTemp = win.querySelector(`#weather-big-temp-${pid}`);
+    const condTxt = win.querySelector(`#weather-condition-${pid}`);
+    const hlRange = win.querySelector(`#weather-hl-${pid}`);
+    const hourlyRow = win.querySelector(`#weather-hourly-row-${pid}`);
+    const dailyList = win.querySelector(`#weather-daily-list-${pid}`);
+    const uvVal = win.querySelector(`#weather-uv-val-${pid}`);
+    const uvSub = win.querySelector(`#weather-uv-sub-${pid}`);
+    const windVal = win.querySelector(`#weather-wind-val-${pid}`);
+    const windSub = win.querySelector(`#weather-wind-sub-${pid}`);
+    const humVal = win.querySelector(`#weather-hum-val-${pid}`);
+    const humSub = win.querySelector(`#weather-hum-sub-${pid}`);
+    const sunVal = win.querySelector(`#weather-sun-val-${pid}`);
+    const sunSub = win.querySelector(`#weather-sun-sub-${pid}`);
+    const pressVal = win.querySelector(`#weather-press-val-${pid}`);
 
-    function renderWeatherCode(code) {
-      if (code === 0) return t('weather_clear', '☀️ Clear');
-      if (code === 1 || code === 2 || code === 3) return t('weather_partly_cloudy', '⛅ Partly Cloudy');
-      if (code === 45 || code === 48) return t('weather_foggy', '🌫️ Foggy');
-      if (code >= 51 && code <= 67) return t('weather_raining', '🌧️ Raining');
-      if (code >= 71 && code <= 77) return t('weather_snowing', '❄️ Snowing');
-      if (code >= 95) return t('weather_thunderstorm', '⛈️ Thunderstorm');
-      return t('weather_clear', '☀️ Clear');
+    function getWeatherInfo(code, isDay = 1) {
+      if (code === 0) return { icon: isDay ? '☀️' : '🌙', desc: currentSystemLang === 'zh' ? '晴朗' : 'Clear', gradient: isDay ? 'linear-gradient(180deg, #1e62a1 0%, #3e8fc7 40%, #7dbbe6 100%)' : 'linear-gradient(180deg, #0d1b2a 0%, #1b263b 60%, #415a77 100%)' };
+      if (code === 1 || code === 2) return { icon: isDay ? '🌤️' : '☁️', desc: currentSystemLang === 'zh' ? '大部晴朗' : 'Mostly Clear', gradient: isDay ? 'linear-gradient(180deg, #2b6cb0 0%, #4299e1 60%, #90cdf4 100%)' : 'linear-gradient(180deg, #1a202c 0%, #2d3748 100%)' };
+      if (code === 3) return { icon: '☁️', desc: currentSystemLang === 'zh' ? '阴天多云' : 'Overcast', gradient: 'linear-gradient(180deg, #4a5568 0%, #718096 100%)' };
+      if (code === 45 || code === 48) return { icon: '🌫️', desc: currentSystemLang === 'zh' ? '有雾' : 'Foggy', gradient: 'linear-gradient(180deg, #5a6578 0%, #8892a0 100%)' };
+      if (code >= 51 && code <= 55) return { icon: '🌦️', desc: currentSystemLang === 'zh' ? '毛毛雨' : 'Drizzle', gradient: 'linear-gradient(180deg, #334155 0%, #475569 60%, #64748b 100%)' };
+      if (code >= 61 && code <= 67) return { icon: '🌧️', desc: currentSystemLang === 'zh' ? '中雨' : 'Rain', gradient: 'linear-gradient(180deg, #1e293b 0%, #334155 60%, #475569 100%)' };
+      if (code >= 71 && code <= 77) return { icon: '🌨️', desc: currentSystemLang === 'zh' ? '飘雪' : 'Snow', gradient: 'linear-gradient(180deg, #64748b 0%, #94a3b8 60%, #cbd5e1 100%)' };
+      if (code >= 80 && code <= 82) return { icon: '🌧️', desc: currentSystemLang === 'zh' ? '强阵雨' : 'Showers', gradient: 'linear-gradient(180deg, #0f172a 0%, #1e293b 100%)' };
+      if (code >= 95) return { icon: '⛈️', desc: currentSystemLang === 'zh' ? '雷阵雨' : 'Thunderstorm', gradient: 'linear-gradient(180deg, #18181b 0%, #27272a 50%, #3f3f46 100%)' };
+      return { icon: '⛅', desc: currentSystemLang === 'zh' ? '多云' : 'Partly Cloudy', gradient: 'linear-gradient(180deg, #2563eb 0%, #38bdf8 100%)' };
     }
+
+    async function loadCityWeather(city) {
+      const isZh = currentSystemLang === 'zh';
+      cityTitle.innerText = isZh ? (city.nameZh || city.name) : city.name;
+      condTxt.innerText = t('weather_requesting', '正在获取天气...');
+
+      try {
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code,wind_speed_10m,surface_pressure&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,uv_index_max,sunrise,sunset&timezone=auto`;
+        const res = await fetch(url);
+        const data = await res.json();
+
+        const cur = data.current || {};
+        const daily = data.daily || {};
+        const hourly = data.hourly || {};
+
+        const temp = Math.round(cur.temperature_2m ?? 21);
+        const code = cur.weather_code ?? 0;
+        const isDay = cur.is_day ?? 1;
+        const wInfo = getWeatherInfo(code, isDay);
+
+        // Update Theme Gradient
+        appEl.style.background = wInfo.gradient;
+        bigTemp.innerText = `${temp}°`;
+        condTxt.innerText = wInfo.desc;
+
+        const maxT = daily.temperature_2m_max ? Math.round(daily.temperature_2m_max[0]) : temp + 4;
+        const minT = daily.temperature_2m_min ? Math.round(daily.temperature_2m_min[0]) : temp - 5;
+        hlRange.innerText = `${isZh ? '最高' : 'H:'} ${maxT}°  ${isZh ? '最低' : 'L:'} ${minT}°`;
+
+        // Render 24-Hour Hourly Forecast
+        if (hourly.time && hourly.temperature_2m) {
+          const nowHour = new Date().getHours();
+          const next24 = [];
+          for (let h = 0; h < 24; h++) {
+            const idx = (nowHour + h) % hourly.time.length;
+            const hTime = h === 0 ? (isZh ? '现在' : 'Now') : `${(nowHour + h) % 24}:00`;
+            const hTemp = Math.round(hourly.temperature_2m[idx] || (temp + Math.sin(h / 3) * 4));
+            const hCode = hourly.weather_code ? hourly.weather_code[idx] : code;
+            const hInfo = getWeatherInfo(hCode, (nowHour + h) % 24 >= 6 && (nowHour + h) % 24 <= 19 ? 1 : 0);
+            next24.push(`
+              <div class="weather-hour-box">
+                <span style="opacity:0.8;">${hTime}</span>
+                <span style="font-size:22px;margin:2px 0;">${hInfo.icon}</span>
+                <span style="font-weight:600;">${hTemp}°</span>
+              </div>
+            `);
+          }
+          hourlyRow.innerHTML = next24.join('');
+        }
+
+        // Render 10-Day Forecast
+        if (daily.time && daily.temperature_2m_max) {
+          const daysOfWeekZh = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+          const daysOfWeekEn = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+          const dRows = [];
+          const count = Math.min(daily.time.length, 10);
+          
+          let overallMin = Math.min(...daily.temperature_2m_min.slice(0, count));
+          let overallMax = Math.max(...daily.temperature_2m_max.slice(0, count));
+          let overallRange = Math.max(1, overallMax - overallMin);
+
+          for (let d = 0; d < count; d++) {
+            const dateObj = new Date(daily.time[d]);
+            const dayName = d === 0 ? (isZh ? '今天' : 'Today') : (isZh ? daysOfWeekZh[dateObj.getDay()] : daysOfWeekEn[dateObj.getDay()]);
+            const dCode = daily.weather_code ? daily.weather_code[d] : code;
+            const dInfo = getWeatherInfo(dCode, 1);
+            const dMin = Math.round(daily.temperature_2m_min[d]);
+            const dMax = Math.round(daily.temperature_2m_max[d]);
+
+            const leftPct = Math.round(((dMin - overallMin) / overallRange) * 100);
+            const widthPct = Math.max(15, Math.round(((dMax - dMin) / overallRange) * 100));
+
+            dRows.push(`
+              <div class="weather-day-row">
+                <span style="width:48px;font-weight:500;">${dayName}</span>
+                <span style="font-size:18px;width:28px;text-align:center;">${dInfo.icon}</span>
+                <span style="width:28px;text-align:right;opacity:0.75;">${dMin}°</span>
+                <div class="weather-temp-bar-bg">
+                  <div class="weather-temp-bar-fill" style="margin-left:${leftPct}%; width:${widthPct}%;"></div>
+                </div>
+                <span style="width:28px;font-weight:600;">${dMax}°</span>
+              </div>
+            `);
+          }
+          dailyList.innerHTML = dRows.join('');
+        }
+
+        // Update 6 Metrics
+        const uv = daily.uv_index_max ? Math.round(daily.uv_index_max[0]) : 3;
+        uvVal.innerText = `${uv} ${uv <= 2 ? (isZh ? '低' : 'Low') : uv <= 5 ? (isZh ? '中等' : 'Moderate') : (isZh ? '高' : 'High')}`;
+        uvSub.innerText = uv <= 2 ? (isZh ? '无需特别防护' : 'No protection required') : (isZh ? '在16:00前保持防晒' : 'Wear sunscreen until 16:00');
+
+        const windSpd = Math.round(cur.wind_speed_10m ?? 12);
+        windVal.innerText = `${windSpd} km/h`;
+        windSub.innerText = `${isZh ? '阵风最高可达' : 'Gusts up to'} ${windSpd + 6} km/h`;
+
+        const hum = Math.round(cur.relative_humidity_2m ?? 55);
+        humVal.innerText = `${hum}%`;
+        humSub.innerText = `${isZh ? '体感温度为' : 'Feels like'} ${Math.round(cur.apparent_temperature ?? temp)}°`;
+
+        const press = Math.round(cur.surface_pressure ?? 1013);
+        pressVal.innerText = `${press} hPa`;
+
+        if (daily.sunset && daily.sunrise) {
+          const sunsetTime = daily.sunset[0].split('T')[1] || '19:15';
+          const sunriseTime = daily.sunrise[0].split('T')[1] || '06:20';
+          sunVal.innerText = sunsetTime;
+          sunSub.innerText = `${isZh ? '日出时间' : 'Sunrise'}: ${sunriseTime}`;
+        }
+      } catch (err) {
+        console.warn('Weather fetch fallback to offline simulation:', err);
+        // Fallback realistic simulation so the UI is always filled
+        const temp = 22;
+        const wInfo = getWeatherInfo(0, 1);
+        appEl.style.background = wInfo.gradient;
+        bigTemp.innerText = `${temp}°`;
+        condTxt.innerText = wInfo.desc;
+        hlRange.innerText = `${isZh ? '最高' : 'H:'} 26°  ${isZh ? '最低' : 'L:'} 15°`;
+
+        hourlyRow.innerHTML = [
+          { t: isZh ? '现在' : 'Now', icon: '☀️', deg: 22 },
+          { t: '14:00', icon: '☀️', deg: 24 },
+          { t: '15:00', icon: '🌤️', deg: 25 },
+          { t: '16:00', icon: '🌤️', deg: 24 },
+          { t: '17:00', icon: '⛅', deg: 23 },
+          { t: '18:00', icon: '⛅', deg: 21 },
+          { t: '19:00', icon: '🌅', deg: 19 },
+          { t: '20:00', icon: '🌙', deg: 18 },
+          { t: '21:00', icon: '🌙', deg: 17 }
+        ].map(item => `
+          <div class="weather-hour-box">
+            <span style="opacity:0.8;">${item.t}</span>
+            <span style="font-size:22px;margin:2px 0;">${item.icon}</span>
+            <span style="font-weight:600;">${item.deg}°</span>
+          </div>
+        `).join('');
+
+        const days = isZh ? ['今天', '周二', '周三', '周四', '周五', '周六', '周日'] : ['Today', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+        dailyList.innerHTML = days.map((day, i) => `
+          <div class="weather-day-row">
+            <span style="width:48px;font-weight:500;">${day}</span>
+            <span style="font-size:18px;width:28px;text-align:center;">${i % 3 === 0 ? '☀️' : i % 3 === 1 ? '🌤️' : '⛅'}</span>
+            <span style="width:28px;text-align:right;opacity:0.75;">${14 + i % 3}°</span>
+            <div class="weather-temp-bar-bg">
+              <div class="weather-temp-bar-fill" style="margin-left:${i * 5}%; width:${60 - i * 2}%;"></div>
+            </div>
+            <span style="width:28px;font-weight:600;">${25 + i % 2}°</span>
+          </div>
+        `).join('');
+
+        uvVal.innerText = isZh ? '4 中等' : '4 Moderate';
+        windVal.innerText = '14 km/h';
+        humVal.innerText = '58%';
+        sunVal.innerText = '19:24';
+      }
+    }
+
+    // City Button Click Handlers
+    win.querySelectorAll('.weather-city-pill[data-idx]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        win.querySelectorAll('.weather-city-pill').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const idx = parseInt(btn.dataset.idx);
+        activeCity = cities[idx];
+        isCurrentGeo = false;
+        loadCityWeather(activeCity);
+      });
+    });
+
+    // My Location Click Handler
+    const myLocBtn = win.querySelector(`#weather-my-loc-${pid}`);
+    myLocBtn.addEventListener('click', async () => {
+      win.querySelectorAll('.weather-city-pill').forEach(b => b.classList.remove('active'));
+      myLocBtn.classList.add('active');
+      condTxt.innerText = t('weather_locating', '正在通过 IP 定位...');
+      try {
+        const geoRes = await fetch('https://get.geojs.io/v1/ip/geo.json');
+        const geo = await geoRes.json();
+        activeCity = {
+          name: geo.city || 'My Location',
+          nameZh: geo.city || '我的位置',
+          lat: geo.latitude,
+          lon: geo.longitude
+        };
+        isCurrentGeo = true;
+        loadCityWeather(activeCity);
+      } catch (err) {
+        activeCity = cities[0];
+        loadCityWeather(activeCity);
+      }
+    });
 
     win._onLanguageChange = () => {
-      if (fetchState === 'done' && lastCity) {
-        statusEl.innerText = `📍 ${lastCity}${lastCountry ? ', ' + lastCountry : ''}`;
-      } else if (fetchState === 'locating') {
-        statusEl.innerText = t('weather_locating', 'Locating via IP...');
-      } else if (fetchState === 'fetching' && lastCity) {
-        statusEl.innerText = t('weather_fetching', 'Fetching forecast for %s...').replace('%s', lastCity);
-      } else if (fetchState === 'error') {
-        statusEl.innerText = t('weather_error', 'Network Error: Could not fetch weather.');
-      } else {
-        statusEl.innerText = t('weather_requesting', 'Requesting satellite data...');
-      }
-      if (lastCode !== null) {
-        descEl.innerText = renderWeatherCode(lastCode);
-      }
+      win.querySelector('.title').innerText = t('app_weather', '天气');
+      loadCityWeather(activeCity);
     };
 
-    try {
-      fetchState = 'locating';
-      statusEl.innerText = t('weather_locating', 'Locating via IP...');
-      const geoRes = await fetch('https://get.geojs.io/v1/ip/geo.json');
-      const geoData = await geoRes.json();
-      
-      const lat = geoData.latitude;
-      const lon = geoData.longitude;
-      const city = geoData.city || 'Unknown Location';
-      lastCity = city;
-      lastCountry = geoData.country || '';
-      
-      fetchState = 'fetching';
-      statusEl.innerText = t('weather_fetching', 'Fetching forecast for %s...').replace('%s', city);
-
-      // Fetch from Open-Meteo
-      const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
-      const weatherData = await weatherRes.json();
-      
-      const current = weatherData.current_weather;
-      
-      fetchState = 'done';
-      statusEl.innerText = `📍 ${city}, ${geoData.country}`;
-      tempEl.innerText = `${current.temperature}°C`;
-      tempEl.style.display = 'block';
-      
-      lastCode = current.weathercode;
-      descEl.innerText = renderWeatherCode(lastCode);
-      descEl.style.display = 'block';
-
-    } catch (e) {
-      fetchState = 'error';
-      statusEl.innerText = t('weather_error', 'Network Error: Could not fetch weather.');
-      console.error(e);
-    }
+    // Initial load
+    loadCityWeather(activeCity);
   }
 }
 
@@ -10550,5 +12504,354 @@ window.toggleSpatialAudio = toggleSpatialAudio;
 window.toggleNightShift = toggleNightShift;
 window.toggleTrueTone = toggleTrueTone;
 window.toggleSystemDarkMode = toggleSystemDarkMode;
+
+// ==========================================
+// macOS Interactive Screenshot Tool & Floating Thumbnail Controller
+// Shortcuts: Ctrl+Shift+4 / Cmd+Shift+4 (Area Selection)
+//            Ctrl+Shift+3 / Cmd+Shift+3 (Full Screen)
+// ==========================================
+let isScreenshotMode = false;
+let screenshotStartX = 0;
+let screenshotStartY = 0;
+let currentScreenshotDataUrl = null;
+let screenshotDismissTimer = null;
+
+const ssOverlay = document.getElementById('screenshot-overlay');
+const ssSelection = document.getElementById('screenshot-selection');
+const ssDims = document.getElementById('screenshot-dims');
+const ssFloatCard = document.getElementById('screenshot-floating-card');
+const ssThumbImg = document.getElementById('screenshot-thumb-img');
+
+function startScreenshotMode() {
+  if (isScreenshotMode) return;
+  isScreenshotMode = true;
+  if (ssOverlay) {
+    ssOverlay.style.display = 'block';
+  }
+  if (ssSelection) {
+    ssSelection.style.display = 'none';
+    ssSelection.style.width = '0px';
+    ssSelection.style.height = '0px';
+  }
+}
+
+function cancelScreenshotMode() {
+  if (!isScreenshotMode) return;
+  isScreenshotMode = false;
+  if (ssOverlay) ssOverlay.style.display = 'none';
+  if (ssSelection) ssSelection.style.display = 'none';
+}
+
+function createFallbackScreenshotDataUrl(rect) {
+  const canvas = document.createElement('canvas');
+  const w = rect ? rect.width : window.innerWidth;
+  const h = rect ? rect.height : window.innerHeight;
+  canvas.width = Math.max(1, w);
+  canvas.height = Math.max(1, h);
+  const ctx = canvas.getContext('2d');
+  
+  const grad = ctx.createLinearGradient(0, 0, w, h);
+  grad.addColorStop(0, '#1a162b');
+  grad.addColorStop(0.5, '#2e2842');
+  grad.addColorStop(1, '#0e3450');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, w, h);
+
+  ctx.fillStyle = 'rgba(255,255,255,0.92)';
+  ctx.font = 'bold 22px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto';
+  ctx.textAlign = 'center';
+  ctx.fillText('AliceOS Screenshot', w / 2, h / 2 - 10);
+  ctx.font = '14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto';
+  ctx.fillStyle = 'rgba(255,255,255,0.7)';
+  ctx.fillText(new Date().toLocaleString(), w / 2, h / 2 + 18);
+  return canvas.toDataURL('image/png');
+}
+
+async function captureFullscreen() {
+  try {
+    if (window.AppleAudioEngine) window.AppleAudioEngine.playShutter();
+    // Flash effect
+    const flash = document.createElement('div');
+    flash.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;background:white;z-index:99999;opacity:0.85;pointer-events:none;transition:opacity 0.35s ease;';
+    document.body.appendChild(flash);
+    setTimeout(() => { flash.style.opacity = '0'; setTimeout(() => flash.remove(), 350); }, 50);
+
+    let dataUrl = null;
+    if (window.aliceOS && window.aliceOS.captureScreen) {
+      const res = await window.aliceOS.captureScreen();
+      if (res && res.success) dataUrl = res.data;
+    }
+    if (!dataUrl) {
+      dataUrl = createFallbackScreenshotDataUrl();
+    }
+
+    displayFloatingScreenshot(dataUrl);
+  } catch (err) {
+    console.warn('captureFullscreen error', err);
+  }
+}
+
+async function finishAreaScreenshot(rect) {
+  cancelScreenshotMode();
+  if (!rect || rect.width < 10 || rect.height < 10) return;
+
+  try {
+    if (window.AppleAudioEngine) window.AppleAudioEngine.playShutter();
+    let dataUrl = null;
+    if (window.aliceOS && window.aliceOS.captureScreen) {
+      const res = await window.aliceOS.captureScreen(rect);
+      if (res && res.success) dataUrl = res.data;
+    }
+    if (!dataUrl) {
+      dataUrl = createFallbackScreenshotDataUrl(rect);
+    }
+
+    displayFloatingScreenshot(dataUrl);
+  } catch (err) {
+    console.warn('finishAreaScreenshot error', err);
+  }
+}
+
+function displayFloatingScreenshot(dataUrl) {
+  currentScreenshotDataUrl = dataUrl;
+  if (!ssFloatCard || !ssThumbImg) return;
+
+  if (screenshotDismissTimer) clearTimeout(screenshotDismissTimer);
+
+  ssThumbImg.src = dataUrl;
+  ssFloatCard.classList.remove('slide-out');
+  ssFloatCard.style.display = 'flex';
+
+  // Auto save to desktop after 4.5s
+  screenshotDismissTimer = setTimeout(() => {
+    autoSaveScreenshotToDesktop();
+  }, 4500);
+}
+
+async function autoSaveScreenshotToDesktop() {
+  if (!currentScreenshotDataUrl) return;
+  const data = currentScreenshotDataUrl;
+  dismissScreenshotThumb();
+  
+  const now = new Date();
+  const pad = (n) => String(n).padStart(2, '0');
+  const dateStr = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} ${pad(now.getHours())}.${pad(now.getMinutes())}.${pad(now.getSeconds())}`;
+  const filename = `截屏 ${dateStr}.png`;
+  
+  if (window.aliceOS && window.aliceOS.vfs) {
+    await window.aliceOS.vfs.writeFile(`/home/${currentUser}/Desktop/${filename}`, data);
+    if (typeof showNotification === 'function') {
+      showNotification(t('screenshot_saved', '截屏已存储'), `已保存至桌面: ${filename}`, '截屏', '📷');
+    }
+  }
+}
+
+function dismissScreenshotThumb() {
+  if (screenshotDismissTimer) {
+    clearTimeout(screenshotDismissTimer);
+    screenshotDismissTimer = null;
+  }
+  if (ssFloatCard) {
+    ssFloatCard.classList.add('slide-out');
+    setTimeout(() => {
+      ssFloatCard.style.display = 'none';
+      ssFloatCard.classList.remove('slide-out');
+    }, 400);
+  }
+}
+
+async function copyScreenshotThumb() {
+  if (screenshotDismissTimer) clearTimeout(screenshotDismissTimer);
+  if (!currentScreenshotDataUrl) return;
+  try {
+    const res = await fetch(currentScreenshotDataUrl);
+    const blob = await res.blob();
+    if (navigator.clipboard && navigator.clipboard.write) {
+      await navigator.clipboard.write([new ClipboardItem({ [blob.type]: blob })]);
+      if (typeof showNotification === 'function') {
+        showNotification('已拷贝截屏', '截屏已复制到系统剪贴板。', '剪贴板', '📋');
+      }
+    }
+  } catch (e) {
+    console.warn('Copy error', e);
+  }
+  dismissScreenshotThumb();
+}
+
+async function saveScreenshotThumb() {
+  await autoSaveScreenshotToDesktop();
+}
+
+// Mouse dragging for area selection
+if (ssOverlay) {
+  let isDraggingSS = false;
+  ssOverlay.addEventListener('mousedown', (e) => {
+    isDraggingSS = true;
+    screenshotStartX = e.clientX;
+    screenshotStartY = e.clientY;
+    if (ssSelection) {
+      ssSelection.style.left = `${screenshotStartX}px`;
+      ssSelection.style.top = `${screenshotStartY}px`;
+      ssSelection.style.width = '0px';
+      ssSelection.style.height = '0px';
+      ssSelection.style.display = 'block';
+      if (ssDims) ssDims.textContent = '0 × 0';
+    }
+  });
+
+  ssOverlay.addEventListener('mousemove', (e) => {
+    if (!isDraggingSS || !ssSelection) return;
+    const currentX = e.clientX;
+    const currentY = e.clientY;
+    const left = Math.min(screenshotStartX, currentX);
+    const top = Math.min(screenshotStartY, currentY);
+    const width = Math.abs(currentX - screenshotStartX);
+    const height = Math.abs(currentY - screenshotStartY);
+
+    ssSelection.style.left = `${left}px`;
+    ssSelection.style.top = `${top}px`;
+    ssSelection.style.width = `${width}px`;
+    ssSelection.style.height = `${height}px`;
+    if (ssDims) ssDims.textContent = `${width} × ${height}`;
+  });
+
+  ssOverlay.addEventListener('mouseup', (e) => {
+    if (!isDraggingSS) return;
+    isDraggingSS = false;
+    const currentX = e.clientX;
+    const currentY = e.clientY;
+    const left = Math.min(screenshotStartX, currentX);
+    const top = Math.min(screenshotStartY, currentY);
+    const width = Math.abs(currentX - screenshotStartX);
+    const height = Math.abs(currentY - screenshotStartY);
+
+    if (width > 8 && height > 8) {
+      finishAreaScreenshot({ x: left, y: top, width, height });
+    } else {
+      cancelScreenshotMode();
+    }
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isScreenshotMode) {
+      cancelScreenshotMode();
+    }
+  });
+}
+
+// Global hotkeys: Cmd/Ctrl + Shift + 4 (Area crop), Cmd/Ctrl + Shift + 3 (Fullscreen)
+document.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.shiftKey && (e.key === '4' || e.code === 'Digit4')) {
+    e.preventDefault();
+    startScreenshotMode();
+  } else if ((e.metaKey || e.ctrlKey) && e.shiftKey && (e.key === '3' || e.code === 'Digit3')) {
+    e.preventDefault();
+    captureFullscreen();
+  }
+});
+
+// Markup Quick Look Modal Logic
+let markupColor = '#ff3b30';
+let isMarkupDrawing = false;
+let markupCanvas = document.getElementById('markup-canvas');
+let markupCtx = markupCanvas ? markupCanvas.getContext('2d') : null;
+let markupModal = document.getElementById('markup-modal');
+
+function setMarkupColor(color) {
+  markupColor = color;
+}
+
+function openScreenshotMarkup() {
+  if (!currentScreenshotDataUrl || !markupModal || !markupCanvas) return;
+  if (screenshotDismissTimer) clearTimeout(screenshotDismissTimer);
+  
+  markupModal.style.display = 'flex';
+  setTimeout(() => { markupModal.style.opacity = '1'; }, 10);
+
+  const img = new Image();
+  img.onload = () => {
+    const maxW = Math.min(window.innerWidth * 0.75, 900);
+    const maxH = Math.min(window.innerHeight * 0.7, 600);
+    let drawW = img.width;
+    let drawH = img.height;
+    if (drawW > maxW || drawH > maxH) {
+      const ratio = Math.min(maxW / drawW, maxH / drawH);
+      drawW = Math.round(drawW * ratio);
+      drawH = Math.round(drawH * ratio);
+    }
+    markupCanvas.width = drawW;
+    markupCanvas.height = drawH;
+    markupCtx = markupCanvas.getContext('2d');
+    markupCtx.drawImage(img, 0, 0, drawW, drawH);
+  };
+  img.src = currentScreenshotDataUrl;
+}
+
+function closeMarkupModal() {
+  if (!markupModal) return;
+  markupModal.style.opacity = '0';
+  setTimeout(() => { markupModal.style.display = 'none'; }, 250);
+}
+
+function clearMarkupCanvas() {
+  if (!currentScreenshotDataUrl || !markupCanvas || !markupCtx) return;
+  const img = new Image();
+  img.onload = () => {
+    markupCtx.drawImage(img, 0, 0, markupCanvas.width, markupCanvas.height);
+  };
+  img.src = currentScreenshotDataUrl;
+}
+
+async function saveMarkupAndClose() {
+  if (!markupCanvas) return;
+  currentScreenshotDataUrl = markupCanvas.toDataURL('image/png');
+  closeMarkupModal();
+  await autoSaveScreenshotToDesktop();
+}
+
+if (markupCanvas) {
+  let lastX = 0, lastY = 0;
+  markupCanvas.addEventListener('mousedown', (e) => {
+    isMarkupDrawing = true;
+    const rect = markupCanvas.getBoundingClientRect();
+    lastX = e.clientX - rect.left;
+    lastY = e.clientY - rect.top;
+  });
+
+  markupCanvas.addEventListener('mousemove', (e) => {
+    if (!isMarkupDrawing || !markupCtx) return;
+    const rect = markupCanvas.getBoundingClientRect();
+    const curX = e.clientX - rect.left;
+    const curY = e.clientY - rect.top;
+
+    markupCtx.beginPath();
+    markupCtx.moveTo(lastX, lastY);
+    markupCtx.lineTo(curX, curY);
+    markupCtx.strokeStyle = markupColor;
+    markupCtx.lineWidth = 3.5;
+    markupCtx.lineCap = 'round';
+    markupCtx.lineJoin = 'round';
+    markupCtx.stroke();
+
+    lastX = curX;
+    lastY = curY;
+  });
+
+  window.addEventListener('mouseup', () => {
+    isMarkupDrawing = false;
+  });
+}
+
+window.startScreenshotMode = startScreenshotMode;
+window.captureFullscreen = captureFullscreen;
+window.openScreenshotMarkup = openScreenshotMarkup;
+window.closeMarkupModal = closeMarkupModal;
+window.setMarkupColor = setMarkupColor;
+window.clearMarkupCanvas = clearMarkupCanvas;
+window.saveMarkupAndClose = saveMarkupAndClose;
+window.copyScreenshotThumb = copyScreenshotThumb;
+window.saveScreenshotThumb = saveScreenshotThumb;
+window.dismissScreenshotThumb = dismissScreenshotThumb;
+
 
 
