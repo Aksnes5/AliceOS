@@ -199,10 +199,15 @@ const i18nDict = {
 
     // Lock Screen & Biometrics
     lock_enter_password: 'Enter Password',
-    lock_faceid_btn: 'Face ID or Enter Password',
+    lock_touchid_prompt: 'Touch ID or Enter Password',
+    lock_switch_user: 'Switch User',
+    lock_sleep: 'Sleep',
+    lock_restart: 'Restart',
+    lock_shutdown: 'Shut Down',
+    lock_faceid_btn: 'Touch ID or Enter Password',
     lock_no_events: 'No Events Today',
-    lock_faceid_title: 'Face ID',
-    lock_faceid_recognized: 'Face ID Recognized',
+    lock_faceid_title: 'Touch ID',
+    lock_faceid_recognized: 'Touch ID Recognized',
     lock_flashlight: 'Flashlight',
     lock_camera: 'Camera',
 
@@ -986,10 +991,15 @@ const i18nDict = {
 
     // 锁屏与生物识别
     lock_enter_password: '输入密码',
-    lock_faceid_btn: '面容 ID 或输入密码',
+    lock_touchid_prompt: '使用触控 ID 或输入密码',
+    lock_switch_user: '切换用户',
+    lock_sleep: '睡眠',
+    lock_restart: '重新启动',
+    lock_shutdown: '关机',
+    lock_faceid_btn: '使用触控 ID 或输入密码',
     lock_no_events: '今天无日程',
-    lock_faceid_title: '面容 ID',
-    lock_faceid_recognized: '面容 ID 验证成功',
+    lock_faceid_title: '触控 ID',
+    lock_faceid_recognized: '触控 ID 验证成功',
     lock_flashlight: '手电筒',
     lock_camera: '相机',
 
@@ -1773,10 +1783,15 @@ const i18nDict = {
 
     // ロック画面 & 生体認証
     lock_enter_password: 'パスワードを入力',
-    lock_faceid_btn: 'Face ID またはパスワード',
+    lock_touchid_prompt: 'Touch ID またはパスワードを入力',
+    lock_switch_user: 'ユーザを切り替え',
+    lock_sleep: 'スリープ',
+    lock_restart: '再起動',
+    lock_shutdown: 'システム終了',
+    lock_faceid_btn: 'Touch ID またはパスワードを入力',
     lock_no_events: '今日の予定はありません',
-    lock_faceid_title: 'Face ID',
-    lock_faceid_recognized: 'Face ID 認証完了',
+    lock_faceid_title: 'Touch ID',
+    lock_faceid_recognized: 'Touch ID 認証完了',
     lock_flashlight: 'フラッシュライト',
     lock_camera: 'カメラ',
 
@@ -2497,6 +2512,13 @@ function setSystemLanguage(lang, save = true) {
   const labelMap = { en: 'EN', zh: '中', ja: '日' };
   const lbl = document.getElementById('current-lang-label');
   if (lbl) lbl.innerText = labelMap[lang] || '中';
+
+  // Update lock screen input source indicator (macOS Sonoma standard)
+  const lockInput = document.getElementById('lock-input-source');
+  if (lockInput) {
+    const lockMap = { en: 'ABC', zh: '中', ja: 'あ' };
+    lockInput.innerText = lockMap[lang] || '中';
+  }
 
   // Update Popover items active and checkmarks
   ['en', 'zh', 'ja'].forEach(code => {
@@ -9802,20 +9824,110 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// Login Logic
+// Login & User Session Management
 let currentUser = 'alice';
+
+function updateLockScreenUserInfo() {
+  const nameEl = document.getElementById('login-user-name');
+  const avatarCircle = document.getElementById('lock-avatar-circle');
+  if (nameEl) {
+    nameEl.innerText = currentUser === 'guest' ? 'Guest' : 'Alice';
+  }
+  if (avatarCircle) {
+    if (currentUser === 'guest') {
+      avatarCircle.innerHTML = `<svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
+      avatarCircle.style.background = 'linear-gradient(135deg, rgba(140, 140, 150, 0.4), rgba(90, 90, 100, 0.2))';
+    } else {
+      avatarCircle.innerHTML = `<svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
+      avatarCircle.style.background = 'linear-gradient(135deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0.12))';
+    }
+  }
+}
+
+function switchUser() {
+  currentUser = currentUser === 'alice' ? 'guest' : 'alice';
+  updateLockScreenUserInfo();
+  if (window.AppleAudioEngine && window.AppleAudioEngine.playPop) {
+    window.AppleAudioEngine.playPop();
+  }
+  const passwordInput = document.getElementById('login-password');
+  if (passwordInput) {
+    passwordInput.value = '';
+    passwordInput.focus();
+  }
+}
+window.switchUser = switchUser;
+
+function lockSleep() {
+  const loginScreen = document.getElementById('login-screen');
+  if (!loginScreen) return;
+  if (window.AppleAudioEngine && window.AppleAudioEngine.playLockClick) {
+    window.AppleAudioEngine.playLockClick();
+  }
+  // Smooth sleep fade to black
+  loginScreen.style.transition = 'filter 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+  loginScreen.style.filter = 'brightness(0)';
+  
+  const wakeUp = () => {
+    loginScreen.style.filter = 'brightness(1)';
+    window.removeEventListener('keydown', wakeUp);
+    loginScreen.removeEventListener('click', wakeUp);
+    const pwd = document.getElementById('login-password');
+    if (pwd) pwd.focus();
+  };
+  setTimeout(() => {
+    window.addEventListener('keydown', wakeUp, { once: true });
+    loginScreen.addEventListener('click', wakeUp, { once: true });
+  }, 100);
+}
+window.lockSleep = lockSleep;
+
+function lockRestart() {
+  if (window.AppleAudioEngine && window.AppleAudioEngine.playPop) {
+    window.AppleAudioEngine.playPop();
+  }
+  const dict = i18nDict[currentSystemLang] || i18nDict.zh || i18nDict.en;
+  if (typeof showSystemNotification === 'function') {
+    showSystemNotification('Apple System', dict.apple_restart || 'Restarting...');
+  }
+  setTimeout(() => {
+    window.location.reload();
+  }, 700);
+}
+window.lockRestart = lockRestart;
+
+function lockShutdown() {
+  if (window.AppleAudioEngine && window.AppleAudioEngine.playPop) {
+    window.AppleAudioEngine.playPop();
+  }
+  const loginScreen = document.getElementById('login-screen');
+  if (loginScreen) {
+    loginScreen.style.transition = 'filter 0.8s ease, opacity 0.8s ease';
+    loginScreen.style.filter = 'brightness(0)';
+    loginScreen.style.opacity = '0';
+  }
+  setTimeout(() => {
+    document.body.innerHTML = `
+      <div style="position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#888;font-family:-apple-system,sans-serif;user-select:none;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.5" stroke-linecap="round"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path><line x1="12" y1="2" x2="12" y2="12"></line></svg>
+        <div style="margin-top:16px;font-size:14px;letter-spacing:0.5px;">系统已安全关机 · 按任意键重新启动</div>
+      </div>
+    `;
+    window.addEventListener('keydown', () => window.location.reload(), { once: true });
+    window.addEventListener('click', () => window.location.reload(), { once: true });
+  }, 600);
+}
+window.lockShutdown = lockShutdown;
 
 function loginUser() {
   const loginScreen = document.getElementById('login-screen');
-  const userSelect = document.getElementById('login-user-select');
   const passwordInput = document.getElementById('login-password');
   const loginBox = document.getElementById('login-box');
-  const lockGlyph = document.getElementById('lock-glyph');
   const lockHeader = document.getElementById('lock-header-group');
+  const lockBottomBar = document.getElementById('lock-bottom-bar');
+  const lockTopBar = document.getElementById('lock-top-bar');
 
-  currentUser = userSelect ? userSelect.value : 'alice';
-
-  // Password verification with iOS Spring Shake & Basso sound
+  // Password verification with macOS Spring Shake & Basso sound
   if (passwordInput && passwordInput.value && passwordInput.value !== '1234' && passwordInput.value !== 'alice' && currentUser !== 'guest') {
     if (loginBox) {
       loginBox.classList.remove('lock-shake');
@@ -9826,45 +9938,52 @@ function loginUser() {
       window.AppleAudioEngine.playBasso();
     }
     passwordInput.value = '';
-    return;
+    passwordInput.focus();
+    return false;
   }
   
   // Re-init VFS home dir for user
-  window.aliceOS.vfs.mkdir(`/Users/${currentUser}/Desktop`).then(() => {
-    refreshDesktop();
-  });
-
-  // Animate Lock Glyph to unlocked with vector SF Symbol
-  if (lockGlyph) {
-    lockGlyph.innerHTML = getSFSymbol('lock.open.fill', 22, '#34c759');
-    lockGlyph.style.transform = 'scale(1.3)';
+  if (window.aliceOS && window.aliceOS.vfs) {
+    window.aliceOS.vfs.mkdir(`/Users/${currentUser}/Desktop`).then(() => {
+      if (typeof refreshDesktop === 'function') refreshDesktop();
+    }).catch(() => {});
   }
 
   // Play authentic macOS unlock chime
   if (window.AppleAudioEngine && window.AppleAudioEngine.playUnlockChime) {
     window.AppleAudioEngine.playUnlockChime();
-  } else if (typeof playSystemBeep === 'function') {
-    playSystemBeep(1200, 0.05);
-    setTimeout(() => playSystemBeep(1600, 0.08), 60);
   }
 
-  // Sonoma Staggered Dissolve: Clock & widgets slide up, login controls scale & dissolve
+  // macOS Sonoma / Sequoia Authentic Unlock Motion:
+  // Sub-elements gently dissolve & scale, then the lock screen expands and unblurs directly into the desktop
   if (lockHeader) {
-    lockHeader.style.transform = 'translateY(-70px)';
+    lockHeader.style.transition = 'transform 0.35s ease, opacity 0.3s ease';
+    lockHeader.style.transform = 'translateY(-18px)';
     lockHeader.style.opacity = '0';
   }
   if (loginBox) {
-    loginBox.style.transform = 'scale(0.92)';
+    loginBox.style.transition = 'transform 0.35s ease, opacity 0.3s ease';
+    loginBox.style.transform = 'scale(0.96)';
     loginBox.style.opacity = '0';
   }
+  if (lockBottomBar) {
+    lockBottomBar.style.transition = 'transform 0.35s ease, opacity 0.3s ease';
+    lockBottomBar.style.transform = 'translateX(-50%) translateY(12px)';
+    lockBottomBar.style.opacity = '0';
+  }
+  if (lockTopBar) {
+    lockTopBar.style.transition = 'opacity 0.25s ease';
+    lockTopBar.style.opacity = '0';
+  }
 
-  // Smooth iOS 17 / Sonoma Slide-up & Blur Reveal
   setTimeout(() => {
-    loginScreen.style.transition = 'transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease, filter 0.5s ease';
-    loginScreen.style.transform = 'translateY(-100vh)';
+    if (!loginScreen) return;
+    // Authentic macOS lock screen zoom-out and blur fade
+    loginScreen.style.transition = 'opacity 0.48s cubic-bezier(0.16, 1, 0.3, 1), filter 0.48s cubic-bezier(0.16, 1, 0.3, 1), transform 0.48s cubic-bezier(0.16, 1, 0.3, 1)';
     loginScreen.style.opacity = '0';
-    loginScreen.style.filter = 'blur(20px)';
-    
+    loginScreen.style.filter = 'blur(18px)';
+    loginScreen.style.transform = 'scale(1.06)';
+
     // Staggered desktop elements entrance
     const menubar = document.getElementById('top-menubar') || document.querySelector('.menubar');
     const dock = document.getElementById('dock-ui') || document.querySelector('.dock-container');
@@ -9872,33 +9991,32 @@ function loginUser() {
     if (menubar) {
       menubar.style.transform = 'translateY(-100%)';
       setTimeout(() => {
-        menubar.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+        menubar.style.transition = 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
         menubar.style.transform = 'translateY(0)';
-      }, 80);
+      }, 60);
     }
     if (dock) {
-      dock.style.transform = 'translateX(-50%) translateY(35px)';
+      dock.style.transform = 'translateX(-50%) translateY(30px)';
       setTimeout(() => {
-        dock.style.transition = 'transform 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+        dock.style.transition = 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
         dock.style.transform = 'translateX(-50%) translateY(0)';
-      }, 120);
+      }, 100);
     }
     if (widgets) {
       widgets.style.opacity = '0';
-      widgets.style.transform = 'translateX(30px)';
+      widgets.style.transform = 'translateX(24px)';
       setTimeout(() => {
-        widgets.style.transition = 'all 0.55s cubic-bezier(0.16, 1, 0.3, 1)';
+        widgets.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
         widgets.style.opacity = '1';
         widgets.style.transform = 'translateX(0)';
-      }, 180);
+      }, 140);
     }
+    const island = document.getElementById('dynamic-island');
+    if (island) island.style.display = 'flex';
 
     setTimeout(() => {
       loginScreen.style.display = 'none';
-      if (lockGlyph) {
-        lockGlyph.innerText = '🔒';
-        lockGlyph.style.transform = 'scale(1)';
-      }
+      // Reset lock elements states for subsequent locks
       if (lockHeader) {
         lockHeader.style.transform = 'translateY(0)';
         lockHeader.style.opacity = '1';
@@ -9907,25 +10025,59 @@ function loginUser() {
         loginBox.style.transform = 'scale(1)';
         loginBox.style.opacity = '1';
       }
-    }, 700);
-  }, 200);
+      if (lockBottomBar) {
+        lockBottomBar.style.transform = 'translateX(-50%) translateY(0)';
+        lockBottomBar.style.opacity = '1';
+      }
+      if (lockTopBar) {
+        lockTopBar.style.opacity = '1';
+      }
+      if (passwordInput) passwordInput.value = '';
+    }, 500);
+  }, 120);
+
+  return true;
+}
+
+function syncLockScreenWallpaper() {
+  const lockBg = document.getElementById('lock-wallpaper-layer');
+  if (!lockBg) return;
+  const dynLayer = document.getElementById('dynamic-wallpaper-layer');
+  let currentBg = '';
+  if (dynLayer && dynLayer.style.backgroundImage) {
+    currentBg = dynLayer.style.backgroundImage;
+  } else if (window.aliceOS && window.aliceOS.wallpaperSetting) {
+    const val = window.aliceOS.wallpaperSetting;
+    currentBg = (!val.startsWith('url(') && !val.startsWith('linear-gradient') && !val.startsWith('radial-gradient'))
+      ? `url('${val}')`
+      : val;
+  } else {
+    currentBg = "url('assets/wallpapers/macos-sequoia.svg')";
+  }
+  lockBg.style.backgroundImage = currentBg;
 }
 
 function lockScreen() {
   const loginScreen = document.getElementById('login-screen');
+  if (!loginScreen) return;
   const passwordInput = document.getElementById('login-password');
-  const lockGlyph = document.getElementById('lock-glyph');
   const lockHeader = document.getElementById('lock-header-group');
   const loginBox = document.getElementById('login-box');
+  const lockBottomBar = document.getElementById('lock-bottom-bar');
+  const lockTopBar = document.getElementById('lock-top-bar');
   
-  if (passwordInput) passwordInput.value = '';
-  if (lockGlyph) {
-    lockGlyph.innerHTML = getSFSymbol('lock.fill', 22, '#ffffff');
-    lockGlyph.style.transform = 'scale(1)';
+  syncLockScreenWallpaper();
+  updateLockScreenUserInfo();
+  if (typeof updateClock === 'function') updateClock();
+
+  if (passwordInput) {
+    passwordInput.value = '';
   }
   if (window.AppleAudioEngine && window.AppleAudioEngine.playLockClick) {
     window.AppleAudioEngine.playLockClick();
   }
+
+  // Restore sub-element initial states
   if (lockHeader) {
     lockHeader.style.transform = 'translateY(0)';
     lockHeader.style.opacity = '1';
@@ -9934,48 +10086,42 @@ function lockScreen() {
     loginBox.style.transform = 'scale(1)';
     loginBox.style.opacity = '1';
   }
+  if (lockBottomBar) {
+    lockBottomBar.style.transform = 'translateX(-50%) translateY(0)';
+    lockBottomBar.style.opacity = '1';
+  }
+  if (lockTopBar) {
+    lockTopBar.style.opacity = '1';
+  }
 
+  // macOS In-Place Blur Fade In Motion
   loginScreen.style.display = 'flex';
-  loginScreen.style.transform = 'translateY(-100vh)';
+  loginScreen.style.transform = 'scale(1.04)';
   loginScreen.style.opacity = '0';
-  loginScreen.style.filter = 'blur(20px)';
+  loginScreen.style.filter = 'blur(16px)';
   void loginScreen.offsetWidth; // force reflow
 
-  loginScreen.style.transition = 'transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease, filter 0.5s ease';
-  loginScreen.style.transform = 'translateY(0)';
+  loginScreen.style.transition = 'opacity 0.42s cubic-bezier(0.16, 1, 0.3, 1), filter 0.42s cubic-bezier(0.16, 1, 0.3, 1), transform 0.42s cubic-bezier(0.16, 1, 0.3, 1)';
   loginScreen.style.opacity = '1';
   loginScreen.style.filter = 'blur(0px)';
+  loginScreen.style.transform = 'scale(1)';
 
-  // Close open popups
+  setTimeout(() => {
+    if (passwordInput) passwordInput.focus();
+  }, 100);
+
+  // Close open popups & hide desktop dynamic island
   const appleMenu = document.getElementById('apple-menu');
   if (appleMenu) appleMenu.style.display = 'none';
   const ccMenu = document.getElementById('control-center');
   if (ccMenu) ccMenu.style.display = 'none';
   if (typeof closeCCSliderModal === 'function') closeCCSliderModal();
+  const island = document.getElementById('dynamic-island');
+  if (island) island.style.display = 'none';
 }
-
-function toggleFlashlight() {
-  const overlay = document.getElementById('flashlight-overlay');
-  if (!overlay) return;
-  if (overlay.style.display === 'none' || !overlay.style.display) {
-    overlay.style.display = 'block';
-    setTimeout(() => overlay.style.opacity = '1', 10);
-  } else {
-    overlay.style.opacity = '0';
-    setTimeout(() => overlay.style.display = 'none', 300);
-  }
-}
+window.lockScreen = lockScreen;
 
 function logoutUser() {
-  const loginScreen = document.getElementById('login-screen');
-  document.getElementById('login-password').value = '';
-  loginScreen.style.display = 'flex';
-  loginScreen.style.transform = 'translateY(0)';
-  loginScreen.style.filter = 'blur(0px)';
-  setTimeout(() => {
-    loginScreen.style.opacity = '1';
-  }, 10);
-  
   // Close all windows
   windows.forEach((win, pid) => {
     window.aliceOS.pm.kill(pid);
@@ -9984,7 +10130,10 @@ function logoutUser() {
   windows.clear();
   
   // Close Apple Menu
-  document.getElementById('apple-menu').style.display = 'none';
+  const appleMenu = document.getElementById('apple-menu');
+  if (appleMenu) appleMenu.style.display = 'none';
+
+  lockScreen();
 }
 
 // macOS Top Menubar Menus Logic
@@ -11598,7 +11747,8 @@ async function launchActivityMonitor() {
 // Hook Notification into login
 const _origLogin = loginUser;
 loginUser = async function() {
-  _origLogin();
+  const ok = _origLogin();
+  if (ok === false) return false;
   
   try {
      const sData = await window.aliceOS.vfs.readFile('/Users/alice/settings.json');
@@ -13647,9 +13797,8 @@ let idleTimer;
 const loginScreen = document.getElementById('login-screen');
 
 function startScreensaver() {
-  if (loginScreen.style.display !== 'none') return;
-  loginScreen.style.opacity = '1';
-  loginScreen.style.display = 'flex';
+  if (loginScreen && loginScreen.style.display !== 'none') return;
+  lockScreen();
 }
 
 // Spotlight Search Logic
@@ -19984,59 +20133,38 @@ function playFaceIDSuccessSound() {
   } catch(e) {}
 }
 
-let faceIdBusy = false;
-function triggerFaceID() {
-  if (faceIdBusy) return;
-  faceIdBusy = true;
+// ==========================================
+// macOS Touch ID Biometric Unlock
+// ==========================================
+let touchIdBusy = false;
+function triggerTouchID() {
+  if (touchIdBusy) return;
+  touchIdBusy = true;
 
-  const modal = document.getElementById('faceid-modal');
-  const icon = document.getElementById('faceid-glyph-icon');
-  const text = document.getElementById('faceid-status-text');
-  const lockGlyph = document.getElementById('lock-glyph');
-  if (!modal) {
-    faceIdBusy = false;
-    loginUser();
-    return;
+  const promptText = document.getElementById('touchid-prompt-text');
+  const dict = i18nDict[currentSystemLang] || i18nDict.zh || i18nDict.en;
+  if (promptText) {
+    promptText.innerText = dict.lock_faceid_recognized || '触控 ID 验证成功';
+    promptText.style.color = '#34c759';
   }
-
-  modal.style.display = 'flex';
-  void modal.offsetWidth;
-  modal.style.opacity = '1';
-  modal.style.transform = 'translate(-50%, -50%) scale(1)';
-  if (icon) {
-    icon.innerText = '🙂';
-    icon.style.transform = 'scale(1)';
-    icon.style.color = 'white';
+  if (window.AppleAudioEngine && window.AppleAudioEngine.playHapticClick) {
+    window.AppleAudioEngine.playHapticClick('heavy');
   }
-  if (text) text.innerText = 'Verifying...';
-
+  const pwdInput = document.getElementById('login-password');
+  if (pwdInput) pwdInput.value = currentUser === 'guest' ? '' : '1234';
+  
   setTimeout(() => {
-    // Face matched!
-    playFaceIDSuccessSound();
-    if (icon) {
-      icon.innerText = '✓';
-      icon.style.color = '#34c759';
-      icon.style.transform = 'scale(1.25)';
+    loginUser();
+    if (promptText) {
+      promptText.innerText = dict.lock_touchid_prompt || '使用触控 ID 或输入密码';
+      promptText.style.color = '';
     }
-    if (text) text.innerText = 'Face ID';
-    if (lockGlyph) {
-      lockGlyph.innerText = '🔓';
-      lockGlyph.style.transform = 'scale(1.25)';
-    }
-
-    setTimeout(() => {
-      modal.style.opacity = '0';
-      modal.style.transform = 'translate(-50%, -50%) scale(0.85)';
-      setTimeout(() => {
-        modal.style.display = 'none';
-        faceIdBusy = false;
-        loginUser();
-      }, 200);
-    }, 450);
-  }, 700);
+    touchIdBusy = false;
+  }, 220);
 }
 
-window.triggerFaceID = triggerFaceID;
+window.triggerTouchID = triggerTouchID;
+window.triggerFaceID = triggerTouchID; // backward compatibility
 
 // ====================================================
 // macOS Sonoma / Sequoia Desktop Widgets Engine

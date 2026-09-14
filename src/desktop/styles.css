@@ -8145,3 +8145,357 @@ body.dark-mode .finder-status-bar {
   color: white;
   text-shadow: 0 1px 3px rgba(0,0,0,0.8);
 }
+
+/* ====================================================
+ * macOS Sonoma / Sequoia Authentic Lock Screen
+ * ==================================================== */
+
+.macos-lock-screen {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100000;
+  background: #000000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  user-select: none;
+  overflow: hidden;
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, filter, transform;
+}
+
+/* Synced Wallpaper Layer with Depth Blur */
+.macos-lock-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(28px) saturate(135%) brightness(0.92);
+  transform: scale(1.08); /* Prevent blur edge fringing */
+  z-index: 0;
+  pointer-events: none;
+  transition: background-image 0.4s ease;
+}
+
+/* Subtle Acrylic Vignette Depth Layer */
+.macos-lock-vignette {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 40%, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0.48) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Top-Right Status Bar */
+.macos-lock-top-bar {
+  position: absolute;
+  top: 18px;
+  right: 28px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  z-index: 10;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 13px;
+  font-weight: 500;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+}
+
+.macos-lock-status-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.macos-lock-input-source {
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 1.5px 6.5px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 0.5px solid rgba(255, 255, 255, 0.28);
+  letter-spacing: 0.5px;
+}
+
+.macos-lock-wifi {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.92;
+}
+
+.macos-lock-battery {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0.95;
+}
+
+.macos-lock-battery-text {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  letter-spacing: 0.2px;
+}
+
+/* Top-Center Typographic Date & Clock (macOS Sonoma / Sequoia style) */
+.macos-lock-header {
+  position: absolute;
+  top: 9vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+  text-align: center;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.macos-lock-date {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+  font-size: 21px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.45);
+  margin-bottom: 2px;
+}
+
+.macos-lock-time {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+  font-size: 110px;
+  font-weight: 200;
+  letter-spacing: -2.5px;
+  line-height: 1;
+  color: #ffffff;
+  text-shadow: 0 4px 28px rgba(0, 0, 0, 0.45);
+}
+
+/* Center User Login Box */
+.macos-lock-login-box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 140px;
+  z-index: 10;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+}
+
+/* User Avatar (88px circular avatar with glass highlight ring) */
+.macos-lock-avatar-container {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  margin-bottom: 14px;
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.macos-lock-avatar-container:hover {
+  transform: scale(1.03);
+}
+
+.macos-lock-avatar-container:active {
+  transform: scale(0.97);
+}
+
+.macos-lock-avatar-circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0.12));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Username Label */
+.macos-lock-username {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
+  font-size: 19px;
+  font-weight: 600;
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  margin-bottom: 16px;
+  letter-spacing: -0.2px;
+}
+
+/* Frosted Capsule Password Input */
+.macos-lock-input-capsule {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  border-radius: 24px;
+  padding: 3px 4px 3px 14px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 210px;
+  box-sizing: border-box;
+}
+
+.macos-lock-input-capsule:focus-within {
+  background: rgba(255, 255, 255, 0.28);
+  border-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 0 2px rgba(255, 255, 255, 0.25);
+}
+
+.macos-lock-input-capsule input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #ffffff;
+  font-size: 13.5px;
+  font-weight: 400;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  text-align: left;
+}
+
+.macos-lock-input-capsule input::placeholder {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.macos-lock-submit-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  padding: 0;
+  flex-shrink: 0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.macos-lock-submit-btn:hover {
+  background: rgba(255, 255, 255, 0.75);
+  color: #1d1d1f;
+  transform: scale(1.05);
+}
+
+.macos-lock-submit-btn:active {
+  transform: scale(0.92);
+}
+
+/* Touch ID Prompt */
+.macos-lock-touchid-prompt {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 14px;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  padding: 5px 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 0.5px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.2s ease;
+}
+
+.macos-lock-touchid-prompt:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.macos-lock-touchid-prompt:active {
+  transform: scale(0.96);
+}
+
+/* macOS Lock Screen Bottom Control Bar: Switch User, Sleep, Restart, Shut Down */
+.macos-lock-bottom-bar {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  z-index: 10;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+}
+
+.macos-lock-action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.macos-lock-action-btn:hover {
+  transform: translateY(-2px);
+}
+
+.macos-lock-action-btn:active {
+  transform: scale(0.94);
+}
+
+.macos-lock-btn-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  transition: background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.macos-lock-action-btn:hover .macos-lock-btn-circle {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.45);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+}
+
+.macos-lock-btn-label {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  letter-spacing: 0.1px;
+}
+
