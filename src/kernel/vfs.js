@@ -374,7 +374,9 @@ function readDir(filePath) {
 
   return node.children.map(c => ({
     name: c.name,
-    type: c.type
+    type: c.type,
+    size: c.type === 'dir' ? 0 : (c.content ? (typeof c.content === 'string' ? Buffer.byteLength(c.content, 'utf8') : c.content.length) : (c.size || 0)),
+    mtime: c.mtime || (c.updatedAt || bootTime)
   }));
 }
 
@@ -396,12 +398,14 @@ function writeFile(filePath, content) {
   if (existingNode) {
     if (existingNode.type !== 'file') throw new Error('Cannot overwrite a directory with a file');
     existingNode.content = content;
+    existingNode.mtime = Date.now();
   } else {
     dirNode.children.push({
       id: nextId++,
       type: 'file',
       name: fileName,
-      content: content
+      content: content,
+      mtime: Date.now()
     });
   }
   saveVFS();
@@ -429,13 +433,14 @@ function mkdir(filePath) {
     id: nextId++,
     type: 'dir',
     name: dirName,
-    children: []
+    children: [],
+    mtime: Date.now()
   });
   saveVFS();
   return true;
 }
 
-function rm(filePath) {
+function rm(filePath, recursive = true) {
   const normPath = normalizePath(filePath);
   if (normPath === '/') throw new Error('Cannot remove root directory');
   if (normPath.startsWith('/proc/')) {
@@ -453,7 +458,7 @@ function rm(filePath) {
   if (index === -1) throw new Error('File or directory not found');
 
   const node = parentNode.children[index];
-  if (node.type === 'dir' && node.children.length > 0) {
+  if (!recursive && node.type === 'dir' && node.children.length > 0) {
     throw new Error('Directory is not empty');
   }
 

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -19,9 +19,29 @@
     </div>
   </div>
 
-  <!-- Screensaver -->
-  <div id="screensaver" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background-color:black;z-index:9998;display:none;">
-    <div id="ss-logo" style="position:absolute;font-size:50px;font-weight:bold;color:lime;text-shadow:0 0 10px lime;">AliceOS</div>
+  <!-- macOS Sonoma / Sequoia Authentic Aerial Screensaver -->
+  <div id="screensaver" class="macos-sonoma-screensaver" style="display:none;opacity:0;">
+    <!-- Cinematic slow-motion aerial wallpaper drift -->
+    <div id="ss-aerial-bg" class="ss-aerial-canvas-layer"></div>
+    <div class="ss-aerial-vignette"></div>
+
+    <!-- Top-Center Sonoma Typographic Clock -->
+    <div class="ss-clock-wrap" id="ss-clock-group">
+      <div id="ss-date" class="ss-date-text">星期四 9月17日</div>
+      <div id="ss-time" class="ss-time-text">15:45</div>
+    </div>
+
+    <!-- Bottom Left: Location Information Pill (Apple Style) -->
+    <div class="ss-location-pill" id="ss-location-badge" onclick="cycleAerialScene(event)" title="点击切换航拍场景">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+      <span id="ss-location-text">优胜美地国家公园 • 酋长岩</span>
+      <span class="ss-scene-cycle-hint">切换</span>
+    </div>
+
+    <!-- Bottom Center: Wake Prompt -->
+    <div class="ss-wake-prompt">
+      <span data-i18n="ss_wake_hint">轻点任意键或移动鼠标以唤醒</span>
+    </div>
   </div>
 
   <!-- BSOD -->
@@ -36,6 +56,7 @@
   <!-- macOS Solar Dynamic Wallpaper Stack -->
   <div id="dynamic-wallpaper-layer" class="dynamic-wallpaper-layer"></div>
   <div id="dynamic-wallpaper-overlay" class="dynamic-wallpaper-overlay"></div>
+  <canvas id="weather-wallpaper-canvas" class="weather-wallpaper-canvas"></canvas>
 
   <!-- Notification Container -->
   <div id="notification-container" class="notification-container"></div>
@@ -45,10 +66,93 @@
     <!-- Populated by JS -->
   </div>
 
-  <!-- Alice Siri-Style Voice Orb Overlay -->
-  <div id="alice-orb-overlay" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.7);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);z-index:9000;display:none;flex-direction:column;align-items:center;justify-content:center;opacity:0;transition:opacity 0.5s ease;">
-    <div id="alice-orb-text" data-i18n="ai_orb_help" style="position:absolute;top:25%;width:80%;text-align:center;font-size:64px;font-weight:200;color:white;text-shadow:0 0 20px rgba(255,255,255,0.5);">请问有什么可以帮您？</div>
-    <div id="alice-orb" style="position:absolute;bottom:20%;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle at 30% 30%, #ff00cc, #333399);box-shadow:0 0 50px #ff00cc, inset 0 0 50px #333399;transition:all 0.1s;cursor:pointer;"></div>
+  <!-- macOS Sequoia Siri & Apple Intelligence Floating Capsule Window -->
+  <div id="siri-window" class="siri-floating-window" style="display:none;" onclick="event.stopPropagation()">
+    <!-- Apple Intelligence Glowing Flow Perimeter -->
+    <div class="siri-glow-border"></div>
+    
+    <div class="siri-inner">
+      <!-- Header with Animated Fluid Siri Orb, Status & Close Button -->
+      <div class="siri-header">
+        <div class="siri-brand">
+          <div class="siri-orb-wrapper">
+            <div class="siri-orb" id="siri-main-orb">
+              <div class="siri-orb-core"></div>
+              <div class="siri-orb-swirl-1"></div>
+              <div class="siri-orb-swirl-2"></div>
+            </div>
+            <!-- Dynamic 5-bar live soundwave visualizer -->
+            <div class="siri-waveform" id="siri-waveform">
+              <span class="siri-wave-bar b1"></span>
+              <span class="siri-wave-bar b2"></span>
+              <span class="siri-wave-bar b3"></span>
+              <span class="siri-wave-bar b4"></span>
+              <span class="siri-wave-bar b5"></span>
+            </div>
+          </div>
+          <div class="siri-title-group">
+            <div class="siri-title">
+              <span>Siri</span>
+              <span class="siri-ai-badge">Apple Intelligence</span>
+            </div>
+            <div class="siri-subtitle" id="siri-status-text">准备就绪，有什么可以帮您？</div>
+          </div>
+        </div>
+        <button class="siri-close-btn" onclick="closeSiri()" title="关闭 (Esc)">✕</button>
+      </div>
+
+      <!-- Quick Suggestion Chips -->
+      <div class="siri-chips-container" id="siri-chips-container">
+        <button class="siri-chip" onclick="askSiriSuggestion('今日天气如何？')">🌦️ 今日天气</button>
+        <button class="siri-chip" onclick="askSiriSuggestion('查看系统性能与状态')">📊 系统状态</button>
+        <button class="siri-chip" onclick="askSiriSuggestion('切换外观深浅模式')">🌓 切换外观</button>
+        <button class="siri-chip" onclick="askSiriSuggestion('清空废纸篓')">🗑️ 清空废纸篓</button>
+        <button class="siri-chip" onclick="askSiriSuggestion('打开截屏工具')">📸 截取屏幕</button>
+        <button class="siri-chip" onclick="askSiriSuggestion('打开系统设置')">⚙️ 系统设置</button>
+        <button class="siri-chip" onclick="askSiriSuggestion('打开访达')">📁 访达</button>
+      </div>
+
+      <!-- Dialogue & Result Cards Stream -->
+      <div class="siri-content-stream" id="siri-stream">
+        <!-- Default Welcome / Ready Card -->
+        <div class="siri-card siri-welcome-card" id="siri-welcome-card">
+          <div class="siri-welcome-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L14.4 7.6L20 10L14.4 12.4L12 18L9.6 12.4L4 10L9.6 7.6L12 2Z" fill="url(#siri-card-grad)"/>
+              <path d="M19 16L20.2 18.8L23 20L20.2 21.2L19 24L17.8 21.2L15 20L17.8 18.8L19 16Z" fill="url(#siri-card-grad)"/>
+              <defs>
+                <linearGradient id="siri-card-grad" x1="2" y1="2" x2="23" y2="24" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#38bdf8"/><stop offset="0.5" stop-color="#a855f7"/><stop offset="1" stop-color="#ec4899"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div class="siri-welcome-text">
+            <div style="font-weight:600;font-size:13.5px;color:rgba(255,255,255,0.95);margin-bottom:2px;">Apple Intelligence 体验</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.65);line-height:1.4;">您可以键入任何指令、点击快捷指令，或让 Siri 控制系统、调节设置与查询天气。</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Type to Siri Input Bar -->
+      <div class="siri-input-wrapper">
+        <input type="text" id="siri-input" class="siri-input" placeholder="与 Siri 对话，或输入指令..." autocomplete="off" />
+        <button id="siri-mic-btn" class="siri-mic-btn" onclick="toggleSiriSpeechInput()" title="语音输入">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+            <line x1="12" y1="19" x2="12" y2="23"/>
+            <line x1="8" y1="23" x2="16" y2="23"/>
+          </svg>
+        </button>
+        <button id="siri-send-btn" class="siri-send-btn" onclick="submitSiriInput()" title="发送 (Enter)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="19" x2="12" y2="5"/>
+            <polyline points="5 12 12 5 19 12"/>
+          </svg>
+        </button>
+      </div>
+    </div>
   </div>
 
   <!-- macOS Quick Look Overlay & Multi-File Carousel -->
@@ -158,6 +262,115 @@
     <div class="context-menu-item" onclick="launchSystemInfo()" data-i18n="ctx_about">关于 AliceOS</div>
   </div>
 
+  <!-- macOS File Context Menu -->
+  <div id="file-context-menu" class="context-menu" style="display:none;position:fixed;z-index:99999;">
+    <div class="context-menu-item bold" id="file-ctx-putback" style="display:none;" onclick="onFileCtxPutBack()">
+      <span style="font-weight:700;">放回原处</span>
+      <span class="ctx-shortcut">⌘⌫</span>
+    </div>
+    <div class="context-menu-item danger" id="file-ctx-delete-immediately" style="display:none;" onclick="onFileCtxDeleteImmediately()">
+      <span>立即删除...</span>
+      <span class="ctx-shortcut">⌥⌘⌫</span>
+    </div>
+    <div class="context-separator" id="file-ctx-trash-top-sep" style="display:none;"></div>
+    <div class="context-menu-item" id="file-ctx-open" onclick="onFileCtxOpen()">
+      <span data-i18n="file_ctx_open">打开</span>
+      <span class="ctx-shortcut">↵</span>
+    </div>
+    <div class="context-menu-item" id="file-ctx-quicklook" onclick="onFileCtxQuickLook()">
+      <span data-i18n="file_ctx_quicklook">快速查看</span>
+      <span class="ctx-shortcut">Space</span>
+    </div>
+    <div class="context-separator"></div>
+    <!-- macOS Share Submenu -->
+    <div class="context-menu-item has-submenu" id="file-ctx-share">
+      <span data-i18n="file_ctx_share">共享</span>
+      <span class="ctx-chevron">›</span>
+      <div class="context-submenu">
+        <div class="context-menu-item" onclick="onFileCtxAirDrop()">
+          <span class="ctx-icon">📡</span>
+          <span>隔空投送...</span>
+        </div>
+        <div class="context-menu-item" onclick="onFileCtxShareNotes()">
+          <span class="ctx-icon">📝</span>
+          <span>备忘录</span>
+        </div>
+        <div class="context-menu-item" onclick="onFileCtxShareMail()">
+          <span class="ctx-icon">✉️</span>
+          <span>邮件</span>
+        </div>
+        <div class="context-separator"></div>
+        <div class="context-menu-item" onclick="onFileCtxCopyPath()">
+          <span class="ctx-icon">🔗</span>
+          <span>拷贝路径名称</span>
+          <span class="ctx-shortcut">⌥⌘C</span>
+        </div>
+      </div>
+    </div>
+    <!-- macOS Quick Actions Submenu -->
+    <div class="context-menu-item has-submenu" id="file-ctx-quickactions">
+      <span data-i18n="file_ctx_quickactions">快速动作</span>
+      <span class="ctx-chevron">›</span>
+      <div class="context-submenu">
+        <div class="context-menu-item" onclick="onFileCtxRotateLeft()">
+          <span class="ctx-icon">↺</span>
+          <span>向左旋转</span>
+          <span class="ctx-shortcut">⌘L</span>
+        </div>
+        <div class="context-menu-item" onclick="onFileCtxRotateRight()">
+          <span class="ctx-icon">↻</span>
+          <span>向右旋转</span>
+          <span class="ctx-shortcut">⌘R</span>
+        </div>
+        <div class="context-separator"></div>
+        <div class="context-menu-item" onclick="onFileCtxCreatePDF()">
+          <span class="ctx-icon">📄</span>
+          <span>创建 PDF</span>
+        </div>
+        <div class="context-menu-item" onclick="onFileCtxMarkup()">
+          <span class="ctx-icon">✏️</span>
+          <span>标记</span>
+        </div>
+      </div>
+    </div>
+    <div class="context-separator"></div>
+    <div class="context-menu-item" id="file-ctx-duplicate" onclick="onFileCtxDuplicate()">
+      <span data-i18n="file_ctx_duplicate">制作副本</span>
+      <span class="ctx-shortcut">⌘D</span>
+    </div>
+    <div class="context-menu-item" id="file-ctx-compress" onclick="onFileCtxCompress()">
+      <span data-i18n="file_ctx_compress">压缩</span>
+    </div>
+    <div class="context-menu-item" id="file-ctx-copy" onclick="onFileCtxCopy()">
+      <span data-i18n="file_ctx_copy">拷贝</span>
+      <span class="ctx-shortcut">⌘C</span>
+    </div>
+    <div class="context-menu-item" id="file-ctx-rename" onclick="onFileCtxRename()">
+      <span data-i18n="file_ctx_rename">重命名</span>
+    </div>
+    <div class="context-separator"></div>
+    <div class="context-menu-item" id="file-ctx-getinfo" onclick="onFileCtxGetInfo()">
+      <span data-i18n="file_ctx_getinfo">显示简介</span>
+      <span class="ctx-shortcut">⌘I</span>
+    </div>
+    <div class="context-separator"></div>
+    <div class="ctx-tag-row" id="file-ctx-tags" title="标签">
+      <span class="ctx-tag-dot red" data-key="red" onclick="onFileCtxSelectTag('red')" title="红色"></span>
+      <span class="ctx-tag-dot orange" data-key="orange" onclick="onFileCtxSelectTag('orange')" title="橙色"></span>
+      <span class="ctx-tag-dot yellow" data-key="yellow" onclick="onFileCtxSelectTag('yellow')" title="黄色"></span>
+      <span class="ctx-tag-dot green" data-key="green" onclick="onFileCtxSelectTag('green')" title="绿色"></span>
+      <span class="ctx-tag-dot blue" data-key="blue" onclick="onFileCtxSelectTag('blue')" title="蓝色"></span>
+      <span class="ctx-tag-dot purple" data-key="purple" onclick="onFileCtxSelectTag('purple')" title="紫色"></span>
+      <span class="ctx-tag-dot gray" data-key="gray" onclick="onFileCtxSelectTag('gray')" title="灰色"></span>
+      <span class="ctx-tag-clear" id="file-ctx-tag-clear" onclick="onFileCtxClearTag()" title="移除标签">✕</span>
+    </div>
+    <div class="context-separator"></div>
+    <div class="context-menu-item danger" id="file-ctx-trash" onclick="onFileCtxMoveToTrash()">
+      <span data-i18n="file_ctx_trash">移到废纸篓</span>
+      <span class="ctx-shortcut">⌘⌫</span>
+    </div>
+  </div>
+
   <!-- Widget Context Menu -->
   <div id="widget-context-menu" class="context-menu" style="display:none;z-index:9999;">
     <div class="context-menu-item" id="w-ctx-remove-btn" onclick="removeActiveWidget()">
@@ -180,8 +393,30 @@
     <div class="context-menu-item" onclick="replaceActiveWidget('calendar')">
       <span data-i18n="w_type_calendar">日历日程</span>
     </div>
+    <div class="context-menu-item" onclick="replaceActiveWidget('reminders')">
+      <span data-i18n="w_type_reminders">提醒事项</span>
+    </div>
     <div class="context-menu-item" onclick="replaceActiveWidget('music')">
       <span data-i18n="w_type_music">音乐播放</span>
+    </div>
+    <div class="context-menu-item" onclick="replaceActiveWidget('photos')">
+      <span data-i18n="w_type_photos">精选照片</span>
+    </div>
+    <div class="context-separator"></div>
+    <div class="context-menu-item has-submenu" id="w-ctx-style">
+      <span>小组件样式</span>
+      <span class="ctx-chevron">›</span>
+      <div class="context-submenu">
+        <div class="context-menu-item" onclick="setWidgetStylePreference('auto')">
+          <span>自动 (自适应窗口)</span>
+        </div>
+        <div class="context-menu-item" onclick="setWidgetStylePreference('monochrome')">
+          <span>单色 (磨砂灰度)</span>
+        </div>
+        <div class="context-menu-item" onclick="setWidgetStylePreference('vibrant')">
+          <span>彩色 (常亮鲜艳)</span>
+        </div>
+      </div>
     </div>
     <div class="context-separator"></div>
     <div class="context-menu-item" onclick="openWidgetGallery()">
@@ -189,6 +424,37 @@
     </div>
     <div class="context-menu-item" onclick="toggleDesktopWidgets()">
       <span id="w-ctx-toggle-label" data-i18n="w_ctx_toggle_hide">隐藏桌面小组件</span>
+    </div>
+  </div>
+
+  <!-- macOS Sonoma / Sequoia Bottom Slide-Up Widget Gallery Sheet -->
+  <div id="widget-gallery-sheet" class="widget-gallery-sheet">
+    <div class="wg-backdrop" onclick="closeWidgetGallery()"></div>
+    <div class="wg-sheet-panel">
+      <div class="wg-header">
+        <div class="wg-search-bar">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="wg-search-input" placeholder="搜索小组件" oninput="filterWidgetGallery(this.value)">
+        </div>
+        <div class="wg-categories">
+          <button class="wg-cat-btn active" data-cat="all" onclick="selectWidgetGalleryCategory('all')">全部</button>
+          <button class="wg-cat-btn" data-cat="clock" onclick="selectWidgetGalleryCategory('clock')">时钟</button>
+          <button class="wg-cat-btn" data-cat="weather" onclick="selectWidgetGalleryCategory('weather')">天气</button>
+          <button class="wg-cat-btn" data-cat="battery" onclick="selectWidgetGalleryCategory('battery')">电池</button>
+          <button class="wg-cat-btn" data-cat="calendar" onclick="selectWidgetGalleryCategory('calendar')">日历</button>
+          <button class="wg-cat-btn" data-cat="reminders" onclick="selectWidgetGalleryCategory('reminders')">提醒事项</button>
+          <button class="wg-cat-btn" data-cat="music" onclick="selectWidgetGalleryCategory('music')">音乐</button>
+          <button class="wg-cat-btn" data-cat="sys" onclick="selectWidgetGalleryCategory('sys')">系统</button>
+          <button class="wg-cat-btn" data-cat="photos" onclick="selectWidgetGalleryCategory('photos')">照片</button>
+        </div>
+        <button class="wg-done-btn" onclick="closeWidgetGallery()">完成</button>
+      </div>
+      <div class="wg-body" id="wg-cards-container">
+        <!-- Dynamically rendered widget cards -->
+      </div>
     </div>
   </div>
 
@@ -419,6 +685,140 @@
             <div style="font-size:10px;color:#34c759;font-weight:500;" data-i18n="airdrop_ready">就绪</div>
           </div>
         </div>
+
+        <!-- AirDrop Bottom Actions -->
+        <div style="margin-top:16px;display:flex;justify-content:center;gap:12px;">
+          <button onclick="simulateIncomingAirDrop()" style="background:rgba(0,122,255,0.12);color:#007aff;border:1px solid rgba(0,122,255,0.25);padding:6px 14px;border-radius:10px;font-size:11.5px;font-weight:600;cursor:pointer;transition:all 0.15s ease;">📡 模拟接收来自外部的隔空投送</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- macOS AirDrop Incoming File Notification Banner -->
+  <div id="airdrop-incoming-banner" class="airdrop-incoming-banner" style="display:none;">
+    <div class="airdrop-banner-header">
+      <div class="airdrop-banner-brand">
+        <div class="airdrop-banner-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a10 10 0 0 0-7.07 17.07l1.41-1.41A8 8 0 1 1 12 4v-2z"/>
+            <path d="M12 6a6 6 0 0 0-4.24 10.24l1.41-1.41A4 4 0 1 1 12 8V6z"/>
+            <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+          </svg>
+        </div>
+        <span class="airdrop-banner-title">隔空投送</span>
+      </div>
+      <span class="airdrop-banner-time">刚刚</span>
+    </div>
+
+    <div class="airdrop-banner-body">
+      <div class="airdrop-banner-device" id="airdrop-inc-device">“Alice 的 iPhone 16 Pro” 想要共享 1 个项目：</div>
+      <div class="airdrop-banner-file-row">
+        <div class="airdrop-banner-file-icon">🖼️</div>
+        <div class="airdrop-banner-file-info">
+          <div class="airdrop-banner-file-name" id="airdrop-inc-name">Sequoia_Shot_2026.png</div>
+          <div class="airdrop-banner-file-meta" id="airdrop-inc-meta">3.8 MB</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="airdrop-banner-actions" id="airdrop-inc-actions">
+      <button class="airdrop-btn-decline" onclick="declineIncomingAirDrop()">拒绝</button>
+      <button class="airdrop-btn-accept" id="airdrop-inc-accept-btn" onclick="acceptIncomingAirDrop()">接受</button>
+    </div>
+
+    <div class="airdrop-banner-progress-row" id="airdrop-inc-progress" style="display:none;">
+      <div class="airdrop-banner-prog-bar-bg">
+        <div class="airdrop-banner-prog-bar-fill" id="airdrop-inc-bar"></div>
+      </div>
+      <span class="airdrop-banner-prog-txt" id="airdrop-inc-status">正在接收...</span>
+    </div>
+  </div>
+
+  <!-- macOS Hot Corners Sheet Modal Overlay -->
+  <div id="hot-corners-modal" class="hot-corners-modal" style="display:none;" onclick="if(event.target === this) closeHotCornersModal()">
+    <div class="hot-corners-sheet">
+      <div class="hot-corners-sheet-header">
+        <div class="hot-corners-sheet-title" data-i18n="hot_corners_title">触发角</div>
+        <div class="hot-corners-sheet-subtitle" data-i18n="hot_corners_desc">将指针移到屏幕角落以快速执行操作。</div>
+      </div>
+
+      <div class="hot-corners-canvas-wrapper">
+        <div class="hot-corners-screen-mock">
+          <div class="hc-corner top-left">
+            <label data-i18n="hc_top_left">左上角</label>
+            <select id="hc-select-top-left" class="hc-select">
+              <option value="none">-</option>
+              <option value="mission-control">调度中心</option>
+              <option value="desktop">显示桌面</option>
+              <option value="notification-center">通知中心</option>
+              <option value="quick-note">快速备忘录</option>
+              <option value="lock-screen">锁定屏幕</option>
+              <option value="screensaver">屏幕保护程序</option>
+              <option value="launchpad">启动台</option>
+              <option value="control-center">控制中心</option>
+            </select>
+          </div>
+
+          <div class="hc-corner top-right">
+            <label data-i18n="hc_top_right">右上角</label>
+            <select id="hc-select-top-right" class="hc-select">
+              <option value="none">-</option>
+              <option value="mission-control">调度中心</option>
+              <option value="desktop">显示桌面</option>
+              <option value="notification-center">通知中心</option>
+              <option value="quick-note">快速备忘录</option>
+              <option value="lock-screen">锁定屏幕</option>
+              <option value="screensaver">屏幕保护程序</option>
+              <option value="launchpad">启动台</option>
+              <option value="control-center">控制中心</option>
+            </select>
+          </div>
+
+          <div class="hot-corners-screen-inner">
+            <div class="hc-mock-menubar"></div>
+            <div class="hc-mock-display">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="rgba(255,255,255,0.3)">
+                <path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/>
+              </svg>
+            </div>
+            <div class="hc-mock-dock"></div>
+          </div>
+
+          <div class="hc-corner bottom-left">
+            <label data-i18n="hc_bottom_left">左下角</label>
+            <select id="hc-select-bottom-left" class="hc-select">
+              <option value="none">-</option>
+              <option value="mission-control">调度中心</option>
+              <option value="desktop">显示桌面</option>
+              <option value="notification-center">通知中心</option>
+              <option value="quick-note">快速备忘录</option>
+              <option value="lock-screen">锁定屏幕</option>
+              <option value="screensaver">屏幕保护程序</option>
+              <option value="launchpad">启动台</option>
+              <option value="control-center">控制中心</option>
+            </select>
+          </div>
+
+          <div class="hc-corner bottom-right">
+            <label data-i18n="hc_bottom_right">右下角</label>
+            <select id="hc-select-bottom-right" class="hc-select">
+              <option value="none">-</option>
+              <option value="mission-control">调度中心</option>
+              <option value="desktop">显示桌面</option>
+              <option value="notification-center">通知中心</option>
+              <option value="quick-note">快速备忘录</option>
+              <option value="lock-screen">锁定屏幕</option>
+              <option value="screensaver">屏幕保护程序</option>
+              <option value="launchpad">启动台</option>
+              <option value="control-center">控制中心</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="hot-corners-sheet-footer">
+        <button class="hc-btn-cancel" onclick="closeHotCornersModal()" data-i18n="btn_cancel">取消</button>
+        <button class="hc-btn-done" onclick="saveHotCornersModal()" data-i18n="btn_done">好</button>
       </div>
     </div>
   </div>
@@ -453,6 +853,27 @@
           <path d="M1.42 9a16 16 0 0 1 21.16 0"/>
           <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
           <line x1="12" y1="20" x2="12.01" y2="20"/>
+        </svg>
+      </div>
+      <!-- macOS Bluetooth Status Item -->
+      <div class="menu-item" id="bluetooth-btn" onclick="toggleBluetoothPopover()" style="cursor:pointer;display:flex;align-items:center;" title="蓝牙 (Bluetooth)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6.5 6.5 17.5 17.5 12 23 12 1 17.5 6.5 6.5 17.5"/>
+        </svg>
+      </div>
+      <!-- macOS Screen Mirroring Item -->
+      <div class="menu-item" id="screen-mirror-btn" onclick="toggleScreenMirrorPopover()" style="cursor:pointer;display:flex;align-items:center;" title="屏幕镜像 (Screen Mirroring)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="14" height="11" rx="2"/>
+          <rect x="8" y="9" width="14" height="11" rx="2" fill="rgba(255,255,255,0.2)"/>
+        </svg>
+      </div>
+      <!-- macOS Time Machine Item -->
+      <div class="menu-item" id="timemachine-btn" onclick="toggleTimeMachinePopover()" style="cursor:pointer;display:flex;align-items:center;" title="时间机器 (Time Machine)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2a10 10 0 1 0 10 10"/>
+          <path d="M12 6v6l4 2"/>
+          <path d="M17 2l5 0 0 5"/>
         </svg>
       </div>
       <!-- macOS Sound Output Item -->
@@ -496,8 +917,29 @@
           <circle cx="11" cy="11" r="3" fill="currentColor"/>
         </svg>
       </div>
-      <div class="menu-item" id="time-display" onclick="toggleNotificationCenter()" style="cursor:pointer;padding:0 15px;">00:00</div>
+      <div class="menu-item" id="time-display" onclick="toggleNotificationCenter(event)" title="通知中心与日历">
+        <span id="time-display-date">9月15日 周二</span>
+        <span id="time-display-time">00:00</span>
+      </div>
     </div>
+  </div>
+  <!-- macOS Menubar Calendar Popover -->
+  <div id="menubar-calendar" style="display:none;position:fixed;top:35px;right:6px;width:280px;background:rgba(28,28,30,0.88);backdrop-filter:blur(60px) saturate(200%);-webkit-backdrop-filter:blur(60px) saturate(200%);border-radius:16px;border:0.5px solid rgba(255,255,255,0.16);box-shadow:0 24px 64px rgba(0,0,0,0.6),0 4px 16px rgba(0,0,0,0.4);z-index:14500;padding:16px;color:white;font-family:-apple-system,'SF Pro Text',sans-serif;transform-origin:top right;animation:contextMenuIn 0.18s cubic-bezier(0.16,1,0.3,1) forwards;" onclick="event.stopPropagation()">
+    <!-- Big time -->
+    <div id="cal-big-time" style="font-size:48px;font-weight:200;letter-spacing:-2px;line-height:1;margin-bottom:2px;">00:00</div>
+    <div id="cal-big-date" style="font-size:14px;font-weight:400;opacity:0.7;margin-bottom:14px;">Monday, January 1, 2026</div>
+    <!-- Month nav -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+      <button onclick="calNavMonth(-1)" style="background:rgba(255,255,255,0.1);border:none;border-radius:6px;color:white;width:26px;height:26px;cursor:pointer;font-size:14px;">‹</button>
+      <span id="cal-month-label" style="font-size:13px;font-weight:600;"></span>
+      <button onclick="calNavMonth(1)" style="background:rgba(255,255,255,0.1);border:none;border-radius:6px;color:white;width:26px;height:26px;cursor:pointer;font-size:14px;">›</button>
+    </div>
+    <!-- Day-of-week headers -->
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);text-align:center;margin-bottom:4px;">
+      <span style="font-size:10px;opacity:0.5;font-weight:600;">Su</span><span style="font-size:10px;opacity:0.5;font-weight:600;">Mo</span><span style="font-size:10px;opacity:0.5;font-weight:600;">Tu</span><span style="font-size:10px;opacity:0.5;font-weight:600;">We</span><span style="font-size:10px;opacity:0.5;font-weight:600;">Th</span><span style="font-size:10px;opacity:0.5;font-weight:600;">Fr</span><span style="font-size:10px;opacity:0.5;font-weight:600;">Sa</span>
+    </div>
+    <!-- Calendar grid -->
+    <div id="cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center;"></div>
   </div>
 
   <!-- macOS Language Popover -->
@@ -541,40 +983,75 @@
   </div>
 
   <!-- macOS Sound / AirPlay Menu Popover -->
-  <div id="sound-popover" class="sound-popover">
+  <div id="sound-popover" class="sound-popover" style="display:none;" onclick="event.stopPropagation()">
     <div style="font-weight:700;font-size:13px;margin-bottom:8px;color:inherit;" data-i18n="cc_sound">声音</div>
     <!-- Volume Slider Row -->
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;background:rgba(255,255,255,0.06);padding:8px 12px;border-radius:12px;">
       <span id="sound-pop-icon" style="display:flex;align-items:center;">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
       </span>
-      <input type="range" id="sound-pop-slider" min="0" max="100" value="75" style="flex:1;cursor:pointer;">
+      <input type="range" id="sound-pop-slider" min="0" max="100" value="75" style="flex:1;cursor:pointer;" oninput="onSoundPopoverVolume(this.value)">
       <span id="sound-pop-pct" style="font-size:12px;font-weight:600;min-width:32px;text-align:right;">75%</span>
     </div>
 
     <!-- Output Section -->
     <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.5);margin-bottom:6px;letter-spacing:0.5px;" data-i18n="cc_output">输出</div>
-    <div class="sound-device-item active" onclick="selectSoundDevice(this, 'MacBook Pro Speakers', 'macbook')">
+    <div class="sound-device-item active" id="sound-dev-macbook" onclick="selectSoundDevice(this, 'MacBook Pro 扬声器', 'macbook')">
       <div style="display:flex;align-items:center;gap:8px;">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><line x1="1" y1="20" x2="23" y2="20"/><line x1="8" y1="20" x2="16" y2="20"/></svg>
         <div>
           <div style="font-size:12px;font-weight:600;" data-i18n="cc_macbook_speakers">MacBook Pro 扬声器</div>
-          <div style="font-size:10px;opacity:0.6;" data-i18n="cc_builtin_audio">内置音频</div>
+          <div style="font-size:10px;opacity:0.6;" data-i18n="cc_builtin_audio">内建音频</div>
         </div>
       </div>
-      <span class="sound-check">✓</span>
+      <span class="sound-check" style="display:inline;">✓</span>
     </div>
-    <div class="sound-device-item" onclick="selectSoundDevice(this, 'Alice\\'s AirPods Pro', 'airpods')">
+    <div class="sound-device-item" id="sound-dev-airpods" onclick="selectSoundDevice(this, 'Alice 的 AirPods Pro', 'airpods')">
       <div style="display:flex;align-items:center;gap:8px;">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></svg>
         <div>
           <div style="font-size:12px;font-weight:600;" data-i18n="cc_airpods_pro">Alice 的 AirPods Pro</div>
-          <div style="font-size:10px;opacity:0.6;" data-i18n="cc_anc_active">降噪模式已开启</div>
+          <div id="sound-airpods-subtitle" style="font-size:10px;opacity:0.6;" data-i18n="cc_anc_active">空间音频 • 降噪已开启</div>
         </div>
       </div>
       <span class="sound-check" style="display:none;">✓</span>
     </div>
-    <div class="sound-device-item" onclick="selectSoundDevice(this, 'Living Room HomePod', 'homepod')">
+
+    <!-- AirPods Pro Controls Panel (macOS Sonoma / Sequoia 1:1) -->
+    <div id="airpods-controls-panel" class="airpods-controls-panel" style="display:none;margin:4px 0 8px 0;padding:8px 10px;background:rgba(255,255,255,0.05);border-radius:10px;border:1px solid rgba(255,255,255,0.08);">
+      <div class="airpods-ctrl-label" style="font-size:10px;font-weight:700;letter-spacing:0.4px;color:rgba(255,255,255,0.5);margin-bottom:6px;">降噪控制</div>
+      <div class="airpods-segmented-ctrl" id="airpods-anc-segmented">
+        <button class="airpods-seg-btn active" data-mode="anc" onclick="setAirPodsNoiseMode('anc')">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4" fill="currentColor"/></svg>
+          <span>降噪</span>
+        </button>
+        <button class="airpods-seg-btn" data-mode="off" onclick="setAirPodsNoiseMode('off')">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+          <span>关闭</span>
+        </button>
+        <button class="airpods-seg-btn" data-mode="transparency" onclick="setAirPodsNoiseMode('transparency')">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3a9 9 0 0 0 0 18"/><path d="M12 7a5 5 0 0 0 0 10"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
+          <span>通透</span>
+        </button>
+      </div>
+
+      <div class="airpods-ctrl-label" style="font-size:10px;font-weight:700;letter-spacing:0.4px;color:rgba(255,255,255,0.5);margin:8px 0 6px 0;">空间音频</div>
+      <div class="airpods-segmented-ctrl" id="airpods-spatial-segmented">
+        <button class="airpods-seg-btn" data-spatial="off" onclick="setAirPodsSpatialMode('off')">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+          <span>关闭</span>
+        </button>
+        <button class="airpods-seg-btn active" data-spatial="fixed" onclick="setAirPodsSpatialMode('fixed')">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+          <span>固定</span>
+        </button>
+        <button class="airpods-seg-btn" data-spatial="head" onclick="setAirPodsSpatialMode('head')">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M3 10a9 9 0 0 1 18 0"/></svg>
+          <span>头部跟踪</span>
+        </button>
+      </div>
+    </div>
+    <div class="sound-device-item" id="sound-dev-homepod" onclick="selectSoundDevice(this, '客厅 HomePod', 'homepod')">
       <div style="display:flex;align-items:center;gap:8px;">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="3" width="14" height="18" rx="6"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="10" y1="16" x2="14" y2="16"/></svg>
         <div>
@@ -584,33 +1061,170 @@
       </div>
       <span class="sound-check" style="display:none;">✓</span>
     </div>
+
+    <div style="height:1px;background:rgba(255,255,255,0.08);margin:10px 0 6px 0;"></div>
+    <div class="sound-popover-footer" onclick="openSoundSettings()">
+      <span data-i18n="sound_settings">声音设置...</span>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+    </div>
+  </div>
+
+  <!-- macOS Time Machine Popover -->
+  <div id="timemachine-popover" class="timemachine-popover" style="display:none;" onclick="event.stopPropagation()">
+    <div class="tm-pop-header">
+      <div class="tm-pop-title">时间机器</div>
+      <div class="tm-pop-sub" id="tm-last-backup-time">上次备份：今天 16:18</div>
+    </div>
+    <div class="tm-pop-divider"></div>
+    <div class="tm-pop-item" id="tm-backup-now-btn" onclick="startManualTimeMachineBackup()">
+      <span class="tm-pop-item-icon" id="tm-backup-icon">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2a10 10 0 1 0 10 10"/>
+          <path d="M12 6v6l4 2"/>
+          <path d="M17 2l5 0 0 5"/>
+        </svg>
+      </span>
+      <div style="flex:1;">
+        <div style="font-size:12.5px;font-weight:600;" id="tm-backup-status-text">立即备份</div>
+        <div style="font-size:10.5px;opacity:0.6;" id="tm-backup-desc">为当前个人目录创建只读系统快照</div>
+      </div>
+    </div>
+    <div class="tm-pop-item" onclick="openTimeMachineBrowser()">
+      <span class="tm-pop-item-icon">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#007aff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+        </svg>
+      </span>
+      <div style="flex:1;">
+        <div style="font-size:12.5px;font-weight:600;">浏览“时间机器”备份...</div>
+        <div style="font-size:10.5px;opacity:0.6;">查看并恢复历史版本文件</div>
+      </div>
+    </div>
+    <div class="tm-pop-divider"></div>
+    <div class="tm-pop-footer" onclick="openTimeMachineSettings()">
+      <span>时间机器设置...</span>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+    </div>
+  </div>
+
+  <!-- macOS Bluetooth Menu Popover -->
+  <div id="bluetooth-popover" class="bluetooth-popover" style="display:none;" onclick="event.stopPropagation()">
+    <div class="bt-pop-header">
+      <div class="bt-pop-title-row">
+        <span class="bt-pop-title">蓝牙</span>
+        <label class="mac-switch">
+          <input type="checkbox" id="bt-toggle-switch" checked onchange="toggleBluetoothPower(this.checked)">
+          <span class="mac-slider"></span>
+        </label>
+      </div>
+    </div>
+    <div class="bt-pop-divider"></div>
+    <div class="bt-pop-section-label">我的设备</div>
+    <div class="bt-device-list" id="bt-device-list">
+      <!-- AirPods Pro -->
+      <div class="bt-device-card active" id="bt-dev-airpods" onclick="toggleBluetoothDevice('airpods')">
+        <div class="bt-device-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#007aff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
+            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+          </svg>
+        </div>
+        <div class="bt-device-info">
+          <div class="bt-device-name">AirPods Pro (第 2 代)</div>
+          <div class="bt-device-sub" id="bt-airpods-sub">已连接 · 空间音频</div>
+          <div class="bt-battery-row">
+            <span class="bt-bat-pill">左 85%</span>
+            <span class="bt-bat-pill">右 85%</span>
+            <span class="bt-bat-pill">盒 92%</span>
+          </div>
+        </div>
+        <div class="bt-device-state">
+          <span class="bt-check-mark" id="bt-check-airpods">✓</span>
+        </div>
+      </div>
+
+      <!-- Magic Keyboard -->
+      <div class="bt-device-card active" id="bt-dev-keyboard" onclick="toggleBluetoothDevice('keyboard')">
+        <div class="bt-device-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2"/>
+            <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M8 16h8"/>
+          </svg>
+        </div>
+        <div class="bt-device-info">
+          <div class="bt-device-name">Magic Keyboard with Touch ID</div>
+          <div class="bt-device-sub" id="bt-keyboard-sub">已连接 · 电量 90%</div>
+        </div>
+        <div class="bt-device-state">
+          <span class="bt-check-mark" id="bt-check-keyboard">✓</span>
+        </div>
+      </div>
+
+      <!-- Magic Trackpad -->
+      <div class="bt-device-card active" id="bt-dev-trackpad" onclick="toggleBluetoothDevice('trackpad')">
+        <div class="bt-device-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="5" width="18" height="14" rx="3"/>
+            <line x1="12" y1="12" x2="12" y2="19"/>
+          </svg>
+        </div>
+        <div class="bt-device-info">
+          <div class="bt-device-name">Magic Trackpad</div>
+          <div class="bt-device-sub" id="bt-trackpad-sub">已连接 · 电量 78%</div>
+        </div>
+        <div class="bt-device-state">
+          <span class="bt-check-mark" id="bt-check-trackpad">✓</span>
+        </div>
+      </div>
+    </div>
+    <div class="bt-pop-divider"></div>
+    <div class="bt-pop-footer" onclick="openBluetoothSettings()">
+      <span>蓝牙设置...</span>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+    </div>
   </div>
 
   <!-- macOS Battery Menu Popover -->
-  <div id="battery-popover">
-    <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:1px solid rgba(0,0,0,0.08);">
-      <div style="font-weight:700;font-size:14px;" data-i18n="cc_battery">电池</div>
-      <div id="battery-pop-pct" style="font-weight:600;font-size:14px;color:#34c759;">98%</div>
+  <div id="battery-popover" class="battery-popover" style="display:none;" onclick="event.stopPropagation()">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.08);">
+      <div style="font-weight:700;font-size:13px;" data-i18n="cc_battery">电池</div>
+      <div id="battery-pop-pct" style="font-weight:700;font-size:13px;color:#34c759;">98%</div>
     </div>
-    <div style="margin-top:10px;font-size:12px;opacity:0.75;" data-i18n="cc_power_source">电源：电池</div>
-    <div style="font-size:11px;opacity:0.6;margin-top:2px;" data-i18n="cc_remaining_time">剩余时间：8小时42分钟</div>
+    <div style="margin-top:10px;font-size:12px;opacity:0.85;" id="battery-pop-source" data-i18n="cc_power_source">电源：电池</div>
+    <div style="font-size:11px;opacity:0.6;margin-top:2px;" id="battery-pop-remain" data-i18n="cc_remaining_time">预估剩余：8小时42分钟</div>
+    <div style="display:flex;align-items:center;gap:6px;font-size:11px;opacity:0.75;margin-top:4px;">
+      <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#34c759;"></span>
+      <span>电池状况：正常</span>
+    </div>
     
-    <div style="margin-top:12px;padding:10px;background:rgba(0,0,0,0.05);border-radius:10px;display:flex;justify-content:space-between;align-items:center;">
+    <div style="margin-top:12px;padding:8px 10px;background:rgba(255,255,255,0.06);border-radius:10px;display:flex;justify-content:space-between;align-items:center;">
       <div>
         <div style="font-weight:600;font-size:12px;" data-i18n="cc_low_power_mode">低电量模式</div>
         <div style="font-size:10px;opacity:0.6;" data-i18n="cc_low_power_desc">降低耗电量以延长电池续航</div>
       </div>
-      <input type="checkbox" id="battery-low-power-toggle" onchange="toggleLowPowerMode(this.checked)" style="cursor:pointer;">
+      <label class="macos-switch">
+        <input type="checkbox" id="battery-low-power-toggle" onchange="toggleLowPowerMode(this.checked)">
+        <span class="macos-slider"></span>
+      </label>
     </div>
 
-    <div style="margin-top:12px;font-size:11px;font-weight:600;opacity:0.6;text-transform:uppercase;" data-i18n="cc_significant_energy">显著耗能的应用</div>
-    <div style="display:flex;align-items:center;gap:8px;margin-top:6px;font-size:12px;">
-      <span>🌐</span><span data-i18n="app_browser">Safari 浏览器</span>
+    <div style="margin-top:12px;font-size:10px;font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:0.5px;text-transform:uppercase;" data-i18n="cc_significant_energy">显著耗能的应用</div>
+    <div id="battery-energy-apps" style="margin-top:6px;font-size:12px;display:flex;flex-direction:column;gap:6px;">
+      <div style="display:flex;align-items:center;gap:8px;padding:4px 6px;border-radius:6px;background:rgba(255,255,255,0.04);">
+        <span style="font-size:14px;">🌐</span>
+        <span style="font-size:12px;">Safari 浏览器</span>
+      </div>
+    </div>
+
+    <div style="height:1px;background:rgba(255,255,255,0.08);margin:10px 0 6px 0;"></div>
+    <div class="battery-popover-footer" onclick="openBatterySettings()">
+      <span data-i18n="battery_settings">电池设置...</span>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
     </div>
   </div>
 
   <!-- macOS Wi-Fi Network Menu Popover -->
-  <div id="wifi-popover" class="wifi-popover">
+  <div id="wifi-popover" class="wifi-popover" style="display:none;" onclick="event.stopPropagation()">
     <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.08);">
       <div>
         <div style="font-weight:700;font-size:13px;color:inherit;" data-i18n="cc_wifi">无线局域网 (Wi-Fi)</div>
@@ -665,29 +1279,189 @@
     </div>
   </div>
 
-  <!-- macOS Notification Banner Toast Container -->
-  <div id="notification-container" class="notification-container"></div>
+  <!-- macOS Screen Mirroring Popover -->
+  <div id="screen-mirroring-popover" class="screen-mirroring-popover" style="display:none;" onclick="event.stopPropagation()">
+    <div class="screen-mirror-header">
+      <div style="font-weight:700;font-size:13px;" data-i18n="cc_screen_mirroring">屏幕镜像</div>
+      <div style="font-size:11px;opacity:0.6;" id="screen-mirror-status">未连接</div>
+    </div>
+    
+    <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.5);margin:10px 0 6px 0;letter-spacing:0.5px;">镜像或扩展至：</div>
+    
+    <div class="mirror-device-item" id="mirror-device-ipad" onclick="connectScreenMirrorDevice('ipad')">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="2" width="16" height="20" rx="3"/>
+          <line x1="12" y1="18" x2="12.01" y2="18"/>
+        </svg>
+        <div>
+          <div style="font-size:12px;font-weight:600;">Alice 的 iPad Pro</div>
+          <div style="font-size:10px;opacity:0.6;">随航 (Sidecar) • 附近</div>
+        </div>
+      </div>
+      <span class="mirror-check" id="mirror-check-ipad" style="display:none;">✓</span>
+    </div>
 
-  <!-- macOS Notification Center Sidebar -->
-  <div id="nc-sidebar" style="position:fixed;top:30px;right:-400px;width:350px;height:calc(100vh - 30px);background:rgba(0,0,0,0.5);backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);z-index:7900;transition:right 0.4s cubic-bezier(0.25,1,0.3,1);display:flex;flex-direction:column;padding:20px;box-sizing:border-box;overflow-y:auto;gap:15px;color:white;border-left:1px solid rgba(255,255,255,0.1);">
-    <div style="font-size:24px;font-weight:bold;margin-bottom:10px;" data-i18n="nc_title">通知中心</div>
-    <div id="nc-notifications-list" style="display:flex;flex-direction:column;gap:10px;">
-      <!-- Populated dynamically -->
-      <div style="opacity:0.5;font-size:14px;text-align:center;padding:20px 0;" data-i18n="nc_no_notifications">无新通知</div>
+    <div class="mirror-device-item" id="mirror-device-appletv" onclick="connectScreenMirrorDevice('appletv')">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="7" width="20" height="15" rx="2"/>
+          <polyline points="17 2 12 7 7 2"/>
+        </svg>
+        <div>
+          <div style="font-size:12px;font-weight:600;">客厅 Apple TV 4K</div>
+          <div style="font-size:10px;opacity:0.6;">隔空播放 (AirPlay) • 客厅</div>
+        </div>
+      </div>
+      <span class="mirror-check" id="mirror-check-appletv" style="display:none;">✓</span>
     </div>
-    
-    <div style="font-size:20px;font-weight:bold;margin-top:20px;margin-bottom:10px;" data-i18n="nc_widgets">小组件</div>
-    <!-- Mini Calendar Widget -->
-    <div class="sonoma-widget" style="background:rgba(255,255,255,0.1);border-radius:18px;padding:15px;border:1px solid rgba(255,255,255,0.1);">
-      <div style="color:#ff3b30;font-weight:bold;font-size:14px;margin-bottom:5px;" id="nc-month">SEPTEMBER</div>
-      <div style="font-size:36px;font-weight:300;line-height:1;" id="nc-day">14</div>
+
+    <div class="mirror-device-item" id="mirror-device-studio" onclick="connectScreenMirrorDevice('studio')">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2"/>
+          <line x1="8" y1="21" x2="16" y2="21"/>
+          <line x1="12" y1="17" x2="12" y2="21"/>
+        </svg>
+        <div>
+          <div style="font-size:12px;font-weight:600;">Studio Display</div>
+          <div style="font-size:10px;opacity:0.6;">雷雳 5K 显示器 • 已连接</div>
+        </div>
+      </div>
+      <span class="mirror-check" id="mirror-check-studio" style="display:none;">✓</span>
     </div>
-    
-    <!-- Screen Time Widget -->
-    <div class="sonoma-widget" style="background:rgba(255,255,255,0.1);border-radius:18px;padding:15px;border:1px solid rgba(255,255,255,0.1);">
-      <div style="font-weight:bold;font-size:14px;opacity:0.8;margin-bottom:10px;" data-i18n="nc_screen_time">⏳ 屏幕使用时间</div>
-      <div style="font-size:24px;font-weight:bold;">4h 12m</div>
-      <div style="font-size:12px;opacity:0.6;margin-top:5px;" data-i18n="nc_today">今天</div>
+
+    <div class="screen-mirror-divider"></div>
+
+    <div class="screen-mirror-mode-group">
+      <label class="mirror-radio-row">
+        <input type="radio" name="mirror-mode" value="mirror" checked onchange="setScreenMirrorMode(this.value)">
+        <span>镜像内置视网膜显示器</span>
+      </label>
+      <label class="mirror-radio-row">
+        <input type="radio" name="mirror-mode" value="extend" onchange="setScreenMirrorMode(this.value)">
+        <span>用作单独的显示器</span>
+      </label>
+    </div>
+
+    <div class="screen-mirror-divider"></div>
+
+    <div class="screen-mirror-footer-btn" onclick="openDisplaySettingsFromMirror()">
+      <span>显示器设置...</span>
+    </div>
+  </div>
+
+  <!-- macOS Sequoia Slide-Over Notification Center -->
+  <div id="nc-panel" class="nc-panel" onclick="event.stopPropagation()">
+    <!-- Header -->
+    <div class="nc-header">
+      <div class="nc-header-title-group">
+        <div class="nc-header-date" id="nc-header-date">9月15日 星期二</div>
+        <div class="nc-header-title" data-i18n="nc_title">通知中心</div>
+      </div>
+      <button class="nc-clear-all-btn" id="nc-clear-all-btn" onclick="clearAllNotifications()" title="清除全部通知" style="display:none;" data-i18n="nc_clear_all">全部清除</button>
+    </div>
+
+    <!-- Scrollable container for notifications & widgets -->
+    <div class="nc-scroll-content">
+      <!-- Section 1: Notifications -->
+      <div class="nc-section-title">
+        <span data-i18n="nc_notifications">通知</span>
+        <span class="nc-badge" id="nc-count-badge" style="display:none;">0</span>
+      </div>
+      <div id="nc-notifications-list" class="nc-notifications-list">
+        <div class="nc-empty-state" id="nc-empty-state">
+          <div class="nc-empty-icon">🔔</div>
+          <div class="nc-empty-text" data-i18n="nc_no_notifications">无新通知</div>
+        </div>
+      </div>
+
+      <!-- Section 2: Sonoma Widgets Shelf -->
+      <div class="nc-section-title" style="margin-top:20px;">
+        <span data-i18n="nc_widgets">小组件</span>
+      </div>
+      <div class="nc-widgets-stack">
+        <!-- Interactive Sonoma Calendar Widget -->
+        <div class="nc-widget nc-widget-calendar">
+          <div class="nc-cal-header">
+            <div class="nc-cal-month-nav">
+              <span id="nc-cal-month-label" class="nc-cal-month-title">9月 2026</span>
+              <div class="nc-cal-nav-btns">
+                <button onclick="calNavMonth(-1)" title="上个月">‹</button>
+                <button onclick="calNavMonth(1)" title="下个月">›</button>
+              </div>
+            </div>
+            <div class="nc-cal-weekdays">
+              <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
+            </div>
+            <div id="nc-cal-grid" class="nc-cal-grid"></div>
+          </div>
+          <div class="nc-cal-event-pill">
+            <div class="nc-cal-pill-bar"></div>
+            <div class="nc-cal-pill-content">
+              <div class="nc-cal-pill-title">AliceOS 1.0 发布会</div>
+              <div class="nc-cal-pill-time">全天 • Cupertino / Online</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cupertino Weather Widget -->
+        <div class="nc-widget nc-widget-weather" onclick="cycleWidgetWeatherCity()" title="点击切换城市天气">
+          <div class="nc-weather-top">
+            <div>
+              <div class="nc-weather-city" id="nc-weather-city">Cupertino</div>
+              <div class="nc-weather-temp" id="nc-weather-temp">72°</div>
+            </div>
+            <div class="nc-weather-icon" id="nc-weather-icon">☀️</div>
+          </div>
+          <div class="nc-weather-bottom">
+            <span class="nc-weather-desc" id="nc-weather-desc">晴朗</span>
+            <span class="nc-weather-hl">最高 76° 最低 54°</span>
+          </div>
+        </div>
+
+        <!-- World Clock Widget -->
+        <div class="nc-widget nc-widget-clock" onclick="cycleWidgetClockCity()" title="点击切换世界时钟">
+          <div class="nc-clock-row">
+            <div>
+              <div class="nc-clock-city" id="nc-clock-local-city">北京</div>
+              <div class="nc-clock-diff">本地时间</div>
+            </div>
+            <div class="nc-clock-digits" id="nc-clock-local-time">14:20</div>
+          </div>
+          <div class="nc-clock-divider"></div>
+          <div class="nc-clock-row">
+            <div>
+              <div class="nc-clock-city">Cupertino</div>
+              <div class="nc-clock-diff">昨天, 晚 15 小时</div>
+            </div>
+            <div class="nc-clock-digits" id="nc-clock-cup-time">23:20</div>
+          </div>
+        </div>
+
+        <!-- System Performance Widget -->
+        <div class="nc-widget nc-widget-sys" onclick="cycleWidgetSysMode()" title="点击切换性能监控">
+          <div class="nc-sys-header">
+            <span>📈 系统性能</span>
+            <span class="nc-sys-badge" id="nc-sys-badge">NORMAL</span>
+          </div>
+          <div class="nc-sys-meters">
+            <div class="nc-sys-meter">
+              <div class="nc-sys-meter-label"><span>CPU</span><span id="nc-cpu-val">24%</span></div>
+              <div class="nc-sys-bar"><div id="nc-cpu-fill" class="nc-sys-fill cpu" style="width:24%;"></div></div>
+            </div>
+            <div class="nc-sys-meter">
+              <div class="nc-sys-meter-label"><span>内存</span><span id="nc-ram-val">4.2 GB</span></div>
+              <div class="nc-sys-bar"><div id="nc-ram-fill" class="nc-sys-fill ram" style="width:38%;"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Edit Widgets Button -->
+        <button class="nc-edit-widgets-btn" onclick="openWidgetGallery(); closeNotificationCenter();" data-i18n="nc_edit_widgets">
+          编辑小组件...
+        </button>
+      </div>
     </div>
   </div>
 
@@ -853,24 +1627,50 @@
 
   <!-- Apple System Menu Dropdown -->
   <div class="menu-dropdown" id="apple-menu" style="left: 10px;">
-    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); launchHostMonitor();" data-i18n="apple_about">关于本机</div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); openAboutMac();" data-i18n="apple_about">关于本机</div>
     <div class="menu-dropdown-separator"></div>
     <div class="menu-dropdown-item" onclick="closeAllTopMenus(); launchSettings();" data-i18n="apple_settings">系统设置...</div>
     <div class="menu-dropdown-item" onclick="closeAllTopMenus(); launchStore();" data-i18n="apple_appstore">App Store...</div>
     <div class="menu-dropdown-separator"></div>
-    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); launchActivityMonitor();" style="display:flex;justify-content:space-between;align-items:center;">
+    <div class="menu-dropdown-item has-submenu" id="apple-recent-item" onmouseenter="openRecentSubmenu()" onmouseleave="scheduleCloseRecentSubmenu()" style="display:flex;justify-content:space-between;align-items:center;position:relative;">
+      <span data-i18n="apple_recent_items">最近使用的项目</span>
+      <span class="menu-arrow" style="font-size:9px;opacity:0.6;">▶</span>
+      <!-- Recent Items Flyout Submenu -->
+      <div class="menu-dropdown apple-recent-submenu" id="apple-recent-submenu" style="display:none;" onmouseenter="cancelCloseRecentSubmenu()" onmouseleave="scheduleCloseRecentSubmenu()">
+        <div class="submenu-header">应用程序</div>
+        <div id="recent-apps-list">
+          <div class="menu-dropdown-item" onclick="closeAllTopMenus(); launchFinder();">访达</div>
+          <div class="menu-dropdown-item" onclick="closeAllTopMenus(); launchBrowser();">Safari 浏览器</div>
+          <div class="menu-dropdown-item" onclick="closeAllTopMenus(); launchTerminal();">终端</div>
+          <div class="menu-dropdown-item" onclick="closeAllTopMenus(); launchNotes();">备忘录</div>
+        </div>
+        <div class="menu-dropdown-separator"></div>
+        <div class="submenu-header">文稿</div>
+        <div id="recent-docs-list">
+          <div class="menu-dropdown-item" onclick="closeAllTopMenus(); openRecentDoc('Sequoia_Shot_2026.png');">Sequoia_Shot_2026.png</div>
+          <div class="menu-dropdown-item" onclick="closeAllTopMenus(); openRecentDoc('Alice_Notes.txt');">Alice_Notes.txt</div>
+        </div>
+        <div class="menu-dropdown-separator"></div>
+        <div class="menu-dropdown-item" onclick="clearRecentItems(); closeAllTopMenus();">清除菜单</div>
+      </div>
+    </div>
+    <div class="menu-dropdown-separator"></div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); openForceQuitDialog();" style="display:flex;justify-content:space-between;align-items:center;">
       <span data-i18n="apple_force_quit">强制退出...</span>
       <span class="menu-shortcut">⌥⌘⎋</span>
     </div>
     <div class="menu-dropdown-separator"></div>
-    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); enterStandByMode();" style="display:flex;justify-content:space-between;align-items:center;">
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); sleepMacDisplay();" style="display:flex;justify-content:space-between;align-items:center;">
       <span data-i18n="apple_sleep">睡眠</span>
     </div>
-    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); location.reload();" style="display:flex;justify-content:space-between;align-items:center;">
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); confirmMacRestart();" style="display:flex;justify-content:space-between;align-items:center;">
       <span data-i18n="apple_restart">重新启动...</span>
     </div>
-    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); window.aliceOS.closeWindow();" data-i18n="apple_shutdown">关机...</div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); confirmMacShutdown();" data-i18n="apple_shutdown">关机...</div>
     <div class="menu-dropdown-separator"></div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); startScreensaver();" style="display:flex;justify-content:space-between;align-items:center;">
+      <span data-i18n="apple_screensaver">屏幕保护程序...</span>
+    </div>
     <div class="menu-dropdown-item" onclick="closeAllTopMenus(); lockScreen();" style="display:flex;justify-content:space-between;align-items:center;">
       <span data-i18n="apple_lock">锁定屏幕</span>
       <span class="menu-shortcut">⌃⌘Q</span>
@@ -957,6 +1757,63 @@
 
   <!-- View Menu Dropdown -->
   <div class="menu-dropdown" id="view-menu" style="left: 165px;">
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); setFinderActiveViewMode('icon');" style="display:flex;justify-content:space-between;align-items:center;">
+      <span>作为图标</span>
+      <span class="menu-shortcut">⌘1</span>
+    </div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); setFinderActiveViewMode('list');" style="display:flex;justify-content:space-between;align-items:center;">
+      <span>作为列表</span>
+      <span class="menu-shortcut">⌘2</span>
+    </div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); setFinderActiveViewMode('column');" style="display:flex;justify-content:space-between;align-items:center;">
+      <span>作为分栏</span>
+      <span class="menu-shortcut">⌘3</span>
+    </div>
+    <div class="menu-dropdown-separator"></div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); toggleFinderGroupBy();" style="display:flex;justify-content:space-between;align-items:center;">
+      <span>使用分组</span>
+      <span class="menu-shortcut">⌃⌘1</span>
+    </div>
+    <div class="menu-dropdown-item has-submenu" id="view-sort-item" onmouseenter="openSortSubmenu()" onmouseleave="scheduleCloseSortSubmenu()" style="display:flex;justify-content:space-between;align-items:center;position:relative;">
+      <span>排序方式</span>
+      <span style="font-size:10px;opacity:0.6;">▶</span>
+      <div class="menu-dropdown view-sort-submenu" id="view-sort-submenu" style="display:none;position:absolute;left:100%;top:0;min-width:140px;box-shadow:0 12px 30px rgba(0,0,0,0.4);" onmouseenter="cancelCloseSortSubmenu()" onmouseleave="scheduleCloseSortSubmenu()">
+        <div class="menu-dropdown-item" onclick="closeAllTopMenus(); setFinderActiveSort('name');" style="display:flex;justify-content:space-between;align-items:center;">
+          <span>名称</span>
+          <span class="sort-check" data-sort="name" style="font-weight:700;color:#007aff;">✓</span>
+        </div>
+        <div class="menu-dropdown-item" onclick="closeAllTopMenus(); setFinderActiveSort('kind');" style="display:flex;justify-content:space-between;align-items:center;">
+          <span>种类</span>
+          <span class="sort-check" data-sort="kind" style="font-weight:700;color:#007aff;display:none;">✓</span>
+        </div>
+        <div class="menu-dropdown-item" onclick="closeAllTopMenus(); setFinderActiveSort('date');" style="display:flex;justify-content:space-between;align-items:center;">
+          <span>修改日期</span>
+          <span class="sort-check" data-sort="date" style="font-weight:700;color:#007aff;display:none;">✓</span>
+        </div>
+        <div class="menu-dropdown-item" onclick="closeAllTopMenus(); setFinderActiveSort('size');" style="display:flex;justify-content:space-between;align-items:center;">
+          <span>大小</span>
+          <span class="sort-check" data-sort="size" style="font-weight:700;color:#007aff;display:none;">✓</span>
+        </div>
+        <div class="menu-dropdown-separator"></div>
+        <div class="menu-dropdown-item" onclick="closeAllTopMenus(); setFinderActiveSortOrder(true);" style="display:flex;justify-content:space-between;align-items:center;">
+          <span>升序</span>
+          <span class="sort-order-check" data-order="asc" style="font-weight:700;color:#007aff;">✓</span>
+        </div>
+        <div class="menu-dropdown-item" onclick="closeAllTopMenus(); setFinderActiveSortOrder(false);" style="display:flex;justify-content:space-between;align-items:center;">
+          <span>降序</span>
+          <span class="sort-order-check" data-order="desc" style="font-weight:700;color:#007aff;display:none;">✓</span>
+        </div>
+      </div>
+    </div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); toggleFinderPathBar();" style="display:flex;justify-content:space-between;align-items:center;">
+      <span>隐藏/显示路径栏</span>
+      <span class="menu-shortcut">⌥⌘P</span>
+    </div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); toggleFinderStatusBar();" style="display:flex;justify-content:space-between;align-items:center;">
+      <span>隐藏/显示状态栏</span>
+      <span class="menu-shortcut">⌘/</span>
+    </div>
+    <div class="menu-dropdown-separator"></div>
     <div class="menu-dropdown-item" onclick="closeAllTopMenus(); toggleStageManager();" style="display:flex;justify-content:space-between;align-items:center;">
       <span data-i18n="cc_stage_manager">台前调度</span>
       <span class="menu-shortcut">⌃S</span>
@@ -971,7 +1828,7 @@
     </div>
   </div>
 
-    <!-- Go Menu Dropdown (Finder) -->
+  <!-- Go Menu Dropdown (Finder) -->
   <div class="menu-dropdown" id="go-menu" style="left: 210px;">
     <div class="menu-dropdown-item" onclick="closeAllTopMenus(); activateOrLaunchApp('finder'); finderNavigate('/Applications');" style="display:flex;justify-content:space-between;align-items:center;">
       <span data-i18n="finder_applications">应用程序</span>
@@ -994,6 +1851,11 @@
       <span>Macintosh HD</span>
       <span class="menu-shortcut">⇧⌘C</span>
     </div>
+    <div class="menu-dropdown-separator"></div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); openGoToFolderModal();" style="display:flex;justify-content:space-between;align-items:center;">
+      <span>前往文件夹...</span>
+      <span class="menu-shortcut">⇧⌘G</span>
+    </div>
   </div>
 
   <!-- Window Menu Dropdown -->
@@ -1006,9 +1868,28 @@
       <span data-i18n="menu_zoom">缩放</span>
     </div>
     <div class="menu-dropdown-separator"></div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); applyTiling('left');" style="display:flex;justify-content:space-between;align-items:center;">
+      <span>拼贴到屏幕左侧</span>
+      <span class="menu-shortcut">⌃⌥←</span>
+    </div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); applyTiling('right');" style="display:flex;justify-content:space-between;align-items:center;">
+      <span>拼贴到屏幕右侧</span>
+      <span class="menu-shortcut">⌃⌥→</span>
+    </div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); applyTiling('full');" style="display:flex;justify-content:space-between;align-items:center;">
+      <span>填充屏幕</span>
+      <span class="menu-shortcut">⌃⌥↩</span>
+    </div>
+    <div class="menu-dropdown-item" onclick="closeAllTopMenus(); applyTiling('center');" style="display:flex;justify-content:space-between;align-items:center;">
+      <span>居中放置</span>
+      <span class="menu-shortcut">⌃⌥C</span>
+    </div>
+    <div class="menu-dropdown-separator"></div>
     <div class="menu-dropdown-item" onclick="closeAllTopMenus(); bringAllToFront();" style="display:flex;justify-content:space-between;align-items:center;">
       <span data-i18n="menu_bring_all_front">前置全部窗口</span>
     </div>
+    <div class="menu-dropdown-separator" id="window-menu-sep" style="display:none;"></div>
+    <div id="window-menu-active-list"></div>
   </div>
 
   <!-- Help Menu Dropdown -->
@@ -1023,16 +1904,14 @@
 
 ﻿  <!-- macOS Sequoia Control Center — Bento Grid -->
   <div id="control-center" class="cc-panel">
-
-    <!-- Row 1: Connectivity Bento Card + DND/AirDrop column -->
+    <!-- Row 1: Connectivity Bento Card + Quick Toggles Column -->
     <div class="cc-row">
-
-      <!-- Big connectivity card (Wi-Fi + Bluetooth) -->
-      <div class="cc-bento cc-bento-lg cc-card" id="cc-connectivity-card">
+      <!-- Big connectivity card (Wi-Fi + Bluetooth + AirDrop) -->
+      <div class="cc-card cc-conn-card" id="cc-connectivity-card">
         <!-- Wi-Fi -->
         <div class="cc-toggle-row" id="cc-wifi-toggle" onclick="toggleCCWifi()">
           <div class="cc-toggle-icon cc-blue" id="cc-wifi-icon-wrap">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1" fill="white"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1" fill="white"/></svg>
           </div>
           <div class="cc-toggle-text">
             <div class="cc-toggle-label" data-i18n="cc_wifi">无线局域网</div>
@@ -1049,95 +1928,127 @@
           </div>
           <div class="cc-toggle-text">
             <div class="cc-toggle-label" data-i18n="cc_bluetooth">蓝牙</div>
-            <div class="cc-toggle-sub" id="cc-bt-status">3 Devices</div>
+            <div class="cc-toggle-sub" id="cc-bt-status">已开启</div>
           </div>
           <div class="cc-chevron">›</div>
         </div>
         <!-- Divider -->
         <div class="cc-divider"></div>
         <!-- AirDrop -->
-        <div class="cc-toggle-row" onclick="toggleCCAirdrop()">
+        <div class="cc-toggle-row" id="cc-airdrop-toggle" onclick="toggleCCAirdrop()">
           <div class="cc-toggle-icon cc-blue" id="cc-airdrop-icon-wrap">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M6.34 6.34a8 8 0 0 0 0 11.32M17.66 6.34a8 8 0 0 1 0 11.32M3.51 3.51a13 13 0 0 0 0 16.98M20.49 3.51a13 13 0 0 1 0 16.98"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M6.34 6.34a8 8 0 0 0 0 11.32M17.66 6.34a8 8 0 0 1 0 11.32M3.51 3.51a13 13 0 0 0 0 16.98M20.49 3.51a13 13 0 0 1 0 16.98"/></svg>
           </div>
           <div class="cc-toggle-text">
             <div class="cc-toggle-label">AirDrop</div>
-            <div class="cc-toggle-sub">所有人</div>
+            <div class="cc-toggle-sub" id="cc-airdrop-status">所有人</div>
           </div>
           <div class="cc-chevron">›</div>
         </div>
       </div>
 
-      <!-- Right column: small tiles -->
+      <!-- Right column: 3 horizontal macOS cards -->
       <div class="cc-col-sm">
-        <!-- DND -->
-        <div class="cc-bento cc-bento-sm cc-card cc-toggle-btn" id="cc-dnd-btn" onclick="toggleCCDND()">
-          <div class="cc-sm-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <!-- DND / Focus -->
+        <div class="cc-card cc-pill-btn" id="cc-dnd-btn" onclick="toggleCCDND()">
+          <div class="cc-pill-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
           </div>
-          <div class="cc-sm-label" data-i18n="cc_dnd">勿扰</div>
+          <div class="cc-pill-label" data-i18n="cc_dnd">勿扰模式</div>
         </div>
         <!-- Stage Manager -->
-        <div class="cc-bento cc-bento-sm cc-card cc-toggle-btn" id="cc-stage-manager-btn" onclick="toggleStageManager()">
-          <div class="cc-sm-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="4" width="14" height="16" rx="2"/><rect x="3" y="7" width="2" height="10" rx="1" fill="currentColor"/><rect x="1" y="9" width="1" height="6" rx="0.5" fill="currentColor"/></svg>
+        <div class="cc-card cc-pill-btn" id="cc-stage-manager-btn" onclick="toggleStageManager()">
+          <div class="cc-pill-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="4" width="14" height="16" rx="2"/><rect x="3" y="7" width="2" height="10" rx="1" fill="currentColor"/><rect x="1" y="9" width="1" height="6" rx="0.5" fill="currentColor"/></svg>
           </div>
-          <div class="cc-sm-label" data-i18n="cc_stage_manager">台前调度</div>
+          <div class="cc-pill-label" data-i18n="cc_stage_manager">台前调度</div>
         </div>
         <!-- Screen Mirroring -->
-        <div class="cc-bento cc-bento-sm cc-card cc-toggle-btn" onclick="">
-          <div class="cc-sm-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        <div class="cc-card cc-pill-btn" id="cc-mirror-btn" onclick="toggleScreenMirroring()">
+          <div class="cc-pill-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
           </div>
-          <div class="cc-sm-label">投屏</div>
+          <div class="cc-pill-label">屏幕镜像</div>
         </div>
       </div>
     </div>
 
-    <!-- Row 2: Brightness Slider -->
-    <div class="cc-bento cc-bento-full cc-card cc-slider-card">
-      <div class="cc-slider-icon">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41m14.14-14.14l-1.41 1.41"/></svg>
+    <!-- Row 2: Brightness Capsule Slider Card -->
+    <div class="cc-card cc-slider-card">
+      <div class="cc-slider-header">
+        <span class="cc-slider-title">显示器</span>
+        <span class="cc-expand-btn" onclick="openCCExpandedSlider('brightness')">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+        </span>
       </div>
-      <div class="cc-slider-track-wrap">
-        <input type="range" id="cc-brightness" min="0" max="100" value="80" class="cc-hslider">
+      <div class="cc-capsule-track" id="cc-brightness-track" style="--val: 80;">
+        <div class="cc-capsule-fill" id="cc-brightness-fill"></div>
+        <div class="cc-capsule-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41m14.14-14.14l-1.41 1.41"/></svg>
+        </div>
+        <input type="range" id="cc-brightness" min="0" max="100" value="80" class="cc-capsule-input" oninput="updateCCSlider(this, true)">
       </div>
-      <span class="cc-expand-btn" onclick="openCCExpandedSlider('brightness')">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-      </span>
     </div>
 
-    <!-- Row 3: Volume Slider -->
-    <div class="cc-bento cc-bento-full cc-card cc-slider-card">
-      <div class="cc-slider-icon" id="cc-volume-icon">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    <!-- Row 2.5: Keyboard Brightness Capsule Slider Card -->
+    <div class="cc-card cc-slider-card" id="cc-kb-brightness-card">
+      <div class="cc-slider-header">
+        <span class="cc-slider-title">键盘亮度</span>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span class="cc-slider-pct" id="cc-kb-pct" style="font-size:11px; color:rgba(255,255,255,0.6); font-variant-numeric:tabular-nums;">75%</span>
+          <span class="cc-expand-btn" onclick="openCCExpandedSlider('keyboard')">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+          </span>
+        </div>
       </div>
-      <div class="cc-slider-track-wrap">
-        <input type="range" id="cc-volume" min="0" max="100" value="50" class="cc-hslider">
+      <div class="cc-capsule-track" id="cc-kb-track" style="--val: 75;">
+        <div class="cc-capsule-fill" id="cc-kb-fill"></div>
+        <div class="cc-capsule-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="14" width="16" height="6" rx="1.5"/>
+            <path d="M7 17h.01M10 17h.01M13 17h.01M16 17h.01"/>
+            <path d="M12 4v4M7.76 5.24l2.83 2.83M16.24 5.24l-2.83 2.83"/>
+          </svg>
+        </div>
+        <input type="range" id="cc-kb-brightness" min="0" max="100" value="75" class="cc-capsule-input" oninput="updateCCKeyboardBrightness(this.value)">
       </div>
-      <span class="cc-expand-btn" onclick="openCCExpandedSlider('volume')">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-      </span>
+    </div>
+
+    <!-- Row 3: Volume Capsule Slider Card -->
+    <div class="cc-card cc-slider-card">
+      <div class="cc-slider-header">
+        <span class="cc-slider-title">声音</span>
+        <span class="cc-expand-btn" onclick="openCCExpandedSlider('volume')">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+        </span>
+      </div>
+      <div class="cc-capsule-track" id="cc-volume-track" style="--val: 65;">
+        <div class="cc-capsule-fill" id="cc-volume-fill"></div>
+        <div class="cc-capsule-icon" id="cc-volume-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <input type="range" id="cc-volume" min="0" max="100" value="65" class="cc-capsule-input" oninput="updateCCSlider(this, true)">
+      </div>
     </div>
 
     <!-- Row 4: Now Playing -->
-    <div class="cc-bento cc-bento-full cc-card cc-nowplaying" id="cc-nowplaying">
+    <div class="cc-card cc-nowplaying" id="cc-nowplaying">
       <div class="cc-np-art" id="cc-np-art">
-        <svg width="28" height="28" viewBox="0 0 100 100"><path d="M 68 22 L 42 28 C 39 29 37 31 37 34 L 37 66 C 35 64 32 63 28 63 C 21 63 16 67 16 73 C 16 79 21 83 28 83 C 35 83 40 78 40 72 L 40 42 L 65 37 L 65 60 C 63 58 60 57 56 57 C 49 57 44 61 44 67 C 44 73 49 77 56 77 C 63 77 68 72 68 66 Z" fill="#ffffff"/></svg>
+        <svg width="22" height="22" viewBox="0 0 100 100"><path d="M 68 22 L 42 28 C 39 29 37 31 37 34 L 37 66 C 35 64 32 63 28 63 C 21 63 16 67 16 73 C 16 79 21 83 28 83 C 35 83 40 78 40 72 L 40 42 L 65 37 L 65 60 C 63 58 60 57 56 57 C 49 57 44 61 44 67 C 44 73 49 77 56 77 C 63 77 68 72 68 66 Z" fill="#ffffff"/></svg>
       </div>
       <div class="cc-np-info">
         <div class="cc-np-title" id="cc-np-title">Alice Symphony</div>
         <div class="cc-np-artist" id="cc-np-artist">Cupertino Soundscape</div>
       </div>
       <div class="cc-np-controls">
-        <span onclick="skipTrack(-1)" class="cc-np-btn">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="4" x2="5" y2="20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+        <span onclick="skipTrack(-1)" class="cc-np-btn" title="上一首">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="4" x2="5" y2="20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
         </span>
-        <span id="cc-music-play-btn" onclick="toggleCCMusic()" class="cc-np-btn cc-np-play">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        <span id="cc-music-play-btn" onclick="toggleCCMusic()" class="cc-np-btn cc-np-play" title="播放/暂停">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
         </span>
-        <span onclick="skipTrack(1)" class="cc-np-btn">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="4" x2="19" y2="20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+        <span onclick="skipTrack(1)" class="cc-np-btn" title="下一首">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="4" x2="19" y2="20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
         </span>
       </div>
       <!-- EQ wave -->
@@ -1266,6 +2177,31 @@
         </svg>
       </div>
 
+      <!-- Siri / Apple Intelligence -->
+      <div class="dock-icon" data-app="siri" onclick="toggleSiri()" title="Siri" data-i18n-title="app_siri">
+        <svg viewBox="0 0 100 100" class="macos-app-icon">
+          <defs>
+            <radialGradient id="dock-siri-grad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#ffffff"/>
+              <stop offset="25%" stop-color="#38bdf8"/>
+              <stop offset="55%" stop-color="#a855f7"/>
+              <stop offset="85%" stop-color="#ec4899"/>
+              <stop offset="100%" stop-color="#1e1b4b"/>
+            </radialGradient>
+            <filter id="dock-siri-blur" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+            </filter>
+          </defs>
+          <rect width="100" height="100" rx="22.5" fill="#09090b"/>
+          <circle cx="50" cy="50" r="38" fill="url(#dock-siri-grad)" filter="url(#dock-siri-blur)"/>
+          <ellipse cx="50" cy="50" rx="32" ry="16" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="2.2" transform="rotate(-30 50 50)"/>
+          <ellipse cx="50" cy="50" rx="32" ry="16" fill="none" stroke="rgba(56,189,248,0.85)" stroke-width="2.2" transform="rotate(30 50 50)"/>
+          <ellipse cx="50" cy="50" rx="32" ry="16" fill="none" stroke="rgba(236,72,153,0.85)" stroke-width="2.2" transform="rotate(90 50 50)"/>
+        </svg>
+        <div class="dock-dot" id="siri-dock-dot"></div>
+      </div>
+
       <!-- Safari -->
       <div class="dock-icon" data-app="browser" onclick="activateOrLaunchApp('browser')" title="Safari 浏览器" data-i18n-title="app_browser">
         <img src="assets/icons/safari.png" alt="Safari" class="macos-app-icon">
@@ -1351,10 +2287,62 @@
         <div class="dock-dot"></div>
       </div>
 
+      <!-- iPhone Mirroring -->
+      <div class="dock-icon" data-app="iphonemirror" onclick="launchIPhoneMirroring()" title="iPhone 镜像" data-i18n-title="app_iphonemirror">
+        <svg viewBox="0 0 100 100" class="macos-app-icon">
+          <defs>
+            <linearGradient id="ipm-dock-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#1e293b"/>
+              <stop offset="100%" stop-color="#0f172a"/>
+            </linearGradient>
+            <linearGradient id="ipm-screen-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#3b82f6"/>
+              <stop offset="100%" stop-color="#1d4ed8"/>
+            </linearGradient>
+          </defs>
+          <rect width="100" height="100" rx="22.5" fill="url(#ipm-dock-bg)"/>
+          <rect x="25" y="12" width="50" height="76" rx="12" fill="#18181b" stroke="#94a3b8" stroke-width="2.5"/>
+          <rect x="42" y="16" width="16" height="5" rx="2.5" fill="#000000"/>
+          <rect x="28" y="24" width="44" height="60" rx="4" fill="url(#ipm-screen-grad)" opacity="0.6"/>
+          <circle cx="50" cy="54" r="12" fill="#60a5fa" opacity="0.8"/>
+        </svg>
+        <div class="dock-dot" id="dock-dot-iphonemirror"></div>
+      </div>
+
       <!-- Settings -->
       <div class="dock-icon" data-app="settings" onclick="activateOrLaunchApp('settings')" title="系统设置" data-i18n-title="app_settings">
         <img src="assets/icons/settings.png" alt="Settings" class="macos-app-icon">
         <div class="dock-dot"></div>
+      </div>
+
+      <!-- Passwords (macOS Sequoia 15) -->
+      <div class="dock-icon" data-app="passwords" onclick="activateOrLaunchApp('passwords')" title="密码" data-i18n-title="app_passwords">
+        <svg viewBox="0 0 100 100" class="macos-app-icon">
+          <defs>
+            <linearGradient id="pwd-dock-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#2c2c2e"/>
+              <stop offset="100%" stop-color="#18181a"/>
+            </linearGradient>
+            <linearGradient id="pwd-key-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ffe600"/>
+              <stop offset="50%" stop-color="#ffb300"/>
+              <stop offset="100%" stop-color="#ff9100"/>
+            </linearGradient>
+            <filter id="pwd-glow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(255,179,0,0.4)"/>
+            </filter>
+          </defs>
+          <rect width="100" height="100" rx="22.5" fill="url(#pwd-dock-bg)"/>
+          <rect x="2" y="2" width="96" height="96" rx="21" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+          <g filter="url(#pwd-glow)">
+            <circle cx="44" cy="42" r="19" fill="none" stroke="url(#pwd-key-grad)" stroke-width="7"/>
+            <circle cx="44" cy="42" r="6" fill="#18181a"/>
+            <line x1="58" y1="56" x2="74" y2="72" stroke="url(#pwd-key-grad)" stroke-width="7" stroke-linecap="round"/>
+            <line x1="66" y1="64" x2="72" y2="58" stroke="url(#pwd-key-grad)" stroke-width="5" stroke-linecap="round"/>
+            <line x1="73" y1="71" x2="78" y2="66" stroke="url(#pwd-key-grad)" stroke-width="5" stroke-linecap="round"/>
+          </g>
+        </svg>
+        <div class="dock-dot" id="dock-dot-passwords"></div>
       </div>
 
       <!-- Separator -->
@@ -1365,7 +2353,7 @@
 
       <!-- Trash -->
       <div class="dock-icon" id="dock-trash" onclick="openTrash()" title="废纸篓" data-i18n-title="app_trash">
-        <svg viewBox="0 0 100 100" class="macos-app-icon">
+        <svg viewBox="0 0 100 100" class="macos-app-icon" id="dock-trash-empty-svg">
           <defs>
             <linearGradient id="trash-glass" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stop-color="rgba(255,255,255,0.7)"/>
@@ -1378,7 +2366,73 @@
           <line x1="50" y1="31" x2="50" y2="90" stroke="rgba(148,163,184,0.6)" stroke-width="1.8"/>
           <line x1="65" y1="28" x2="60" y2="87" stroke="rgba(148,163,184,0.6)" stroke-width="1.8"/>
         </svg>
+        <svg viewBox="0 0 100 100" class="macos-app-icon" id="dock-trash-full-svg" style="display:none;">
+          <defs>
+            <linearGradient id="trash-glass-full" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="rgba(255,255,255,0.75)"/>
+              <stop offset="100%" stop-color="rgba(200,210,225,0.45)"/>
+            </linearGradient>
+            <linearGradient id="paper-grad-1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ffffff"/>
+              <stop offset="100%" stop-color="#cbd5e1"/>
+            </linearGradient>
+            <linearGradient id="paper-grad-2" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#f8fafc"/>
+              <stop offset="100%" stop-color="#e2e8f0"/>
+            </linearGradient>
+            <filter id="trash-paper-shadow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.25)"/>
+            </filter>
+          </defs>
+          <!-- Back Papers poking out of the basket -->
+          <g filter="url(#trash-paper-shadow)">
+            <!-- Left tilted folded paper sheet -->
+            <path d="M 28 26 L 36 10 L 52 14 L 46 30 Z" fill="url(#paper-grad-2)"/>
+            <path d="M 36 10 L 44 18 L 52 14 Z" fill="#94a3b8" opacity="0.4"/>
+            <line x1="33" y1="18" x2="42" y2="21" stroke="#94a3b8" stroke-width="1" opacity="0.6"/>
+            
+            <!-- Right folded crumpled paper -->
+            <path d="M 52 28 L 60 7 L 78 12 L 72 27 Z" fill="url(#paper-grad-1)"/>
+            <path d="M 60 7 L 68 15 L 78 12 Z" fill="#64748b" opacity="0.35"/>
+            <line x1="62" y1="17" x2="72" y2="19" stroke="#94a3b8" stroke-width="1" opacity="0.6"/>
+            <line x1="61" y1="21" x2="70" y2="23" stroke="#94a3b8" stroke-width="1" opacity="0.6"/>
+
+            <!-- Center crumpled paper cluster -->
+            <path d="M 38 24 C 36 14 44 8 50 9 C 56 10 63 15 62 25 C 55 23 45 23 38 24 Z" fill="#ffffff"/>
+            <path d="M 44 14 L 48 19 L 54 13 L 57 20" fill="none" stroke="#cbd5e1" stroke-width="1.2"/>
+          </g>
+
+          <!-- Back rim of basket -->
+          <ellipse cx="50" cy="22" rx="34" ry="10" fill="none" stroke="#94a3b8" stroke-width="2"/>
+
+          <!-- Front crumpled paper spilling slightly over rim -->
+          <path d="M 38 21 C 42 18 56 19 60 22 C 58 26 52 28 46 27 C 41 26 38 23 38 21 Z" fill="#f1f5f9" opacity="0.95"/>
+
+          <!-- Translucent glass basket body -->
+          <path d="M 20 25 L 28 85 C 29 89 38 92 50 92 C 62 92 71 89 72 85 L 80 25 Z" fill="url(#trash-glass-full)" stroke="#cbd5e1" stroke-width="2"/>
+          
+          <!-- Inner paper silhouettes inside the basket -->
+          <path d="M 32 35 C 30 50 38 70 48 72 C 58 70 65 52 64 35 Z" fill="rgba(255,255,255,0.55)" filter="blur(1px)"/>
+
+          <!-- Basket vertical ribs -->
+          <line x1="35" y1="28" x2="40" y2="87" stroke="rgba(148,163,184,0.65)" stroke-width="1.8"/>
+          <line x1="50" y1="31" x2="50" y2="90" stroke="rgba(148,163,184,0.65)" stroke-width="1.8"/>
+          <line x1="65" y1="28" x2="60" y2="87" stroke="rgba(148,163,184,0.65)" stroke-width="1.8"/>
+
+          <!-- Front rim highlight -->
+          <path d="M 16 22 C 16 27 31 32 50 32 C 69 32 84 27 84 22" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2"/>
+        </svg>
       </div>
+  </div>
+
+  <!-- macOS Dock Trash Context Menu -->
+  <div id="dock-trash-menu" class="dock-context-menu" style="display:none;position:fixed;z-index:99999;">
+    <div class="dock-context-item" id="trash-menu-empty" onclick="emptyTrash(); hideDockTrashMenu();">
+      <span>清空废纸篓</span>
+    </div>
+    <div class="dock-context-divider"></div>
+    <div class="dock-context-item" id="trash-menu-open" onclick="openTrash(); hideDockTrashMenu();">
+      <span>打开</span>
     </div>
   </div>
 
@@ -1400,6 +2454,24 @@
 
   <!-- macOS Window Split Snap Preview Silhouette -->
   <div id="window-snap-preview"></div>
+
+  <!-- macOS Sequoia Window Tiling Feedback HUD Pill -->
+  <div id="tiling-hud-pill" class="tiling-hud-pill" style="display:none;">
+    <div class="tiling-hud-icon" id="tiling-hud-icon"></div>
+    <div class="tiling-hud-label" id="tiling-hud-label">左侧半屏</div>
+  </div>
+
+  <!-- macOS Universal Clipboard Continuity Capsule HUD -->
+  <div id="clipboard-sync-hud" class="clipboard-sync-hud" style="display:none;">
+    <div class="clipboard-sync-icon" id="clipboard-sync-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="5" y="2" width="14" height="20" rx="3"></rect>
+        <line x1="12" y1="18" x2="12.01" y2="18"></line>
+      </svg>
+    </div>
+    <div class="clipboard-sync-label" id="clipboard-sync-label">从 iPhone 粘贴...</div>
+    <div class="clipboard-sync-spinner"></div>
+  </div>
 
   <!-- macOS Quick Note Peek Dog-Ear & Floating Card -->
   <div id="quick-note-peek" onclick="openQuickNote()" title="快速备忘" data-i18n-title="qn_title" style="display:flex;align-items:center;justify-content:center;">
@@ -1424,6 +2496,40 @@
     </span>
     <div style="width:100px;height:5px;background:rgba(255,255,255,0.25);border-radius:3px;overflow:hidden;">
       <div id="volume-hud-bar" style="width:50%;height:100%;background:white;border-radius:3px;transition:width 0.12s cubic-bezier(0.16, 1, 0.3, 1);"></div>
+    </div>
+  </div>
+
+  <!-- macOS Floating Brightness HUD -->
+  <div id="brightness-hud">
+    <span id="brightness-hud-icon" style="display:flex;align-items:center;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1" x2="12" y2="3"/>
+        <line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1" y1="12" x2="3" y2="12"/>
+        <line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+    </span>
+    <div style="width:100px;height:5px;background:rgba(255,255,255,0.25);border-radius:3px;overflow:hidden;">
+      <div id="brightness-hud-bar" style="width:80%;height:100%;background:white;border-radius:3px;transition:width 0.12s cubic-bezier(0.16, 1, 0.3, 1);"></div>
+    </div>
+  </div>
+
+  <!-- macOS Floating Keyboard Backlight HUD -->
+  <div id="keyboard-hud">
+    <span id="keyboard-hud-icon" style="display:flex;align-items:center;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="4" y="14" width="16" height="6" rx="1.5"/>
+        <path d="M7 17h.01M10 17h.01M13 17h.01M16 17h.01"/>
+        <path d="M12 4v4M7.76 5.24l2.83 2.83M16.24 5.24l-2.83 2.83"/>
+      </svg>
+    </span>
+    <div style="width:100px;height:5px;background:rgba(255,255,255,0.25);border-radius:3px;overflow:hidden;">
+      <div id="keyboard-hud-bar" style="width:75%;height:100%;background:white;border-radius:3px;transition:width 0.12s cubic-bezier(0.16, 1, 0.3, 1);"></div>
     </div>
   </div>
 
@@ -1595,6 +2701,98 @@
     </div>
   </div>
 
+  <!-- macOS Sequoia Screen Capture Utility Bar (⌘⇧5) -->
+  <div id="screenshot-bar-hud" class="screenshot-bar-hud" style="display:none;" onclick="event.stopPropagation()">
+    <!-- Close button -->
+    <button class="ss-bar-btn ss-bar-close" onclick="closeScreenshotUtilityBar()" title="关闭 (Esc)">✕</button>
+    <div class="ss-bar-divider"></div>
+
+    <!-- Still capture modes -->
+    <div class="ss-bar-group">
+      <button class="ss-bar-btn active" id="ss-btn-portion" onclick="setScreenshotMode('portion')" title="捕捉所选部分">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M18 22V8a2 2 0 0 0-2-2H2"/>
+        </svg>
+      </button>
+      <button class="ss-bar-btn" id="ss-btn-window" onclick="setScreenshotMode('window')" title="捕捉所选窗口">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="16" rx="3"/><line x1="3" y1="9" x2="21" y2="9"/><circle cx="6" cy="6.5" r="1" fill="currentColor"/>
+        </svg>
+      </button>
+      <button class="ss-bar-btn" id="ss-btn-screen" onclick="setScreenshotMode('screen')" title="捕捉整个屏幕">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="ss-bar-divider"></div>
+
+    <!-- Video record modes -->
+    <div class="ss-bar-group">
+      <button class="ss-bar-btn" id="ss-btn-rec-portion" onclick="setScreenshotMode('rec_portion')" title="录制所选部分">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="18" height="18" rx="3" stroke-dasharray="3 3"/>
+          <circle cx="12" cy="12" r="4" fill="#ff3b30" stroke="none"/>
+        </svg>
+      </button>
+      <button class="ss-bar-btn" id="ss-btn-rec-screen" onclick="setScreenshotMode('rec_screen')" title="录制整个屏幕">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+          <circle cx="12" cy="10" r="3" fill="#ff3b30" stroke="none"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="ss-bar-divider"></div>
+
+    <!-- Options popover button -->
+    <div class="ss-options-wrapper" style="position:relative;">
+      <button class="ss-bar-btn ss-bar-text-btn" id="ss-options-btn" onclick="toggleScreenshotOptions(event)">
+        选项 <span style="font-size:10px;margin-left:2px;">▾</span>
+      </button>
+      <!-- Options dropdown -->
+      <div id="ss-options-popover" class="ss-options-popover" style="display:none;" onclick="event.stopPropagation()">
+        <div class="ss-opt-section-title">存储到</div>
+        <div class="ss-opt-item active" id="ss-save-desktop" onclick="setScreenshotSaveLocation('desktop')"><span class="ss-opt-check">✓</span> 桌面</div>
+        <div class="ss-opt-item" id="ss-save-documents" onclick="setScreenshotSaveLocation('documents')"><span class="ss-opt-check"></span> 文稿</div>
+        <div class="ss-opt-item" id="ss-save-clipboard" onclick="setScreenshotSaveLocation('clipboard')"><span class="ss-opt-check"></span> 剪贴板</div>
+        <div class="ss-opt-divider"></div>
+        <div class="ss-opt-section-title">计时器</div>
+        <div class="ss-opt-item active" id="ss-timer-0" onclick="setScreenshotTimer(0)"><span class="ss-opt-check">✓</span> 无</div>
+        <div class="ss-opt-item" id="ss-timer-5" onclick="setScreenshotTimer(5)"><span class="ss-opt-check"></span> 5 秒</div>
+        <div class="ss-opt-item" id="ss-timer-10" onclick="setScreenshotTimer(10)"><span class="ss-opt-check"></span> 10 秒</div>
+        <div class="ss-opt-divider"></div>
+        <div class="ss-opt-section-title">选项</div>
+        <div class="ss-opt-item active" id="ss-opt-thumb" onclick="toggleScreenshotOptThumb()"><span class="ss-opt-check">✓</span> 显示浮动缩略图</div>
+        <div class="ss-opt-item active" id="ss-opt-pointer" onclick="toggleScreenshotOptPointer()"><span class="ss-opt-check">✓</span> 记住上一次选取</div>
+      </div>
+    </div>
+
+    <!-- Action button: Capture or Record -->
+    <button class="ss-bar-action-btn" id="ss-bar-action-btn" onclick="executeScreenshotAction()">
+      捕捉
+    </button>
+  </div>
+
+  <!-- Resizable Crop Frame for Portion Mode -->
+  <div id="screenshot-crop-box" class="screenshot-crop-box" style="display:none;">
+    <div class="ss-crop-handle nw" data-handle="nw"></div>
+    <div class="ss-crop-handle n" data-handle="n"></div>
+    <div class="ss-crop-handle ne" data-handle="ne"></div>
+    <div class="ss-crop-handle e" data-handle="e"></div>
+    <div class="ss-crop-handle se" data-handle="se"></div>
+    <div class="ss-crop-handle s" data-handle="s"></div>
+    <div class="ss-crop-handle sw" data-handle="sw"></div>
+    <div class="ss-crop-handle w" data-handle="w"></div>
+    <div class="ss-crop-size-tag" id="ss-crop-size-tag">640 × 400</div>
+  </div>
+
+  <!-- Countdown Timer Overlay -->
+  <div id="screenshot-timer-overlay" class="screenshot-timer-overlay" style="display:none;">
+    <div class="screenshot-timer-circle" id="screenshot-timer-circle">5</div>
+  </div>
+
   <!-- macOS Floating Screenshot Thumbnail (Bottom-Right) -->
   <div id="screenshot-floating-card" class="screenshot-floating-card" style="display:none;" onclick="openScreenshotMarkup()">
     <img id="screenshot-thumb-img" class="screenshot-floating-preview" src="" alt="Screenshot" />
@@ -1638,6 +2836,108 @@
   </div>
 
   <script src="renderer.js"></script>
+    <!-- macOS Sequoia "About This Mac" Modal -->
+  <div id="about-mac-modal" class="about-mac-overlay" onclick="closeAboutMac(event)">
+    <div class="about-mac-window" onclick="event.stopPropagation()">
+      <div class="about-mac-titlebar">
+        <div class="about-mac-controls">
+          <div class="control close" onclick="closeAboutMac()" title="关闭"></div>
+        </div>
+      </div>
+      <div class="about-mac-body">
+        <!-- MacBook Pro Hero SVG -->
+        <div class="about-mac-hero-icon">
+          <svg viewBox="0 0 100 100" width="80" height="80">
+            <defs>
+              <linearGradient id="mac-screen-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#007aff"/>
+                <stop offset="50%" stop-color="#5856d6"/>
+                <stop offset="100%" stop-color="#ff2d55"/>
+              </linearGradient>
+              <linearGradient id="mac-body-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#71717a"/>
+                <stop offset="100%" stop-color="#27272a"/>
+              </linearGradient>
+            </defs>
+            <!-- Laptop Display Lid -->
+            <rect x="18" y="14" width="64" height="42" rx="4" fill="url(#mac-body-grad)" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
+            <rect x="21" y="17" width="58" height="36" rx="2" fill="url(#mac-screen-grad)"/>
+            <!-- Wallpaper Silhouette curve on screen -->
+            <path d="M 21 42 Q 50 30 79 46 L 79 53 L 21 53 Z" fill="rgba(0,0,0,0.3)"/>
+            <!-- Apple logo on screen reflection -->
+            <path d="M 50 28 C 47.8 28 46.5 29.2 45.4 29.2 C 44.2 29.2 43.1 28.2 41.5 28.2 C 39.4 28.2 37 29.9 37 33.4 C 37 36.9 40 42 42.5 42 C 43.7 42 44.4 41.2 45.8 41.2 C 47.1 41.2 47.7 42 49 42 C 51.5 42 53.2 39.3 53.2 37.8 C 50.3 36.4 50.4 32.4 53.3 31.2 C 52 29.2 49.9 28 47.6 28 Z M 46.2 27.5 C 47 26.5 47.5 25.1 47.3 23.8 C 46.1 23.9 44.6 24.6 43.8 25.6 C 43.1 26.4 42.5 27.8 42.7 29.1 C 44 29.2 45.4 28.4 46.2 27.5 Z" fill="rgba(255,255,255,0.85)" transform="translate(-5,-3) scale(0.6)"/>
+            <!-- Notch on mini screen -->
+            <rect x="46" y="17" width="8" height="2.5" rx="1" fill="#000000"/>
+            <!-- Laptop Base -->
+            <path d="M 10 57 L 90 57 C 91.5 57 92.5 58 91.5 59.5 L 86 63 C 85 63.5 83.5 64 82 64 L 18 64 C 16.5 64 15 63.5 14 63 L 8.5 59.5 C 7.5 58 8.5 57 10 57 Z" fill="url(#mac-body-grad)" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/>
+            <!-- Notch cutout for opening lid -->
+            <path d="M 44 57 L 56 57 C 55 58.5 45 58.5 44 57 Z" fill="#18181b"/>
+          </svg>
+        </div>
+
+        <div class="about-mac-model-title">MacBook Pro</div>
+        <div class="about-mac-model-subtitle">16-inch, Nov 2024 · Space Black</div>
+
+        <!-- Specs Grid -->
+        <div class="about-mac-specs-grid">
+          <div class="about-mac-spec-row">
+            <span class="about-mac-spec-label">芯片</span>
+            <span class="about-mac-spec-value">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="color:#ff9500;"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              Apple M3 Ultra (16-core CPU, 40-core GPU)
+            </span>
+          </div>
+          <div class="about-mac-spec-row">
+            <span class="about-mac-spec-label">内存</span>
+            <span class="about-mac-spec-value">36 GB 统一内存 (LPDDR5-6400)</span>
+          </div>
+          <div class="about-mac-spec-row">
+            <span class="about-mac-spec-label">启动磁盘</span>
+            <span class="about-mac-spec-value">Macintosh HD (APFS 加密)</span>
+          </div>
+          <div class="about-mac-spec-row">
+            <span class="about-mac-spec-label">macOS 版本</span>
+            <span class="about-mac-spec-value">macOS Sequoia 15.2 (24C101)</span>
+          </div>
+          <div class="about-mac-spec-row">
+            <span class="about-mac-spec-label">序列号</span>
+            <span class="about-mac-spec-value">
+              <span id="about-mac-serial">C02G879XP0D9</span>
+              <button class="about-mac-copy-btn" onclick="copyMacSerial()">复制</button>
+            </span>
+          </div>
+        </div>
+
+        <!-- Storage Breakdown Bar -->
+        <div class="about-mac-storage-section">
+          <div class="about-mac-storage-header">
+            <span><strong>Macintosh HD</strong> · 1 TB NVMe SSD</span>
+            <span>已使用 254.9 GB / 可用 745.1 GB</span>
+          </div>
+          <div class="about-mac-storage-bar">
+            <div class="storage-seg-apps" title="应用程序 142.5 GB"></div>
+            <div class="storage-seg-dev" title="开发者与 SDK 64.2 GB"></div>
+            <div class="storage-seg-macos" title="macOS Sequoia 28.4 GB"></div>
+            <div class="storage-seg-system" title="系统数据 19.8 GB"></div>
+            <div class="storage-seg-free" title="可用空间 745.1 GB"></div>
+          </div>
+          <div class="about-mac-storage-legend">
+            <span><span class="storage-legend-dot" style="background:#007aff;"></span>应用程序 142.5 GB</span>
+            <span><span class="storage-legend-dot" style="background:#5856d6;"></span>开发资源 64.2 GB</span>
+            <span><span class="storage-legend-dot" style="background:#af52de;"></span>macOS 28.4 GB</span>
+            <span><span class="storage-legend-dot" style="background:#ff9500;"></span>系统数据 19.8 GB</span>
+            <span><span class="storage-legend-dot" style="background:rgba(255,255,255,0.25);"></span>可用 745.1 GB</span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="about-mac-actions">
+          <button class="about-mac-btn primary" onclick="closeAboutMac(); launchHostMonitor();">更多信息与系统报告...</button>
+          <button class="about-mac-btn" onclick="checkMacSoftwareUpdate()">软件更新...</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- macOS Sequoia Window Tiling Menu -->
   <div id="tiling-menu" style="display:none;position:fixed;z-index:19999;">
     <div class="tiling-menu-card">
@@ -1651,6 +2951,229 @@
         <div class="tiling-btn" onclick="applyTiling('topright')" title="右上角"><div class="tiling-icon tiling-topright"></div><span>右上</span></div>
         <div class="tiling-btn" onclick="applyTiling('botleft')" title="左下角"><div class="tiling-icon tiling-botleft"></div><span>左下</span></div>
         <div class="tiling-btn" onclick="applyTiling('botright')" title="右下角"><div class="tiling-icon tiling-botright"></div><span>右下</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- macOS Force Quit Applications Dialog (⌥⌘⎋) -->
+  <div id="force-quit-modal" class="force-quit-overlay" style="display:none;" onclick="if(event.target === this) closeForceQuitDialog()">
+    <div class="force-quit-window" onclick="event.stopPropagation()">
+      <div class="force-quit-titlebar">
+        <div class="force-quit-controls">
+          <div class="control close" onclick="closeForceQuitDialog()" title="关闭"></div>
+        </div>
+        <div class="force-quit-title">强制退出应用程序</div>
+      </div>
+      <div class="force-quit-body">
+        <div class="force-quit-desc">如果某个应用程序无响应，请在列表中选择它，然后点按“强制退出”。</div>
+        <div class="force-quit-list-container">
+          <div class="force-quit-list" id="force-quit-list">
+            <!-- Dynamically populated list of active applications -->
+          </div>
+        </div>
+        <div class="force-quit-footer">
+          <div class="force-quit-shortcut-hint">若要打开此窗口，请按下 Option-Command-Esc。</div>
+          <div class="force-quit-actions">
+            <button class="force-quit-btn cancel" onclick="closeForceQuitDialog()">取消</button>
+            <button class="force-quit-btn danger" id="force-quit-action-btn" onclick="executeForceQuit()">强制退出</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- macOS Native Restart / Shut Down 60-Second Countdown Modal -->
+  <div id="mac-power-modal" class="mac-power-overlay" style="display:none;" onclick="if(event.target === this) cancelMacPowerAction()">
+    <div class="mac-power-window" onclick="event.stopPropagation()">
+      <div class="mac-power-icon-wrap" id="mac-power-icon">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+          <circle cx="32" cy="32" r="30" fill="url(#power-icon-grad)" />
+          <path d="M32 16v16M20 22a16 16 0 1 0 24 0" stroke="white" stroke-width="4" stroke-linecap="round" />
+          <defs>
+            <linearGradient id="power-icon-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ff9500"/>
+              <stop offset="100%" stop-color="#ff3b30"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="mac-power-content">
+        <div class="mac-power-title" id="mac-power-title">您确定要现在重新启动吗？</div>
+        <div class="mac-power-desc" id="mac-power-desc">如果您不进行任何操作，Mac 将在 <span id="mac-power-countdown">60</span> 秒后自动重新启动。</div>
+        <label class="mac-power-checkbox-row">
+          <input type="checkbox" id="mac-power-reopen-check" checked />
+          <span>重新登录时重新打开窗口</span>
+        </label>
+        <div class="mac-power-actions">
+          <button class="mac-power-btn cancel" onclick="cancelMacPowerAction()">取消</button>
+          <button class="mac-power-btn primary" id="mac-power-confirm-btn" onclick="executeMacPowerAction()">重新启动</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- macOS Native Display Sleep & Wake Overlay -->
+  <div id="mac-display-sleep" class="mac-display-sleep" style="display:none;" onclick="wakeMacDisplay()">
+    <div class="sleep-led-breathing"></div>
+  </div>
+
+  <!-- macOS Native Trash Confirmation Modal (⇧⌘⌫) -->
+  <div id="trash-confirm-modal" class="trash-confirm-overlay" style="display:none;" onclick="if(event.target === this) closeTrashConfirmModal()">
+    <div class="trash-confirm-window" onclick="event.stopPropagation()">
+      <div class="trash-confirm-icon-wrap">
+        <svg width="58" height="58" viewBox="0 0 64 64" fill="none">
+          <circle cx="32" cy="32" r="28" fill="url(#trash-icon-grad)" />
+          <path d="M22 24h20M26 24v18c0 2 1.5 3 3 3h6c1.5 0 3-1 3-3V24M28 20h8c1 0 1.5.5 1.5 1.5V24h-11v-2.5c0-1 .5-1.5 1.5-1.5z" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+          <line x1="29" y1="28" x2="29" y2="39" stroke="white" stroke-width="2" stroke-linecap="round" />
+          <line x1="35" y1="28" x2="35" y2="39" stroke="white" stroke-width="2" stroke-linecap="round" />
+          <defs>
+            <linearGradient id="trash-icon-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#8e8e93"/>
+              <stop offset="100%" stop-color="#48484a"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="trash-confirm-content">
+        <div class="trash-confirm-title" id="trash-confirm-title">您确定要永久抹掉“废纸篓”中的项目吗？</div>
+        <div class="trash-confirm-desc" id="trash-confirm-desc">如果清空废纸篓，将无法撤销此操作。</div>
+        <div class="trash-confirm-actions">
+          <button class="trash-confirm-btn cancel" onclick="closeTrashConfirmModal()">取消</button>
+          <button class="trash-confirm-btn danger" id="trash-confirm-empty-btn" onclick="executeEmptyTrash()">清空废纸篓</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- macOS Native AirDrop Incoming Transfer Modal (macOS Sequoia 1:1 Center Modal) -->
+  <div id="airdrop-incoming-modal" class="airdrop-incoming-overlay" style="display:none;" onclick="if(event.target === this) declineIncomingAirDrop()">
+    <div class="airdrop-incoming-card" onclick="event.stopPropagation()">
+      <div class="airdrop-incoming-radar-anim">
+        <div class="airdrop-radar-ring ring1"></div>
+        <div class="airdrop-radar-ring ring2"></div>
+        <div class="airdrop-avatar-wrap">
+          <div class="airdrop-avatar-icon" id="airdrop-sender-avatar">📱</div>
+        </div>
+      </div>
+      <div class="airdrop-incoming-content">
+        <div class="airdrop-incoming-title">隔空投送</div>
+        <div class="airdrop-incoming-subtitle">
+          来自 <b id="airdrop-modal-sender-name">Bob 的 iPhone 16 Pro</b>
+        </div>
+        <div class="airdrop-file-preview-card">
+          <div class="airdrop-file-icon-box" id="airdrop-modal-file-icon">📊</div>
+          <div class="airdrop-file-meta">
+            <div class="airdrop-file-name" id="airdrop-modal-file-name">WWDC26_Keynote_Deck.key</div>
+            <div class="airdrop-file-size" id="airdrop-modal-file-size">24.6 MB · 演示文稿</div>
+          </div>
+        </div>
+      </div>
+      <div class="airdrop-incoming-actions" id="airdrop-modal-actions">
+        <button class="airdrop-btn airdrop-btn-decline" onclick="declineIncomingAirDrop()">拒绝</button>
+        <button class="airdrop-btn airdrop-btn-accept" onclick="acceptIncomingAirDrop()">接受</button>
+      </div>
+      <div class="airdrop-incoming-progress" id="airdrop-modal-progress" style="display:none;">
+        <div class="airdrop-prog-track">
+          <div class="airdrop-prog-fill" id="airdrop-modal-bar"></div>
+        </div>
+        <div class="airdrop-prog-label" id="airdrop-modal-status">正在接收...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- macOS Finder Go To Folder Modal (⇧⌘G) -->
+  <div id="finder-goto-modal" class="finder-goto-overlay" style="display:none;" onclick="if(event.target === this) closeGoToFolderModal()">
+    <div class="finder-goto-card" onclick="event.stopPropagation()">
+      <div class="finder-goto-header">
+        <div class="finder-goto-title">前往文件夹</div>
+        <button class="finder-goto-close" onclick="closeGoToFolderModal()" title="关闭 (Esc)">✕</button>
+      </div>
+      <div class="finder-goto-input-wrap">
+        <svg class="finder-goto-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+        <input type="text" id="finder-goto-input" class="finder-goto-input" placeholder="输入路径，例如 ~/Downloads 或 /Applications" onkeydown="handleGoToFolderKeyDown(event)">
+      </div>
+      <div class="finder-goto-suggestions">
+        <div class="finder-goto-sug-title">常用位置</div>
+        <div class="finder-goto-sug-item" onclick="setAndGoToFolder('/Users/alice')">
+          <span class="sug-icon">🏠</span> <span class="sug-name">个人目录 (~/)</span> <span class="sug-path">/Users/alice</span>
+        </div>
+        <div class="finder-goto-sug-item" onclick="setAndGoToFolder('/Users/alice/Desktop')">
+          <span class="sug-icon">🖥️</span> <span class="sug-name">桌面 (~/Desktop)</span> <span class="sug-path">/Users/alice/Desktop</span>
+        </div>
+        <div class="finder-goto-sug-item" onclick="setAndGoToFolder('/Users/alice/Downloads')">
+          <span class="sug-icon">📥</span> <span class="sug-name">下载 (~/Downloads)</span> <span class="sug-path">/Users/alice/Downloads</span>
+        </div>
+        <div class="finder-goto-sug-item" onclick="setAndGoToFolder('/Users/alice/Documents')">
+          <span class="sug-icon">📄</span> <span class="sug-name">文稿 (~/Documents)</span> <span class="sug-path">/Users/alice/Documents</span>
+        </div>
+        <div class="finder-goto-sug-item" onclick="setAndGoToFolder('/Applications')">
+          <span class="sug-icon">📦</span> <span class="sug-name">应用程序 (/Applications)</span> <span class="sug-path">/Applications</span>
+        </div>
+        <div class="finder-goto-sug-item" onclick="setAndGoToFolder('/TimeMachine/Backups.backupdb')">
+          <span class="sug-icon">⏰</span> <span class="sug-name">时间机器备份 (/TimeMachine)</span> <span class="sug-path">/TimeMachine/Backups.backupdb</span>
+        </div>
+        <div class="finder-goto-sug-item" onclick="setAndGoToFolder('/')">
+          <span class="sug-icon">💻</span> <span class="sug-name">Macintosh HD (根目录)</span> <span class="sug-path">/</span>
+        </div>
+      </div>
+      <div class="finder-goto-actions">
+        <button class="finder-goto-btn cancel" onclick="closeGoToFolderModal()">取消</button>
+        <button class="finder-goto-btn confirm" onclick="submitGoToFolder()">前往</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- macOS Native Keyboard Shortcuts Sheet (⌘/) -->
+  <div id="shortcuts-modal" class="shortcuts-overlay" style="display:none;" onclick="if(event.target === this) closeShortcutsModal()">
+    <div class="shortcuts-window" onclick="event.stopPropagation()">
+      <div class="shortcuts-header">
+        <div class="shortcuts-title-row">
+          <div class="shortcuts-icon-title">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#007aff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="4" width="20" height="16" rx="3"/>
+              <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M8 16h8"/>
+            </svg>
+            <div class="shortcuts-title">macOS 键盘快捷键速查</div>
+          </div>
+          <button class="shortcuts-close-btn" onclick="closeShortcutsModal()" title="关闭 (Esc)">✕</button>
+        </div>
+        <div class="shortcuts-subtitle">按下快捷键或组合键以快速完成常用操作</div>
+      </div>
+      <div class="shortcuts-body">
+        <div class="shortcuts-grid">
+          <!-- Column 1: 系统与通用 -->
+          <div class="shortcuts-col">
+            <div class="shortcuts-section-title">系统与通用</div>
+            <div class="shortcut-item"><span class="shortcut-label">聚焦搜索 Spotlight</span><span class="shortcut-keys"><kbd>⌘</kbd><kbd>Space</kbd></span></div>
+            <div class="shortcut-item"><span class="shortcut-label">切换应用程序 App Switcher</span><span class="shortcut-keys"><kbd>⌘</kbd><kbd>Tab</kbd></span></div>
+            <div class="shortcut-item"><span class="shortcut-label">强制退出应用程序</span><span class="shortcut-keys"><kbd>⌥</kbd><kbd>⌘</kbd><kbd>Esc</kbd></span></div>
+            <div class="shortcut-item"><span class="shortcut-label">快速备忘录 Quick Note</span><span class="shortcut-keys"><kbd>⌥</kbd><kbd>Q</kbd></span></div>
+            <div class="shortcut-item"><span class="shortcut-label">调度中心 Mission Control</span><span class="shortcut-keys"><kbd>F3</kbd></span></div>
+            <div class="shortcut-item"><span class="shortcut-label">显示桌面 Show Desktop</span><span class="shortcut-keys"><kbd>F11</kbd></span></div>
+            <div class="shortcut-item"><span class="shortcut-label">系统偏好设置</span><span class="shortcut-keys"><kbd>⌘</kbd><kbd>,</kbd></span></div>
+          </div>
+          <!-- Column 2: 访达与窗口 -->
+          <div class="shortcuts-col">
+            <div class="shortcuts-section-title">访达与窗口</div>
+            <div class="shortcut-item"><span class="shortcut-label">快速查看 Quick Look</span><span class="shortcut-keys"><kbd>Space</kbd></span></div>
+            <div class="shortcut-item"><span class="shortcut-label">新建访达标签页</span><span class="shortcut-keys"><kbd>⌘</kbd><kbd>T</kbd></span></div>
+            <div class="shortcut-item"><span class="shortcut-label">关闭当前窗口 / 标签页</span><span class="shortcut-keys"><kbd>⌘</kbd><kbd>W</kbd></span></div>
+            <div class="shortcut-item"><span class="shortcut-label">显示简介 Get Info</span><span class="shortcut-keys"><kbd>⌘</kbd><kbd>I</kbd></span></div>
+            <div class="shortcut-item"><span class="shortcut-label">移到废纸篓 / 放回原处</span><span class="shortcut-keys"><kbd>⌘</kbd><kbd>⌫</kbd></span></div>
+            <div class="shortcut-item"><span class="shortcut-label">清空废纸篓</span><span class="shortcut-keys"><kbd>⇧</kbd><kbd>⌘</kbd><kbd>⌫</kbd></span></div>
+            <div class="shortcut-item"><span class="shortcut-label">快捷键速查表</span><span class="shortcut-keys"><kbd>⌘</kbd><kbd>/</kbd></span></div>
+          </div>
+          <!-- Column 3: 截屏与编辑 -->
+          <div class="shortcuts-col">
+            <div class="shortcuts-section-title">截屏与常用操作</div>
+            <div class="shortcut-item"><span class="shortcut-label">捕获全屏幕截图</span><span class="shortcut-keys"><kbd>⇧</kbd><kbd>⌘</kbd><kbd>3</kbd></span></div>
+            <div class="shortcut-item"><span class="shortcut-label">选取区域截图</span><span class="shortcut-keys"><kbd>⇧</kbd><kbd>⌘</kbd><kbd>4</kbd></span></div>
+            <div class="shortcut-item"><span class="shortcut-label">截图与录屏控制条</span><span class="shortcut-keys"><kbd>⇧</kbd><kbd>⌘</kbd><kbd>5</kbd></span></div>
+            <div class="shortcut-item"><span class="shortcut-label">复制 / 粘贴</span><span class="shortcut-keys"><kbd>⌘</kbd><kbd>C</kbd> / <kbd>V</kbd></span></div>
+            <div class="shortcut-item"><span class="shortcut-label">全选</span><span class="shortcut-keys"><kbd>⌘</kbd><kbd>A</kbd></span></div>
+            <div class="shortcut-item"><span class="shortcut-label">锁定屏幕</span><span class="shortcut-keys"><kbd>⌃</kbd><kbd>⌘</kbd><kbd>Q</kbd></span></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

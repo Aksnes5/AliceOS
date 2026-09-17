@@ -4,3 +4,7 @@ dist/
 out/
 .DS_Store
 *.db
+scratch/
+src/desktop/assets/icons_backup/
+
+

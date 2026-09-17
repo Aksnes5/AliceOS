@@ -257,11 +257,21 @@ function setupIPC(ipcMain, mainWindow) {
     try {
       if (!fs.existsSync(targetPath)) throw new Error('Path not found');
       const items = fs.readdirSync(targetPath, { withFileTypes: true });
-      const data = items.map(item => ({
-        name: item.name,
-        type: item.isDirectory() ? 'dir' : 'file',
-        size: item.isFile() ? fs.statSync(pathModule.join(targetPath, item.name)).size : 0
-      }));
+      const data = items.map(item => {
+        let size = 0;
+        let mtime = Date.now();
+        try {
+          const stat = fs.statSync(pathModule.join(targetPath, item.name));
+          size = item.isFile() ? stat.size : 0;
+          mtime = stat.mtimeMs || stat.mtime;
+        } catch(e) {}
+        return {
+          name: item.name,
+          type: item.isDirectory() ? 'dir' : 'file',
+          size: size,
+          mtime: mtime
+        };
+      });
       return { success: true, data };
     } catch (e) {
       return { success: false, error: e.message };

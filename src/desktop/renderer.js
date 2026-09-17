@@ -168,6 +168,19 @@ const i18nDict = {
     ctx_wallpaper: 'Change Wallpaper...',
     ctx_about: 'About AliceOS',
     ctx_toggle_widgets: 'Hide Desktop Widgets',
+    file_ctx_open: 'Open',
+    file_ctx_quicklook: 'Quick Look',
+    file_ctx_share: 'Share',
+    file_ctx_quickactions: 'Quick Actions',
+    file_ctx_duplicate: 'Duplicate',
+    file_ctx_compress: 'Compress',
+    file_ctx_airdrop: 'AirDrop...',
+    file_ctx_copy: 'Copy',
+    file_ctx_rename: 'Rename',
+    file_ctx_getinfo: 'Get Info',
+    file_ctx_trash: 'Move to Trash',
+    trash_empty_desc: 'Trash has been emptied',
+    rename_prompt: 'Rename file:',
     w_ctx_remove: 'Remove Widget',
     w_ctx_replace_title: 'Replace With...',
     w_type_clock: 'World Clock',
@@ -175,7 +188,9 @@ const i18nDict = {
     w_type_sys: 'System Activity',
     w_type_battery: 'Batteries',
     w_type_calendar: 'Calendar',
+    w_type_reminders: 'Reminders',
     w_type_music: 'Now Playing',
+    w_type_photos: 'Photos',
     w_ctx_toggle_hide: 'Hide Desktop Widgets',
     w_ctx_toggle_show: 'Show Desktop Widgets',
     w_empty_prompt: '+ Click to Add Widgets',
@@ -246,6 +261,11 @@ const i18nDict = {
     spotlight_top_hit: 'Top Hit',
     spotlight_category_apps: 'Applications',
     spotlight_category_calc: 'Calculator & Conversions',
+    spotlight_category_weather: 'Weather',
+    spotlight_category_clock: 'World Clock',
+    spotlight_category_converter: 'Unit Converter',
+    spotlight_open_weather: 'Open in Weather',
+    spotlight_open_clock: 'Open in Clock',
     spotlight_category_settings: 'System Settings & Controls',
     spotlight_category_files: 'Documents & Files',
     spotlight_category_web: 'Web Suggestions',
@@ -597,6 +617,7 @@ const i18nDict = {
     app_activity: 'Activity Monitor',
     app_store: 'App Store',
     app_iphonemirror: 'iPhone Mirroring',
+    app_passwords: 'Passwords',
     app_trash: 'Trash',
     notes_math_notes: 'Math Notes',
     notes_math_eval: 'Calculated',
@@ -973,6 +994,19 @@ const i18nDict = {
     ctx_wallpaper: '更改壁纸...',
     ctx_about: '关于 AliceOS',
     ctx_toggle_widgets: '隐藏桌面小组件',
+    file_ctx_open: '打开',
+    file_ctx_quicklook: '快速查看',
+    file_ctx_share: '共享',
+    file_ctx_quickactions: '快速动作',
+    file_ctx_duplicate: '制作副本',
+    file_ctx_compress: '压缩',
+    file_ctx_airdrop: '隔空投送...',
+    file_ctx_copy: '拷贝',
+    file_ctx_rename: '重命名',
+    file_ctx_getinfo: '显示简介',
+    file_ctx_trash: '移到废纸篓',
+    trash_empty_desc: '废纸篓已清空',
+    rename_prompt: '重命名文件：',
     w_ctx_remove: '移除小组件',
     w_ctx_replace_title: '更换为...',
     w_type_clock: '世界时钟',
@@ -980,7 +1014,9 @@ const i18nDict = {
     w_type_sys: '系统性能',
     w_type_battery: '电池电量',
     w_type_calendar: '日历日程',
+    w_type_reminders: '提醒事项',
     w_type_music: '正在播放',
+    w_type_photos: '精选照片',
     w_ctx_toggle_hide: '隐藏桌面小组件',
     w_ctx_toggle_show: '显示桌面小组件',
     w_empty_prompt: '+ 点击打开小组件库添加',
@@ -1051,6 +1087,11 @@ const i18nDict = {
     spotlight_top_hit: '最佳匹配',
     spotlight_category_apps: '应用程序',
     spotlight_category_calc: '计算与换算',
+    spotlight_category_weather: '天气',
+    spotlight_category_clock: '世界时钟',
+    spotlight_category_converter: '单位换算',
+    spotlight_open_weather: '在天气中打开',
+    spotlight_open_clock: '在时钟中打开',
     spotlight_category_settings: '系统设置与控制',
     spotlight_category_files: '文稿与文件',
     spotlight_category_web: '网页搜索建议',
@@ -1402,6 +1443,7 @@ const i18nDict = {
     app_activity: '活动监视器',
     app_store: 'App Store',
     app_iphonemirror: 'iPhone 镜像',
+    app_passwords: '密码',
     app_trash: '废纸篓',
     notes_math_notes: '数学备忘录',
     notes_math_eval: '计算结果',
@@ -1778,6 +1820,19 @@ const i18nDict = {
     ctx_wallpaper: '壁紙を変更...',
     ctx_about: 'AliceOS について',
     ctx_toggle_widgets: 'ウィジェットを非表示',
+    file_ctx_open: '開く',
+    file_ctx_quicklook: 'クイックルック',
+    file_ctx_share: '共有',
+    file_ctx_quickactions: 'クイックアクション',
+    file_ctx_duplicate: '複製',
+    file_ctx_compress: '圧縮',
+    file_ctx_airdrop: 'AirDrop...',
+    file_ctx_copy: 'コピー',
+    file_ctx_rename: '名称変更',
+    file_ctx_getinfo: '情報を見る',
+    file_ctx_trash: 'ゴミ箱に入れる',
+    trash_empty_desc: 'ゴミ箱を空にしました',
+    rename_prompt: '名称を変更:',
     w_ctx_remove: 'ウィジェットを削除',
     w_ctx_replace_title: '置き換え...',
     w_type_clock: '世界時計',
@@ -1785,7 +1840,9 @@ const i18nDict = {
     w_type_sys: 'システム性能',
     w_type_battery: 'バッテリー',
     w_type_calendar: 'カレンダー',
+    w_type_reminders: 'リマインダー',
     w_type_music: '再生中',
+    w_type_photos: '写真',
     w_ctx_toggle_hide: 'ウィジェットを非表示',
     w_ctx_toggle_show: 'ウィジェットを表示',
     w_empty_prompt: '+ ウィジェットを追加',
@@ -1856,6 +1913,11 @@ const i18nDict = {
     spotlight_top_hit: 'トップヒット',
     spotlight_category_apps: 'アプリケーション',
     spotlight_category_calc: '計算と換算',
+    spotlight_category_weather: '天気',
+    spotlight_category_clock: '世界時計',
+    spotlight_category_converter: '単位換算',
+    spotlight_open_weather: '天気で開く',
+    spotlight_open_clock: '時計で開く',
     spotlight_category_settings: 'システム設定とコントロール',
     spotlight_category_files: '書類とファイル',
     spotlight_category_web: 'Web検索の候補',
@@ -2179,6 +2241,7 @@ const i18nDict = {
     app_activity: 'アクティビティモニタ',
     app_store: 'App Store',
     app_iphonemirror: 'iPhoneミラーリング',
+    app_passwords: 'パスワード',
     app_trash: 'ゴミ箱',
     notes_math_notes: '計算メモ',
     notes_math_eval: '計算結果',
@@ -2723,8 +2786,16 @@ function updateDockTooltips() {
     }
   });
   const trashIcon = document.getElementById('dock-trash');
-  if (trashIcon && dict.app_trash) {
-    trashIcon.title = dict.app_trash;
+  if (trashIcon) {
+    if (dict.app_trash) trashIcon.title = dict.app_trash;
+    if (!trashIcon._hasContextMenu) {
+      trashIcon._hasContextMenu = true;
+      trashIcon.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        showDockTrashMenu(e.clientX, e.clientY);
+      });
+    }
   }
 }
 
@@ -2858,6 +2929,27 @@ const DOCK_APP_ICONS = {
     <circle cx="50" cy="54" r="10" fill="#60a5fa" opacity="0.6"/>
   </svg>`,
 
+  passwords: `<svg viewBox="0 0 100 100" class="macos-app-icon">
+    <defs>
+      <linearGradient id="pwd-dock-dyn" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#2c2c2e"/>
+        <stop offset="100%" stop-color="#18181a"/>
+      </linearGradient>
+      <linearGradient id="pwd-key-dyn" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#ffe600"/>
+        <stop offset="50%" stop-color="#ffb300"/>
+        <stop offset="100%" stop-color="#ff9100"/>
+      </linearGradient>
+    </defs>
+    <rect width="100" height="100" rx="22.5" fill="url(#pwd-dock-dyn)"/>
+    <rect x="2" y="2" width="96" height="96" rx="21" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+    <circle cx="44" cy="42" r="19" fill="none" stroke="url(#pwd-key-dyn)" stroke-width="7"/>
+    <circle cx="44" cy="42" r="6" fill="#18181a"/>
+    <line x1="58" y1="56" x2="74" y2="72" stroke="url(#pwd-key-dyn)" stroke-width="7" stroke-linecap="round"/>
+    <line x1="66" y1="64" x2="72" y2="58" stroke="url(#pwd-key-dyn)" stroke-width="5" stroke-linecap="round"/>
+    <line x1="73" y1="71" x2="78" y2="66" stroke="url(#pwd-key-dyn)" stroke-width="5" stroke-linecap="round"/>
+  </svg>`,
+
   maps: `<svg viewBox="0 0 100 100" class="macos-app-icon">
     <defs>
       <linearGradient id="maps-dyn-bg" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -2968,7 +3060,7 @@ function getAppDockSvg(appKey) {
     mail:       'assets/icons/mail.png',
   };
   if (DOCK_PNG[appKey]) {
-    return `<img src="${DOCK_PNG[appKey]}" alt="${appKey}" style="width:100%;height:100%;object-fit:contain;border-radius:22.5%;pointer-events:none;">`;
+    return `<img src="${DOCK_PNG[appKey]}" alt="${appKey}" class="macos-app-icon" style="width:calc(var(--dock-icon-size,48px)*1.174);height:calc(var(--dock-icon-size,48px)*1.174);object-fit:contain;pointer-events:none;display:block;flex-shrink:0;">`;
   }
   if (DOCK_APP_ICONS[appKey]) return DOCK_APP_ICONS[appKey];
   return `<div class="macos-app-icon" style="background:linear-gradient(135deg,#6366f1,#3b82f6);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:20px;border-radius:22.5%;">${(appKey || 'A').charAt(0).toUpperCase()}</div>`;
@@ -3226,13 +3318,237 @@ function showCurrentAppAbout() {
   showNotification(appTitle, `macOS Sequoia Native App (${appTitle})`, 'About', iconSvg);
 }
 
-function finderNavigate(targetPath) {
+async function finderNavigate(targetPath, host = false) {
+  let cleanPath = targetPath;
+  if (cleanPath.startsWith('~')) {
+    cleanPath = '/Users/alice' + cleanPath.slice(1);
+  }
   const finderWin = Array.from(windows.values()).find(w => w.dataset.appKey === 'finder');
   if (finderWin) {
     focusWindow(finderWin);
-    const item = finderWin.querySelector(`.finder-sidebar-item[data-path="${targetPath}"]`);
-    if (item) item.click();
+    if (typeof finderWin._finderNavigate === 'function') {
+      await finderWin._finderNavigate(cleanPath, host);
+    } else {
+      const item = finderWin.querySelector(`.finder-sidebar-item[data-path="${cleanPath}"]`) ||
+                   finderWin.querySelector(`.finder-sidebar-item[data-path="${targetPath}"]`);
+      if (item) item.click();
+    }
+  } else {
+    await launchFinder(cleanPath, host);
   }
+}
+
+function getActiveFinderWindow() {
+  const activeWin = document.querySelector('.window.is-active[data-app-key="finder"]');
+  if (activeWin) return activeWin;
+  return Array.from(windows.values()).find(w => w.dataset.appKey === 'finder');
+}
+
+function setFinderActiveViewMode(mode) {
+  const fw = getActiveFinderWindow();
+  if (fw && typeof fw._setFinderViewMode === 'function') {
+    fw._setFinderViewMode(mode);
+    if (window.AppleAudioEngine && window.AppleAudioEngine.playHapticClick) {
+      window.AppleAudioEngine.playHapticClick('light');
+    }
+  } else {
+    launchFinder('/Users/alice').then(w => {
+      if (w && typeof w._setFinderViewMode === 'function') w._setFinderViewMode(mode);
+    });
+  }
+}
+
+function toggleFinderGroupBy() {
+  const fw = getActiveFinderWindow();
+  if (fw && typeof fw._toggleFinderGroupBy === 'function') {
+    fw._toggleFinderGroupBy();
+  }
+}
+
+function toggleFinderPathBar() {
+  const fw = getActiveFinderWindow();
+  if (fw && typeof fw._toggleFinderPathBar === 'function') {
+    fw._toggleFinderPathBar();
+  }
+}
+
+function toggleFinderStatusBar() {
+  const fw = getActiveFinderWindow();
+  if (fw && typeof fw._toggleFinderStatusBar === 'function') {
+    fw._toggleFinderStatusBar();
+  }
+}
+
+let _sortSubmenuTimer = null;
+function openSortSubmenu() {
+  if (_sortSubmenuTimer) clearTimeout(_sortSubmenuTimer);
+  const submenu = document.getElementById('view-sort-submenu');
+  if (submenu) submenu.style.display = 'block';
+}
+
+function scheduleCloseSortSubmenu() {
+  if (_sortSubmenuTimer) clearTimeout(_sortSubmenuTimer);
+  _sortSubmenuTimer = setTimeout(() => {
+    const submenu = document.getElementById('view-sort-submenu');
+    if (submenu) submenu.style.display = 'none';
+  }, 250);
+}
+
+function cancelCloseSortSubmenu() {
+  if (_sortSubmenuTimer) clearTimeout(_sortSubmenuTimer);
+}
+
+function setFinderActiveSort(sortField) {
+  const fw = getActiveFinderWindow();
+  if (fw && typeof fw._setFinderSort === 'function') {
+    fw._setFinderSort(sortField);
+    if (window.AppleAudioEngine && window.AppleAudioEngine.playHapticClick) {
+      window.AppleAudioEngine.playHapticClick('light');
+    }
+  }
+  updateMenubarSortChecks(sortField);
+}
+
+function setFinderActiveSortOrder(asc) {
+  const fw = getActiveFinderWindow();
+  if (fw && typeof fw._setFinderSort === 'function') {
+    fw._setFinderSort(null, asc);
+    if (window.AppleAudioEngine && window.AppleAudioEngine.playHapticClick) {
+      window.AppleAudioEngine.playHapticClick('light');
+    }
+  }
+  updateMenubarSortChecks(null, asc);
+}
+
+function updateMenubarSortChecks(sortBy, sortAsc) {
+  if (sortBy) {
+    document.querySelectorAll('#view-sort-submenu .sort-check').forEach(el => {
+      el.style.display = (el.dataset.sort === sortBy) ? 'inline' : 'none';
+    });
+  }
+  if (sortAsc !== undefined && sortAsc !== null) {
+    document.querySelectorAll('#view-sort-submenu .sort-order-check').forEach(el => {
+      const isAsc = el.dataset.order === 'asc';
+      el.style.display = (isAsc === sortAsc) ? 'inline' : 'none';
+    });
+  }
+}
+
+window.openSortSubmenu = openSortSubmenu;
+window.scheduleCloseSortSubmenu = scheduleCloseSortSubmenu;
+window.cancelCloseSortSubmenu = cancelCloseSortSubmenu;
+window.setFinderActiveSort = setFinderActiveSort;
+window.setFinderActiveSortOrder = setFinderActiveSortOrder;
+window.updateMenubarSortChecks = updateMenubarSortChecks;
+
+function openGoToFolderModal() {
+  const modal = document.getElementById('finder-goto-modal');
+  if (!modal) return;
+  modal.style.display = 'flex';
+  const inp = document.getElementById('finder-goto-input');
+  if (inp) {
+    inp.value = '';
+    inp.focus();
+  }
+  if (window.AppleAudioEngine && window.AppleAudioEngine.playHapticClick) {
+    window.AppleAudioEngine.playHapticClick('medium');
+  }
+}
+
+function closeGoToFolderModal() {
+  const modal = document.getElementById('finder-goto-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+function handleGoToFolderKeyDown(e) {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    submitGoToFolder();
+  } else if (e.key === 'Escape') {
+    e.preventDefault();
+    closeGoToFolderModal();
+  }
+}
+
+function setAndGoToFolder(path) {
+  const inp = document.getElementById('finder-goto-input');
+  if (inp) inp.value = path;
+  submitGoToFolder();
+}
+
+async function submitGoToFolder() {
+  const inp = document.getElementById('finder-goto-input');
+  if (!inp) return;
+  let target = inp.value.trim();
+  if (!target) return;
+
+  if (target.startsWith('~')) {
+    target = '/Users/alice' + target.slice(1);
+  }
+
+  // Verify path existence in VFS or Host
+  let exists = false;
+  let isHost = target.includes(':\\') || target.startsWith('C:\\');
+  if (isHost) {
+    exists = true;
+  } else {
+    try {
+      if (window.aliceOS && window.aliceOS.vfs) {
+        const stat = await window.aliceOS.vfs.stat(target);
+        if (stat.success) exists = true;
+      }
+    } catch (e) {
+      exists = false;
+    }
+    if (!exists && ['/Users/alice', '/Applications', '/Users/alice/Desktop', '/Users/alice/Downloads', '/Users/alice/Documents', '/TimeMachine/Backups.backupdb', '/'].includes(target)) {
+      exists = true;
+    }
+  }
+
+  if (exists) {
+    closeGoToFolderModal();
+    if (window.AppleAudioEngine && window.AppleAudioEngine.playPop) {
+      window.AppleAudioEngine.playPop();
+    }
+    await finderNavigate(target, isHost);
+  } else {
+    const card = document.querySelector('.finder-goto-card');
+    if (card) {
+      card.classList.add('shake');
+      setTimeout(() => card.classList.remove('shake'), 400);
+    }
+    if (window.AppleAudioEngine && window.AppleAudioEngine.playTink) {
+      window.AppleAudioEngine.playTink();
+    }
+    showNotification('前往文件夹', `找不到文件夹“${target}”。`, '访达', 'assets/icons/finder.png');
+  }
+}
+
+function refreshWindowMenuList() {
+  const listEl = document.getElementById('window-menu-active-list');
+  const sepEl = document.getElementById('window-menu-sep');
+  if (!listEl || !sepEl) return;
+
+  const openWins = Array.from(windows.values()).filter(w => !w.dataset.isMinimized && w.style.display !== 'none');
+  if (openWins.length === 0) {
+    sepEl.style.display = 'none';
+    listEl.innerHTML = '';
+    return;
+  }
+
+  sepEl.style.display = 'block';
+  const activeWin = document.querySelector('.window.is-active');
+
+  listEl.innerHTML = openWins.map(w => {
+    const isCur = (w === activeWin);
+    const title = w.dataset.title || w.querySelector('.titlebar .title')?.innerText || '窗口';
+    return `
+      <div class="menu-dropdown-item" onclick="closeAllTopMenus(); focusWindow(document.getElementById('${w.id}'));" style="display:flex;align-items:center;gap:6px;">
+        <span style="width:14px;font-weight:700;color:#007aff;">${isCur ? '✓' : ''}</span>
+        <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${title}</span>
+      </div>
+    `;
+  }).join('');
 }
 
 window.syncMenubarActiveApp = syncMenubarActiveApp;
@@ -3245,6 +3561,16 @@ window.zoomActiveWindow = zoomActiveWindow;
 window.bringAllToFront = bringAllToFront;
 window.showCurrentAppAbout = showCurrentAppAbout;
 window.finderNavigate = finderNavigate;
+window.setFinderActiveViewMode = setFinderActiveViewMode;
+window.toggleFinderGroupBy = toggleFinderGroupBy;
+window.toggleFinderPathBar = toggleFinderPathBar;
+window.toggleFinderStatusBar = toggleFinderStatusBar;
+window.openGoToFolderModal = openGoToFolderModal;
+window.closeGoToFolderModal = closeGoToFolderModal;
+window.handleGoToFolderKeyDown = handleGoToFolderKeyDown;
+window.setAndGoToFolder = setAndGoToFolder;
+window.submitGoToFolder = submitGoToFolder;
+window.refreshWindowMenuList = refreshWindowMenuList;
 
 function launchAppByName(appKey) {
   switch (appKey) {
@@ -3264,6 +3590,7 @@ function launchAppByName(appKey) {
     case 'weather': launchWeather(); break;
     case 'camera': launchCamera(); break;
     case 'iphonemirror': launchIPhoneMirroring(); break;
+    case 'passwords': launchPasswordsApp(); break;
     case 'maps': launchMaps(); break;
     case 'activity': launchActivityMonitor(); break;
     case 'ide': launchIDE(); break;
@@ -3369,9 +3696,9 @@ function initDockMagnification() {
   dock.addEventListener('mousemove', (e) => {
     const icons = Array.from(dock.querySelectorAll('.dock-icon'));
     const mouseX = e.clientX;
-    const maxScale = 1.55;
+    const maxScale = 1.75;
     const baseScale = 1.0;
-    const influenceRadius = 140; // pixels
+    const influenceRadius = 120; // tighter radius = more focused magnification
 
     let hoveredIcon = null;
     let minDistance = Infinity;
@@ -3394,14 +3721,16 @@ function initDockMagnification() {
 
       let scale = baseScale;
       if (distance < influenceRadius) {
-        const factor = Math.cos((distance / influenceRadius) * (Math.PI / 2));
+        // Gaussian bell curve for more natural macOS magnification feel
+        const t = distance / influenceRadius;
+        const factor = Math.exp(-3.5 * t * t);
         scale = baseScale + (maxScale - baseScale) * factor;
       }
 
       if (!icon.classList.contains('dock-launching')) {
-        icon.style.transform = `scale(${scale}) translateY(-${(scale - 1) * 20}px)`;
+        icon.style.transform = `scale(${scale.toFixed(3)}) translateY(-${((scale - 1) * 22).toFixed(1)}px)`;
       }
-      icon.style.margin = `0 ${(scale - 1) * 14}px`;
+      icon.style.margin = `0 ${((scale - 1) * 10).toFixed(1)}px`;
     });
 
     if (tooltip && hoveredIcon && minDistance < 45) {
@@ -3540,6 +3869,9 @@ function initSystemLanguage() {
           if (s && s.lang && i18nDict[s.lang] && s.lang !== currentSystemLang) {
             setSystemLanguage(s.lang, false);
           }
+          if (s && s.hotCorners) {
+            window.hotCornersConfig = { ...window.hotCornersConfig, ...s.hotCorners };
+          }
         } catch(e) {}
       }
     }).catch(() => {});
@@ -3551,6 +3883,399 @@ if (document.readyState === 'loading') {
 } else {
   initSystemLanguage();
 }
+
+// ============================================================
+// macOS Unified Menubar Popovers & Mutual Exclusion Engine
+// ============================================================
+function closeAllMenubarPopovers(exceptId = null) {
+  if (exceptId !== 'battery-popover' && typeof closeBatteryPopover === 'function') closeBatteryPopover();
+  if (exceptId !== 'sound-popover' && typeof closeSoundPopover === 'function') closeSoundPopover();
+  if (exceptId !== 'wifi-popover' && typeof closeWifiPopover === 'function') closeWifiPopover();
+  if (exceptId !== 'bluetooth-popover' && typeof closeBluetoothPopover === 'function') closeBluetoothPopover();
+  if (exceptId !== 'screen-mirroring-popover' && typeof closeScreenMirrorPopover === 'function') closeScreenMirrorPopover();
+  if (exceptId !== 'timemachine-popover' && typeof closeTimeMachinePopover === 'function') closeTimeMachinePopover();
+  if (exceptId !== 'lang-popover' && typeof closeLanguagePopover === 'function') closeLanguagePopover();
+  const appleMenu = document.getElementById('apple-menu');
+  if (appleMenu && exceptId !== 'apple-menu') appleMenu.style.display = 'none';
+  const cc = document.getElementById('control-center');
+  if (cc && exceptId !== 'control-center') cc.style.display = 'none';
+}
+window.closeAllMenubarPopovers = closeAllMenubarPopovers;
+
+// Document click listener to close all popovers when clicking outside
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('#battery-btn') && !e.target.closest('#battery-popover') &&
+      !e.target.closest('#sound-btn') && !e.target.closest('#sound-popover') &&
+      !e.target.closest('#wifi-btn') && !e.target.closest('#wifi-popover') &&
+      !e.target.closest('#bluetooth-btn') && !e.target.closest('#bluetooth-popover') &&
+      !e.target.closest('#screen-mirror-btn') && !e.target.closest('#screen-mirroring-popover') &&
+      !e.target.closest('#timemachine-btn') && !e.target.closest('#timemachine-popover') &&
+      !e.target.closest('#lang-btn') && !e.target.closest('#lang-popover')) {
+    closeAllMenubarPopovers();
+  }
+});
+
+// ============================================================
+// macOS Battery Health & Power Management Popover Engine
+// ============================================================
+let lowPowerModeActive = false;
+
+function toggleBatteryPopover() {
+  const pop = document.getElementById('battery-popover');
+  if (!pop) return;
+  const wasOpen = pop.style.display === 'block';
+  closeAllMenubarPopovers('battery-popover');
+  if (wasOpen) {
+    closeBatteryPopover();
+  } else {
+    updateBatteryPopoverData();
+    pop.style.display = 'block';
+    if (typeof AppleAudioEngine !== 'undefined' && AppleAudioEngine.playHapticClick) {
+      AppleAudioEngine.playHapticClick('light');
+    }
+  }
+}
+
+function closeBatteryPopover() {
+  const pop = document.getElementById('battery-popover');
+  if (!pop) return;
+  pop.style.display = 'none';
+}
+
+function toggleLowPowerMode(enabled) {
+  lowPowerModeActive = !!enabled;
+  const pctEl = document.getElementById('battery-pop-pct');
+  const menubarPct = document.getElementById('battery-level-pct');
+  const toggle = document.getElementById('battery-low-power-toggle');
+  if (toggle) toggle.checked = lowPowerModeActive;
+
+  if (lowPowerModeActive) {
+    if (pctEl) pctEl.style.color = '#ff9500';
+    if (menubarPct) menubarPct.style.color = '#ff9500';
+    if (typeof showNotification === 'function') {
+      showNotification('电池', '低电量模式已开启：系统已降低后台能耗并微调亮度以延长续航');
+    }
+  } else {
+    if (pctEl) pctEl.style.color = '#34c759';
+    if (menubarPct) menubarPct.style.color = 'inherit';
+    if (typeof showNotification === 'function') {
+      showNotification('电池', '低电量模式已关闭');
+    }
+  }
+  if (typeof AppleAudioEngine !== 'undefined' && AppleAudioEngine.playHapticClick) {
+    AppleAudioEngine.playHapticClick('medium');
+  }
+}
+
+function updateBatteryPopoverData() {
+  const popPct = document.getElementById('battery-pop-pct');
+  const barPct = document.getElementById('battery-level-pct');
+  const curPct = barPct ? barPct.innerText : '98%';
+  if (popPct) {
+    popPct.innerText = curPct;
+    popPct.style.color = lowPowerModeActive ? '#ff9500' : '#34c759';
+  }
+
+  const toggle = document.getElementById('battery-low-power-toggle');
+  if (toggle) toggle.checked = lowPowerModeActive;
+
+  // Energy apps
+  const appsContainer = document.getElementById('battery-energy-apps');
+  if (appsContainer && typeof windows !== 'undefined') {
+    const running = Array.from(windows.values()).filter(w => !w.dataset.isMinimized);
+    if (running.length > 0) {
+      appsContainer.innerHTML = running.slice(0, 2).map(w => {
+        const title = w.dataset.title || w.querySelector('.title')?.innerText || '应用程序';
+        return `
+          <div style="display:flex;align-items:center;gap:8px;padding:4px 6px;border-radius:6px;background:rgba(255,255,255,0.04);">
+            <span style="font-size:13px;">⚡</span>
+            <span style="font-size:12px;font-weight:500;">${title}</span>
+          </div>
+        `;
+      }).join('');
+    } else {
+      appsContainer.innerHTML = `<div style="font-size:11px;opacity:0.6;padding:2px 4px;">无正在消耗显著电量的应用程序</div>`;
+    }
+  }
+}
+
+function openBatterySettings() {
+  closeBatteryPopover();
+  if (typeof launchSettings === 'function') {
+    launchSettings().then(() => {
+      setTimeout(() => {
+        const batTab = document.querySelector('.ventura-nav-item[data-tab="battery"]');
+        if (batTab) batTab.click();
+      }, 150);
+    });
+  }
+}
+
+window.toggleBatteryPopover = toggleBatteryPopover;
+window.closeBatteryPopover = closeBatteryPopover;
+window.toggleLowPowerMode = toggleLowPowerMode;
+window.openBatterySettings = openBatterySettings;
+
+// ============================================================
+// macOS Sound Output & Volume Popover Engine
+// ============================================================
+let currentSoundVolume = 75;
+let currentSoundDevice = 'macbook';
+
+function toggleSoundPopover() {
+  const pop = document.getElementById('sound-popover');
+  if (!pop) return;
+  const wasOpen = pop.style.display === 'block';
+  closeAllMenubarPopovers('sound-popover');
+  if (wasOpen) {
+    closeSoundPopover();
+  } else {
+    pop.style.display = 'block';
+    const slider = document.getElementById('sound-pop-slider');
+    if (slider) slider.value = currentSoundVolume;
+    onSoundPopoverVolume(currentSoundVolume, false);
+    if (typeof AppleAudioEngine !== 'undefined' && AppleAudioEngine.playHapticClick) {
+      AppleAudioEngine.playHapticClick('light');
+    }
+  }
+}
+
+function closeSoundPopover() {
+  const pop = document.getElementById('sound-popover');
+  if (!pop) return;
+  pop.style.display = 'none';
+}
+
+function onSoundPopoverVolume(val, playBeep = true) {
+  currentSoundVolume = parseInt(val, 10) || 0;
+  const pctEl = document.getElementById('sound-pop-pct');
+  if (pctEl) pctEl.innerText = `${currentSoundVolume}%`;
+
+  const iconSpan = document.getElementById('sound-pop-icon');
+  if (iconSpan) {
+    if (currentSoundVolume === 0) {
+      iconSpan.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" stroke-width="2"/><line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" stroke-width="2"/></svg>`;
+    } else if (currentSoundVolume < 35) {
+      iconSpan.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
+    } else {
+      iconSpan.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
+    }
+  }
+
+  const ccSlider = document.getElementById('cc-sound-slider') || document.getElementById('cc-volume');
+  if (ccSlider && ccSlider.value != currentSoundVolume) {
+    ccSlider.value = currentSoundVolume;
+  }
+
+  if (playBeep && typeof playVolumeFeedbackBeep === 'function') {
+    playVolumeFeedbackBeep();
+  }
+}
+
+let currentAirPodsNoiseMode = 'anc';
+let currentAirPodsSpatialMode = 'fixed';
+
+function selectSoundDevice(el, devName, devKey) {
+  currentSoundDevice = devKey;
+  const items = document.querySelectorAll('.sound-device-item');
+  items.forEach(it => {
+    it.classList.remove('active');
+    const chk = it.querySelector('.sound-check');
+    if (chk) chk.style.display = 'none';
+  });
+  if (el) {
+    el.classList.add('active');
+    const chk = el.querySelector('.sound-check');
+    if (chk) chk.style.display = 'inline';
+  }
+
+  // Show/Hide macOS AirPods Pro Controls Panel
+  const airPodsPanel = document.getElementById('airpods-controls-panel');
+  if (airPodsPanel) {
+    airPodsPanel.style.display = (devKey === 'airpods') ? 'block' : 'none';
+  }
+
+  if (typeof showNotification === 'function') {
+    showNotification('声音输出', `已将音频输出切换至：${devName}`);
+  }
+  if (typeof AppleAudioEngine !== 'undefined' && AppleAudioEngine.playAirDrop) {
+    AppleAudioEngine.playAirDrop();
+  } else if (typeof playClickSound === 'function') {
+    playClickSound();
+  }
+}
+
+function setAirPodsNoiseMode(mode) {
+  currentAirPodsNoiseMode = mode;
+  const container = document.getElementById('airpods-anc-segmented');
+  if (container) {
+    container.querySelectorAll('.airpods-seg-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.mode === mode);
+    });
+  }
+  updateAirPodsSubtitle();
+  if (typeof AppleAudioEngine !== 'undefined' && AppleAudioEngine.playANCChime) {
+    AppleAudioEngine.playANCChime(mode);
+  }
+  const noiseLabels = {
+    anc: '主动降噪已开启',
+    off: '噪声控制已关闭',
+    transparency: '通透模式已开启'
+  };
+  if (typeof showNotification === 'function') {
+    showNotification('AirPods Pro', noiseLabels[mode] || '降噪模式已更新', 'AirPods', '🎧');
+  }
+}
+
+function setAirPodsSpatialMode(mode) {
+  currentAirPodsSpatialMode = mode;
+  const container = document.getElementById('airpods-spatial-segmented');
+  if (container) {
+    container.querySelectorAll('.airpods-seg-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.spatial === mode);
+    });
+  }
+  updateAirPodsSubtitle();
+  if (typeof AppleAudioEngine !== 'undefined' && AppleAudioEngine.playPop) {
+    AppleAudioEngine.playPop(1.1);
+  }
+  const spatialLabels = {
+    off: '空间音频已关闭',
+    fixed: '空间音频：固定',
+    head: '空间音频：头部跟踪'
+  };
+  if (typeof showNotification === 'function') {
+    showNotification('AirPods Pro', spatialLabels[mode] || '空间音频已更新', 'AirPods', '🎧');
+  }
+}
+
+function updateAirPodsSubtitle() {
+  const sub = document.getElementById('sound-airpods-subtitle');
+  if (!sub) return;
+  const noiseLabels = {
+    anc: '降噪已开启',
+    off: '降噪已关闭',
+    transparency: '通透模式已开启'
+  };
+  const spatialLabels = {
+    off: '',
+    fixed: '空间音频 • ',
+    head: '空间音频 (头部跟踪) • '
+  };
+  const spatialPrefix = spatialLabels[currentAirPodsSpatialMode] !== undefined ? spatialLabels[currentAirPodsSpatialMode] : '空间音频 • ';
+  const noiseText = noiseLabels[currentAirPodsNoiseMode] || '降噪已开启';
+  sub.innerText = `${spatialPrefix}${noiseText}`;
+}
+
+function openSoundSettings() {
+  closeSoundPopover();
+  if (typeof launchSettings === 'function') {
+    launchSettings().then(() => {
+      setTimeout(() => {
+        const sndTab = document.querySelector('.ventura-nav-item[data-tab="sound"]');
+        if (sndTab) sndTab.click();
+      }, 150);
+    });
+  }
+}
+
+window.toggleSoundPopover = toggleSoundPopover;
+window.closeSoundPopover = closeSoundPopover;
+window.onSoundPopoverVolume = onSoundPopoverVolume;
+window.selectSoundDevice = selectSoundDevice;
+window.setAirPodsNoiseMode = setAirPodsNoiseMode;
+window.setAirPodsSpatialMode = setAirPodsSpatialMode;
+window.updateAirPodsSubtitle = updateAirPodsSubtitle;
+window.openSoundSettings = openSoundSettings;
+
+// ============================================================
+// macOS Finder 7-Color Tags & Labels System Engine
+// ============================================================
+const TAG_COLOR_MAP = {
+  red: '#ff3b30',
+  orange: '#ff9500',
+  yellow: '#ffcc00',
+  green: '#34c759',
+  blue: '#007aff',
+  purple: '#af52de',
+  gray: '#8e8e93'
+};
+
+function initFileTagsStore() {
+  if (!window.aliceFileTags) {
+    try {
+      const stored = localStorage.getItem('alice_file_tags');
+      if (stored) window.aliceFileTags = JSON.parse(stored);
+    } catch(e) {}
+  }
+  if (!window.aliceFileTags) {
+    window.aliceFileTags = {
+      '/Users/alice/Desktop/quick_note.txt': '#ff9500',
+      '/Users/alice/Desktop': '#ff3b30',
+      '/Users/alice/Documents': '#007aff',
+      '/Users/alice/Downloads': '#34c759'
+    };
+    try { localStorage.setItem('alice_file_tags', JSON.stringify(window.aliceFileTags)); } catch(e) {}
+  }
+}
+initFileTagsStore();
+
+function getFileTag(path) {
+  initFileTagsStore();
+  return window.aliceFileTags ? window.aliceFileTags[path] : null;
+}
+
+function setFileTag(path, color) {
+  initFileTagsStore();
+  window.aliceFileTags[path] = color;
+  try { localStorage.setItem('alice_file_tags', JSON.stringify(window.aliceFileTags)); } catch(e) {}
+  if (typeof refreshDesktop === 'function') refreshDesktop();
+  if (typeof window.renderActiveFinderView === 'function') window.renderActiveFinderView();
+}
+
+function removeFileTag(path) {
+  initFileTagsStore();
+  if (window.aliceFileTags && window.aliceFileTags[path]) {
+    delete window.aliceFileTags[path];
+    try { localStorage.setItem('alice_file_tags', JSON.stringify(window.aliceFileTags)); } catch(e) {}
+    if (typeof refreshDesktop === 'function') refreshDesktop();
+    if (typeof window.renderActiveFinderView === 'function') window.renderActiveFinderView();
+  }
+}
+
+function onFileCtxSelectTag(tagKey) {
+  const file = currentFileContextTarget || (typeof window.getSystemSelectedFile === 'function' ? window.getSystemSelectedFile() : window.selectedFile);
+  if (!file) return;
+  const tagColor = TAG_COLOR_MAP[tagKey] || tagKey;
+  const existing = getFileTag(file.path);
+  if (existing === tagColor || existing === tagKey) {
+    removeFileTag(file.path);
+  } else {
+    setFileTag(file.path, tagColor);
+  }
+  if (typeof AppleAudioEngine !== 'undefined' && AppleAudioEngine.playHapticClick) {
+    AppleAudioEngine.playHapticClick('medium');
+  } else if (typeof playClickSound === 'function') {
+    playClickSound();
+  }
+  hideFileContextMenu();
+}
+
+function onFileCtxClearTag() {
+  const file = currentFileContextTarget || (typeof window.getSystemSelectedFile === 'function' ? window.getSystemSelectedFile() : window.selectedFile);
+  if (!file) return;
+  removeFileTag(file.path);
+  if (typeof AppleAudioEngine !== 'undefined' && AppleAudioEngine.playPop) {
+    AppleAudioEngine.playPop();
+  }
+  hideFileContextMenu();
+}
+
+window.getFileTag = getFileTag;
+window.setFileTag = setFileTag;
+window.removeFileTag = removeFileTag;
+window.onFileCtxSelectTag = onFileCtxSelectTag;
+window.onFileCtxClearTag = onFileCtxClearTag;
 
 // Clock update forwarder (delegates to updateClock)
 function updateTime() {
@@ -3714,11 +4439,12 @@ function focusWindow(win) {
     }
   });
   
-  // macOS Sonoma: Dim widgets when a window focuses
+  // macOS Sonoma: Dynamic wallpaper tinting when a window focuses
   const widgets = document.getElementById('desktop-widgets');
   if (widgets) {
-    widgets.style.opacity = '0.3';
-    widgets.style.filter = 'grayscale(100%)';
+    widgets.classList.add('tinted');
+    widgets.style.opacity = '';
+    widgets.style.filter = '';
   }
 
   // macOS Dynamic Menubar sync
@@ -3930,8 +4656,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const widgets = document.getElementById('desktop-widgets');
       if (widgets) {
-        widgets.style.opacity = '1';
-        widgets.style.filter = 'grayscale(0%)';
+        widgets.classList.remove('tinted');
+        widgets.style.opacity = '';
+        widgets.style.filter = '';
       }
 
       // Revert Menu Bar to Finder on desktop click
@@ -3955,8 +4682,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  if (grid) grid.addEventListener('mousedown', handleDesktopClick);
-  if (desktop) desktop.addEventListener('mousedown', handleDesktopClick);
+  if (grid) {
+    grid.addEventListener('mousedown', handleDesktopClick);
+    grid.addEventListener('click', handleDesktopClick);
+  }
+  if (desktop) {
+    desktop.addEventListener('mousedown', handleDesktopClick);
+    desktop.addEventListener('click', handleDesktopClick);
+  }
 
   // Initialize Marquee selection
   initDesktopSelectionAndMarquee();
@@ -4050,6 +4783,10 @@ function getSFSymbol(name, size = 16, color = 'currentColor') {
       break;
     case 'plus':
       svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`;
+      break;
+    case 'arrow.up.arrow.down':
+    case 'arrow-up-down':
+      svg = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20V4M7 4L3 8M7 4L11 8M17 4V20M17 20L21 16M17 20L13 16"/></svg>`;
       break;
     case 'arrow-clockwise':
     case 'refresh':
@@ -4440,6 +5177,7 @@ function createWindow(pid, title, contentHtml, explicitAppKey = null) {
     else if (title.includes('Tic') || title.includes('棋') || title.includes('目並べ')) appKey = 'tictactoe';
     else if (title.includes('Logs') || title.includes('日志') || title.includes('ログ')) appKey = 'syslogs';
     else if (title.includes('iPhone')) appKey = 'iphonemirror';
+    else if (title.includes('Passwords') || title.includes('密码') || title.includes('パスワード')) appKey = 'passwords';
     else if (title.includes('Mirror') || title.includes('镜像') || title.includes('ミラー')) appKey = 'hostscreen';
     else if (title.includes('LAN') || title.includes('Server') || title.includes('门户') || title.includes('サーバー')) appKey = 'webhost';
     else if (title.includes('Image') || title.includes('Gallery') || title.includes('画廊') || title.includes('ビューア')) appKey = 'gallery';
@@ -4468,6 +5206,14 @@ function createWindow(pid, title, contentHtml, explicitAppKey = null) {
     <div class="window-content">
       ${contentHtml}
     </div>
+    <div class="win-resize-handle win-resize-n"></div>
+    <div class="win-resize-handle win-resize-s"></div>
+    <div class="win-resize-handle win-resize-e"></div>
+    <div class="win-resize-handle win-resize-w"></div>
+    <div class="win-resize-handle win-resize-ne"></div>
+    <div class="win-resize-handle win-resize-nw"></div>
+    <div class="win-resize-handle win-resize-se"></div>
+    <div class="win-resize-handle win-resize-sw"></div>
   `;
   win.dataset.title = localizedTitle;
   win.dataset.pid = pid;
@@ -4478,29 +5224,57 @@ function createWindow(pid, title, contentHtml, explicitAppKey = null) {
   }
   win.dataset.icon = appKey || 'finder';
 
-  // macOS Spring Spawn Animation
-  win.style.transform = 'scale(0.8)';
-  win.style.opacity = '0';
-  win.style.transition = 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease';
-  
-  desktop.appendChild(win);
-  windows.set(pid, win);
-  focusWindow(win);
-  
-  // Trigger reflow then spring
-  requestAnimationFrame(() => {
-    win.style.transform = 'scale(1)';
-    win.style.opacity = '1';
-  });
-  
-  setTimeout(() => {
-    win.style.transition = 'none'; // clear transition so dragging doesn't lag
-  }, 500);
-  
-  if (window.aliceOS && window.notifyIsland) {
-    const iconSvg = getAppIconSvg(appKey || 'finder', 24);
-    window.notifyIsland(iconSvg, localizedTitle, 100);
+  // macOS Zoom-from-Dock Open Animation
+  const dockIcon = appKey ? document.querySelector(`.dock-icon[data-app="${appKey}"]`) : null;
+  if (dockIcon) {
+    const iconRect = dockIcon.getBoundingClientRect();
+    const iconCX = iconRect.left + iconRect.width / 2;
+    const iconCY = iconRect.top + iconRect.height / 2;
+    // We need to calculate after appending so we have win dimensions
+    desktop.appendChild(win);
+    windows.set(pid, win);
+    focusWindow(win);
+
+    const winRect = win.getBoundingClientRect();
+    const winCX = winRect.left + winRect.width / 2;
+    const winCY = winRect.top + winRect.height / 2;
+    const dx = iconCX - winCX;
+    const dy = iconCY - winCY;
+
+    win.style.transition = 'none';
+    win.style.transform = `translate(${dx}px, ${dy}px) scale(0.08)`;
+    win.style.opacity = '0';
+    win.style.transformOrigin = 'center center';
+
+    const triggerDockZoomIn = () => {
+      win.style.transition = 'transform 0.36s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.22s ease';
+      win.style.transform = 'translate(0,0) scale(1)';
+      win.style.opacity = '1';
+    };
+    if (typeof requestAnimationFrame === 'function') {
+      requestAnimationFrame(() => requestAnimationFrame(triggerDockZoomIn));
+    }
+    setTimeout(triggerDockZoomIn, 50);
+  } else {
+    // Fallback: centre-zoom spring (no dock icon found)
+    win.style.transform = 'scale(0.85)';
+    win.style.opacity = '0';
+    win.style.transition = 'transform 0.36s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.22s ease';
+    desktop.appendChild(win);
+    windows.set(pid, win);
+    focusWindow(win);
+    const triggerCenterZoomIn = () => {
+      win.style.transform = 'scale(1)';
+      win.style.opacity = '1';
+    };
+    if (typeof requestAnimationFrame === 'function') {
+      requestAnimationFrame(() => requestAnimationFrame(triggerCenterZoomIn));
+    }
+    setTimeout(triggerCenterZoomIn, 50);
   }
+
+  // Clear transition after open animation so dragging won't lag
+  setTimeout(() => { win.style.transition = ''; }, 500);
 
   // Setup dragging
   const titlebar = win.querySelector('.titlebar');
@@ -4648,42 +5422,49 @@ function createWindow(pid, title, contentHtml, explicitAppKey = null) {
         win.style.width = 'calc(50vw - 12px)';
         win.style.height = 'calc(50vh - 66px)';
         win.dataset.snapped = 'top-left';
+        if (typeof showTilingHud === 'function') showTilingHud('top-left');
       } else if (isTopRight) {
         win.style.left = 'calc(50vw + 4px)';
         win.style.top = '36px';
         win.style.width = 'calc(50vw - 12px)';
         win.style.height = 'calc(50vh - 66px)';
         win.dataset.snapped = 'top-right';
+        if (typeof showTilingHud === 'function') showTilingHud('top-right');
       } else if (isBottomLeft) {
         win.style.left = '8px';
         win.style.top = 'calc(50vh - 22px)';
         win.style.width = 'calc(50vw - 12px)';
         win.style.height = 'calc(50vh - 72px)';
         win.dataset.snapped = 'bottom-left';
+        if (typeof showTilingHud === 'function') showTilingHud('bottom-left');
       } else if (isBottomRight) {
         win.style.left = 'calc(50vw + 4px)';
         win.style.top = 'calc(50vh - 22px)';
         win.style.width = 'calc(50vw - 12px)';
         win.style.height = 'calc(50vh - 72px)';
         win.dataset.snapped = 'bottom-right';
+        if (typeof showTilingHud === 'function') showTilingHud('bottom-right');
       } else if (isLeftEdge) {
         win.style.left = '8px';
         win.style.top = '36px';
         win.style.width = 'calc(50vw - 12px)';
         win.style.height = 'calc(100vh - 126px)';
         win.dataset.snapped = 'left';
+        if (typeof showTilingHud === 'function') showTilingHud('left');
       } else if (isRightEdge) {
         win.style.left = 'calc(50vw + 4px)';
         win.style.top = '36px';
         win.style.width = 'calc(50vw - 12px)';
         win.style.height = 'calc(100vh - 126px)';
         win.dataset.snapped = 'right';
+        if (typeof showTilingHud === 'function') showTilingHud('right');
       } else if (isTopEdge) {
         win.style.left = '8px';
         win.style.top = '36px';
         win.style.width = 'calc(100vw - 16px)';
         win.style.height = 'calc(100vh - 126px)';
         win.dataset.snapped = 'top';
+        if (typeof showTilingHud === 'function') showTilingHud('full');
       } else {
         // macOS Elastic Rubber-Band Boundary Rebound
         let boundedTop = win.offsetTop;
@@ -4715,10 +5496,8 @@ function createWindow(pid, title, contentHtml, explicitAppKey = null) {
           win.style.left = boundedLeft + 'px';
         }
       }
-      
-      setTimeout(() => { 
-        win.style.transition = ''; 
-        // Update mission control orig state
+      setTimeout(() => {
+        win.style.transition = '';
         win.dataset.origTop = win.style.top;
         win.dataset.origLeft = win.style.left;
         win.dataset.origTransform = win.style.transform;
@@ -4726,15 +5505,61 @@ function createWindow(pid, title, contentHtml, explicitAppKey = null) {
     }
   });
 
+  // macOS 8-direction resize handle logic
+  const resizeHandles = win.querySelectorAll('.win-resize-handle');
+  resizeHandles.forEach(handle => {
+    handle.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      focusWindow(win);
+      const dir = handle.className.replace('win-resize-handle win-resize-', '');
+      const startX = e.clientX;
+      const startY = e.clientY;
+      const startW = win.offsetWidth;
+      const startH = win.offsetHeight;
+      const startLeft = win.offsetLeft;
+      const startTop = win.offsetTop;
+      const minW = parseInt(win.style.minWidth) || 300;
+      const minH = parseInt(win.style.minHeight) || 200;
+
+      const onMove = (ev) => {
+        const dx = ev.clientX - startX;
+        const dy = ev.clientY - startY;
+        let newW = startW, newH = startH, newLeft = startLeft, newTop = startTop;
+
+        if (dir.includes('e')) newW = Math.max(minW, startW + dx);
+        if (dir.includes('s')) newH = Math.max(minH, startH + dy);
+        if (dir.includes('w')) { newW = Math.max(minW, startW - dx); newLeft = startLeft + startW - newW; }
+        if (dir.includes('n')) { newH = Math.max(minH, startH - dy); newTop = startTop + startH - newH; }
+
+        win.style.width = newW + 'px';
+        win.style.height = newH + 'px';
+        win.style.left = newLeft + 'px';
+        win.style.top = newTop + 'px';
+      };
+      const onUp = () => {
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+        win.dataset.origTop = win.style.top;
+        win.dataset.origLeft = win.style.left;
+      };
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    });
+  });
+
   win.addEventListener('mousedown', () => focusWindow(win));
 
-  // Controls
   const closeBtn = win.querySelector('.close');
   closeBtn.addEventListener('click', async () => {
     await window.aliceOS.pm.kill(pid);
-    win.style.transition = 'all 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53)';
-    win.style.transform = 'scale(0.8)';
+
+    // Authentic macOS window close dissolve animation
+    win.style.transition = 'transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.16s ease';
+    win.style.transform = 'scale(0.92) translateY(6px)';
     win.style.opacity = '0';
+    win.style.pointerEvents = 'none';
+
     setTimeout(() => {
       const minIcon = document.getElementById(`dock-min-${pid}`);
       if (minIcon) {
@@ -4743,6 +5568,10 @@ function createWindow(pid, title, contentHtml, explicitAppKey = null) {
       }
       win.remove();
       windows.delete(pid);
+      if (windows.size === 0) {
+        const widgets = document.getElementById('desktop-widgets');
+        if (widgets) widgets.classList.remove('tinted');
+      }
       if (typeof window.isStageManagerEnabled === 'function' && window.isStageManagerEnabled()) {
         updateStageManager();
       }
@@ -4773,7 +5602,7 @@ function createWindow(pid, title, contentHtml, explicitAppKey = null) {
       if (typeof syncMenubarActiveApp === 'function') {
         syncMenubarActiveApp(nextTop);
       }
-    }, 300);
+    }, 330);
   });
 
   const minBtn = win.querySelector('.minimize');
@@ -6396,7 +7225,7 @@ async function launchNotes(filePath = null) {
   selectNote(activeNoteId);
 }
 
-async function launchFinder() {
+async function launchFinder(initialDir = '/Users/alice', initialHost = false) {
   const res = await window.aliceOS.pm.spawn('finder');
   if (!res.success) return;
   const pid = res.data.pid;
@@ -6404,6 +7233,8 @@ async function launchFinder() {
     <div class="finder-container" id="finder-${pid}">
       <div class="finder-sidebar">
         <div style="font-size:10px;font-weight:700;color:#888;margin:8px 0 4px 8px;letter-spacing:0.5px;" data-finder-header="fav">${t('finder_favorites', 'FAVORITES')}</div>
+        <div class="finder-sidebar-item" data-path="airdrop" data-host="false" data-finder-label="airdrop"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#007aff" stroke-width="2" stroke-linecap="round" style="flex-shrink:0;margin-right:2px;"><circle cx="12" cy="12" r="2.5" fill="#007aff"/><path d="M7.75 7.75a6 6 0 0 1 8.5 0"/><path d="M4.93 4.93a10 10 0 0 1 14.14 0"/></svg> <span>${t('finder_airdrop', '隔空投送')}</span></div>
+        <div class="finder-sidebar-item" data-path="recents" data-host="false" data-finder-label="recents"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#007aff" stroke-width="2" stroke-linecap="round" style="flex-shrink:0;margin-right:2px;"><circle cx="12" cy="12" r="9"/><polyline points="12 6 12 12 16 14"/></svg> <span>${t('finder_recents', '最近使用')}</span></div>
         <div class="finder-sidebar-item" data-path="/Applications" data-host="false" data-finder-label="apps">${getSFSymbol('folder', 14, '#007aff')} <span>${t('finder_applications', 'Applications')}</span></div>
         <div class="finder-sidebar-item" data-path="/Users/alice" data-host="false" data-finder-label="home">${getSFSymbol('house', 14, '#007aff')} <span>${t('finder_home', 'Alice Home')}</span></div>
         <div class="finder-sidebar-item" data-path="/Users/alice/Desktop" data-host="false" data-finder-label="desktop">${getSFSymbol('desktop', 14, '#007aff')} <span>${t('finder_desktop', 'Desktop')}</span></div>
@@ -6412,6 +7243,7 @@ async function launchFinder() {
         <div class="finder-sidebar-item" data-path="/" data-host="false" data-finder-label="root">${getSFSymbol('internaldrive', 14, '#007aff')} <span>Macintosh HD</span></div>
         <div style="font-size:10px;font-weight:700;color:#888;margin:12px 0 4px 8px;letter-spacing:0.5px;" data-finder-header="loc">${t('finder_locations', 'LOCATIONS')}</div>
         <div class="finder-sidebar-item" data-path="C:\\\\" data-host="true" data-finder-label="disk">${getSFSymbol('internaldrive', 14, '#8e8e93')} <span>${t('finder_local_disk', 'Local Disk (C:)')}</span></div>
+        <div class="finder-sidebar-item" data-path="/Users/alice/.Trash" data-host="false" data-finder-label="trash">${getSFSymbol('trash', 14, '#8e8e93')} <span>${t('app_trash', '废纸篓')}</span></div>
         <div style="font-size:10px;font-weight:700;color:#888;margin:12px 0 4px 8px;letter-spacing:0.5px;" data-finder-header="tags">${t('finder_tags', 'TAGS')}</div>
         <div class="finder-sidebar-tag" data-tag-color="#ff3b30" data-tag-key="red"><span class="finder-tag-dot" style="background:#ff3b30;"></span> <span>${t('finder_tag_red', 'Red')}</span></div>
         <div class="finder-sidebar-tag" data-tag-color="#ff9500" data-tag-key="orange"><span class="finder-tag-dot" style="background:#ff9500;"></span> <span>${t('finder_tag_orange', 'Orange')}</span></div>
@@ -6422,6 +7254,11 @@ async function launchFinder() {
         <div class="finder-sidebar-tag" data-tag-color="#8e8e93" data-tag-key="gray"><span class="finder-tag-dot" style="background:#8e8e93;"></span> <span>${t('finder_tag_gray', 'Gray')}</span></div>
       </div>
       <div class="finder-main">
+        <!-- Finder Tab Bar (macOS Sonoma / Sequoia style) -->
+        <div class="finder-tab-bar" id="finder-tab-bar-${pid}" style="display:none;">
+          <div class="finder-tabs-container" id="finder-tabs-container-${pid}"></div>
+          <button class="finder-new-tab-btn" id="finder-new-tab-${pid}" title="新建标签页 (⌘T)">+</button>
+        </div>
         <div class="finder-toolbar" style="align-items:center;justify-content:space-between;padding:6px 12px;gap:8px;">
           <div style="display:flex;align-items:center;gap:6px;">
             <button id="finder-back-${pid}" title="${t('finder_back', 'Back')}" class="finder-toolbar-btn">${getSFSymbol('chevron-left', 12)}</button>
@@ -6430,12 +7267,34 @@ async function launchFinder() {
             <span id="finder-path-${pid}" style="font-size:12px;font-weight:600;margin-left:8px;opacity:0.8;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">/Users/alice</span>
           </div>
           <div style="display:flex;align-items:center;gap:6px;">
+            <button class="finder-toolbar-btn finder-empty-trash-btn" id="finder-empty-btn-${pid}" style="display:none;padding:3px 10px;font-size:11.5px;font-weight:600;background:rgba(255,255,255,0.1);border-radius:6px;border:1px solid rgba(255,255,255,0.15);color:#fff;" title="清倒废纸篓">清倒</button>
             <button class="finder-toolbar-btn" id="finder-newfolder-${pid}" title="新建文件夹">${getSFSymbol('folder-plus', 13)}</button>
             <button class="finder-toolbar-btn" id="finder-trash-${pid}" title="移到废纸篓">${getSFSymbol('trash', 13)}</button>
             <div class="finder-segmented-control">
               <button class="finder-seg-btn" id="finder-view-icon-${pid}" title="${t('finder_view_icon', 'Icon View')}">${getSFSymbol('grid', 12)}</button>
               <button class="finder-seg-btn" id="finder-view-list-${pid}" title="${t('finder_view_list', 'List View')}">${getSFSymbol('list', 12)}</button>
               <button class="finder-seg-btn active" id="finder-view-col-${pid}" title="${t('finder_view_col', 'Column View')}">${getSFSymbol('column', 12)}</button>
+            </div>
+            <div style="position:relative;display:flex;align-items:center;">
+              <button class="finder-toolbar-btn" id="finder-groupby-btn-${pid}" title="分组方式">${getSFSymbol('rectangle.3.group', 12)}</button>
+              <div class="finder-groupby-popover" id="finder-groupby-popover-${pid}" style="display:none;">
+                <div class="finder-groupby-item active" data-group="none">无</div>
+                <div class="finder-groupby-item" data-group="kind">按种类</div>
+                <div class="finder-groupby-item" data-group="date">按修改日期</div>
+                <div class="finder-groupby-item" data-group="size">按大小</div>
+              </div>
+            </div>
+            <div style="position:relative;display:flex;align-items:center;">
+              <button class="finder-toolbar-btn" id="finder-sortby-btn-${pid}" title="排序方式">${getSFSymbol('arrow.up.arrow.down', 12)}</button>
+              <div class="finder-groupby-popover" id="finder-sortby-popover-${pid}" style="display:none;width:130px;">
+                <div class="finder-groupby-item active" data-sort="name">按名称</div>
+                <div class="finder-groupby-item" data-sort="kind">按种类</div>
+                <div class="finder-groupby-item" data-sort="date">按修改日期</div>
+                <div class="finder-groupby-item" data-sort="size">按大小</div>
+                <div style="height:1px;background:rgba(255,255,255,0.08);margin:4px 0;"></div>
+                <div class="finder-groupby-item active" data-order="asc">升序</div>
+                <div class="finder-groupby-item" data-order="desc">降序</div>
+              </div>
             </div>
             <button class="finder-toolbar-btn" id="finder-refresh-${pid}" title="${t('finder_refresh', 'Refresh')}">${getSFSymbol('arrow-clockwise', 12)}</button>
             <div class="finder-search-wrap">
@@ -6446,20 +7305,74 @@ async function launchFinder() {
         </div>
         <div class="finder-view-wrapper" id="finder-view-${pid}" style="flex:1;overflow:hidden;display:flex;flex-direction:column;position:relative;">
         </div>
+        <div class="finder-path-bar" id="finder-pathbar-${pid}"></div>
         <div class="finder-status-bar" id="finder-status-${pid}">
           <span id="finder-status-count-${pid}">-- 项</span>
-          <span id="finder-status-disk-${pid}">245.8 GB 可用</span>
+          <span id="finder-status-disk-${pid}">18.7 GB 可用</span>
+          <div class="finder-zoom-slider-wrap" id="finder-zoom-wrap-${pid}" style="display:none;">
+            <span class="finder-zoom-icon" title="缩小时标">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2.5"/></svg>
+            </span>
+            <input type="range" class="finder-zoom-slider" id="finder-zoom-${pid}" min="36" max="96" value="54" title="调整图标大小">
+            <span class="finder-zoom-icon" title="放大图标">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+            </span>
+          </div>
         </div>
       </div>
     </div>
   `);
 
-  let currentDir = '/Users/alice';
-  let isHostDir = false;
+  let currentDir = (typeof initialDir === 'string' && initialDir) ? initialDir : '/Users/alice';
+  let isHostDir = !!initialHost;
   let viewMode = 'column'; // Default macOS Column View
   let history = [{ path: currentDir, host: isHostDir }];
   let historyIdx = 0;
   let activeTagFilter = null;
+  let groupBy = 'none'; // 'none' | 'kind' | 'date' | 'size'
+
+  function getItemKind(item) {
+    if (item.type === 'app' || (item.name && item.name.endsWith('.app'))) return '应用程序';
+    if (item.type === 'dir') return '文件夹';
+    const n = (item.name || '').toLowerCase();
+    if (n.endsWith('.png') || n.endsWith('.jpg') || n.endsWith('.jpeg') || n.endsWith('.gif') || n.endsWith('.svg') || n.endsWith('.webp') || n.endsWith('.icns')) return '图像';
+    if (n.endsWith('.txt') || n.endsWith('.md') || n.endsWith('.doc') || n.endsWith('.docx') || n.endsWith('.pdf') || n.endsWith('.rtf') || n.endsWith('.json') || n.endsWith('.js') || n.endsWith('.ts') || n.endsWith('.py') || n.endsWith('.c') || n.endsWith('.cpp') || n.endsWith('.html') || n.endsWith('.css')) return '文稿';
+    if (n.endsWith('.mp4') || n.endsWith('.mov') || n.endsWith('.mkv') || n.endsWith('.webm') || n.endsWith('.mp3') || n.endsWith('.wav') || n.endsWith('.m4a') || n.endsWith('.flac')) return '影片与音频';
+    return '其他';
+  }
+
+  function getItemDateGroup(item) {
+    const mtime = item.mtime ? new Date(item.mtime) : new Date();
+    const now = new Date();
+    const diffDays = Math.floor((now - mtime) / (1000 * 60 * 60 * 24));
+    if (diffDays <= 0) return '今天';
+    if (diffDays === 1) return '昨天';
+    if (diffDays <= 7) return '过去 7 天';
+    if (diffDays <= 30) return '过去 30 天';
+    return '更早';
+  }
+
+  function getItemSizeGroup(item) {
+    if (item.type === 'dir') return '文件夹';
+    const s = item.size || 0;
+    if (s >= 100 * 1024 * 1024) return '大 (100 MB – 1 GB)';
+    if (s >= 1 * 1024 * 1024) return '中 (1 MB – 100 MB)';
+    if (s >= 10 * 1024) return '小 (10 KB – 1 MB)';
+    return '极小 (< 10 KB)';
+  }
+
+  function groupItems(items, mode) {
+    const map = new Map();
+    items.forEach(it => {
+      let gName = '其他';
+      if (mode === 'kind') gName = getItemKind(it);
+      else if (mode === 'date') gName = getItemDateGroup(it);
+      else if (mode === 'size') gName = getItemSizeGroup(it);
+      if (!map.has(gName)) map.set(gName, []);
+      map.get(gName).push(it);
+    });
+    return map;
+  }
 
   window.aliceFileTags = window.aliceFileTags || {
     '/Users/alice/Desktop/quick_note.txt': '#ff9500',
@@ -6479,15 +7392,19 @@ async function launchFinder() {
   ];
 
   function getFileTag(path) {
-    return window.aliceFileTags ? window.aliceFileTags[path] : null;
+    return window.getFileTag ? window.getFileTag(path) : (window.aliceFileTags ? window.aliceFileTags[path] : null);
   }
 
   function setFileTag(path, color) {
-    if (!window.aliceFileTags) window.aliceFileTags = {};
-    if (window.aliceFileTags[path] === color) {
-      delete window.aliceFileTags[path];
+    if (window.setFileTag) {
+      window.setFileTag(path, color);
     } else {
-      window.aliceFileTags[path] = color;
+      if (!window.aliceFileTags) window.aliceFileTags = {};
+      if (window.aliceFileTags[path] === color) {
+        delete window.aliceFileTags[path];
+      } else {
+        window.aliceFileTags[path] = color;
+      }
     }
   }
 
@@ -6500,15 +7417,223 @@ async function launchFinder() {
   const btnList = win.querySelector(`#finder-view-list-${pid}`);
   const btnCol = win.querySelector(`#finder-view-col-${pid}`);
 
+  // macOS Finder Multi-Tab System
+  let finderTabs = [
+    {
+      id: 1,
+      name: currentDir.split(/[/\\]/).filter(Boolean).pop() || (isHostDir ? 'Local Disk' : 'alice'),
+      path: currentDir,
+      isHost: isHostDir,
+      viewMode: 'column',
+      history: [{ path: currentDir, host: isHostDir }],
+      historyIdx: 0,
+      columnStack: [{ dirPath: currentDir, isHost: isHostDir, selectedName: null }]
+    }
+  ];
+  let activeTabId = 1;
+
+  function renderFinderTabs() {
+    const bar = win.querySelector(`#finder-tab-bar-${pid}`);
+    const container = win.querySelector(`#finder-tabs-container-${pid}`);
+    if (!bar || !container) return;
+
+    if (finderTabs.length <= 1) {
+      bar.style.display = 'none';
+    } else {
+      bar.style.display = 'flex';
+    }
+
+    container.innerHTML = '';
+    finderTabs.forEach(tab => {
+      const tabEl = document.createElement('div');
+      tabEl.className = `finder-tab ${tab.id === activeTabId ? 'active' : ''}`;
+      const folderName = tab.path.split('/').filter(Boolean).pop() || (tab.isHost ? 'Local Disk' : 'Macintosh HD');
+      tabEl.innerHTML = `
+        <span class="finder-tab-icon" style="display:flex;align-items:center;">${getSFSymbol('folder', 13, tab.id === activeTabId ? '#007aff' : 'currentColor')}</span>
+        <span class="finder-tab-title" title="${tab.path}">${folderName}</span>
+        <span class="finder-tab-close" data-id="${tab.id}" title="关闭标签页">✕</span>
+      `;
+      tabEl.onclick = (e) => {
+        if (e.target.classList.contains('finder-tab-close')) {
+          e.stopPropagation();
+          closeFinderTab(tab.id);
+          return;
+        }
+        switchFinderTab(tab.id);
+      };
+      container.appendChild(tabEl);
+    });
+  }
+
+  function createFinderTab(path = currentDir, isHost = isHostDir) {
+    const newId = Date.now();
+    const folderName = path.split('/').filter(Boolean).pop() || (isHost ? 'Local Disk' : 'Macintosh HD');
+    finderTabs.push({
+      id: newId,
+      name: folderName,
+      path: path,
+      isHost: isHost,
+      viewMode: viewMode,
+      history: [{ path: path, host: isHost }],
+      historyIdx: 0,
+      columnStack: [{ dirPath: path, isHost: isHost, selectedName: null }]
+    });
+    renderFinderTabs();
+    switchFinderTab(newId);
+    if (window.AppleAudioEngine && window.AppleAudioEngine.playPop) {
+      try { window.AppleAudioEngine.playPop(); } catch(e) {}
+    }
+  }
+
+  function switchFinderTab(tabId) {
+    const currentTab = finderTabs.find(t => t.id === activeTabId);
+    if (currentTab) {
+      currentTab.path = currentDir;
+      currentTab.isHost = isHostDir;
+      currentTab.viewMode = viewMode;
+      currentTab.history = history;
+      currentTab.historyIdx = historyIdx;
+      currentTab.columnStack = columnStack;
+    }
+
+    const newTab = finderTabs.find(t => t.id === tabId);
+    if (!newTab) return;
+    activeTabId = tabId;
+    currentDir = newTab.path;
+    isHostDir = newTab.isHost;
+    viewMode = newTab.viewMode;
+    history = newTab.history;
+    historyIdx = newTab.historyIdx;
+    columnStack = newTab.columnStack;
+
+    updateSegBtns();
+    renderFinderTabs();
+    renderActiveView();
+    updatePathBar();
+    updateStatusBar();
+  }
+
+  function closeFinderTab(tabId) {
+    if (finderTabs.length <= 1) return;
+    const idx = finderTabs.findIndex(t => t.id === tabId);
+    if (idx === -1) return;
+    finderTabs.splice(idx, 1);
+    if (activeTabId === tabId) {
+      const nextTab = finderTabs[Math.max(0, idx - 1)];
+      switchFinderTab(nextTab.id);
+    } else {
+      renderFinderTabs();
+    }
+  }
+
+  const newTabBtn = win.querySelector(`#finder-new-tab-${pid}`);
+  if (newTabBtn) {
+    newTabBtn.onclick = () => createFinderTab();
+  }
+
+  // Keyboard shortcut: Cmd/Ctrl + T creates a new tab, Cmd/Ctrl + W closes tab
+  win.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.code === 'KeyT') {
+      e.preventDefault();
+      e.stopPropagation();
+      createFinderTab();
+    } else if ((e.metaKey || e.ctrlKey) && e.code === 'KeyW' && finderTabs.length > 1) {
+      e.preventDefault();
+      e.stopPropagation();
+      closeFinderTab(activeTabId);
+    }
+  });
+
   function updateSegBtns() {
     [btnIcon, btnList, btnCol].forEach(b => b.classList.remove('active'));
     if (viewMode === 'icon') btnIcon.classList.add('active');
     else if (viewMode === 'list') btnList.classList.add('active');
     else if (viewMode === 'column') btnCol.classList.add('active');
+    const zoomWrap = win.querySelector(`#finder-zoom-wrap-${pid}`);
+    if (zoomWrap) {
+      zoomWrap.style.display = (viewMode === 'icon') ? 'flex' : 'none';
+    }
+  }
+
+  let currentSortBy = 'name';
+  let currentSortAsc = true;
+
+  function formatBytes(bytes) {
+    if (bytes === undefined || bytes === null || isNaN(bytes) || bytes === 0) return '--';
+    const k = 1024;
+    const sizes = ['字节', 'KB', 'MB', 'GB', 'TB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    if (i === 0) return `${bytes} 字节`;
+    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(1))} ${sizes[i]}`;
+  }
+
+  function formatMacDate(mtime) {
+    if (!mtime) return '--';
+    const d = new Date(mtime);
+    if (isNaN(d.getTime())) return '--';
+    const now = new Date();
+    const isToday = d.toDateString() === now.toDateString();
+    const timeStr = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+    if (isToday) return `今天 ${timeStr}`;
+    const yesterday = new Date(now);
+    yesterday.setDate(now.getDate() - 1);
+    if (d.toDateString() === yesterday.toDateString()) return `昨天 ${timeStr}`;
+    return `${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, '0')}/${String(d.getDate()).padStart(2, '0')} ${timeStr}`;
+  }
+
+  function sortDirItems(items, sortBy = currentSortBy, sortAsc = currentSortAsc) {
+    return [...items].sort((a, b) => {
+      // macOS standard: Folders kept at top
+      if (a.type === 'dir' && b.type !== 'dir') return -1;
+      if (a.type !== 'dir' && b.type === 'dir') return 1;
+
+      let res = 0;
+      if (sortBy === 'name') {
+        res = (a.name || '').localeCompare(b.name || '', undefined, { numeric: true, sensitivity: 'base' });
+      } else if (sortBy === 'kind') {
+        const getKind = (item) => {
+          if (item.type === 'dir') return 'Folder';
+          if (item.type === 'app' || (item.name && item.name.endsWith('.app'))) return 'Application';
+          const ext = (item.name.split('.').pop() || '').toLowerCase();
+          return ext || 'Document';
+        };
+        res = getKind(a).localeCompare(getKind(b));
+        if (res === 0) res = (a.name || '').localeCompare(b.name || '');
+      } else if (sortBy === 'size') {
+        const sizeA = Number(a.size) || 0;
+        const sizeB = Number(b.size) || 0;
+        res = sizeA - sizeB;
+        if (res === 0) res = (a.name || '').localeCompare(b.name || '');
+      } else if (sortBy === 'date') {
+        const dateA = Number(a.mtime) || 0;
+        const dateB = Number(b.mtime) || 0;
+        res = dateA - dateB;
+        if (res === 0) res = (a.name || '').localeCompare(b.name || '');
+      }
+      return sortAsc ? res : -res;
+    });
   }
 
   let searchQuery = '';
   async function getDirItems(path, host) {
+    if (activeTagFilter) {
+      if (typeof initFileTagsStore === 'function') initFileTagsStore();
+      const targetColor = (typeof TAG_COLOR_MAP !== 'undefined' && TAG_COLOR_MAP[activeTagFilter]) || activeTagFilter;
+      const matchingPaths = Object.keys(window.aliceFileTags || {}).filter(p => {
+        const col = window.aliceFileTags[p];
+        return col === activeTagFilter || col === targetColor;
+      });
+      return matchingPaths.map(p => {
+        const parts = p.split(/[/\\]/);
+        const name = parts[parts.length - 1] || p;
+        return {
+          name: name,
+          path: p,
+          isCustomPath: true,
+          type: p.includes('.') ? 'file' : 'dir'
+        };
+      });
+    }
     let items = [];
     if (!host && (path === '/Applications' || path === '/Applications/')) {
       const dict = i18nDict[currentSystemLang] || i18nDict.en;
@@ -6529,15 +7654,140 @@ async function launchFinder() {
     if (searchQuery) {
       items = items.filter(i => i.name.toLowerCase().includes(searchQuery));
     }
-    return items;
+    return sortDirItems(items);
   }
 
   async function updateStatusBar() {
     try {
+      if (activeTagFilter) {
+        const tagObj = FINDER_TAG_COLORS.find(c => c.hex === activeTagFilter || c.name.toLowerCase() === activeTagFilter) || { name: '标签', hex: activeTagFilter };
+        const items = await getDirItems(currentDir, isHostDir);
+        const countEl = win.querySelector(`#finder-status-count-${pid}`);
+        if (countEl) countEl.innerText = `${items.length} 个标签项目`;
+        const diskEl = win.querySelector(`#finder-status-disk-${pid}`);
+        if (diskEl) diskEl.innerText = `“${tagObj.name}”标签`;
+        return;
+      }
+      if (currentDir === 'airdrop') {
+        const countEl = win.querySelector(`#finder-status-count-${pid}`);
+        if (countEl) countEl.innerText = '附近已发现 3 台设备';
+        const diskEl = win.querySelector(`#finder-status-disk-${pid}`);
+        if (diskEl) diskEl.innerText = '无线共享就绪';
+        return;
+      }
+      if (currentDir === 'recents') {
+        const countEl = win.querySelector(`#finder-status-count-${pid}`);
+        if (countEl) countEl.innerText = '最近使用的项目';
+        const diskEl = win.querySelector(`#finder-status-disk-${pid}`);
+        if (diskEl) diskEl.innerText = '按访问时间排列';
+        return;
+      }
       const items = await getDirItems(currentDir, isHostDir);
       const countEl = win.querySelector(`#finder-status-count-${pid}`);
       if (countEl) countEl.innerText = `${items.length} 项`;
+      const diskEl = win.querySelector(`#finder-status-disk-${pid}`);
+      if (diskEl) diskEl.innerText = '18.7 GB 可用';
     } catch(e) {}
+  }
+
+  function updatePathBar() {
+    const pathbarEl = win.querySelector(`#finder-pathbar-${pid}`);
+    if (!pathbarEl) return;
+    pathbarEl.innerHTML = '';
+    
+    if (activeTagFilter) {
+      const tagObj = FINDER_TAG_COLORS.find(c => c.hex === activeTagFilter || c.name.toLowerCase() === activeTagFilter) || { name: '标签', hex: activeTagFilter };
+      const span = document.createElement('span');
+      span.className = 'finder-path-segment';
+      span.innerHTML = `<span class="finder-tag-dot" style="background:${tagObj.hex};margin-right:4px;"></span> <span>标签 › ${tagObj.name}</span>`;
+      pathbarEl.appendChild(span);
+      return;
+    }
+    
+    if (currentDir === 'airdrop') {
+      const span = document.createElement('span');
+      span.className = 'finder-path-segment';
+      span.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#007aff" stroke-width="2" style="margin-right:4px;"><circle cx="12" cy="12" r="2.5" fill="#007aff"/><path d="M7.75 7.75a6 6 0 0 1 8.5 0"/><path d="M4.93 4.93a10 10 0 0 1 14.14 0"/></svg> <span>隔空投送</span>`;
+      pathbarEl.appendChild(span);
+      return;
+    }
+    if (currentDir === 'recents') {
+      const span = document.createElement('span');
+      span.className = 'finder-path-segment';
+      span.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#007aff" stroke-width="2" style="margin-right:4px;"><circle cx="12" cy="12" r="9"/><polyline points="12 6 12 12 16 14"/></svg> <span>最近使用</span>`;
+      pathbarEl.appendChild(span);
+      return;
+    }
+
+    if (!isHostDir) {
+      const parts = currentDir.split('/').filter(Boolean);
+      const segments = [{ name: 'Macintosh HD', path: '/', icon: getSFSymbol('internaldrive', 12, '#8e8e93') }];
+      let accum = '';
+      for (let i = 0; i < parts.length; i++) {
+        accum += '/' + parts[i];
+        let icon = getSFSymbol('folder', 12, '#007aff');
+        let label = parts[i];
+        if (parts[i] === 'Users') {
+          icon = getSFSymbol('folder', 12, '#8e8e93');
+        } else if (parts[i] === 'alice') {
+          icon = getSFSymbol('house', 12, '#007aff');
+          label = 'alice';
+        } else if (parts[i] === 'Desktop') {
+          icon = getSFSymbol('desktop', 12, '#007aff');
+          label = '桌面';
+        } else if (parts[i] === 'Documents') {
+          icon = getSFSymbol('doc-text', 12, '#007aff');
+          label = '文稿';
+        } else if (parts[i] === 'Downloads') {
+          icon = getSFSymbol('arrow-down-circle', 12, '#007aff');
+          label = '下载';
+        } else if (parts[i] === 'Applications') {
+          icon = getSFSymbol('folder', 12, '#007aff');
+          label = '应用程序';
+        } else if (parts[i] === '.Trash') {
+          icon = getSFSymbol('trash', 12, '#8e8e93');
+          label = '废纸篓';
+        }
+        segments.push({ name: label, path: accum, icon });
+      }
+      
+      segments.forEach((seg, idx) => {
+        const span = document.createElement('span');
+        span.className = 'finder-path-segment';
+        span.innerHTML = `${seg.icon} <span>${seg.name}</span>`;
+        span.onclick = () => navigateTo(seg.path, false);
+        pathbarEl.appendChild(span);
+        if (idx < segments.length - 1) {
+          const sep = document.createElement('span');
+          sep.className = 'finder-path-separator';
+          sep.innerText = '›';
+          pathbarEl.appendChild(sep);
+        }
+      });
+    } else {
+      const parts = currentDir.replace(/\\/g, '/').split('/').filter(Boolean);
+      const segments = [];
+      let accum = '';
+      for (let i = 0; i < parts.length; i++) {
+        if (i === 0) accum = parts[0] + '\\';
+        else accum += '\\' + parts[i];
+        const icon = i === 0 ? getSFSymbol('internaldrive', 12, '#8e8e93') : getSFSymbol('folder', 12, '#007aff');
+        segments.push({ name: parts[i], path: accum, icon });
+      }
+      segments.forEach((seg, idx) => {
+        const span = document.createElement('span');
+        span.className = 'finder-path-segment';
+        span.innerHTML = `${seg.icon} <span>${seg.name}</span>`;
+        span.onclick = () => navigateTo(seg.path, true);
+        pathbarEl.appendChild(span);
+        if (idx < segments.length - 1) {
+          const sep = document.createElement('span');
+          sep.className = 'finder-path-separator';
+          sep.innerText = '›';
+          pathbarEl.appendChild(sep);
+        }
+      });
+    }
   }
 
   async function navigateTo(path, host, pushHistory = true) {
@@ -6550,8 +7800,23 @@ async function launchFinder() {
       historyIdx = history.length - 1;
     }
     columnStack = [{ dirPath: currentDir, isHost: isHostDir, selectedName: null }];
+
+    const curTab = finderTabs.find(t => t.id === activeTabId);
+    if (curTab) {
+      curTab.path = currentDir;
+      curTab.isHost = isHostDir;
+      curTab.name = currentDir.split('/').filter(Boolean).pop() || (isHostDir ? 'Local Disk' : 'Macintosh HD');
+      renderFinderTabs();
+    }
+
+    updatePathBar();
     await renderActiveView();
+    updateStatusBar();
   }
+
+  window.navigateToFinderPath = (path, host = false) => {
+    navigateTo(path, host);
+  };
 
   function handleFileOpen(item, targetPath, host) {
     if (item && (item.type === 'app' || (item.name && item.name.endsWith('.app')))) {
@@ -6579,8 +7844,36 @@ async function launchFinder() {
   }
 
   async function renderActiveView() {
+    window.renderActiveFinderView = renderActiveView;
     viewContainer.innerHTML = '';
-    pathDisplay.innerText = currentDir;
+
+    if (currentDir === 'airdrop') {
+      pathDisplay.innerText = t('finder_airdrop', '隔空投送');
+      const emptyBtn = win.querySelector(`#finder-empty-btn-${pid}`);
+      if (emptyBtn) emptyBtn.style.display = 'none';
+      renderAirDropRadarView(viewContainer, pid);
+      updateStatusBar();
+      return;
+    }
+
+    if (currentDir === 'recents') {
+      pathDisplay.innerText = t('finder_recents', '最近使用');
+      const emptyBtn = win.querySelector(`#finder-empty-btn-${pid}`);
+      if (emptyBtn) emptyBtn.style.display = 'none';
+      await renderRecentsTimelineView(viewContainer, pid);
+      updateStatusBar();
+      return;
+    }
+
+    pathDisplay.innerText = currentDir === '/Users/alice/.Trash' ? t('app_trash', '废纸篓') : currentDir;
+
+    const emptyBtn = win.querySelector(`#finder-empty-btn-${pid}`);
+    if (emptyBtn) {
+      emptyBtn.style.display = currentDir === '/Users/alice/.Trash' ? 'block' : 'none';
+      emptyBtn.onclick = () => {
+        confirmEmptyTrash();
+      };
+    }
 
     if (activeTagFilter) {
       const tagObj = FINDER_TAG_COLORS.find(c => c.hex === activeTagFilter) || { name: 'Tag', hex: activeTagFilter };
@@ -6610,16 +7903,21 @@ async function launchFinder() {
   }
 
   async function renderIconView() {
+    const zoomSlider = win.querySelector(`#finder-zoom-${pid}`);
+    const sz = zoomSlider ? (parseInt(zoomSlider.value) || 54) : 54;
+    viewContainer.style.setProperty('--finder-item-size', (sz * 1.35) + 'px');
+    viewContainer.style.setProperty('--finder-icon-size', sz + 'px');
+
     const content = document.createElement('div');
     content.className = 'finder-content';
     content.innerHTML = '<div style="padding:20px;opacity:0.6;">' + t('finder_loading', 'Loading...') + '</div>';
     viewContainer.appendChild(content);
 
     let items = await getDirItems(currentDir, isHostDir);
-    if (activeTagFilter) {
+    if (activeTagFilter && !items[0]?.isCustomPath) {
       items = items.filter(item => {
         let targetPath = isHostDir 
-          ? (currentDir.endsWith('\\\\') ? currentDir + item.name : currentDir + '\\\\' + item.name)
+          ? (currentDir.endsWith('\\') ? currentDir + item.name : currentDir + '\\' + item.name)
           : (currentDir === '/' ? `/${item.name}` : `${currentDir}/${item.name}`);
         return getFileTag(targetPath) === activeTagFilter;
       });
@@ -6627,11 +7925,15 @@ async function launchFinder() {
 
     content.innerHTML = '';
     if (items.length === 0) {
-      content.innerHTML = '<div style="padding:20px;opacity:0.5;">' + (activeTagFilter ? t('finder_no_match_tag', 'No files match this tag') : t('finder_empty', 'Empty folder')) + '</div>';
+      if (currentDir === '/Users/alice/.Trash') {
+        content.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;opacity:0.4;gap:10px;"><div style="font-size:42px;">🗑️</div><div style="font-size:13px;font-weight:600;">废纸篓是空的</div></div>';
+      } else {
+        content.innerHTML = '<div style="padding:20px;opacity:0.5;">' + (activeTagFilter ? t('finder_no_match_tag', 'No files match this tag') : t('finder_empty', 'Empty folder')) + '</div>';
+      }
       return;
     }
 
-    items.forEach(item => {
+    function createIconElement(item) {
       const el = document.createElement('div');
       el.className = 'finder-item';
       let icon = item.type === 'dir' ? getSFSymbol('folder', 48) : getSFSymbol('doc', 44);
@@ -6645,9 +7947,9 @@ async function launchFinder() {
         icon = getSFSymbol('film', 44);
       }
 
-      let targetPath = isHostDir 
-        ? (currentDir.endsWith('\\\\') ? currentDir + item.name : currentDir + '\\\\' + item.name)
-        : (currentDir === '/' ? `/${item.name}` : `${currentDir}/${item.name}`);
+      let targetPath = item.isCustomPath ? item.path : (isHostDir 
+        ? (currentDir.endsWith('\\') ? currentDir + item.name : currentDir + '\\' + item.name)
+        : (currentDir === '/' ? `/${item.name}` : `${currentDir}/${item.name}`));
 
       const tagColor = getFileTag(targetPath);
       const tagDot = tagColor ? `<span class="finder-tag-dot" style="background:${tagColor};"></span>` : '';
@@ -6670,6 +7972,22 @@ async function launchFinder() {
         else window.selectedFile = fData;
       });
 
+      el.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        content.querySelectorAll('.finder-item').forEach(i => i.classList.remove('selected'));
+        el.classList.add('selected');
+        const fData = {
+          path: targetPath,
+          isHost: isHostDir,
+          type: item.type,
+          name: item.name
+        };
+        if (typeof window.setSystemSelectedFile === 'function') window.setSystemSelectedFile(fData);
+        else window.selectedFile = fData;
+        showFileContextMenu(e.clientX, e.clientY, fData);
+      });
+
       el.addEventListener('dblclick', () => {
         if (item.type === 'dir') {
           navigateTo(targetPath, isHostDir);
@@ -6678,8 +7996,26 @@ async function launchFinder() {
         }
       });
 
-      content.appendChild(el);
-    });
+      return el;
+    }
+
+    if (groupBy === 'none') {
+      items.forEach(item => {
+        content.appendChild(createIconElement(item));
+      });
+    } else {
+      const groups = groupItems(items, groupBy);
+      groups.forEach((groupItems, groupName) => {
+        const sec = document.createElement('div');
+        sec.className = 'finder-group-section';
+        sec.innerHTML = `<div class="finder-group-header"><span>${groupName}</span><span class="finder-group-count">(${groupItems.length})</span></div>`;
+        const grid = document.createElement('div');
+        grid.className = 'finder-group-grid';
+        groupItems.forEach(item => grid.appendChild(createIconElement(item)));
+        sec.appendChild(grid);
+        content.appendChild(sec);
+      });
+    }
   }
 
   async function renderListView() {
@@ -6689,10 +8025,10 @@ async function launchFinder() {
     viewContainer.appendChild(listWrap);
 
     let items = await getDirItems(currentDir, isHostDir);
-    if (activeTagFilter) {
+    if (activeTagFilter && !items[0]?.isCustomPath) {
       items = items.filter(item => {
         let targetPath = isHostDir 
-          ? (currentDir.endsWith('\\\\') ? currentDir + item.name : currentDir + '\\\\' + item.name)
+          ? (currentDir.endsWith('\\') ? currentDir + item.name : currentDir + '\\' + item.name)
           : (currentDir === '/' ? `/${item.name}` : `${currentDir}/${item.name}`);
         return getFileTag(targetPath) === activeTagFilter;
       });
@@ -6706,19 +8042,40 @@ async function launchFinder() {
 
     const table = document.createElement('table');
     table.className = 'finder-list-table';
+    const sortIndicator = (col) => {
+      if (currentSortBy !== col) return '';
+      return currentSortAsc ? ' <span class="finder-sort-arrow">▲</span>' : ' <span class="finder-sort-arrow">▼</span>';
+    };
     table.innerHTML = `
       <thead>
         <tr>
-          <th style="width:50%;">${t('finder_col_name', 'Name')}</th>
-          <th style="width:25%;">${t('finder_col_kind', 'Kind')}</th>
-          <th style="width:25%;">${t('finder_col_type', 'Type')}</th>
+          <th class="finder-th-sort ${currentSortBy === 'name' ? 'sorted' : ''}" data-sort="name" style="width:42%;cursor:pointer;">${t('finder_col_name', 'Name')}${sortIndicator('name')}</th>
+          <th class="finder-th-sort ${currentSortBy === 'kind' ? 'sorted' : ''}" data-sort="kind" style="width:20%;cursor:pointer;">${t('finder_col_kind', 'Kind')}${sortIndicator('kind')}</th>
+          <th class="finder-th-sort ${currentSortBy === 'size' ? 'sorted' : ''}" data-sort="size" style="width:18%;cursor:pointer;">${t('finder_col_size', 'Size')}${sortIndicator('size')}</th>
+          <th class="finder-th-sort ${currentSortBy === 'date' ? 'sorted' : ''}" data-sort="date" style="width:20%;cursor:pointer;">${t('finder_col_date', 'Date Modified')}${sortIndicator('date')}</th>
         </tr>
       </thead>
       <tbody></tbody>
     `;
     const tbody = table.querySelector('tbody');
 
-    items.forEach(item => {
+    table.querySelectorAll('th.finder-th-sort').forEach(th => {
+      th.addEventListener('click', () => {
+        const col = th.dataset.sort;
+        if (currentSortBy === col) {
+          currentSortAsc = !currentSortAsc;
+        } else {
+          currentSortBy = col;
+          currentSortAsc = true;
+        }
+        if (window.AppleAudioEngine && window.AppleAudioEngine.playHapticClick) {
+          window.AppleAudioEngine.playHapticClick('light');
+        }
+        renderActiveView();
+      });
+    });
+
+    function createListRow(item) {
       const tr = document.createElement('tr');
       tr.className = 'finder-list-row';
       let icon = item.type === 'dir' ? getSFSymbol('folder', 18) : getSFSymbol('doc', 16);
@@ -6733,28 +8090,55 @@ async function launchFinder() {
       }
       let kind = item.type === 'dir' ? t('finder_folder', 'Folder') : ((item.type === 'app' || (item.name && item.name.endsWith('.app'))) ? (currentSystemLang === 'zh' ? 'macOS 应用程序' : 'macOS Application') : (item.name.endsWith('.png') ? t('finder_png_image', 'PNG Image') : t('finder_document', 'Document')));
 
-      let targetPath = isHostDir 
-        ? (currentDir.endsWith('\\\\') ? currentDir + item.name : currentDir + '\\\\' + item.name)
-        : (currentDir === '/' ? `/${item.name}` : `${currentDir}/${item.name}`);
+      let targetPath = item.isCustomPath ? item.path : (isHostDir 
+        ? (currentDir.endsWith('\\') ? currentDir + item.name : currentDir + '\\' + item.name)
+        : (currentDir === '/' ? `/${item.name}` : `${currentDir}/${item.name}`));
 
       const tagColor = getFileTag(targetPath);
       const tagDot = tagColor ? `<span class="finder-tag-dot" style="background:${tagColor};"></span>` : '';
 
+      let sizeStr = '--';
+      if (item.type !== 'dir') {
+        sizeStr = formatBytes(item.size);
+      }
+      let dateStr = formatMacDate(item.mtime);
+
       tr.innerHTML = `
         <td style="display:flex;align-items:center;gap:8px;"><span style="font-size:16px;">${icon}</span> ${tagDot}<span>${item.name}</span></td>
         <td>${kind}</td>
-        <td style="opacity:0.6;font-size:11px;">${item.type}</td>
+        <td style="opacity:0.75;font-size:11px;">${sizeStr}</td>
+        <td style="opacity:0.75;font-size:11px;">${dateStr}</td>
       `;
 
       tr.addEventListener('click', () => {
         tbody.querySelectorAll('.finder-list-row').forEach(r => r.classList.remove('selected'));
         tr.classList.add('selected');
-        window.aliceOS.selectedFile = {
+        const fData = {
           path: targetPath,
           isHost: isHostDir,
           type: item.type,
           name: item.name
         };
+        window.aliceOS.selectedFile = fData;
+        if (typeof window.setSystemSelectedFile === 'function') window.setSystemSelectedFile(fData);
+        else window.selectedFile = fData;
+      });
+
+      tr.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        tbody.querySelectorAll('.finder-list-row').forEach(r => r.classList.remove('selected'));
+        tr.classList.add('selected');
+        const fData = {
+          path: targetPath,
+          isHost: isHostDir,
+          type: item.type,
+          name: item.name
+        };
+        window.aliceOS.selectedFile = fData;
+        if (typeof window.setSystemSelectedFile === 'function') window.setSystemSelectedFile(fData);
+        else window.selectedFile = fData;
+        showFileContextMenu(e.clientX, e.clientY, fData);
       });
 
       tr.addEventListener('dblclick', () => {
@@ -6765,8 +8149,23 @@ async function launchFinder() {
         }
       });
 
-      tbody.appendChild(tr);
-    });
+      return tr;
+    }
+
+    if (groupBy === 'none') {
+      items.forEach(item => {
+        tbody.appendChild(createListRow(item));
+      });
+    } else {
+      const groups = groupItems(items, groupBy);
+      groups.forEach((groupItems, groupName) => {
+        const headRow = document.createElement('tr');
+        headRow.className = 'finder-list-group-row';
+        headRow.innerHTML = `<td colspan="4"><div class="finder-group-header"><span>${groupName}</span><span class="finder-group-count">(${groupItems.length})</span></div></td>`;
+        tbody.appendChild(headRow);
+        groupItems.forEach(item => tbody.appendChild(createListRow(item)));
+      });
+    }
 
     listWrap.appendChild(table);
   }
@@ -6898,7 +8297,7 @@ async function launchFinder() {
         colContainer.appendChild(colEl);
 
         let items = await getDirItems(colData.dirPath, colData.isHost);
-        if (activeTagFilter) {
+        if (activeTagFilter && !items[0]?.isCustomPath) {
           items = items.filter(item => {
             let childPath = colData.isHost 
               ? (colData.dirPath.endsWith('\\\\') ? colData.dirPath + item.name : colData.dirPath + '\\\\' + item.name)
@@ -6924,9 +8323,9 @@ async function launchFinder() {
               icon = getSFSymbol('film', 15);
             }
             
-            let childPath = colData.isHost 
+            let childPath = item.isCustomPath ? item.path : (colData.isHost 
               ? (colData.dirPath.endsWith('\\\\') ? colData.dirPath + item.name : colData.dirPath + '\\\\' + item.name)
-              : (colData.dirPath === '/' ? `/${item.name}` : `${colData.dirPath}/${item.name}`);
+              : (colData.dirPath === '/' ? `/${item.name}` : `${colData.dirPath}/${item.name}`));
 
             const tagColor = getFileTag(childPath);
             const tagDot = tagColor ? `<span class="finder-tag-dot" style="background:${tagColor};"></span>` : '';
@@ -6943,12 +8342,15 @@ async function launchFinder() {
 
             itemEl.addEventListener('click', async () => {
               colData.selectedName = item.name;
-              window.aliceOS.selectedFile = {
+              const fData = {
                 path: childPath,
                 isHost: colData.isHost,
                 type: item.type,
                 name: item.name
               };
+              window.aliceOS.selectedFile = fData;
+              if (typeof window.setSystemSelectedFile === 'function') window.setSystemSelectedFile(fData);
+              else window.selectedFile = fData;
               // Truncate following columns
               columnStack = columnStack.slice(0, cIdx + 1);
               if (item.type === 'dir') {
@@ -6956,12 +8358,27 @@ async function launchFinder() {
               } else {
                 columnStack.push({
                   isPreview: true,
-                  file: { path: childPath, isHost: colData.isHost, type: item.type, name: item.name },
+                  file: fData,
                   targetPath: childPath,
                   isHost: colData.isHost
                 });
               }
               await renderColumnView();
+            });
+
+            itemEl.addEventListener('contextmenu', (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              const fData = {
+                path: childPath,
+                isHost: colData.isHost,
+                type: item.type,
+                name: item.name
+              };
+              window.aliceOS.selectedFile = fData;
+              if (typeof window.setSystemSelectedFile === 'function') window.setSystemSelectedFile(fData);
+              else window.selectedFile = fData;
+              showFileContextMenu(e.clientX, e.clientY, fData);
             });
 
             itemEl.addEventListener('dblclick', () => {
@@ -6996,6 +8413,15 @@ async function launchFinder() {
     updateSegBtns();
     renderActiveView();
   });
+
+  const zoomSlider = win.querySelector(`#finder-zoom-${pid}`);
+  if (zoomSlider) {
+    zoomSlider.addEventListener('input', (e) => {
+      const sz = parseInt(e.target.value) || 54;
+      viewContainer.style.setProperty('--finder-item-size', (sz * 1.35) + 'px');
+      viewContainer.style.setProperty('--finder-icon-size', sz + 'px');
+    });
+  }
 
   // Navigation actions
   win.querySelector(`#finder-back-${pid}`).addEventListener('click', () => {
@@ -7072,15 +8498,74 @@ async function launchFinder() {
         return;
       }
       if (confirm(`确定要将“${sFile.name}”移到废纸篓吗？`)) {
-        await window.aliceOS.vfs.rm(sFile.path);
-        if (window.AppleAudioEngine) window.AppleAudioEngine.playTrash();
-        if (typeof window.setSystemSelectedFile === 'function') window.setSystemSelectedFile(null);
-        else window.selectedFile = null;
-        await renderActiveView();
-        if (sFile.path.startsWith('/Users/alice/Desktop') && typeof window.renderDesktopGrid === 'function') {
-          window.renderDesktopGrid();
-        }
+        await moveToTrash(sFile.path, sFile.name);
       }
+    });
+  }
+
+  const groupByBtn = win.querySelector(`#finder-groupby-btn-${pid}`);
+  const groupByPopover = win.querySelector(`#finder-groupby-popover-${pid}`);
+  if (groupByBtn && groupByPopover) {
+    groupByBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = groupByPopover.style.display === 'block';
+      groupByPopover.style.display = isOpen ? 'none' : 'block';
+    });
+    groupByPopover.querySelectorAll('.finder-groupby-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        groupBy = item.getAttribute('data-group') || 'none';
+        groupByPopover.querySelectorAll('.finder-groupby-item').forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        groupByPopover.style.display = 'none';
+        if (window.AppleAudioEngine && window.AppleAudioEngine.playHapticClick) {
+          window.AppleAudioEngine.playHapticClick('light');
+        }
+        renderActiveView();
+      });
+    });
+    win.addEventListener('click', () => {
+      groupByPopover.style.display = 'none';
+    });
+  }
+
+  const sortByBtn = win.querySelector(`#finder-sortby-btn-${pid}`);
+  const sortByPopover = win.querySelector(`#finder-sortby-popover-${pid}`);
+  if (sortByBtn && sortByPopover) {
+    sortByBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (groupByPopover) groupByPopover.style.display = 'none';
+      const isOpen = sortByPopover.style.display === 'block';
+      sortByPopover.style.display = isOpen ? 'none' : 'block';
+    });
+    sortByPopover.querySelectorAll('.finder-groupby-item[data-sort]').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        currentSortBy = item.getAttribute('data-sort') || 'name';
+        sortByPopover.querySelectorAll('.finder-groupby-item[data-sort]').forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        sortByPopover.style.display = 'none';
+        if (window.AppleAudioEngine && window.AppleAudioEngine.playHapticClick) {
+          window.AppleAudioEngine.playHapticClick('light');
+        }
+        renderActiveView();
+      });
+    });
+    sortByPopover.querySelectorAll('.finder-groupby-item[data-order]').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        currentSortAsc = item.getAttribute('data-order') === 'asc';
+        sortByPopover.querySelectorAll('.finder-groupby-item[data-order]').forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        sortByPopover.style.display = 'none';
+        if (window.AppleAudioEngine && window.AppleAudioEngine.playHapticClick) {
+          window.AppleAudioEngine.playHapticClick('light');
+        }
+        renderActiveView();
+      });
+    });
+    win.addEventListener('click', () => {
+      sortByPopover.style.display = 'none';
     });
   }
 
@@ -7161,6 +8646,45 @@ async function launchFinder() {
     if (refBtn) refBtn.title = t('finder_refresh', 'Refresh');
 
     renderActiveView();
+  };
+
+  win._finderNavigate = navigateTo;
+  win._setFinderViewMode = (mode) => {
+    viewMode = mode;
+    updateSegBtns();
+    renderActiveView();
+  };
+  win._setFinderSort = (col, asc) => {
+    if (col) currentSortBy = col;
+    if (asc !== undefined && asc !== null) currentSortAsc = asc;
+    if (sortByPopover) {
+      if (col) {
+        sortByPopover.querySelectorAll('.finder-groupby-item[data-sort]').forEach(i => {
+          i.classList.toggle('active', i.getAttribute('data-sort') === col);
+        });
+      }
+      if (asc !== undefined && asc !== null) {
+        sortByPopover.querySelectorAll('.finder-groupby-item[data-order]').forEach(i => {
+          const isAsc = i.getAttribute('data-order') === 'asc';
+          i.classList.toggle('active', isAsc === asc);
+        });
+      }
+    }
+    renderActiveView();
+  };
+  win._toggleFinderGroupBy = () => {
+    const pop = win.querySelector(`#finder-groupby-popover-${pid}`);
+    if (pop) {
+      pop.style.display = (pop.style.display === 'none') ? 'block' : 'none';
+    }
+  };
+  win._toggleFinderPathBar = () => {
+    const pb = win.querySelector(`#finder-pathbar-${pid}`);
+    if (pb) pb.style.display = (pb.style.display === 'none') ? 'flex' : 'none';
+  };
+  win._toggleFinderStatusBar = () => {
+    const sb = win.querySelector(`#finder-status-${pid}`);
+    if (sb) sb.style.display = (sb.style.display === 'none') ? 'flex' : 'none';
   };
 
   // Initial render in Column View
@@ -7269,14 +8793,46 @@ async function launchBrowser() {
         </div>
 
         <!-- Reader Mode Overlay -->
-        <div id="safari-reader-modal-${pid}" style="position:absolute;top:76px;left:0;width:100%;height:calc(100% - 76px);background:#faf8f5;color:#2c2c2e;z-index:15;display:none;flex-direction:column;overflow-y:auto;padding:40px 15%;font-family:-apple-system, 'SF Pro Text', Georgia, serif;line-height:1.7;">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;border-bottom:1px solid rgba(0,0,0,0.08);padding-bottom:14px;">
-            <div style="font-size:12px;color:#8e8e93;font-weight:600;text-transform:uppercase;letter-spacing:1px;">SAFARI READER VIEW</div>
-            <button id="safari-reader-close-${pid}" style="background:rgba(0,0,0,0.06);border:none;padding:4px 12px;border-radius:12px;font-size:12px;cursor:pointer;">✕ Close</button>
+        <div id="safari-reader-modal-${pid}" style="position:absolute;top:76px;left:0;width:100%;height:calc(100% - 76px);background:#faf8f5;color:#2c2c2e;z-index:15;display:none;flex-direction:column;overflow-y:auto;padding:40px 15%;font-family:-apple-system, 'SF Pro Text', Georgia, serif;line-height:1.7;transition:background 0.25s ease, color 0.25s ease;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;border-bottom:1px solid rgba(0,0,0,0.08);padding-bottom:14px;position:relative;">
+            <div style="font-size:12px;opacity:0.65;font-weight:600;text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center;gap:6px;">
+              ${getSFSymbol('doc-text', 14, 'currentColor')} <span>SAFARI 阅读器</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <button id="safari-reader-aa-btn-${pid}" title="显示外观与字体选项" style="background:rgba(0,0,0,0.06);border:none;padding:5px 12px;border-radius:10px;font-size:13px;font-weight:700;font-family:serif;cursor:pointer;display:flex;align-items:center;gap:3px;color:inherit;">
+                aA
+              </button>
+              <button id="safari-reader-close-${pid}" style="background:rgba(0,0,0,0.06);border:none;padding:5px 14px;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;color:inherit;">完成</button>
+            </div>
+
+            <!-- Apple Safari Reader aA Appearance Popover -->
+            <div id="safari-reader-aa-popover-${pid}" style="position:absolute;top:40px;right:0;width:240px;background:rgba(255,255,255,0.92);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border-radius:14px;border:1px solid rgba(0,0,0,0.12);box-shadow:0 12px 36px rgba(0,0,0,0.22);padding:14px;z-index:30;display:none;flex-direction:column;gap:12px;color:#1d1d1f;font-family:-apple-system,sans-serif;">
+              <!-- Font Size Segment -->
+              <div style="display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,0,0.06);padding:3px;border-radius:8px;">
+                <button id="safari-reader-font-dec-${pid}" style="flex:1;background:none;border:none;padding:4px;cursor:pointer;font-size:13px;font-weight:600;color:inherit;" title="缩小字体">A⁻</button>
+                <div style="width:1px;height:14px;background:rgba(0,0,0,0.15);"></div>
+                <button id="safari-reader-font-inc-${pid}" style="flex:1;background:none;border:none;padding:4px;cursor:pointer;font-size:16px;font-weight:600;color:inherit;" title="放大字体">A⁺</button>
+              </div>
+
+              <!-- Color Themes (White, Sepia, Slate, Dark) -->
+              <div style="display:flex;gap:8px;justify-content:space-between;" id="safari-reader-themes-${pid}">
+                <div class="safari-theme-pill active" data-theme="white" style="flex:1;height:28px;border-radius:6px;background:#ffffff;border:2px solid #007aff;cursor:pointer;" title="白底"></div>
+                <div class="safari-theme-pill" data-theme="sepia" style="flex:1;height:28px;border-radius:6px;background:#f8f1e3;border:1px solid rgba(0,0,0,0.12);cursor:pointer;" title="羊皮纸"></div>
+                <div class="safari-theme-pill" data-theme="gray" style="flex:1;height:28px;border-radius:6px;background:#4e4e50;border:1px solid rgba(0,0,0,0.12);cursor:pointer;" title="灰色"></div>
+                <div class="safari-theme-pill" data-theme="night" style="flex:1;height:28px;border-radius:6px;background:#1c1c1e;border:1px solid rgba(0,0,0,0.12);cursor:pointer;" title="暗夜"></div>
+              </div>
+
+              <!-- Font Family Selector -->
+              <div style="display:flex;flex-direction:column;gap:4px;font-size:12px;" id="safari-reader-fonts-${pid}">
+                <div class="safari-font-item active" data-font="-apple-system, sans-serif" style="padding:6px 10px;border-radius:6px;cursor:pointer;display:flex;justify-content:space-between;background:rgba(0,122,255,0.1);color:#007aff;font-weight:600;"><span>San Francisco</span><span class="sf-chk">✓</span></div>
+                <div class="safari-font-item" data-font="'New York', Georgia, serif" style="padding:6px 10px;border-radius:6px;cursor:pointer;display:flex;justify-content:space-between;font-family:Georgia,serif;"><span>New York (经典衬线)</span><span class="sf-chk" style="display:none;">✓</span></div>
+                <div class="safari-font-item" data-font="'PingFang SC', sans-serif" style="padding:6px 10px;border-radius:6px;cursor:pointer;display:flex;justify-content:space-between;"><span>PingFang SC (苹方)</span><span class="sf-chk" style="display:none;">✓</span></div>
+              </div>
+            </div>
           </div>
-          <h1 id="safari-reader-title-${pid}" style="font-size:28px;margin-bottom:12px;letter-spacing:-0.5px;color:#1d1d1f;">Apple Intelligence in macOS Sequoia</h1>
-          <div id="safari-reader-meta-${pid}" style="font-size:13px;color:#8e8e93;margin-bottom:24px;">Published by Apple Newsroom • 4 min read</div>
-          <div id="safari-reader-body-${pid}" style="font-size:16px;color:#3a3a3c;">
+          <h1 id="safari-reader-title-${pid}" style="font-size:28px;margin-bottom:12px;letter-spacing:-0.5px;color:inherit;font-weight:700;">Apple Intelligence in macOS Sequoia</h1>
+          <div id="safari-reader-meta-${pid}" style="font-size:13px;opacity:0.65;margin-bottom:24px;">Published by Apple Newsroom • 4 min read</div>
+          <div id="safari-reader-body-${pid}" style="font-size:16px;color:inherit;line-height:1.75;">
             <p>macOS Sequoia introduces powerful intelligence and groundbreaking new features to the world's most advanced desktop operating system. Designed from the ground up for Apple Silicon, it empowers users to work faster, write smarter, and express themselves seamlessly.</p>
             <p>With deep system-wide integration, Apple Intelligence understands your personal context to deliver assistance that is genuinely useful and relevant, all while setting an unmatched standard for privacy in AI through on-device processing and Private Cloud Compute.</p>
             <p>The updated Safari brings an all-new Start Page, Highlights that quickly extract key information from articles, and a redesigned Reader View for distraction-free enjoyment of your favorite content.</p>
@@ -7712,7 +9268,98 @@ async function launchBrowser() {
     readerCloseBtn.addEventListener('click', () => {
       readerActive = false;
       readerModal.style.display = 'none';
+      if (aaPopover) aaPopover.style.display = 'none';
     });
+
+    // Safari Reader aA Appearance Controls
+    const aaBtn = win.querySelector(`#safari-reader-aa-btn-${pid}`);
+    const aaPopover = win.querySelector(`#safari-reader-aa-popover-${pid}`);
+    let readerFontSize = 16;
+
+    if (aaBtn && aaPopover) {
+      aaBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = aaPopover.style.display === 'flex';
+        aaPopover.style.display = isOpen ? 'none' : 'flex';
+      });
+
+      // Close popover when clicking elsewhere in reader
+      readerModal.addEventListener('click', (e) => {
+        if (!e.target.closest(`#safari-reader-aa-popover-${pid}`) && !e.target.closest(`#safari-reader-aa-btn-${pid}`)) {
+          aaPopover.style.display = 'none';
+        }
+      });
+
+      // Font size buttons
+      const btnDec = win.querySelector(`#safari-reader-font-dec-${pid}`);
+      const btnInc = win.querySelector(`#safari-reader-font-inc-${pid}`);
+      const readerBody = win.querySelector(`#safari-reader-body-${pid}`);
+
+      if (btnDec && readerBody) {
+        btnDec.addEventListener('click', () => {
+          if (readerFontSize > 13) {
+            readerFontSize -= 1.5;
+            readerBody.style.fontSize = `${readerFontSize}px`;
+          }
+        });
+      }
+      if (btnInc && readerBody) {
+        btnInc.addEventListener('click', () => {
+          if (readerFontSize < 24) {
+            readerFontSize += 1.5;
+            readerBody.style.fontSize = `${readerFontSize}px`;
+          }
+        });
+      }
+
+      // 4 macOS themes
+      const themePills = win.querySelectorAll(`#safari-reader-themes-${pid} .safari-theme-pill`);
+      themePills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          themePills.forEach(p => {
+            p.style.border = '1px solid rgba(0,0,0,0.12)';
+          });
+          pill.style.border = '2px solid #007aff';
+          const theme = pill.dataset.theme;
+          if (theme === 'white') {
+            readerModal.style.background = '#ffffff';
+            readerModal.style.color = '#1d1d1f';
+          } else if (theme === 'sepia') {
+            readerModal.style.background = '#f8f1e3';
+            readerModal.style.color = '#4f3e28';
+          } else if (theme === 'gray') {
+            readerModal.style.background = '#4e4e50';
+            readerModal.style.color = '#f5f5f7';
+          } else if (theme === 'night') {
+            readerModal.style.background = '#1c1c1e';
+            readerModal.style.color = '#e5e5e7';
+          }
+          if (window.AppleAudioEngine && window.AppleAudioEngine.playPop) {
+            try { window.AppleAudioEngine.playPop(); } catch(err) {}
+          }
+        });
+      });
+
+      // Font family selector
+      const fontItems = win.querySelectorAll(`#safari-reader-fonts-${pid} .safari-font-item`);
+      fontItems.forEach(item => {
+        item.addEventListener('click', () => {
+          fontItems.forEach(fi => {
+            fi.style.background = 'transparent';
+            fi.style.color = 'inherit';
+            fi.style.fontWeight = 'normal';
+            const chk = fi.querySelector('.sf-chk');
+            if (chk) chk.style.display = 'none';
+          });
+          item.style.background = 'rgba(0,122,255,0.1)';
+          item.style.color = '#007aff';
+          item.style.fontWeight = '600';
+          const chk = item.querySelector('.sf-chk');
+          if (chk) chk.style.display = 'inline';
+          readerModal.style.fontFamily = item.dataset.font;
+        });
+      });
+    }
 
     win.querySelector(`#browser-back-${pid}`).addEventListener('click', () => {
       const activeFrame = framesContainer.querySelector(`.browser-tab-frame[data-tab-id="${activeTabId}"] webview`);
@@ -7841,12 +9488,37 @@ async function launchCalculator() {
         <div class="calc-mode-seg">
           <button class="calc-seg-btn active" id="calc-mode-basic-${pid}">${t('calc_mode_basic', '基本')}</button>
           <button class="calc-seg-btn" id="calc-mode-sci-${pid}">${t('calc_mode_sci', '科学')}</button>
+          <button class="calc-seg-btn" id="calc-mode-notes-${pid}">数学备忘录</button>
         </div>
-        <button class="calc-tape-btn" id="calc-tape-toggle-${pid}">${getSFSymbol('clock', 13, 'currentColor')} ${t('calc_history', '历史')}</button>
+        <div style="display:flex;align-items:center;gap:4px;">
+          <button class="calc-tape-btn" id="calc-convert-toggle-${pid}" title="开启单位与汇率换算">${getSFSymbol('arrow-left-arrow-right', 12, 'currentColor')} 换算</button>
+          <button class="calc-tape-btn" id="calc-tape-toggle-${pid}">${getSFSymbol('clock', 13, 'currentColor')} ${t('calc_history', '历史')}</button>
+        </div>
+      </div>
+
+      <!-- macOS Sequoia Math Notes Pane -->
+      <div class="calc-mathnotes-pane" id="calc-mathnotes-pane-${pid}" style="display:none;position:absolute;inset:40px 0 0 0;z-index:20;">
+        <div class="calc-mathnotes-header">
+          ${getSFSymbol('pencil', 13, '#ff9500')} <span>数学备忘录 (Math Notes)</span>
+        </div>
+        <textarea class="calc-mathnotes-textarea" id="calc-mathnotes-input-${pid}" placeholder="在此键入数学公式并输入等号自动计算&#10;例如:&#10;125 * 8 = &#10;1500 / 12 = &#10;sin(30) + 10 = "></textarea>
       </div>
 
       <div style="display:flex;flex:1;overflow:hidden;position:relative;">
         <div class="calc-main-col">
+          <!-- macOS Sequoia Unit/Currency Convert Bar -->
+          <div class="calc-convert-bar" id="calc-convert-bar-${pid}" style="display:none;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <select class="calc-convert-select" id="calc-convert-cat-${pid}">
+                <option value="currency">货币 (CNY ↔ USD)</option>
+                <option value="length">长度 (米 ↔ 英尺)</option>
+                <option value="weight">重量 (千克 ↔ 磅)</option>
+                <option value="temp">温度 (°C ↔ °F)</option>
+              </select>
+            </div>
+            <div class="calc-converted-value" id="calc-converted-val-${pid}">≈ 0.00 USD</div>
+          </div>
+
           <div class="calc-mac-display">
             <div class="calc-expr-line" id="calc-expr-${pid}">&nbsp;</div>
             <div class="calc-result-line" id="calc-result-${pid}">0</div>
@@ -7915,7 +9587,14 @@ async function launchCalculator() {
   const tapeList = win.querySelector(`#calc-tape-list-${pid}`);
   const modeBasicBtn = win.querySelector(`#calc-mode-basic-${pid}`);
   const modeSciBtn = win.querySelector(`#calc-mode-sci-${pid}`);
+  const modeNotesBtn = win.querySelector(`#calc-mode-notes-${pid}`);
   const tapeToggleBtn = win.querySelector(`#calc-tape-toggle-${pid}`);
+  const convertToggleBtn = win.querySelector(`#calc-convert-toggle-${pid}`);
+  const convertBar = win.querySelector(`#calc-convert-bar-${pid}`);
+  const convertCatSelect = win.querySelector(`#calc-convert-cat-${pid}`);
+  const convertedValEl = win.querySelector(`#calc-converted-val-${pid}`);
+  const mathNotesPane = win.querySelector(`#calc-mathnotes-pane-${pid}`);
+  const mathNotesInput = win.querySelector(`#calc-mathnotes-input-${pid}`);
   const opBtns = win.querySelectorAll('.calc-mac-btn.op');
   const acBtn = win.querySelector('.calc-mac-btn.func[data-val="AC"]');
 
@@ -7924,6 +9603,23 @@ async function launchCalculator() {
   let operation = null;
   let justEvaluated = false;
   let historyTape = [];
+
+  function updateConvertValue() {
+    if (!convertedValEl || !convertBar || convertBar.style.display === 'none') return;
+    const num = parseFloat(current) || 0;
+    const cat = convertCatSelect ? convertCatSelect.value : 'currency';
+    let resStr = '';
+    if (cat === 'currency') {
+      resStr = `≈ ${(num * 0.14).toFixed(2)} USD`;
+    } else if (cat === 'length') {
+      resStr = `≈ ${(num * 3.28084).toFixed(2)} ft`;
+    } else if (cat === 'weight') {
+      resStr = `≈ ${(num * 2.20462).toFixed(2)} lb`;
+    } else if (cat === 'temp') {
+      resStr = `≈ ${(num * 9 / 5 + 32).toFixed(1)} °F`;
+    }
+    convertedValEl.innerText = resStr;
+  }
 
   win._onLanguageChange = () => {
     if (modeBasicBtn) modeBasicBtn.innerText = t('calc_mode_basic', '基本');
@@ -7946,6 +9642,7 @@ async function launchCalculator() {
     if (current.length > 12) display.style.fontSize = '22px';
     else if (current.length > 8) display.style.fontSize = '28px';
     else display.style.fontSize = '40px';
+    updateConvertValue();
   }
 
   function addHistory(expr, resVal) {
@@ -8106,6 +9803,8 @@ async function launchCalculator() {
   modeBasicBtn.addEventListener('click', () => {
     modeBasicBtn.classList.add('active');
     modeSciBtn.classList.remove('active');
+    if (modeNotesBtn) modeNotesBtn.classList.remove('active');
+    if (mathNotesPane) mathNotesPane.style.display = 'none';
     sciGrid.style.display = 'none';
     win.style.width = '320px';
   });
@@ -8113,9 +9812,70 @@ async function launchCalculator() {
   modeSciBtn.addEventListener('click', () => {
     modeSciBtn.classList.add('active');
     modeBasicBtn.classList.remove('active');
+    if (modeNotesBtn) modeNotesBtn.classList.remove('active');
+    if (mathNotesPane) mathNotesPane.style.display = 'none';
     sciGrid.style.display = 'grid';
     win.style.width = '440px';
   });
+
+  if (modeNotesBtn) {
+    modeNotesBtn.addEventListener('click', () => {
+      modeNotesBtn.classList.add('active');
+      modeBasicBtn.classList.remove('active');
+      modeSciBtn.classList.remove('active');
+      if (mathNotesPane) {
+        mathNotesPane.style.display = 'flex';
+        win.style.width = '420px';
+        win.style.height = '520px';
+        if (mathNotesInput) mathNotesInput.focus();
+      }
+    });
+  }
+
+  // Convert Bar Toggle
+  if (convertToggleBtn && convertBar) {
+    convertToggleBtn.addEventListener('click', () => {
+      const isShown = convertBar.style.display !== 'none';
+      convertBar.style.display = isShown ? 'none' : 'flex';
+      convertToggleBtn.style.color = isShown ? '' : '#ff9500';
+      if (!isShown) updateConvertValue();
+    });
+  }
+
+  if (convertCatSelect) {
+    convertCatSelect.addEventListener('change', updateConvertValue);
+  }
+
+  // Math Notes smart expression evaluator
+  if (mathNotesInput) {
+    mathNotesInput.addEventListener('input', () => {
+      const val = mathNotesInput.value;
+      const lines = val.split('\n');
+      const lastLine = lines[lines.length - 1];
+      if (lastLine.endsWith('=') && !lastLine.endsWith('==')) {
+        const expr = lastLine.slice(0, -1).trim();
+        try {
+          // Safe math evaluation
+          const sanitized = expr
+            .replace(/sin\(([^)]+)\)/g, 'Math.sin($1)')
+            .replace(/cos\(([^)]+)\)/g, 'Math.cos($1)')
+            .replace(/tan\(([^)]+)\)/g, 'Math.tan($1)')
+            .replace(/sqrt\(([^)]+)\)/g, 'Math.sqrt($1)')
+            .replace(/pi/gi, 'Math.PI');
+          if (/^[0-9+\-*/(). Math,]+$/.test(sanitized)) {
+            const res = Function('"use strict";return (' + sanitized + ')')();
+            if (typeof res === 'number' && !isNaN(res)) {
+              lines[lines.length - 1] = `${lastLine} ${parseFloat(res.toFixed(6))}`;
+              mathNotesInput.value = lines.join('\n');
+              if (window.AppleAudioEngine && window.AppleAudioEngine.playPop) {
+                try { window.AppleAudioEngine.playPop(); } catch(e) {}
+              }
+            }
+          }
+        } catch(e) {}
+      }
+    });
+  }
 
   // Tape Drawer Toggle
   tapeToggleBtn.addEventListener('click', () => {
@@ -8162,17 +9922,19 @@ const brightnessOverlay = document.getElementById('brightness-overlay');
 
 // ── Slider track live-fill ──────────────────────────────────────────────────
 function initCCSliders() {
-  const setFill = (el) => {
-    if (!el) return;
-    const pct = ((el.value - el.min) / (el.max - el.min)) * 100;
-    el.style.setProperty('--val', pct + '%');
-    el.style.background = `linear-gradient(to right, rgba(255,255,255,0.85) ${pct}%, rgba(255,255,255,0.2) ${pct}%)`;
-  };
   ['cc-brightness', 'cc-volume'].forEach(id => {
     const sl = document.getElementById(id);
     if (!sl) return;
-    setFill(sl);
-    sl.addEventListener('input', () => setFill(sl));
+    if (typeof window.updateCCSlider === 'function') {
+      window.updateCCSlider(sl);
+    } else {
+      const val = parseInt(sl.value) || 0;
+      sl.style.setProperty('--val', val);
+      if (sl.parentElement) sl.parentElement.style.setProperty('--val', val);
+    }
+    sl.addEventListener('input', () => {
+      if (typeof window.updateCCSlider === 'function') window.updateCCSlider(sl);
+    });
   });
   const bSlider = document.getElementById('cc-brightness');
   if (bSlider) {
@@ -8196,11 +9958,13 @@ document.addEventListener('click', (e) => {
 
 function toggleControlCenter() {
   const ccMenu = document.getElementById('control-center');
+  const ccBtn = document.getElementById('cc-btn');
   if (!ccMenu) return;
   const isOpen = ccMenu.classList.contains('cc-open');
   if (isOpen) {
     ccMenu.style.opacity = '0';
     ccMenu.style.transform = 'scale(0.94) translateY(-12px)';
+    if (ccBtn) ccBtn.classList.remove('active');
     setTimeout(() => {
       ccMenu.style.display = 'none';
       ccMenu.classList.remove('cc-open');
@@ -8210,12 +9974,15 @@ function toggleControlCenter() {
       toggleNotificationCenter();
     }
     ccMenu.style.display = 'flex';
+    ccMenu.style.opacity = '1';
+    ccMenu.style.transform = 'scale(1) translateY(0)';
     void ccMenu.offsetWidth;
     ccMenu.classList.add('cc-open');
+    if (ccBtn) ccBtn.classList.add('active');
     // Update slider track fills
     ['cc-brightness', 'cc-volume'].forEach(id => {
       const sl = document.getElementById(id);
-      if (sl) sl.style.setProperty('--val', sl.value + '%');
+      if (sl && typeof window.updateCCSlider === 'function') window.updateCCSlider(sl);
     });
   }
 }
@@ -8284,12 +10051,17 @@ if (volumeSlider) {
 }
 
 document.addEventListener('click', () => {
-  if (ccMenu.style.display === 'flex') {
+  if (ccMenu && ccMenu.style.display === 'flex') {
     ccMenu.style.opacity = '0';
-    ccMenu.style.transform = 'translateY(-20px)';
-    setTimeout(() => ccMenu.style.display = 'none', 300);
+    ccMenu.style.transform = 'scale(0.94) translateY(-12px)';
+    ccBtn?.classList.remove('active');
+    setTimeout(() => {
+      ccMenu.style.display = 'none';
+      ccMenu.classList.remove('cc-open');
+    }, 220);
   }
-  document.getElementById('apple-menu').style.display = 'none';
+  const appleMenu = document.getElementById('apple-menu');
+  if (appleMenu) appleMenu.style.display = 'none';
 });
 
 // Prevent click inside ccMenu from closing it
@@ -8434,6 +10206,7 @@ async function launchSettings() {
       }
       else if (tab === 'wallpaper') {
         const wallpapers = [
+          { name: 'Dynamic Weather (Live)', val: 'dynamic-weather', preview: 'assets/wallpapers/macos-sequoia.svg', badge: 'Live Particle' },
           { name: 'Dynamic Solar (Sonoma)', val: 'dynamic-solar', preview: 'assets/wallpapers/macos-solar-day.svg', badge: 'Solar Cycle' },
           { name: 'Dynamic Time (Mojave)', val: 'dynamic-mojave', preview: 'assets/wallpapers/macos-mojave-day.svg', badge: 'Auto Clock' },
           { name: 'macOS Sequoia', val: 'assets/wallpapers/macos-sequoia.svg', preview: 'assets/wallpapers/macos-sequoia.svg', badge: 'macOS 15' },
@@ -8476,6 +10249,22 @@ async function launchSettings() {
             }).join('')}
           </div>
 
+          <!-- macOS Dynamic Weather Particle Simulator Card -->
+          <div class="ventura-card" style="margin-top:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+              <div>
+                <div style="font-weight:600;font-size:13px;">实时动态天气壁纸粒子系统</div>
+                <div style="font-size:11px;opacity:0.65;">macOS 动态天气粒子引擎 · 实时降雨/飘雪/暖阳/星空</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;" id="weather-particle-buttons">
+              <button class="weather-mode-btn" data-weather="rain" style="flex:1;padding:6px 10px;background:rgba(0,122,255,0.12);color:#007aff;border:1px solid rgba(0,122,255,0.25);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;">🌧️ 降雨天气</button>
+              <button class="weather-mode-btn" data-weather="snow" style="flex:1;padding:6px 10px;background:rgba(255,255,255,0.08);color:#fff;border:1px solid rgba(255,255,255,0.15);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;">❄️ 漫天飞雪</button>
+              <button class="weather-mode-btn" data-weather="sunny" style="flex:1;padding:6px 10px;background:rgba(255,255,255,0.08);color:#fff;border:1px solid rgba(255,255,255,0.15);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;">☀️ 温暖艳阳</button>
+              <button class="weather-mode-btn" data-weather="stars" style="flex:1;padding:6px 10px;background:rgba(255,255,255,0.08);color:#fff;border:1px solid rgba(255,255,255,0.15);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;">✨ 璀璨星空</button>
+            </div>
+          </div>
+
           <!-- Solar Time-Lapse Simulator Slider Card -->
           <div class="ventura-card" style="margin-top:16px;">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
@@ -8497,14 +10286,34 @@ async function launchSettings() {
           c.onclick = async () => {
             const val = c.dataset.val;
             if (typeof window.setWallpaperSetting === 'function') window.setWallpaperSetting(val);
-            if (val === 'dynamic-solar' || val === 'dynamic-mojave') {
+            if (val === 'dynamic-weather') {
+              if (typeof initWeatherWallpaperEngine === 'function') initWeatherWallpaperEngine('rain');
+              applySystemWallpaper('dynamic-weather');
+            } else if (val === 'dynamic-solar' || val === 'dynamic-mojave') {
+              if (typeof stopWeatherWallpaperEngine === 'function') stopWeatherWallpaperEngine();
               updateSolarDynamicWallpaper();
             } else {
+              if (typeof stopWeatherWallpaperEngine === 'function') stopWeatherWallpaperEngine();
               applySystemWallpaper(val);
             }
             await saveSettings({ wallpaper: val });
             renderTab('wallpaper');
             if (typeof playVolumeFeedbackBeep === 'function') playVolumeFeedbackBeep();
+          };
+        });
+
+        contentArea.querySelectorAll('.weather-mode-btn').forEach(btn => {
+          btn.onclick = async () => {
+            const wMode = btn.dataset.weather;
+            if (typeof setWeatherCondition === 'function') {
+              setWeatherCondition(wMode);
+            } else if (typeof initWeatherWallpaperEngine === 'function') {
+              initWeatherWallpaperEngine(wMode);
+            }
+            if (typeof window.setWallpaperSetting === 'function') window.setWallpaperSetting('dynamic-weather');
+            applySystemWallpaper('dynamic-weather');
+            await saveSettings({ wallpaper: 'dynamic-weather' });
+            renderTab('wallpaper');
           };
         });
 
@@ -8572,8 +10381,20 @@ async function launchSettings() {
                 <span class="ios-slider"></span>
               </label>
             </div>
+            <div class="ventura-row" style="padding-top:12px;border-top:1px solid rgba(255,255,255,0.08);">
+              <div>
+                <div style="font-weight:600;font-size:13px;">${t('settings_hotcorners_title', '触发角')}</div>
+                <div style="font-size:11px;opacity:0.6;">${t('settings_hotcorners_desc', '将鼠标指针移到屏幕角落时执行预设快捷操作')}</div>
+              </div>
+              <button id="ventura-hotcorners-btn" style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.18);color:inherit;padding:5px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:background 0.15s ease;">${t('settings_hotcorners_btn', '触发角...')}</button>
+            </div>
           </div>
         `;
+
+        const hcBtn = contentArea.querySelector('#ventura-hotcorners-btn');
+        if (hcBtn) {
+          hcBtn.onclick = () => openHotCornersModal();
+        }
 
         const smToggle = contentArea.querySelector('#ventura-sm-toggle');
         smToggle.onchange = (e) => {
@@ -9027,6 +10848,14 @@ async function launchSettings() {
 window.addEventListener('DOMContentLoaded', () => {
   const bootScreen = document.getElementById('boot-screen');
   const bootProgress = document.getElementById('boot-progress');
+  const dynamicIsland = document.getElementById('dynamic-island');
+
+  // Hide dynamic island during boot
+  if (dynamicIsland) {
+    dynamicIsland.style.visibility = 'hidden';
+    dynamicIsland.style.opacity = '0';
+    dynamicIsland.style.pointerEvents = 'none';
+  }
   
   if (bootScreen && bootProgress) {
     setTimeout(() => {
@@ -9037,10 +10866,24 @@ window.addEventListener('DOMContentLoaded', () => {
       bootScreen.style.opacity = '0';
       setTimeout(() => {
         bootScreen.style.display = 'none';
+        // Show dynamic island after boot completes
+        if (dynamicIsland) {
+          dynamicIsland.style.visibility = '';
+          dynamicIsland.style.opacity = '';
+          dynamicIsland.style.pointerEvents = '';
+        }
       }, 1000);
     }, 1600);
+  } else {
+    // No boot screen, show island immediately
+    if (dynamicIsland) {
+      dynamicIsland.style.visibility = '';
+      dynamicIsland.style.opacity = '';
+      dynamicIsland.style.pointerEvents = '';
+    }
   }
 });
+
 
 
 
@@ -9172,7 +11015,8 @@ function getAppIconSvg(id, size = 64) {
     mail:       'assets/icons/mail.png',
   };
   if (MACOS_PNG[normId]) {
-    return `<img src="${MACOS_PNG[normId]}" alt="${normId}" width="${size}" height="${size}" style="border-radius:${Math.round(size*0.225)}px;object-fit:contain;display:block;pointer-events:none;">`;
+    const pngSize = Math.round(size * 1.174);
+    return `<img src="${MACOS_PNG[normId]}" alt="${normId}" class="app-rendered-icon" width="${pngSize}" height="${pngSize}" style="width:${pngSize}px !important;height:${pngSize}px !important;max-width:${pngSize}px !important;max-height:${pngSize}px !important;object-fit:contain;display:block;pointer-events:none;flex-shrink:0;">`;
   }
   // ────────────────────────────────────────────────────────────────────────
 
@@ -9351,6 +11195,26 @@ function getAppIconSvg(id, size = 64) {
       <rect x="42" y="16" width="16" height="5" rx="2.5" fill="#000000"/>
       <rect x="28" y="24" width="44" height="60" rx="4" fill="#3b82f6" opacity="0.35"/>
       <circle cx="50" cy="54" r="10" fill="#60a5fa" opacity="0.6"/>
+    </svg>`;
+  }
+
+  if (normId === 'passwords' || normId === 'password') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="macos-app-icon">
+      <defs>
+        <linearGradient id="pwd-bg-${uid}" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#2c2c2e"/><stop offset="100%" stop-color="#18181a"/>
+        </linearGradient>
+        <linearGradient id="pwd-k-${uid}" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#ffe600"/><stop offset="50%" stop-color="#ffb300"/><stop offset="100%" stop-color="#ff9100"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" rx="22.5" fill="url(#pwd-bg-${uid})"/>
+      <rect x="2" y="2" width="96" height="96" rx="21" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+      <circle cx="44" cy="42" r="19" fill="none" stroke="url(#pwd-k-${uid})" stroke-width="7"/>
+      <circle cx="44" cy="42" r="6" fill="#18181a"/>
+      <line x1="58" y1="56" x2="74" y2="72" stroke="url(#pwd-k-${uid})" stroke-width="7" stroke-linecap="round"/>
+      <line x1="66" y1="64" x2="72" y2="58" stroke="url(#pwd-k-${uid})" stroke-width="5" stroke-linecap="round"/>
+      <line x1="73" y1="71" x2="78" y2="66" stroke="url(#pwd-k-${uid})" stroke-width="5" stroke-linecap="round"/>
     </svg>`;
   }
 
@@ -9790,6 +11654,7 @@ const baseAppDefs = [
   { id: 'settings', icon: '⚙️', action: 'launchSettings()' },
   { id: 'store', icon: '🛍️', action: 'launchStore()' },
   { id: 'iphonemirror', icon: '📱', action: 'launchIPhoneMirroring()' },
+  { id: 'passwords', icon: '🔑', action: 'launchPasswordsApp()' },
   { id: 'ide', icon: '🧑‍💻', action: 'launchIDE()' },
   { id: 'hostinfo', icon: '💻', action: 'launchHostMonitor()' },
   { id: 'hostscreen', icon: '🪞', action: 'launchHostScreen()' },
@@ -10149,6 +12014,7 @@ function loginUser() {
   if (window.aliceOS && window.aliceOS.vfs) {
     window.aliceOS.vfs.mkdir(`/Users/${currentUser}/Desktop`).then(() => {
       if (typeof refreshDesktop === 'function') refreshDesktop();
+      if (typeof checkAndUpdateTrashState === 'function') checkAndUpdateTrashState();
     }).catch(() => {});
   }
 
@@ -10365,6 +12231,9 @@ function toggleTopMenu(e, menuId) {
   closeAllTopMenus();
   
   if (!isCurrentlyOpen) {
+    if (menuId === 'window-menu' && typeof refreshWindowMenuList === 'function') {
+      refreshWindowMenuList();
+    }
     targetMenu.style.display = 'flex';
     if (e && e.currentTarget) {
       e.currentTarget.classList.add('active');
@@ -10439,10 +12308,628 @@ function toggleFullScreen() {
   }
 }
 
-function openTrash() {
-  if (window.AppleAudioEngine) window.AppleAudioEngine.playTrash();
+async function checkAndUpdateTrashState() {
+  try {
+    const trashEl = document.getElementById('dock-trash');
+    if (!trashEl) return;
+    if (window.aliceOS && window.aliceOS.vfs) {
+      try { await window.aliceOS.vfs.mkdir('/Users/alice/.Trash'); } catch(e) {}
+      const res = await window.aliceOS.vfs.readDir('/Users/alice/.Trash');
+      const items = (res && res.data && Array.isArray(res.data)) ? res.data : [];
+      if (items.length > 0) {
+        trashEl.classList.add('has-items');
+      } else {
+        trashEl.classList.remove('has-items');
+      }
+    }
+  } catch(e) {
+    console.warn('Error checking trash state:', e);
+  }
+}
+window.checkAndUpdateTrashState = checkAndUpdateTrashState;
+
+async function openTrash() {
+  if (window.AppleAudioEngine && window.AppleAudioEngine.playTrash) {
+    window.AppleAudioEngine.playTrash();
+  }
+  try {
+    if (window.aliceOS && window.aliceOS.vfs) {
+      await window.aliceOS.vfs.mkdir('/Users/alice/.Trash');
+    }
+  } catch(e) {}
+  launchFinder();
+  setTimeout(() => {
+    if (typeof window.navigateToFinderPath === 'function') {
+      window.navigateToFinderPath('/Users/alice/.Trash', false);
+    }
+  }, 350);
+  checkAndUpdateTrashState();
+}
+
+async function emptyTrash() {
+  if (window.AppleAudioEngine && window.AppleAudioEngine.playTrash) {
+    window.AppleAudioEngine.playTrash();
+  }
+  try {
+    if (window.aliceOS && window.aliceOS.vfs) {
+      const res = await window.aliceOS.vfs.readDir('/Users/alice/.Trash');
+      if (res && res.data && Array.isArray(res.data)) {
+        for (const item of res.data) {
+          try {
+            await window.aliceOS.vfs.rm(`/Users/alice/.Trash/${item.name}`);
+          } catch(e) {}
+        }
+      }
+      try {
+        await window.aliceOS.vfs.rm('/Users/alice/.Trash');
+      } catch(e) {}
+      await window.aliceOS.vfs.mkdir('/Users/alice/.Trash');
+    }
+  } catch(e) {}
+  await checkAndUpdateTrashState();
   if (typeof showNotification === 'function') {
-    showNotification(t('app_trash', 'Trash'), t('trash_empty_desc', 'No deleted items found.'), 'Trash', '🗑️');
+    showNotification(t('app_trash', '废纸篓'), t('trash_empty_desc', '废纸篓已清空'), 'Trash', '🗑️');
+  }
+  if (typeof refreshDesktop === 'function') {
+    refreshDesktop();
+  }
+  if (typeof window.renderActiveFinderView === 'function') {
+    window.renderActiveFinderView();
+  }
+}
+
+async function moveToTrash(filePath, fileName) {
+  if (!filePath) return;
+  const name = fileName || filePath.split('/').pop();
+  try {
+    if (window.aliceOS && window.aliceOS.vfs) {
+      await window.aliceOS.vfs.mkdir('/Users/alice/.Trash');
+      if (filePath.startsWith('/Users/alice/.Trash/')) {
+        await window.aliceOS.vfs.rm(filePath);
+      } else {
+        const fileRes = await window.aliceOS.vfs.readFile(filePath);
+        let destName = name;
+        const trashFilesRes = await window.aliceOS.vfs.readDir('/Users/alice/.Trash');
+        const existing = (trashFilesRes && trashFilesRes.data) || [];
+        if (existing.some(f => f.name === destName)) {
+          const dotIdx = destName.lastIndexOf('.');
+          if (dotIdx > 0) {
+            destName = `${destName.substring(0, dotIdx)} ${Date.now() % 10000}${destName.substring(dotIdx)}`;
+          } else {
+            destName = `${destName} ${Date.now() % 10000}`;
+          }
+        }
+        await window.aliceOS.vfs.writeFile(`/Users/alice/.Trash/${destName}`, (fileRes && fileRes.data !== undefined) ? fileRes.data : '');
+        window.trashPutBackMap = window.trashPutBackMap || {};
+        window.trashPutBackMap[destName] = filePath;
+        await window.aliceOS.vfs.rm(filePath);
+      }
+    }
+    if (window.AppleAudioEngine && window.AppleAudioEngine.playTrash) {
+      window.AppleAudioEngine.playTrash();
+    }
+    await checkAndUpdateTrashState();
+    if (typeof window.setSystemSelectedFile === 'function') window.setSystemSelectedFile(null);
+    else window.selectedFile = null;
+    if (filePath.startsWith('/Users/alice/Desktop') && typeof window.renderDesktopGrid === 'function') {
+      window.renderDesktopGrid();
+    }
+    if (typeof window.renderActiveFinderView === 'function') {
+      window.renderActiveFinderView();
+    }
+  } catch(e) {
+    console.error('Failed to move to trash:', e);
+  }
+}
+window.moveToTrash = moveToTrash;
+
+function showDockTrashMenu(x, y) {
+  const menu = document.getElementById('dock-trash-menu');
+  if (!menu) return;
+  menu.style.display = 'block';
+  const menuWidth = 140;
+  const menuHeight = 70;
+  menu.style.left = `${Math.max(10, Math.min(window.innerWidth - menuWidth - 10, x - menuWidth / 2))}px`;
+  menu.style.top = `${Math.max(10, y - menuHeight - 12)}px`;
+}
+
+function hideDockTrashMenu() {
+  const menu = document.getElementById('dock-trash-menu');
+  if (menu) menu.style.display = 'none';
+}
+
+// macOS File Context Menu Management
+let currentFileContextTarget = null;
+
+function showFileContextMenu(x, y, fileData) {
+  currentFileContextTarget = fileData;
+  const menu = document.getElementById('file-context-menu');
+  if (!menu) return;
+  
+  const desktopMenu = document.getElementById('desktop-context-menu');
+  if (desktopMenu) desktopMenu.style.display = 'none';
+  const widgetMenu = document.getElementById('widget-context-menu');
+  if (widgetMenu) widgetMenu.style.display = 'none';
+  const trashMenu = document.getElementById('dock-trash-menu');
+  if (trashMenu) trashMenu.style.display = 'none';
+
+  // Highlight active tag
+  const curTag = fileData && fileData.path && typeof getFileTag === 'function' ? getFileTag(fileData.path) : null;
+  const dots = menu.querySelectorAll('.ctx-tag-dot');
+  dots.forEach(d => {
+    const k = d.dataset.key;
+    const c = TAG_COLOR_MAP[k] || k;
+    if (curTag && (curTag === k || curTag === c)) {
+      d.classList.add('active');
+    } else {
+      d.classList.remove('active');
+    }
+  });
+
+  const isTrashItem = fileData && fileData.path && fileData.path.startsWith('/Users/alice/.Trash');
+  const putBackBtn = document.getElementById('file-ctx-putback');
+  const delImmBtn = document.getElementById('file-ctx-delete-immediately');
+  const trashTopSep = document.getElementById('file-ctx-trash-top-sep');
+  const trashBtn = document.getElementById('file-ctx-trash');
+  const shareBtn = document.getElementById('file-ctx-share');
+  const qaBtn = document.getElementById('file-ctx-quickactions');
+  const dupBtn = document.getElementById('file-ctx-duplicate');
+  const compBtn = document.getElementById('file-ctx-compress');
+  const renBtn = document.getElementById('file-ctx-rename');
+  const tagsRow = document.getElementById('file-ctx-tags');
+
+  if (isTrashItem) {
+    if (putBackBtn) putBackBtn.style.display = 'flex';
+    if (delImmBtn) delImmBtn.style.display = 'flex';
+    if (trashTopSep) trashTopSep.style.display = 'block';
+    if (trashBtn) trashBtn.style.display = 'none';
+    if (shareBtn) shareBtn.style.display = 'none';
+    if (qaBtn) qaBtn.style.display = 'none';
+    if (dupBtn) dupBtn.style.display = 'none';
+    if (compBtn) compBtn.style.display = 'none';
+    if (renBtn) renBtn.style.display = 'none';
+    if (tagsRow) tagsRow.style.display = 'none';
+  } else {
+    if (putBackBtn) putBackBtn.style.display = 'none';
+    if (delImmBtn) delImmBtn.style.display = 'none';
+    if (trashTopSep) trashTopSep.style.display = 'none';
+    if (trashBtn) trashBtn.style.display = 'flex';
+    if (shareBtn) shareBtn.style.display = 'flex';
+    if (qaBtn) qaBtn.style.display = 'flex';
+    if (dupBtn) dupBtn.style.display = 'flex';
+    if (compBtn) compBtn.style.display = 'flex';
+    if (renBtn) renBtn.style.display = 'flex';
+    if (tagsRow) tagsRow.style.display = 'flex';
+  }
+
+  menu.style.display = 'flex';
+  const menuW = 210;
+  const menuH = isTrashItem ? 160 : 370;
+  const posX = Math.max(10, Math.min(window.innerWidth - menuW - 10, x));
+  const posY = Math.max(32, Math.min(window.innerHeight - menuH - 10, y));
+  menu.style.left = `${posX}px`;
+  menu.style.top = `${posY}px`;
+
+  // Flip submenus left if near right screen edge
+  const submenus = menu.querySelectorAll('.context-submenu');
+  if (posX + menuW + 180 > window.innerWidth) {
+    submenus.forEach(s => s.classList.add('flip-left'));
+  } else {
+    submenus.forEach(s => s.classList.remove('flip-left'));
+  }
+}
+
+function hideFileContextMenu() {
+  const menu = document.getElementById('file-context-menu');
+  if (menu) menu.style.display = 'none';
+  currentFileContextTarget = null;
+}
+
+function onFileCtxOpen() {
+  const file = currentFileContextTarget || (typeof window.getSystemSelectedFile === 'function' ? window.getSystemSelectedFile() : window.selectedFile);
+  hideFileContextMenu();
+  if (!file) return;
+  if (file.isDirectory || file.type === 'dir') {
+    launchFinder();
+    setTimeout(() => {
+      if (typeof window.navigateToFinderPath === 'function') {
+        window.navigateToFinderPath(file.path, file.isHost || false);
+      }
+    }, 300);
+  } else {
+    const lower = (file.name || '').toLowerCase();
+    if (lower.endsWith('.png') || lower.endsWith('.jpg') || lower.endsWith('.jpeg')) {
+      launchGallery(file.path);
+    } else if (lower.endsWith('.mp4') || lower.endsWith('.webm') || lower.endsWith('.mov')) {
+      if (typeof openPiPPlayer === 'function') openPiPPlayer(file.path, file.name);
+    } else {
+      launchNotes(file.path);
+    }
+  }
+}
+
+function onFileCtxQuickLook() {
+  const file = currentFileContextTarget || (typeof window.getSystemSelectedFile === 'function' ? window.getSystemSelectedFile() : window.selectedFile);
+  hideFileContextMenu();
+  if (file && typeof toggleQuickLook === 'function') {
+    toggleQuickLook(file);
+  }
+}
+
+function onFileCtxAirDrop() {
+  hideFileContextMenu();
+  if (typeof openAirDrop === 'function') openAirDrop();
+}
+
+function onFileCtxShareNotes() {
+  const file = currentFileContextTarget || (typeof window.getSystemSelectedFile === 'function' ? window.getSystemSelectedFile() : window.selectedFile);
+  hideFileContextMenu();
+  if (!file) return;
+  launchNotes();
+  showNotification('备忘录', `已将“${file.name}”添加到备忘录`, 'Notes', '📝');
+  if (window.AppleAudioEngine) window.AppleAudioEngine.playHapticClick('medium');
+}
+
+function onFileCtxShareMail() {
+  const file = currentFileContextTarget || (typeof window.getSystemSelectedFile === 'function' ? window.getSystemSelectedFile() : window.selectedFile);
+  hideFileContextMenu();
+  if (!file) return;
+  showNotification('邮件', `已新建邮件草稿并附带“${file.name}”`, 'Mail', '✉️');
+  if (window.AppleAudioEngine) window.AppleAudioEngine.playHapticClick('medium');
+}
+
+function onFileCtxCopyPath() {
+  const file = currentFileContextTarget || (typeof window.getSystemSelectedFile === 'function' ? window.getSystemSelectedFile() : window.selectedFile);
+  hideFileContextMenu();
+  if (!file) return;
+  navigator.clipboard?.writeText(file.path);
+  showNotification('访达', `已拷贝路径名称：${file.path}`, 'Finder', '🔗');
+  if (window.AppleAudioEngine) window.AppleAudioEngine.playHapticClick('light');
+}
+
+function onFileCtxRotateLeft() {
+  const file = currentFileContextTarget || (typeof window.getSystemSelectedFile === 'function' ? window.getSystemSelectedFile() : window.selectedFile);
+  hideFileContextMenu();
+  if (!file) return;
+  showNotification('快速动作', `已向左旋转 90°：“${file.name}”`, 'Finder', '↺');
+  if (window.AppleAudioEngine) window.AppleAudioEngine.playHapticClick('medium');
+}
+
+function onFileCtxRotateRight() {
+  const file = currentFileContextTarget || (typeof window.getSystemSelectedFile === 'function' ? window.getSystemSelectedFile() : window.selectedFile);
+  hideFileContextMenu();
+  if (!file) return;
+  showNotification('快速动作', `已向右旋转 90°：“${file.name}”`, 'Finder', '↻');
+  if (window.AppleAudioEngine) window.AppleAudioEngine.playHapticClick('medium');
+}
+
+async function onFileCtxCreatePDF() {
+  const file = currentFileContextTarget || (typeof window.getSystemSelectedFile === 'function' ? window.getSystemSelectedFile() : window.selectedFile);
+  hideFileContextMenu();
+  if (!file) return;
+  const dotIdx = file.path.lastIndexOf('.');
+  const pdfPath = (dotIdx > 0 ? file.path.substring(0, dotIdx) : file.path) + '.pdf';
+  const pdfName = (dotIdx > 0 ? file.name.substring(0, file.name.lastIndexOf('.')) : file.name) + '.pdf';
+  try {
+    if (window.aliceOS && window.aliceOS.vfs) {
+      const contentRes = await window.aliceOS.vfs.readFile(file.path);
+      const dataStr = (contentRes && contentRes.data) ? String(contentRes.data) : 'PDF Document rendered from ' + file.name;
+      await window.aliceOS.vfs.writeFile(pdfPath, `%PDF-1.7\n${dataStr}\n%%EOF`);
+    }
+    if (typeof refreshDesktop === 'function') refreshDesktop();
+    if (typeof window.renderActiveFinderView === 'function') window.renderActiveFinderView();
+    showNotification('快速动作', `已成功创建 PDF 文稿：“${pdfName}”`, 'Finder', '📄');
+    if (window.AppleAudioEngine) window.AppleAudioEngine.playAirDrop();
+  } catch(e) {
+    console.error('Create PDF failed:', e);
+  }
+}
+
+function onFileCtxMarkup() {
+  const file = currentFileContextTarget || (typeof window.getSystemSelectedFile === 'function' ? window.getSystemSelectedFile() : window.selectedFile);
+  hideFileContextMenu();
+  if (!file) return;
+  const lower = (file.name || '').toLowerCase();
+  if (lower.endsWith('.png') || lower.endsWith('.jpg') || lower.endsWith('.jpeg')) {
+    launchGallery(file.path);
+  } else {
+    launchNotes(file.path);
+  }
+  showNotification('标记', `正在启动“${file.name}”的标记编辑工具...`, 'Markup', '✏️');
+  if (window.AppleAudioEngine) window.AppleAudioEngine.playHapticClick('medium');
+}
+
+async function onFileCtxDuplicate() {
+  const file = currentFileContextTarget || (typeof window.getSystemSelectedFile === 'function' ? window.getSystemSelectedFile() : window.selectedFile);
+  hideFileContextMenu();
+  if (!file) return;
+  const dotIdx = file.path.lastIndexOf('.');
+  const ext = dotIdx > 0 ? file.path.substring(dotIdx) : '';
+  const base = dotIdx > 0 ? file.path.substring(0, dotIdx) : file.path;
+  const dupPath = `${base} 副本${ext}`;
+  try {
+    if (window.aliceOS && window.aliceOS.vfs) {
+      const contentRes = await window.aliceOS.vfs.readFile(file.path);
+      await window.aliceOS.vfs.writeFile(dupPath, (contentRes && contentRes.data !== undefined) ? contentRes.data : '');
+    }
+    if (typeof refreshDesktop === 'function') refreshDesktop();
+    if (typeof window.renderActiveFinderView === 'function') window.renderActiveFinderView();
+    showNotification('访达', `已创建副本：“${file.name.replace(ext, '')} 副本${ext}”`, 'Finder', '📑');
+    if (window.AppleAudioEngine) window.AppleAudioEngine.playHapticClick('light');
+  } catch(e) {
+    console.error('Duplicate failed:', e);
+  }
+}
+
+async function onFileCtxCompress() {
+  const file = currentFileContextTarget || (typeof window.getSystemSelectedFile === 'function' ? window.getSystemSelectedFile() : window.selectedFile);
+  hideFileContextMenu();
+  if (!file) return;
+  const dotIdx = file.path.lastIndexOf('.');
+  const base = dotIdx > 0 ? file.path.substring(0, dotIdx) : file.path;
+  const zipPath = `${base}.zip`;
+  const zipName = `${file.name.replace(/\.[^/.]+$/, '')}.zip`;
+  try {
+    if (window.aliceOS && window.aliceOS.vfs) {
+      await window.aliceOS.vfs.writeFile(zipPath, `PK\x03\x04[ZIP ARCHIVE OF ${file.name}]`);
+    }
+    if (typeof refreshDesktop === 'function') refreshDesktop();
+    if (typeof window.renderActiveFinderView === 'function') window.renderActiveFinderView();
+    showNotification('归档实用工具', `已创建压缩文件：“${zipName}”`, 'Archive Utility', '🗜️');
+    if (window.AppleAudioEngine) window.AppleAudioEngine.playAirDrop();
+  } catch(e) {
+    console.error('Compress failed:', e);
+  }
+}
+
+function onFileCtxCopy() {
+  const file = currentFileContextTarget || (typeof window.getSystemSelectedFile === 'function' ? window.getSystemSelectedFile() : window.selectedFile);
+  hideFileContextMenu();
+  if (file) {
+    navigator.clipboard?.writeText(file.path);
+    if (typeof showNotification === 'function') {
+      showNotification(t('app_finder', '访达'), `${file.name} 已复制到剪贴板`, 'Finder', '📋');
+    }
+  }
+}
+
+async function onFileCtxRename() {
+  const file = currentFileContextTarget || (typeof window.getSystemSelectedFile === 'function' ? window.getSystemSelectedFile() : window.selectedFile);
+  hideFileContextMenu();
+  if (!file) return;
+  const oldName = file.name;
+  const newName = prompt(t('rename_prompt', '重命名文件：'), oldName);
+  if (!newName || newName.trim() === '' || newName === oldName) return;
+  const parentDir = file.path.substring(0, file.path.lastIndexOf('/'));
+  const newPath = `${parentDir}/${newName.trim()}`;
+  try {
+    if (window.aliceOS && window.aliceOS.vfs) {
+      const contentRes = await window.aliceOS.vfs.readFile(file.path);
+      await window.aliceOS.vfs.writeFile(newPath, (contentRes && contentRes.data !== undefined) ? contentRes.data : '');
+      await window.aliceOS.vfs.rm(file.path);
+    }
+    if (typeof refreshDesktop === 'function') refreshDesktop();
+    if (typeof window.renderActiveFinderView === 'function') window.renderActiveFinderView();
+  } catch(e) {
+    console.error('Rename failed:', e);
+  }
+}
+
+function onFileCtxGetInfo() {
+  const file = currentFileContextTarget || (typeof window.getSystemSelectedFile === 'function' ? window.getSystemSelectedFile() : window.selectedFile);
+  hideFileContextMenu();
+  if (file) showGetInfo(file);
+}
+
+async function onFileCtxMoveToTrash() {
+  const file = currentFileContextTarget || (typeof window.getSystemSelectedFile === 'function' ? window.getSystemSelectedFile() : window.selectedFile);
+  hideFileContextMenu();
+  if (file) {
+    await moveToTrash(file.path, file.name);
+  }
+}
+
+async function onFileCtxPutBack() {
+  const file = currentFileContextTarget || (typeof window.getSystemSelectedFile === 'function' ? window.getSystemSelectedFile() : window.selectedFile);
+  hideFileContextMenu();
+  if (!file || !file.name) return;
+
+  const fileName = file.name;
+  const currentPath = file.path || `/Users/alice/.Trash/${fileName}`;
+  const originalPath = (window.trashPutBackMap && window.trashPutBackMap[fileName]) 
+    || `/Users/alice/Desktop/${fileName}`;
+
+  try {
+    if (window.aliceOS && window.aliceOS.vfs) {
+      // Ensure target parent dir exists
+      const lastSlash = originalPath.lastIndexOf('/');
+      if (lastSlash > 0) {
+        const parentDir = originalPath.substring(0, lastSlash);
+        await window.aliceOS.vfs.mkdir(parentDir);
+      }
+
+      // Read from trash and write back to origin
+      const fileRes = await window.aliceOS.vfs.readFile(currentPath);
+      await window.aliceOS.vfs.writeFile(originalPath, (fileRes && fileRes.data !== undefined) ? fileRes.data : '');
+      await window.aliceOS.vfs.rm(currentPath);
+
+      if (window.trashPutBackMap) {
+        delete window.trashPutBackMap[fileName];
+      }
+    }
+
+    if (window.AppleAudioEngine && window.AppleAudioEngine.playPop) {
+      window.AppleAudioEngine.playPop();
+    }
+
+    await checkAndUpdateTrashState();
+    if (typeof window.setSystemSelectedFile === 'function') window.setSystemSelectedFile(null);
+    else window.selectedFile = null;
+
+    if (originalPath.startsWith('/Users/alice/Desktop') && typeof window.renderDesktopGrid === 'function') {
+      window.renderDesktopGrid();
+    }
+    if (typeof window.renderActiveFinderView === 'function') {
+      window.renderActiveFinderView();
+    }
+
+    showNotification('访达', `已将“${fileName}”放回原处。`, '访达', 'assets/icons/finder.png');
+  } catch(err) {
+    console.error('Put back error:', err);
+  }
+}
+
+async function onFileCtxDeleteImmediately() {
+  const file = currentFileContextTarget || (typeof window.getSystemSelectedFile === 'function' ? window.getSystemSelectedFile() : window.selectedFile);
+  hideFileContextMenu();
+  if (!file) return;
+
+  const fileName = file.name || file.path.split('/').pop();
+  if (confirm(`确定要立即永久抹掉“${fileName}”吗？此操作无法撤销。`)) {
+    try {
+      if (window.aliceOS && window.aliceOS.vfs) {
+        await window.aliceOS.vfs.rm(file.path);
+      }
+      if (window.AppleAudioEngine && window.AppleAudioEngine.playTrash) {
+        window.AppleAudioEngine.playTrash();
+      }
+      await checkAndUpdateTrashState();
+      if (typeof window.renderActiveFinderView === 'function') {
+        window.renderActiveFinderView();
+      }
+      showNotification('废纸篓', `已永久抹掉“${fileName}”。`, '废纸篓');
+    } catch(err) {
+      console.error('Delete immediately error:', err);
+    }
+  }
+}
+
+window.onFileCtxPutBack = onFileCtxPutBack;
+window.onFileCtxDeleteImmediately = onFileCtxDeleteImmediately;
+window.onFileCtxShareNotes = onFileCtxShareNotes;
+window.onFileCtxShareMail = onFileCtxShareMail;
+window.onFileCtxCopyPath = onFileCtxCopyPath;
+window.onFileCtxRotateLeft = onFileCtxRotateLeft;
+window.onFileCtxRotateRight = onFileCtxRotateRight;
+window.onFileCtxCreatePDF = onFileCtxCreatePDF;
+window.onFileCtxMarkup = onFileCtxMarkup;
+window.onFileCtxDuplicate = onFileCtxDuplicate;
+window.onFileCtxCompress = onFileCtxCompress;
+
+// macOS Get Info (显示简介 - ⌘I) Inspector
+async function showGetInfo(file) {
+  if (!file) return;
+  const name = file.name || (file.path ? file.path.split('/').pop() : 'Item');
+  const path = file.path || `/Users/alice/${name}`;
+  const isDir = file.isDirectory || file.type === 'dir';
+  let sizeBytes = file.size || 0;
+  
+  if (!isDir && sizeBytes === 0 && window.aliceOS && window.aliceOS.vfs) {
+    try {
+      const res = await window.aliceOS.vfs.readFile(path);
+      if (res && res.data) {
+        sizeBytes = typeof res.data === 'string' ? new Blob([res.data]).size : (res.data.length || 1024);
+      }
+    } catch(e) {}
+  }
+  if (sizeBytes === 0) sizeBytes = isDir ? 4096 : 1024;
+
+  const sizeFormatted = sizeBytes > 1048576 
+    ? `${(sizeBytes / 1048576).toFixed(1)} MB (${sizeBytes.toLocaleString()} 字节)`
+    : (sizeBytes > 1024 ? `${(sizeBytes / 1024).toFixed(1)} KB (${sizeBytes.toLocaleString()} 字节)` : `${sizeBytes} 字节`);
+
+  const lower = name.toLowerCase();
+  let kindText = '文稿';
+  let iconSvg = getSFSymbol('doc-text', 36, '#007aff');
+  if (isDir) {
+    kindText = '文件夹';
+    iconSvg = getSFSymbol('folder', 36, '#007aff');
+  } else if (lower.endsWith('.png') || lower.endsWith('.jpg') || lower.endsWith('.jpeg')) {
+    kindText = 'PNG 图像';
+    iconSvg = getSFSymbol('doc-image', 36, '#34c759');
+  } else if (lower.endsWith('.app')) {
+    kindText = 'macOS 应用程序';
+    iconSvg = getAppIconSvg(name.replace('.app', ''), 36);
+  } else if (lower.endsWith('.json')) {
+    kindText = 'JSON 数据文件';
+    iconSvg = getSFSymbol('doc-text', 36, '#ff9500');
+  }
+
+  const now = new Date();
+  const createdStr = `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 09:41`;
+  const modifiedStr = `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 14:20`;
+
+  const infoPid = 'getinfo-' + Date.now();
+  const win = createWindow(infoPid, `${name} 简介`, `
+    <div class="getinfo-window">
+      <div class="getinfo-header">
+        <div class="getinfo-icon">${iconSvg}</div>
+        <div class="getinfo-meta">
+          <div class="getinfo-title" title="${name}">${name}</div>
+          <div class="getinfo-sub">${kindText} • ${sizeFormatted.split(' ')[0]} ${sizeFormatted.split(' ')[1]}</div>
+          <div class="getinfo-sub" style="opacity:0.45;">修改时间: ${modifiedStr}</div>
+        </div>
+      </div>
+      <div class="getinfo-body">
+        <div class="getinfo-section">
+          <div class="getinfo-section-title">
+            <span>通用</span>
+            <span style="opacity:0.6;">▾</span>
+          </div>
+          <div class="getinfo-row">
+            <span class="getinfo-label">种类:</span>
+            <span class="getinfo-val">${kindText}</span>
+          </div>
+          <div class="getinfo-row">
+            <span class="getinfo-label">大小:</span>
+            <span class="getinfo-val">${sizeFormatted}</span>
+          </div>
+          <div class="getinfo-row">
+            <span class="getinfo-label">位置:</span>
+            <span class="getinfo-val" style="direction:rtl;text-align:right;">${path}</span>
+          </div>
+          <div class="getinfo-row">
+            <span class="getinfo-label">创建时间:</span>
+            <span class="getinfo-val">${createdStr}</span>
+          </div>
+          <div class="getinfo-row">
+            <span class="getinfo-label">修改时间:</span>
+            <span class="getinfo-val">${modifiedStr}</span>
+          </div>
+        </div>
+
+        <div class="getinfo-section">
+          <div class="getinfo-section-title">
+            <span>名称与扩展名</span>
+            <span style="opacity:0.6;">▾</span>
+          </div>
+          <input type="text" value="${name}" readonly style="width:100%;box-sizing:border-box;background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.12);border-radius:6px;color:#fff;padding:5px 8px;font-size:12px;outline:none;">
+        </div>
+
+        <div class="getinfo-section">
+          <div class="getinfo-section-title">
+            <span>共享与权限</span>
+            <span style="opacity:0.6;">▾</span>
+          </div>
+          <div style="font-size:11px;opacity:0.6;margin-bottom:6px;">你拥有读写权限</div>
+          <table class="getinfo-table">
+            <thead>
+              <tr><th>名称</th><th>权限</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>👤 alice (个人)</td><td>读与写</td></tr>
+              <tr><td>👥 staff</td><td>只读</td></tr>
+              <tr><td>🌐 everyone</td><td>只读</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  `);
+
+  if (win) {
+    win.style.width = '330px';
+    win.style.height = '480px';
   }
 }
 
@@ -10451,6 +12938,28 @@ window.closeAllTopMenus = closeAllTopMenus;
 window.closeActiveWindow = closeActiveWindow;
 window.toggleFullScreen = toggleFullScreen;
 window.openTrash = openTrash;
+window.emptyTrash = emptyTrash;
+window.moveToTrash = moveToTrash;
+window.checkAndUpdateTrashState = checkAndUpdateTrashState;
+window.showDockTrashMenu = showDockTrashMenu;
+window.hideDockTrashMenu = hideDockTrashMenu;
+window.showFileContextMenu = showFileContextMenu;
+window.hideFileContextMenu = hideFileContextMenu;
+window.onFileCtxOpen = onFileCtxOpen;
+window.onFileCtxQuickLook = onFileCtxQuickLook;
+window.onFileCtxAirDrop = onFileCtxAirDrop;
+window.onFileCtxCopy = onFileCtxCopy;
+window.onFileCtxRename = onFileCtxRename;
+window.onFileCtxGetInfo = onFileCtxGetInfo;
+window.onFileCtxMoveToTrash = onFileCtxMoveToTrash;
+window.showGetInfo = showGetInfo;
+window.closeAllTopMenus = closeAllTopMenus;
+window.closeActiveWindow = closeActiveWindow;
+window.toggleFullScreen = toggleFullScreen;
+window.openTrash = openTrash;
+window.emptyTrash = emptyTrash;
+window.showDockTrashMenu = showDockTrashMenu;
+window.hideDockTrashMenu = hideDockTrashMenu;
 
 // ==========================================
 // Phase 66: macOS Sonoma Interactive Widgets Controllers
@@ -10572,6 +13081,17 @@ function applySystemWallpaper(val) {
     window.aliceOS.wallpaperSetting = val;
   }
   
+  if (val === 'dynamic-weather') {
+    if (typeof initWeatherWallpaperEngine === 'function') {
+      initWeatherWallpaperEngine('rain');
+    }
+    val = 'assets/wallpapers/macos-sequoia.svg';
+  } else {
+    if (typeof stopWeatherWallpaperEngine === 'function') {
+      stopWeatherWallpaperEngine();
+    }
+  }
+
   const layer = document.getElementById('dynamic-wallpaper-layer');
   const overlay = document.getElementById('dynamic-wallpaper-overlay');
   
@@ -10713,22 +13233,43 @@ function updateClock() {
   const localeCode = currentSystemLang === 'zh' ? 'zh-CN' : (currentSystemLang === 'ja' ? 'ja-JP' : 'en-US');
   
   if (timeDisplay) {
-    let newTimeStr = '';
-    if (currentSystemLang === 'zh') {
-      const dayName = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'][now.getDay()];
-      newTimeStr = `${now.getMonth() + 1}月${now.getDate()}日 ${dayName} ${timeStr}`;
-    } else if (currentSystemLang === 'ja') {
-      const dayName = ['日', '月', '火', '水', '木', '金', '土'][now.getDay()];
-      newTimeStr = `${now.getMonth() + 1}月${now.getDate()}日(${dayName}) ${timeStr}`;
+    const timeEl = document.getElementById('time-display-time');
+    const dateEl = document.getElementById('time-display-date');
+    if (timeEl && dateEl) {
+      // New dual-line format
+      if (timeEl.innerText !== timeStr) timeEl.innerText = timeStr;
+      let dateStr = '';
+      if (currentSystemLang === 'zh') {
+        const dayName = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'][now.getDay()];
+        dateStr = `${now.getMonth() + 1}月${now.getDate()}日 ${dayName}`;
+      } else if (currentSystemLang === 'ja') {
+        const dayName = ['日', '月', '火', '水', '木', '金', '土'][now.getDay()];
+        dateStr = `${now.getMonth() + 1}月${now.getDate()}日(${dayName})`;
+      } else {
+        const dayName = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][now.getDay()];
+        const monthName = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][now.getMonth()];
+        dateStr = `${dayName} ${now.getDate()} ${monthName}`;
+      }
+      if (dateEl.innerText !== dateStr) dateEl.innerText = dateStr;
     } else {
-      const dayName = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][now.getDay()];
-      const monthName = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][now.getMonth()];
-      newTimeStr = `${dayName} ${monthName} ${now.getDate()}  ${timeStr}`;
-    }
-    if (timeDisplay.innerText !== newTimeStr) {
-      timeDisplay.innerText = newTimeStr;
+      // Fallback for old single element
+      let newTimeStr = timeStr;
+      if (timeDisplay.innerText !== newTimeStr) timeDisplay.innerText = newTimeStr;
     }
   }
+
+  // Sync calendar popover live clock
+  const calBigTime = document.getElementById('cal-big-time');
+  const calBigDate = document.getElementById('cal-big-date');
+  if (calBigTime) calBigTime.innerText = timeStr;
+  if (calBigDate) {
+    calBigDate.innerText = now.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  }
+
+  if (typeof updateScreensaverClock === 'function') {
+    updateScreensaverClock();
+  }
+
   
   if (widgetTime) {
     const c = widgetClockCities[currentClockCityIdx];
@@ -11484,28 +14025,37 @@ function showNotification(title, message, appName = 'AliceOS', appIcon = null) {
   }
 
   // Infer app icon and app name if default
+  const NOTIF_PNG_MAP = {
+    safari: 'assets/icons/safari.png',
+    music: 'assets/icons/music.png',
+    notes: 'assets/icons/notes.png',
+    messages: 'assets/icons/messages.png',
+    mail: 'assets/icons/mail.png',
+    settings: 'assets/icons/settings.png',
+    finder: 'assets/icons/finder.png',
+    photos: 'assets/icons/photos.png',
+    facetime: 'assets/icons/facetime.png',
+    calculator: 'assets/icons/calculator.png',
+    maps: 'assets/icons/maps.png',
+    books: 'assets/icons/books.png',
+    appstore: 'assets/icons/appstore.png',
+  };
+
   let displayIcon = appIcon || getSFSymbol('apple', 14, 'currentColor');
   let displayApp = appName;
   const lowerTitle = (title || '').toLowerCase();
   const lowerApp = (appName || '').toLowerCase();
-  if (lowerTitle.includes('safari') || lowerApp.includes('safari')) {
-    displayIcon = '🧭'; displayApp = 'Safari';
-  } else if (lowerTitle.includes('terminal') || lowerApp.includes('terminal') || lowerTitle.includes('zsh')) {
-    displayIcon = '💻'; displayApp = 'Terminal';
-  } else if (lowerTitle.includes('music') || lowerApp.includes('music') || lowerTitle.includes('playing')) {
-    displayIcon = '🎵'; displayApp = 'Music';
-  } else if (lowerTitle.includes('airdrop') || lowerApp.includes('airdrop')) {
-    displayIcon = '📡'; displayApp = 'AirDrop';
-  } else if (lowerTitle.includes('battery') || lowerTitle.includes('power') || lowerApp.includes('battery')) {
-    displayIcon = '🔋'; displayApp = 'Battery';
-  } else if (lowerTitle.includes('sound') || lowerTitle.includes('audio') || lowerApp.includes('sound')) {
-    displayIcon = '🔊'; displayApp = 'Sound';
-  } else if (lowerTitle.includes('note') || lowerApp.includes('note')) {
-    displayIcon = '📝'; displayApp = 'Notes';
-  } else if (lowerTitle.includes('stage') || lowerTitle.includes('mission')) {
-    displayIcon = '🪟'; displayApp = 'Window Manager';
-  } else if (lowerTitle.includes('camera') || lowerApp.includes('camera')) {
-    displayIcon = '📷'; displayApp = 'Camera';
+
+  for (const [key, iconPath] of Object.entries(NOTIF_PNG_MAP)) {
+    if (lowerTitle.includes(key) || lowerApp.includes(key)) {
+      displayIcon = `<img src="${iconPath}" alt="${key}" style="width:18px;height:18px;border-radius:4px;object-fit:contain;vertical-align:middle;">`;
+      displayApp = key.charAt(0).toUpperCase() + key.slice(1);
+      break;
+    }
+  }
+
+  if (typeof displayIcon === 'string' && (displayIcon.startsWith('assets/') || displayIcon.endsWith('.png'))) {
+    displayIcon = `<img src="${displayIcon}" alt="app" style="width:18px;height:18px;border-radius:4px;object-fit:contain;vertical-align:middle;">`;
   }
 
   // 1. Toast Banner
@@ -11514,16 +14064,18 @@ function showNotification(title, message, appName = 'AliceOS', appIcon = null) {
   toast.innerHTML = `
     <div class="toast-header">
       <div class="toast-app-badge">
-        <span style="display:flex;align-items:center;font-size:13px;">${displayIcon}</span>
+        <span style="display:flex;align-items:center;">${displayIcon}</span>
         <span>${displayApp}</span>
       </div>
-      <div class="toast-time">now</div>
+      <div class="toast-time">现在</div>
     </div>
-    <div class="toast-title">${title}</div>
-    <div class="toast-body">${message}</div>
+    <div class="toast-body">
+      <div class="toast-title">${title}</div>
+      <div class="toast-message">${message}</div>
+    </div>
     <div class="toast-actions">
-      <button class="toast-btn" onclick="this.closest('.toast').remove()">Clear</button>
-      <button class="toast-btn" onclick="this.closest('.toast').remove()">Options</button>
+      <button class="toast-act-btn" onclick="this.closest('.toast').classList.add('toast-hiding'); setTimeout(() => this.closest('.toast').remove(), 260)">关闭</button>
+      <button class="toast-act-btn primary" onclick="this.closest('.toast').classList.add('toast-hiding'); setTimeout(() => this.closest('.toast').remove(), 260)">打开</button>
     </div>
   `;
   container.appendChild(toast);
@@ -11532,38 +14084,207 @@ function showNotification(title, message, appName = 'AliceOS', appIcon = null) {
   const dismiss = () => {
     if (dismissed) return;
     dismissed = true;
-    toast.style.transform = 'translateX(120%) scale(0.9)';
-    toast.style.opacity = '0';
+    toast.classList.add('toast-hiding');
     setTimeout(() => {
       if (toast.parentElement) toast.remove();
-    }, 320);
+    }, 280);
   };
 
   let timer = setTimeout(dismiss, 5000);
   toast.addEventListener('mouseenter', () => clearTimeout(timer));
   toast.addEventListener('mouseleave', () => { timer = setTimeout(dismiss, 2500); });
 
-  // 2. Add to Notification Center Sidebar
-  ncHistory.unshift({ title, message, app: displayApp, icon: displayIcon, time: new Date() });
+  // 2. Add to macOS Notification Center
+  addNotificationToCenter({ title, message, app: displayApp, icon: displayIcon, time: new Date() });
+}
+
+function addNotificationToCenter(notif) {
+  ncHistory.unshift(notif);
   const list = document.getElementById('nc-notifications-list');
+  const emptyState = document.getElementById('nc-empty-state');
+  const clearBtn = document.getElementById('nc-clear-all-btn');
+  const badge = document.getElementById('nc-count-badge');
+
+  if (emptyState) emptyState.style.display = 'none';
+  if (clearBtn) clearBtn.style.display = 'block';
+  if (badge) {
+    badge.style.display = 'inline-block';
+    badge.textContent = String(ncHistory.length);
+  }
+
   if (list) {
-    if (ncHistory.length === 1) list.innerHTML = '';
-    const item = document.createElement('div');
-    item.style = 'background:rgba(255,255,255,0.1);backdrop-filter:blur(20px);padding:14px;border-radius:16px;border:1px solid rgba(255,255,255,0.12);box-shadow:0 4px 15px rgba(0,0,0,0.2);';
-    item.innerHTML = `
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-        <div style="display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;opacity:0.75;">
-          <span>${displayIcon}</span>
-          <span>${displayApp}</span>
+    const card = document.createElement('div');
+    card.className = 'nc-card';
+    card.innerHTML = `
+      <div class="nc-card-header">
+        <div class="nc-card-app">
+          <span>${notif.icon}</span>
+          <span>${notif.app}</span>
         </div>
-        <span style="font-size:10px;opacity:0.5;">Just now</span>
+        <div class="nc-card-actions">
+          <span class="nc-card-time">现在</span>
+          <button class="nc-card-close" title="关闭通知">✕</button>
+        </div>
       </div>
-      <div style="font-weight:700;font-size:13px;margin-bottom:3px;">${title}</div>
-      <div style="font-size:12px;opacity:0.85;line-height:1.4;">${message}</div>
+      <div class="nc-card-title">${notif.title}</div>
+      <div class="nc-card-body">${notif.message}</div>
     `;
-    list.prepend(item);
+
+    const closeBtn = card.querySelector('.nc-card-close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        card.style.opacity = '0';
+        card.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          card.remove();
+          const idx = ncHistory.indexOf(notif);
+          if (idx !== -1) ncHistory.splice(idx, 1);
+          if (badge) {
+            badge.textContent = String(ncHistory.length);
+            if (ncHistory.length === 0) badge.style.display = 'none';
+          }
+          if (ncHistory.length === 0) {
+            if (emptyState) emptyState.style.display = 'flex';
+            if (clearBtn) clearBtn.style.display = 'none';
+          }
+        }, 200);
+      });
+    }
+
+    list.prepend(card);
   }
 }
+
+function clearAllNotifications() {
+  ncHistory.length = 0;
+  const list = document.getElementById('nc-notifications-list');
+  const emptyState = document.getElementById('nc-empty-state');
+  const clearBtn = document.getElementById('nc-clear-all-btn');
+  const badge = document.getElementById('nc-count-badge');
+
+  if (list) {
+    const cards = list.querySelectorAll('.nc-card');
+    cards.forEach(c => {
+      c.style.opacity = '0';
+      c.style.transform = 'scale(0.92)';
+      setTimeout(() => c.remove(), 180);
+    });
+  }
+  setTimeout(() => {
+    if (emptyState) emptyState.style.display = 'flex';
+    if (clearBtn) clearBtn.style.display = 'none';
+    if (badge) badge.style.display = 'none';
+  }, 200);
+}
+
+let isNotificationCenterOpen = false;
+
+function toggleNotificationCenter(e) {
+  if (e) e.stopPropagation();
+  const panel = document.getElementById('nc-panel');
+  const timeBtn = document.getElementById('time-display');
+  if (!panel) return;
+
+  if (panel.classList.contains('open')) {
+    closeNotificationCenter();
+  } else {
+    if (typeof closeAllTopMenus === 'function') closeAllTopMenus();
+    const cc = document.getElementById('control-center');
+    if (cc) cc.classList.remove('cc-open');
+    const ccBtn = document.getElementById('cc-btn');
+    if (ccBtn) ccBtn.classList.remove('active');
+
+    panel.classList.add('open');
+    if (timeBtn) timeBtn.classList.add('active');
+    isNotificationCenterOpen = true;
+    renderNotificationCenterWidgets();
+  }
+}
+
+function closeNotificationCenter() {
+  const panel = document.getElementById('nc-panel');
+  const timeBtn = document.getElementById('time-display');
+  if (panel) panel.classList.remove('open');
+  if (timeBtn) timeBtn.classList.remove('active');
+  isNotificationCenterOpen = false;
+}
+
+function renderNotificationCenterWidgets() {
+  const now = new Date();
+  
+  // Header date
+  const headerDateEl = document.getElementById('nc-header-date');
+  if (headerDateEl) {
+    const days = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+    headerDateEl.textContent = `${now.getMonth() + 1}月${now.getDate()}日 ${days[now.getDay()]}`;
+  }
+
+  // Calendar
+  renderNCCalendar();
+
+  // World Clocks
+  const pad = (n) => String(n).padStart(2, '0');
+  const localClock = document.getElementById('nc-clock-local-time');
+  if (localClock) localClock.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+
+  const cupClock = document.getElementById('nc-clock-cup-time');
+  if (cupClock) {
+    const utcHours = now.getUTCHours();
+    const cupHours = (utcHours - 7 + 24) % 24;
+    cupClock.textContent = `${pad(cupHours)}:${pad(now.getMinutes())}`;
+  }
+
+  // System meters
+  const cpuVal = document.getElementById('nc-cpu-val');
+  const cpuFill = document.getElementById('nc-cpu-fill');
+  const ramVal = document.getElementById('nc-ram-val');
+  const ramFill = document.getElementById('nc-ram-fill');
+  if (cpuVal && cpuFill) {
+    const cpuPct = Math.floor(18 + Math.random() * 14);
+    cpuVal.textContent = `${cpuPct}%`;
+    cpuFill.style.width = `${cpuPct}%`;
+  }
+  if (ramVal && ramFill) {
+    ramVal.textContent = '4.6 GB';
+    ramFill.style.width = '39%';
+  }
+}
+
+function renderNCCalendar() {
+  const grid = document.getElementById('nc-cal-grid');
+  const label = document.getElementById('nc-cal-month-label');
+  if (!grid || !label) return;
+
+  const today = new Date();
+  if (!window._calViewDate) window._calViewDate = new Date();
+  const y = window._calViewDate.getFullYear();
+  const m = window._calViewDate.getMonth();
+  label.textContent = `${m + 1}月 ${y}`;
+
+  const firstDay = new Date(y, m, 1).getDay();
+  const daysInMonth = new Date(y, m + 1, 0).getDate();
+
+  grid.innerHTML = '';
+  for (let i = 0; i < firstDay; i++) {
+    const blank = document.createElement('span');
+    grid.appendChild(blank);
+  }
+  for (let d = 1; d <= daysInMonth; d++) {
+    const cell = document.createElement('span');
+    const isToday = (d === today.getDate() && m === today.getMonth() && y === today.getFullYear());
+    cell.textContent = d;
+    if (isToday) {
+      cell.className = 'today';
+    }
+    grid.appendChild(cell);
+  }
+}
+
+window.toggleNotificationCenter = toggleNotificationCenter;
+window.closeNotificationCenter = closeNotificationCenter;
+window.clearAllNotifications = clearAllNotifications;
+window.renderNCCalendar = renderNCCalendar;
 window.showNotification = showNotification;
 window.playNotificationChime = playNotificationChime;
 // Activity Monitor - Full macOS Sequoia Fidelity
@@ -13136,6 +15857,12 @@ document.addEventListener('click', (e) => {
   if (e.target !== desktopMenu) {
     desktopMenu.style.display = 'none';
   }
+  if (!e.target.closest('#dock-trash-menu')) {
+    if (typeof hideDockTrashMenu === 'function') hideDockTrashMenu();
+  }
+  if (!e.target.closest('#file-context-menu')) {
+    if (typeof hideFileContextMenu === 'function') hideFileContextMenu();
+  }
 });
 
 let folderCount = 1;
@@ -13181,6 +15908,7 @@ function toggleDesktopStacks() {
 }
 
 async function refreshDesktop() {
+  if (!window.aliceOS || !window.aliceOS.vfs) return;
   const res = await window.aliceOS.vfs.readDir(`/Users/${currentUser}/Desktop`);
   if (!res.success) return;
   desktopGrid.innerHTML = '';
@@ -13257,6 +15985,34 @@ async function refreshDesktop() {
             <div style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;">${childIconSvg}</div>
             <div style="font-size:10px;color:white;text-align:center;overflow:hidden;text-overflow:ellipsis;width:100%;white-space:nowrap;margin-top:4px;">${child.name}</div>
           `;
+          itemEl.onclick = (e) => {
+            e.stopPropagation();
+            const targetPath = `/Users/${currentUser}/Desktop/${child.name}`;
+            const fileData = {
+              name: child.name,
+              path: targetPath,
+              isDirectory: child.isDirectory,
+              size: child.size || 4096,
+              mtime: child.mtime || Date.now()
+            };
+            if (typeof window.setSystemSelectedFile === 'function') window.setSystemSelectedFile(fileData);
+            else window.selectedFile = fileData;
+          };
+          itemEl.oncontextmenu = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const targetPath = `/Users/${currentUser}/Desktop/${child.name}`;
+            const fileData = {
+              name: child.name,
+              path: targetPath,
+              isDirectory: child.isDirectory,
+              size: child.size || 4096,
+              mtime: child.mtime || Date.now()
+            };
+            if (typeof window.setSystemSelectedFile === 'function') window.setSystemSelectedFile(fileData);
+            else window.selectedFile = fileData;
+            showFileContextMenu(e.clientX, e.clientY, fileData);
+          };
           itemEl.ondblclick = () => {
             const targetPath = `/Users/${currentUser}/Desktop/${child.name}`;
             if (child.isDirectory) {
@@ -13303,9 +16059,13 @@ async function refreshDesktop() {
       startX += 105;
     }
     
+    const targetPath = `/Users/${currentUser}/Desktop/${item.name}`;
+    const fileTag = typeof getFileTag === 'function' ? getFileTag(targetPath) : null;
+    const tagBadge = fileTag ? `<span class="file-tag-dot-badge" style="background:${fileTag};"></span>` : '';
+    
     div.innerHTML = `
       <div class="icon">${iconSvg}</div>
-      <div class="label">${item.name}</div>
+      <div class="label" style="display:flex;align-items:center;justify-content:center;gap:3px;">${tagBadge}<span>${item.name}</span></div>
     `;
 
     // macOS Desktop Icon Click Selection & Quick Look file binding
@@ -13336,6 +16096,27 @@ async function refreshDesktop() {
           else window.selectedFile = null;
         }
       }
+    });
+
+    // macOS Desktop Icon Context Menu
+    div.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      document.querySelectorAll('.desktop-icon-wrapper.selected').forEach(el => {
+        if (el !== div) el.classList.remove('selected');
+      });
+      div.classList.add('selected');
+      const targetPath = `/Users/${currentUser}/Desktop/${item.name}`;
+      const fileData = {
+        name: item.name,
+        path: targetPath,
+        isDirectory: isDir,
+        size: item.size || 4096,
+        mtime: item.mtime || Date.now()
+      };
+      if (typeof window.setSystemSelectedFile === 'function') window.setSystemSelectedFile(fileData);
+      else window.selectedFile = fileData;
+      showFileContextMenu(e.clientX, e.clientY, fileData);
     });
 
     div.ondblclick = () => {
@@ -13380,9 +16161,9 @@ async function refreshDesktop() {
         if (e.clientX >= rect.left && e.clientX <= rect.right &&
             e.clientY >= rect.top && e.clientY <= rect.bottom) {
           
-          // Delete from VFS
+          // Move to Trash in VFS
           const targetPath = `/Users/${currentUser}/Desktop/${item.name}`;
-          await window.aliceOS.vfs.rm(targetPath);
+          await moveToTrash(targetPath, item.name);
           
           // Poof animation
           div.style.transition = 'transform 0.3s, opacity 0.3s';
@@ -13399,193 +16180,502 @@ async function refreshDesktop() {
 
 // Initial Desktop load removed, handled by loginUser()
 
-// AI Assistant Logic
-const aiBtn = document.getElementById('ai-btn');
-const aiPanel = document.getElementById('ai-panel');
-const aiChat = document.getElementById('ai-chat');
-const aiInput = document.getElementById('ai-input');
+// ==========================================================
+// macOS Sequoia Siri & Apple Intelligence Assistant (1:1 macOS Fidelity)
+// ==========================================================
+let isSiriOpen = false;
+let siriSpeechActive = false;
+let siriSpeechRecognition = null;
 
-let orbActive = false;
-function toggleAssistant() {
-  const overlay = document.getElementById('alice-orb-overlay');
-  const orb = document.getElementById('alice-orb');
-  const orbText = document.getElementById('alice-orb-text');
-  
-  if (!overlay) return;
-  orbActive = !orbActive;
-  
-  if (orbActive) {
-    overlay.style.display = 'flex';
-    setTimeout(() => {
-      overlay.style.opacity = '1';
-      orb.style.animation = 'orbPulse 2s infinite ease-in-out';
-      orbText.innerText = t('assistant_listening', '正在聆听...');
-      
-      // Attempt Voice Recognition
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (SpeechRecognition) {
-        const recognition = new SpeechRecognition();
-        recognition.lang = currentSystemLang === 'zh' ? 'zh-CN' : (currentSystemLang === 'ja' ? 'ja-JP' : 'en-US');
-        recognition.interimResults = true;
-        recognition.maxAlternatives = 1;
-        
-        recognition.onresult = (event) => {
-          let text = '';
-          for (let i = event.resultIndex; i < event.results.length; i++) {
-            text += event.results[i][0].transcript;
-          }
-          orbText.innerText = text;
-          
-          if (event.results[0].isFinal) {
-            orb.style.animation = 'orbPulse 0.5s infinite ease-in-out';
-            orbText.innerText = t('assistant_thinking', '正在思考...');
-            setTimeout(() => {
-              const reply = t('assistant_reply', '我听到的是：%s。我是 Alice。').replace('%s', text);
-              orbText.innerText = reply;
-              if (window.speechSynthesis) {
-                const utterance = new SpeechSynthesisUtterance(reply);
-                window.speechSynthesis.speak(utterance);
-                utterance.onend = () => {
-                  toggleAssistant(); // close when done
-                };
-              } else {
-                setTimeout(toggleAssistant, 2000);
-              }
-            }, 1000);
-          }
-        };
-        
-        recognition.onerror = () => {
-          orbText.innerText = t('assistant_error', '音频解析错误。');
-          setTimeout(toggleAssistant, 2000);
-        };
-        
-        recognition.start();
-      } else {
-        orbText.innerText = t('notif_speech_error', 'Speech API not supported.');
-        setTimeout(toggleAssistant, 2000);
-      }
-    }, 50);
-  } else {
-    overlay.style.opacity = '0';
-    setTimeout(() => {
-      overlay.style.display = 'none';
-      orb.style.animation = 'none';
-    }, 500);
-  }
-}
+function playSiriChime(type = 'open') {
+  try {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    if (!window._aliceAudioCtx) window._aliceAudioCtx = new AudioContext();
+    const ctx = window._aliceAudioCtx;
+    if (ctx.state === 'suspended') ctx.resume().catch(() => {});
+    const now = ctx.currentTime;
 
-document.getElementById('alice-orb').addEventListener('click', toggleAssistant);
+    if (type === 'open') {
+      // macOS Siri activation two-tone prompt: C5 (523.25Hz) -> G5 (783.99Hz)
+      const osc1 = ctx.createOscillator();
+      const gain1 = ctx.createGain();
+      osc1.type = 'sine';
+      osc1.frequency.setValueAtTime(523.25, now);
+      gain1.gain.setValueAtTime(0, now);
+      gain1.gain.linearRampToValueAtTime(0.18, now + 0.005);
+      gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+      osc1.connect(gain1);
+      gain1.connect(ctx.destination);
+      osc1.start(now);
+      osc1.stop(now + 0.12);
 
-aiInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') handleAIInput();
-});
-
-function appendAIChat(text, isUser = false) {
-  const div = document.createElement('div');
-  div.style.background = isUser ? '#007aff' : 'rgba(255,255,255,0.8)';
-  div.style.color = isUser ? 'white' : '#333';
-  div.style.padding = '8px';
-  div.style.borderRadius = '8px';
-  div.style.alignSelf = isUser ? 'flex-end' : 'flex-start';
-  div.style.maxWidth = '80%';
-  div.innerText = text;
-  aiChat.appendChild(div);
-  aiChat.scrollTop = aiChat.scrollHeight;
-  
-  // TTS (Text-to-Speech) for Alice
-  if (!isUser && window.speechSynthesis) {
-    // Only speak actual text responses (ignore emojis or short things if you want, but reading all is fine)
-    const utterance = new SpeechSynthesisUtterance(text);
-    const voices = window.speechSynthesis.getVoices();
-    // Try to find a nice female voice
-    const femaleVoice = voices.find(v => v.name.includes('Zira') || v.name.includes('Female') || v.name.includes('Google'));
-    if (femaleVoice) utterance.voice = femaleVoice;
-    utterance.rate = 1.0;
-    utterance.pitch = 1.2; // Slightly higher pitch for "Alice"
-    window.speechSynthesis.speak(utterance);
-  }
-}
-
-async function handleAIInput() {
-  const val = aiInput.value.trim().toLowerCase();
-  if (!val) return;
-  
-  aiInput.value = '';
-  appendAIChat(val, true);
-
-  setTimeout(async () => {
-    let response = "I'm not sure how to help with that.";
-    
-    if (val.includes('time')) {
-      response = `It is currently ${new Date().toLocaleTimeString()}.`;
-    } else if (val.includes('open') || val.includes('launch')) {
-      if (val.includes('music')) { launchMusic(); response = 'Opening Music Player for you.'; }
-      else if (val.includes('camera')) { launchCamera(); response = 'Launching Photo Booth.'; }
-      else if (val.includes('calculator')) { launchCalculator(); response = 'Opening Calculator.'; }
-      else if (val.includes('terminal')) { launchTerminal(); response = 'Opening Terminal.'; }
-      else if (val.includes('paint')) { launchPaint(); response = 'Opening Paint.'; }
-      else if (val.includes('maps')) { launchMaps(); response = 'Opening Maps.'; }
-      else if (val.includes('radar')) { launchRadar(); response = 'Scanning for extra-terrestrial life... 👽'; }
-      else if (val.includes('weather')) { launchWeather(); response = 'Checking the skies...'; }
-      else if (val.includes('host') || val.includes('hardware')) { launchHostMonitor(); response = 'Breaching 4th wall... Accessing host hardware.'; }
-      else if (val.includes('ide') || val.includes('code')) { launchIDE(); response = 'Opening AliceScript IDE.'; }
-      else { response = "I don't know that app."; }
-    } else if (val.includes('wallpaper') || val.includes('background')) {
-      applySystemWallpaper('assets/wallpapers/macos-sequoia.svg');
-      response = 'I have changed your wallpaper to something fresh!';
-    } else if (val.includes('hello') || val.includes('hi')) {
-      response = 'Hello! I am Alice, your personal OS assistant. Try asking me to open an app!';
-    } else if (val.includes('notify') && val.includes('host')) {
-      if (window.aliceOS.hostNotify) {
-         window.aliceOS.hostNotify('Alice Assistant', 'Hello from the Virtual Machine!');
-         response = 'I have sent a physical push notification to your host machine.';
-      } else {
-         response = 'Host notification bridge is offline.';
-      }
+      const osc2 = ctx.createOscillator();
+      const gain2 = ctx.createGain();
+      osc2.type = 'sine';
+      osc2.frequency.setValueAtTime(783.99, now + 0.08);
+      gain2.gain.setValueAtTime(0, now + 0.08);
+      gain2.gain.linearRampToValueAtTime(0.22, now + 0.085);
+      gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+      osc2.connect(gain2);
+      gain2.connect(ctx.destination);
+      osc2.start(now + 0.08);
+      osc2.stop(now + 0.28);
+    } else {
+      // macOS Siri dismiss tone
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(659.25, now);
+      osc.frequency.exponentialRampToValueAtTime(440.0, now + 0.15);
+      gain.gain.setValueAtTime(0.12, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.15);
     }
-    
-    appendAIChat(response, false);
+  } catch (e) {}
+}
+
+function openSiri() {
+  const win = document.getElementById('siri-window');
+  if (!win) return;
+  isSiriOpen = true;
+  win.style.display = 'block';
+  requestAnimationFrame(() => {
+    win.classList.add('open');
+  });
+
+  const waveform = document.getElementById('siri-waveform');
+  if (waveform) waveform.classList.add('active');
+
+  const dockDot = document.getElementById('siri-dock-dot');
+  if (dockDot) dockDot.classList.add('active');
+
+  playSiriChime('open');
+
+  const input = document.getElementById('siri-input');
+  if (input) {
+    input.value = '';
+    setTimeout(() => input.focus(), 100);
+  }
+  updateSiriStatus('准备就绪，有什么可以帮您？');
+}
+
+function closeSiri() {
+  const win = document.getElementById('siri-window');
+  if (!win) return;
+  isSiriOpen = false;
+  win.classList.remove('open');
+
+  const waveform = document.getElementById('siri-waveform');
+  if (waveform) waveform.classList.remove('active');
+
+  const dockDot = document.getElementById('siri-dock-dot');
+  if (dockDot) dockDot.classList.remove('active');
+
+  stopSiriSpeech();
+  playSiriChime('close');
+
+  setTimeout(() => {
+    if (!isSiriOpen) win.style.display = 'none';
+  }, 250);
+}
+
+function toggleSiri() {
+  if (isSiriOpen) closeSiri();
+  else openSiri();
+}
+
+function toggleAssistant() {
+  toggleSiri();
+}
+
+function updateSiriStatus(text) {
+  const el = document.getElementById('siri-status-text');
+  if (el) el.innerText = text;
+}
+
+function appendSiriUserMessage(text) {
+  const stream = document.getElementById('siri-stream');
+  if (!stream) return;
+  const msg = document.createElement('div');
+  msg.className = 'siri-user-msg';
+  msg.innerText = text;
+  stream.appendChild(msg);
+  stream.scrollTop = stream.scrollHeight;
+}
+
+function appendSiriAssistantMessage(text, htmlContent = null) {
+  const stream = document.getElementById('siri-stream');
+  if (!stream) return;
+  const msg = document.createElement('div');
+  msg.className = 'siri-assistant-msg';
+  msg.innerText = text;
+  stream.appendChild(msg);
+
+  if (htmlContent) {
+    const cardWrap = document.createElement('div');
+    cardWrap.innerHTML = htmlContent;
+    stream.appendChild(cardWrap.firstElementChild || cardWrap);
+  }
+
+  stream.scrollTop = stream.scrollHeight;
+
+  // Speak response using speech synthesis
+  speakSiriResponse(text);
+}
+
+function speakSiriResponse(text) {
+  try {
+    if (window.speechSynthesis && typeof SpeechSynthesisUtterance !== 'undefined') {
+      window.speechSynthesis.cancel();
+      const utt = new SpeechSynthesisUtterance(text);
+      utt.lang = currentSystemLang === 'zh' ? 'zh-CN' : (currentSystemLang === 'ja' ? 'ja-JP' : 'en-US');
+      utt.rate = 1.05;
+      utt.pitch = 1.1;
+      window.speechSynthesis.speak(utt);
+    }
+  } catch(e) {}
+}
+
+function askSiriSuggestion(text) {
+  submitSiriCommand(text);
+}
+
+function submitSiriInput() {
+  const input = document.getElementById('siri-input');
+  if (!input) return;
+  const query = input.value.trim();
+  if (!query) return;
+  input.value = '';
+  submitSiriCommand(query);
+}
+
+function submitSiriCommand(query) {
+  appendSiriUserMessage(query);
+  updateSiriStatus('Siri 正在思考...');
+
+  const waveform = document.getElementById('siri-waveform');
+  if (waveform) waveform.classList.add('active');
+
+  setTimeout(() => {
+    executeSiriIntent(query);
   }, 400);
 }
 
-// Voice Recognition Integration
-function startVoiceRecognition() {
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SpeechRecognition) {
-    showNotification(t('msg_error', 'Error'), t('notif_speech_error', 'Speech API not supported.'));
+function executeSiriIntent(rawQuery) {
+  const q = rawQuery.toLowerCase();
+  updateSiriStatus('准备就绪，有什么可以帮您？');
+
+  // 1. Weather
+  if (q.includes('天气') || q.includes('weather') || q.includes('温度') || q.includes('气温') || q.includes('下雨') || q.includes('冷') || q.includes('热')) {
+    const weatherCardHtml = `
+      <div class="siri-weather-card">
+        <div class="siri-weather-header">
+          <div>
+            <div class="siri-weather-city">上海 (Cupertino 时区对齐)</div>
+            <div style="font-size:12px;opacity:0.75;margin-top:2px;">晴间多云</div>
+          </div>
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="5" fill="#f59e0b"/>
+            <path d="M12 2V4M12 20V22M2 12H4M20 12H22M4.93 4.93L6.34 6.34M17.66 17.66L19.07 19.07M4.93 19.07L6.34 17.66M17.66 6.34L19.07 4.93" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="siri-weather-temp">24°</div>
+        <div class="siri-weather-footer">
+          <span>最高: 26° 最低: 18°</span>
+          <span>湿度 45% · 优 (26)</span>
+        </div>
+      </div>
+    `;
+    appendSiriAssistantMessage('上海今天天气晴朗，气温 24°C，空气质量优秀，适合出行。', weatherCardHtml);
     return;
   }
-  
-  const recognition = new SpeechRecognition();
-  recognition.lang = currentSystemLang === 'zh' ? 'zh-CN' : (currentSystemLang === 'ja' ? 'ja-JP' : 'en-US');
-  recognition.interimResults = false;
-  recognition.maxAlternatives = 1;
-  
-  const micBtn = document.getElementById('ai-mic-btn');
-  const originalBg = micBtn.style.background;
-  micBtn.style.background = '#4CAF50';
-  
-  recognition.start();
-  
-  recognition.onresult = (event) => {
-    const transcript = event.results[0][0].transcript;
-    document.getElementById('ai-input').value = transcript;
-    handleAIInput();
-  };
-  
-  recognition.onspeechend = () => {
-    recognition.stop();
-  };
-  
-  recognition.onend = () => {
-    micBtn.style.background = originalBg;
-  };
-  
-  recognition.onerror = (event) => {
-    micBtn.style.background = originalBg;
-  };
+
+  // 2. System Status / Specs
+  if (q.includes('系统') || q.includes('性能') || q.includes('状态') || q.includes('cpu') || q.includes('内存') || q.includes('ram') || q.includes('配置') || q.includes('hardware') || q.includes('specs')) {
+    const sysCardHtml = `
+      <div class="siri-system-card">
+        <div style="font-weight:600;font-size:13px;display:flex;justify-content:space-between;">
+          <span>macOS Sequoia 15.1</span>
+          <span style="color:#34c759;font-weight:bold;">运行正常</span>
+        </div>
+        <div class="siri-system-row">
+          <span>CPU 使用率</span>
+          <div class="siri-system-bar-bg">
+            <div class="siri-system-bar-fill" style="width: 14%; background: #34c759;"></div>
+          </div>
+          <span>14%</span>
+        </div>
+        <div class="siri-system-row">
+          <span>统一内存</span>
+          <div class="siri-system-bar-bg">
+            <div class="siri-system-bar-fill" style="width: 32%; background: #007aff;"></div>
+          </div>
+          <span>32%</span>
+        </div>
+        <div class="siri-system-row" style="opacity:0.75;font-size:11.5px;">
+          <span>Apple M3 Max · 电池 98% 正常</span>
+        </div>
+      </div>
+    `;
+    appendSiriAssistantMessage('您的 Mac 运行状态极佳，CPU 与内存负荷正常。', sysCardHtml);
+    return;
+  }
+
+  // 3. Trash Emptying
+  if (q.includes('垃圾') || q.includes('废纸篓') || q.includes('trash') || q.includes('清空')) {
+    if (typeof emptyTrash === 'function') {
+      emptyTrash();
+    }
+    const actionHtml = `
+      <div class="siri-action-card">
+        <div class="siri-action-icon">✓</div>
+        <div>
+          <div style="font-weight:600;font-size:13px;">已清空废纸篓</div>
+          <div style="font-size:11.5px;opacity:0.75;">所有临时废弃文件已被完全清除。</div>
+        </div>
+      </div>
+    `;
+    appendSiriAssistantMessage('已为您清空废纸篓中的所有项目。', actionHtml);
+    return;
+  }
+
+  // 4. Screenshot
+  if (q.includes('截屏') || q.includes('截图') || q.includes('screenshot') || q.includes('capture')) {
+    setTimeout(() => {
+      closeSiri();
+      if (typeof openScreenshotUtilityBar === 'function') {
+        openScreenshotUtilityBar();
+      }
+    }, 400);
+    appendSiriAssistantMessage('正在启动 macOS 屏幕捕获实用工具栏...');
+    return;
+  }
+
+  // 5. Dark / Light Mode
+  if (q.includes('深色') || q.includes('浅色') || q.includes('主题') || q.includes('外观') || q.includes('dark') || q.includes('light')) {
+    const isDark = document.body.classList.contains('dark-mode');
+    let targetDark = !isDark;
+    if (q.includes('深色') || q.includes('dark')) targetDark = true;
+    if (q.includes('浅色') || q.includes('light')) targetDark = false;
+
+    if (targetDark) {
+      document.body.classList.add('dark-mode');
+      localStorage.setItem('alice_theme', 'dark');
+    } else {
+      document.body.classList.remove('dark-mode');
+      localStorage.setItem('alice_theme', 'light');
+    }
+
+    const actionHtml = `
+      <div class="siri-action-card">
+        <div class="siri-action-icon">🌓</div>
+        <div>
+          <div style="font-weight:600;font-size:13px;">外观已切换</div>
+          <div style="font-size:11.5px;opacity:0.75;">已切换至 ${targetDark ? '深色模式' : '浅色模式'}。</div>
+        </div>
+      </div>
+    `;
+    appendSiriAssistantMessage(`已成功为您切换至${targetDark ? '深色' : '浅色'}外观模式。`, actionHtml);
+    return;
+  }
+
+  // 6. Launch / Open Apps
+  if (q.includes('打开') || q.includes('启动') || q.includes('open') || q.includes('launch') || q.includes('run')) {
+    let appFound = null;
+    let appTitle = '';
+
+    if (q.includes('访达') || q.includes('finder') || q.includes('文件')) {
+      appFound = 'finder'; appTitle = '访达';
+    } else if (q.includes('终端') || q.includes('terminal') || q.includes('命令行')) {
+      appFound = 'terminal'; appTitle = '终端';
+    } else if (q.includes('safari') || q.includes('浏览器') || q.includes('browser') || q.includes('网页')) {
+      appFound = 'browser'; appTitle = 'Safari 浏览器';
+    } else if (q.includes('备忘录') || q.includes('note') || q.includes('便签')) {
+      appFound = 'notes'; appTitle = '备忘录';
+    } else if (q.includes('日历') || q.includes('calendar')) {
+      appFound = 'calendar'; appTitle = '日历';
+    } else if (q.includes('提醒') || q.includes('reminder')) {
+      appFound = 'reminders'; appTitle = '提醒事项';
+    } else if (q.includes('音乐') || q.includes('music')) {
+      appFound = 'music'; appTitle = '音乐';
+    } else if (q.includes('设置') || q.includes('setting')) {
+      appFound = 'settings'; appTitle = '系统设置';
+    } else if (q.includes('计算器') || q.includes('calc')) {
+      if (typeof launchCalculator === 'function') launchCalculator();
+      appTitle = '计算器';
+    } else if (q.includes('商店') || q.includes('store')) {
+      appFound = 'store'; appTitle = 'App Store';
+    } else if (q.includes('照片') || q.includes('paint') || q.includes('画图')) {
+      appFound = 'paint'; appTitle = '照片与画板';
+    }
+
+    if (appFound) {
+      if (typeof activateOrLaunchApp === 'function') {
+        activateOrLaunchApp(appFound);
+      }
+    }
+
+    if (appTitle) {
+      const actionHtml = `
+        <div class="siri-action-card">
+          <div class="siri-action-icon">🚀</div>
+          <div>
+            <div style="font-weight:600;font-size:13px;">正在打开 ${appTitle}</div>
+            <div style="font-size:11.5px;opacity:0.75;">窗口已调至前台并获得焦点。</div>
+          </div>
+        </div>
+      `;
+      appendSiriAssistantMessage(`好的，正在为您打开 ${appTitle}。`, actionHtml);
+      return;
+    }
+  }
+
+  // 7. Math / Arithmetic calculation
+  const mathRegex = /^[\d\.\s\+\-\*\/\(\)\%\^x×÷]+$/;
+  const cleanMath = q.replace(/x|×/g, '*').replace(/÷/g, '/').trim();
+  if (/^(\d+[\s\+\-\*\/\%\^]+)+\d+$/.test(cleanMath) || (cleanMath.length > 2 && mathRegex.test(cleanMath) && /[0-9]/.test(cleanMath))) {
+    try {
+      const safeMath = cleanMath.replace(/[^0-9\+\-\*\/\.\(\)]/g, '');
+      const result = Function(`'use strict'; return (${safeMath})`)();
+      if (typeof result === 'number' && !isNaN(result)) {
+        const mathHtml = `
+          <div class="siri-system-card" style="align-items:center;padding:16px;">
+            <div style="font-size:12px;opacity:0.65;margin-bottom:4px;">${rawQuery} =</div>
+            <div style="font-size:32px;font-weight:200;letter-spacing:-1px;color:#38bdf8;">${result}</div>
+          </div>
+        `;
+        appendSiriAssistantMessage(`计算结果为 ${result}。`, mathHtml);
+        return;
+      }
+    } catch(e) {}
+  }
+
+  // 8. Time query
+  if (q.includes('几点') || q.includes('时间') || q.includes('time') || q.includes('几号') || q.includes('星期')) {
+    const now = new Date();
+    const dateStr = now.toLocaleDateString(currentSystemLang === 'zh' ? 'zh-CN' : 'en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+    const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    appendSiriAssistantMessage(`当前时间是 ${dateStr} ${timeStr}。`);
+    return;
+  }
+
+  // 9. Friendly conversational assistant default
+  const defaultGreetings = [
+    '有什么我能协助您处理的吗？您可以让我启动应用、查询天气、整理文件或调节系统设置。',
+    '我在。您可以试着对我说：“今日天气如何”、“查看系统状态”或“打开终端”。',
+    'Apple Intelligence 随时为您服务。请告诉我您的需求。'
+  ];
+  const chosen = defaultGreetings[Math.floor(Math.random() * defaultGreetings.length)];
+  appendSiriAssistantMessage(chosen);
 }
+
+// Voice Recognition Toggle
+function toggleSiriSpeechInput() {
+  const micBtn = document.getElementById('siri-mic-btn');
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  if (!SpeechRecognition) {
+    appendSiriAssistantMessage('当前环境不支持语音听写 API，您可直接在下方输入框中键入指令。');
+    return;
+  }
+
+  if (siriSpeechActive) {
+    stopSiriSpeech();
+    return;
+  }
+
+  try {
+    siriSpeechRecognition = new SpeechRecognition();
+    siriSpeechRecognition.lang = currentSystemLang === 'zh' ? 'zh-CN' : (currentSystemLang === 'ja' ? 'ja-JP' : 'en-US');
+    siriSpeechRecognition.interimResults = true;
+    siriSpeechRecognition.maxAlternatives = 1;
+
+    siriSpeechActive = true;
+    if (micBtn) micBtn.classList.add('listening');
+    updateSiriStatus('Siri 正在聆听您的声音...');
+
+    const waveform = document.getElementById('siri-waveform');
+    if (waveform) waveform.classList.add('active');
+
+    siriSpeechRecognition.onresult = (event) => {
+      let text = '';
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        text += event.results[i][0].transcript;
+      }
+      const input = document.getElementById('siri-input');
+      if (input) input.value = text;
+
+      if (event.results[0].isFinal && text.trim()) {
+        stopSiriSpeech();
+        submitSiriCommand(text.trim());
+      }
+    };
+
+    siriSpeechRecognition.onerror = () => {
+      stopSiriSpeech();
+    };
+
+    siriSpeechRecognition.onend = () => {
+      stopSiriSpeech();
+    };
+
+    siriSpeechRecognition.start();
+  } catch(e) {
+    stopSiriSpeech();
+  }
+}
+
+function stopSiriSpeech() {
+  siriSpeechActive = false;
+  const micBtn = document.getElementById('siri-mic-btn');
+  if (micBtn) micBtn.classList.remove('listening');
+  if (siriSpeechRecognition) {
+    try { siriSpeechRecognition.stop(); } catch(e) {}
+    siriSpeechRecognition = null;
+  }
+}
+
+// Bind Siri Events
+document.addEventListener('DOMContentLoaded', () => {
+  const siriInput = document.getElementById('siri-input');
+  if (siriInput) {
+    siriInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        submitSiriInput();
+      } else if (e.key === 'Escape') {
+        closeSiri();
+      }
+    });
+  }
+
+  const siriOrb = document.getElementById('siri-main-orb');
+  if (siriOrb) {
+    siriOrb.addEventListener('click', toggleSiriSpeechInput);
+  }
+});
+
+// Global Shortcuts for Siri (Option + Space, Escape)
+document.addEventListener('keydown', (e) => {
+  if (e.altKey && e.code === 'Space') {
+    e.preventDefault();
+    toggleSiri();
+  } else if (e.key === 'Escape' && isSiriOpen) {
+    closeSiri();
+  }
+});
+
+// Window Exports
+window.openSiri = openSiri;
+window.closeSiri = closeSiri;
+window.toggleSiri = toggleSiri;
+window.toggleAssistant = toggleAssistant;
+window.askSiriSuggestion = askSiriSuggestion;
+window.submitSiriInput = submitSiriInput;
+window.toggleSiriSpeechInput = toggleSiriSpeechInput;
 
 // ==========================================================
 // System Audio Engine (Apple High-Fidelity Synthetic Acoustics - macOS Sequoia Edition)
@@ -13718,6 +16808,50 @@ const AppleAudioEngine = {
       this._lastVolPopTime = now;
       this.playPop(scale);
     }
+  },
+
+  // Apple AirPods Pro Noise Cancellation & Transparency Mode Chimes
+  playANCChime(mode = 'anc') {
+    if (!this.settings.soundEffectsEnabled) return;
+    try {
+      this.ensureCtx();
+      const t = audioCtx.currentTime;
+      if (mode === 'anc') {
+        // macOS AirPods Active Noise Cancellation Seal Chime (two smooth acoustic tones: 440Hz -> 554.37Hz)
+        const osc1 = audioCtx.createOscillator();
+        const osc2 = audioCtx.createOscillator();
+        const g1 = audioCtx.createGain();
+        const g2 = audioCtx.createGain();
+        osc1.type = 'sine';
+        osc1.frequency.setValueAtTime(440, t);
+        g1.gain.setValueAtTime(0.001, t);
+        g1.gain.linearRampToValueAtTime(0.12 * this.settings.masterVolume, t + 0.04);
+        g1.gain.exponentialRampToValueAtTime(0.0001, t + 0.16);
+        osc1.connect(g1); g1.connect(audioCtx.destination);
+        osc1.start(t); osc1.stop(t + 0.17);
+
+        osc2.type = 'sine';
+        osc2.frequency.setValueAtTime(554.37, t + 0.12);
+        g2.gain.setValueAtTime(0.001, t + 0.12);
+        g2.gain.linearRampToValueAtTime(0.14 * this.settings.masterVolume, t + 0.16);
+        g2.gain.exponentialRampToValueAtTime(0.0001, t + 0.32);
+        osc2.connect(g2); g2.connect(audioCtx.destination);
+        osc2.start(t + 0.12); osc2.stop(t + 0.33);
+      } else if (mode === 'transparency') {
+        // AirPods Transparency ping chime (587.33Hz -> 880Hz)
+        const osc = audioCtx.createOscillator();
+        const g = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(587.33, t);
+        osc.frequency.exponentialRampToValueAtTime(880, t + 0.15);
+        g.gain.setValueAtTime(0.15 * this.settings.masterVolume, t);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + 0.22);
+        osc.connect(g); g.connect(audioCtx.destination);
+        osc.start(t); osc.stop(t + 0.23);
+      } else {
+        this.playPop(0.85);
+      }
+    } catch(e) {}
   },
 
   // 3. Official macOS "Tink" (Glass Bell Chime)
@@ -14002,14 +17136,182 @@ function handleGlobalTouchInteraction(e) {
 
 document.addEventListener('pointerdown', handleGlobalTouchInteraction, { capture: true, passive: true });
 
-// macOS Lock Screen Logic
+// ============================================================
+// macOS Sonoma / Sequoia Authentic Aerial Screensaver Engine
+// ============================================================
 let idleTimer;
 const loginScreen = document.getElementById('login-screen');
 
-function startScreensaver() {
-  if (loginScreen && loginScreen.style.display !== 'none') return;
-  lockScreen();
+const AERIAL_SCENES = [
+  {
+    id: 'yosemite',
+    title: '优胜美地国家公园 • 酋长岩',
+    bg: "url('assets/wallpapers/macos-sequoia.svg')"
+  },
+  {
+    id: 'sonoma',
+    title: '加利福尼亚州 • 索诺玛地平线',
+    bg: "url('assets/wallpapers/macos-sonoma.svg')"
+  },
+  {
+    id: 'big-sur',
+    title: '大瑟尔海岸 • 太平洋晨雾',
+    bg: "url('assets/wallpapers/macos-big-sur.svg')"
+  },
+  {
+    id: 'monterey',
+    title: '蒙特雷海湾 • 晚霞余晖',
+    bg: "url('assets/wallpapers/macos-monterey.svg')"
+  },
+  {
+    id: 'ventura',
+    title: '文图拉海滩 • 阳光海岸',
+    bg: "url('assets/wallpapers/macos-ventura.svg')"
+  },
+  {
+    id: 'catalina',
+    title: '卡特琳娜岛 • 暮色海岛',
+    bg: "url('assets/wallpapers/macos-catalina.svg')"
+  }
+];
+
+let currentAerialSceneIdx = 0;
+let isScreensaverActive = false;
+let screensaverWakeDebounce = false;
+
+function updateScreensaverClock() {
+  const ssTime = document.getElementById('ss-time');
+  const ssDate = document.getElementById('ss-date');
+  if (!ssTime && !ssDate) return;
+  const now = new Date();
+  const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  if (ssTime && ssTime.innerText !== timeStr) ssTime.innerText = timeStr;
+  if (ssDate) {
+    let dateStr = '';
+    if (typeof currentSystemLang === 'undefined' || currentSystemLang === 'zh') {
+      const dayName = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'][now.getDay()];
+      dateStr = `${dayName} ${now.getMonth() + 1}月${now.getDate()}日`;
+    } else {
+      dateStr = now.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
+    }
+    if (ssDate.innerText !== dateStr) ssDate.innerText = dateStr;
+  }
 }
+window.updateScreensaverClock = updateScreensaverClock;
+
+function onScreensaverPointerWake(e) {
+  if (!isScreensaverActive || screensaverWakeDebounce) return;
+  if (e.type === 'mousemove' && (Math.abs(e.movementX) < 4 && Math.abs(e.movementY) < 4)) return;
+  wakeFromScreensaver();
+}
+
+function onScreensaverUserWake(e) {
+  if (!isScreensaverActive || screensaverWakeDebounce) return;
+  wakeFromScreensaver();
+}
+
+function startScreensaver() {
+  const ssEl = document.getElementById('screensaver');
+  if (!ssEl) return;
+  if (isScreensaverActive) return;
+
+  isScreensaverActive = true;
+  screensaverWakeDebounce = true;
+  setTimeout(() => { screensaverWakeDebounce = false; }, 800);
+
+  if (typeof closeAllTopMenus === 'function') closeAllTopMenus();
+  const ccMenu = document.getElementById('control-center');
+  if (ccMenu) ccMenu.style.display = 'none';
+
+  const scene = AERIAL_SCENES[currentAerialSceneIdx];
+  const aerialBg = document.getElementById('ss-aerial-bg');
+  const locText = document.getElementById('ss-location-text');
+  if (aerialBg) {
+    aerialBg.style.backgroundImage = scene.bg;
+  }
+  if (locText) {
+    locText.innerText = scene.title;
+  }
+
+  updateScreensaverClock();
+
+  ssEl.style.display = 'flex';
+  ssEl.style.transform = 'scale(1.03)';
+  ssEl.style.filter = 'blur(12px)';
+  ssEl.style.opacity = '0';
+  void ssEl.offsetWidth;
+
+  ssEl.style.transition = 'opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), filter 0.65s cubic-bezier(0.16, 1, 0.3, 1)';
+  ssEl.style.opacity = '1';
+  ssEl.style.transform = 'scale(1)';
+  ssEl.style.filter = 'blur(0px)';
+
+  window.addEventListener('keydown', onScreensaverUserWake, { capture: true });
+  window.addEventListener('mousemove', onScreensaverPointerWake, { capture: true });
+  window.addEventListener('pointerdown', onScreensaverPointerWake, { capture: true });
+}
+window.startScreensaver = startScreensaver;
+
+function wakeFromScreensaver() {
+  if (!isScreensaverActive) return;
+  isScreensaverActive = false;
+
+  window.removeEventListener('keydown', onScreensaverUserWake, { capture: true });
+  window.removeEventListener('mousemove', onScreensaverPointerWake, { capture: true });
+  window.removeEventListener('pointerdown', onScreensaverPointerWake, { capture: true });
+
+  if (window.AppleAudioEngine && window.AppleAudioEngine.playPop) {
+    try { window.AppleAudioEngine.playPop(); } catch (e) {}
+  }
+
+  // Seamless transition: keep the same aerial background on lock screen
+  const scene = AERIAL_SCENES[currentAerialSceneIdx];
+  const lockBg = document.getElementById('lock-wallpaper-layer');
+  if (lockBg && scene) {
+    lockBg.style.backgroundImage = scene.bg;
+  }
+
+  if (typeof lockScreen === 'function') {
+    lockScreen();
+  }
+
+  const ssEl = document.getElementById('screensaver');
+  if (ssEl) {
+    ssEl.style.transition = 'opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), filter 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
+    ssEl.style.opacity = '0';
+    ssEl.style.filter = 'blur(10px)';
+    setTimeout(() => {
+      if (!isScreensaverActive) {
+        ssEl.style.display = 'none';
+        ssEl.style.filter = 'none';
+      }
+    }, 460);
+  }
+}
+window.wakeFromScreensaver = wakeFromScreensaver;
+
+function cycleAerialScene(e) {
+  if (e) e.stopPropagation();
+  currentAerialSceneIdx = (currentAerialSceneIdx + 1) % AERIAL_SCENES.length;
+  const scene = AERIAL_SCENES[currentAerialSceneIdx];
+  const aerialBg = document.getElementById('ss-aerial-bg');
+  const locText = document.getElementById('ss-location-text');
+  if (aerialBg) {
+    aerialBg.style.transition = 'opacity 0.35s ease';
+    aerialBg.style.opacity = '0.3';
+    setTimeout(() => {
+      aerialBg.style.backgroundImage = scene.bg;
+      aerialBg.style.opacity = '1';
+    }, 180);
+  }
+  if (locText) {
+    locText.innerText = scene.title;
+  }
+  if (window.AppleAudioEngine && window.AppleAudioEngine.playPop) {
+    try { window.AppleAudioEngine.playPop(); } catch (err) {}
+  }
+}
+window.cycleAerialScene = cycleAerialScene;
 
 // ====================================================
 // Phase 75: macOS Sequoia Dual-Pane Spotlight & Wi-Fi Engine
@@ -14164,12 +17466,79 @@ document.addEventListener('keydown', async (e) => {
     toggleSpotlight();
     return;
   }
-  if (e.code === 'Escape' && spotlight && spotlight.classList.contains('open')) {
-    e.preventDefault();
-    closeSpotlight();
-    return;
+  if (e.code === 'Escape') {
+    const scModal = document.getElementById('shortcuts-modal');
+    if (scModal && scModal.style.display === 'flex') {
+      e.preventDefault();
+      closeShortcutsModal();
+      return;
+    }
+    if (spotlight && spotlight.classList.contains('open')) {
+      e.preventDefault();
+      closeSpotlight();
+      return;
+    }
   }
   
+  // macOS Hardware Media Keys: Brightness F1 / F2
+  if ((e.code === 'F1' || e.key === 'F1') && !e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey) {
+    e.preventDefault();
+    if (typeof showBrightnessHUD === 'function') {
+      showBrightnessHUD(Math.max(10, currentBrightness - 6.25));
+    }
+    return;
+  }
+  if ((e.code === 'F2' || e.key === 'F2') && !e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey) {
+    e.preventDefault();
+    if (typeof showBrightnessHUD === 'function') {
+      showBrightnessHUD(Math.min(100, currentBrightness + 6.25));
+    }
+    return;
+  }
+
+  // macOS Hardware Media Keys: Volume F10 (Mute), F11 (Down), F12 (Up)
+  if ((e.code === 'F10' || e.key === 'F10') && !e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey) {
+    e.preventDefault();
+    if (currentSoundVolume > 0) {
+      window._prevVol = currentSoundVolume;
+      if (typeof onSoundPopoverVolume === 'function') onSoundPopoverVolume(0);
+      if (typeof showVolumeHUD === 'function') showVolumeHUD(0);
+    } else {
+      const restore = window._prevVol || 75;
+      if (typeof onSoundPopoverVolume === 'function') onSoundPopoverVolume(restore);
+      if (typeof showVolumeHUD === 'function') showVolumeHUD(restore);
+    }
+    return;
+  }
+  if ((e.code === 'F11' || e.key === 'F11') && !e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey) {
+    e.preventDefault();
+    const newVol = Math.max(0, currentSoundVolume - 6.25);
+    if (typeof onSoundPopoverVolume === 'function') onSoundPopoverVolume(newVol);
+    if (typeof showVolumeHUD === 'function') showVolumeHUD(newVol);
+    return;
+  }
+  if ((e.code === 'F12' || e.key === 'F12') && !e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey) {
+    e.preventDefault();
+    const newVol = Math.min(100, currentSoundVolume + 6.25);
+    if (typeof onSoundPopoverVolume === 'function') onSoundPopoverVolume(newVol);
+    if (typeof showVolumeHUD === 'function') showVolumeHUD(newVol);
+    return;
+  }
+
+  // macOS Quick Note Hotkey (Fn+Q or Option+Q)
+  if (e.code === 'KeyQ' && e.altKey && !e.metaKey && !e.ctrlKey) {
+    e.preventDefault();
+    if (typeof toggleQuickNote === 'function') toggleQuickNote();
+    return;
+  }
+
+  // macOS Mission Control Hotkey (F3 or Ctrl+Up)
+  if (e.code === 'F3' || (e.ctrlKey && e.code === 'ArrowUp')) {
+    e.preventDefault();
+    if (typeof toggleMissionControl === 'function') toggleMissionControl();
+    return;
+  }
+
   // macOS Standard Window & App Hotkeys
   if (isCmdOrCtrl && !e.shiftKey && !e.altKey) {
     if (e.code === 'KeyW' && !(document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')) {
@@ -14192,9 +17561,45 @@ document.addEventListener('keydown', async (e) => {
       quitCurrentApp();
       return;
     }
+    if (e.code === 'KeyI' && !(document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')) {
+      const curSel = (typeof window.getSystemSelectedFile === 'function' ? window.getSystemSelectedFile() : null) || window.selectedFile;
+      if (curSel) {
+        e.preventDefault();
+        showGetInfo(curSel);
+        return;
+      }
+    }
+    if ((e.code === 'Backspace' || e.code === 'Delete') && !(document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')) {
+      const curSel = (typeof window.getSystemSelectedFile === 'function' ? window.getSystemSelectedFile() : null) || window.selectedFile;
+      if (curSel && curSel.path) {
+        e.preventDefault();
+        if (curSel.path.startsWith('/Users/alice/.Trash')) {
+          onFileCtxPutBack();
+        } else {
+          moveToTrash(curSel.path, curSel.name);
+        }
+        return;
+      }
+    }
     if (e.code === 'Comma') {
       e.preventDefault();
       activateOrLaunchApp('settings');
+      return;
+    }
+  }
+
+  // macOS Shortcuts Cheat Sheet (⌘/)
+  if (isCmdOrCtrl && (e.code === 'Slash' || e.key === '/')) {
+    e.preventDefault();
+    toggleShortcutsModal();
+    return;
+  }
+
+  // Empty Trash (Cmd+Shift+Backspace / Cmd+Shift+Delete, Option skips confirm)
+  if (isCmdOrCtrl && e.shiftKey && (e.code === 'Backspace' || e.code === 'Delete')) {
+    if (!(document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')) {
+      e.preventDefault();
+      confirmEmptyTrash(e.altKey);
       return;
     }
   }
@@ -14670,17 +18075,19 @@ function renderSpotlightItems(items) {
     categories[cat].push(it);
   });
   
-  const dict = getSpotlightDict();
   const categoryTitles = {
     top_hit: dict.spotlight_top_hit || '最佳匹配',
+    weather: dict.spotlight_category_weather || '天气',
+    world_clock: dict.spotlight_category_clock || '世界时钟',
     app: dict.spotlight_category_apps || '应用程序',
     calc: dict.spotlight_category_calc || '计算与换算',
+    converter: dict.spotlight_category_converter || '单位换算',
     setting: dict.spotlight_category_settings || '系统设置与控制',
     file: dict.spotlight_category_files || '文稿与文件',
     web: dict.spotlight_category_web || '网页搜索建议'
   };
 
-  const catOrder = ['top_hit', 'app', 'calc', 'setting', 'file', 'web', 'other'];
+  const catOrder = ['top_hit', 'weather', 'world_clock', 'app', 'calc', 'converter', 'setting', 'file', 'web', 'other'];
   catOrder.forEach(catKey => {
     const catItems = categories[catKey];
     if (!catItems || catItems.length === 0) return;
@@ -14750,6 +18157,119 @@ function renderSpotlightPreview(item) {
   }
 
   const dict = getSpotlightDict();
+
+  if (item.type === 'weather') {
+    const w = item.weatherData;
+    const hourlyHtml = (w.hourly || []).map(h => `
+      <div class="spotlight-weather-pill">
+        <span class="spotlight-weather-hour">${h.time}</span>
+        <span class="spotlight-weather-glyph">${getSFSymbol(h.icon, 18, '#ffffff')}</span>
+        <span class="spotlight-weather-deg">${h.temp}°</span>
+      </div>
+    `).join('');
+
+    spotlightPreview.innerHTML = `
+      <div class="spotlight-weather-card">
+        <div class="spotlight-weather-city">📍 ${w.name}</div>
+        <div class="spotlight-weather-temp">${w.temp}°</div>
+        <div class="spotlight-weather-cond">${w.condition}</div>
+        <div class="spotlight-weather-hl">最高 ${w.high}° • 最低 ${w.low}°</div>
+        <div class="spotlight-weather-hourly">${hourlyHtml}</div>
+        <div class="spotlight-weather-stats">
+          <div class="spotlight-weather-stat-box">
+            <div class="stat-lbl">空气质量</div>
+            <div class="stat-val">${w.aqi}</div>
+          </div>
+          <div class="spotlight-weather-stat-box">
+            <div class="stat-lbl">降水概率</div>
+            <div class="stat-val">${w.precip}%</div>
+          </div>
+          <div class="spotlight-weather-stat-box">
+            <div class="stat-lbl">风速</div>
+            <div class="stat-val">${w.wind}</div>
+          </div>
+          <div class="spotlight-weather-stat-box">
+            <div class="stat-lbl">紫外线指数</div>
+            <div class="stat-val">${w.uv}</div>
+          </div>
+        </div>
+        <button class="spotlight-action-btn" onclick="executeSpotlightItemByIndex(${item.flatIndex})">
+          <span>${dict.spotlight_open_weather || '在天气中打开'}</span> ➜
+        </button>
+      </div>
+    `;
+    return;
+  }
+
+  if (item.type === 'world_clock') {
+    const c = item.clockData;
+    const now = new Date();
+    const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+    const targetDate = new Date(utc + (3600000 * c.offsetHours));
+    const h = String(targetDate.getHours()).padStart(2, '0');
+    const m = String(targetDate.getMinutes()).padStart(2, '0');
+    const s = String(targetDate.getSeconds()).padStart(2, '0');
+    const timeStr = `${h}:${m}:${s}`;
+    const dateStr = `${targetDate.getFullYear()}年${targetDate.getMonth()+1}月${targetDate.getDate()}日`;
+    
+    const hDeg = (targetDate.getHours() % 12) * 30 + targetDate.getMinutes() * 0.5;
+    const mDeg = targetDate.getMinutes() * 6;
+    const sDeg = targetDate.getSeconds() * 6;
+
+    const ticks = [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map(deg => {
+      const rad = (deg - 90) * Math.PI / 180;
+      const x1 = (50 + 42 * Math.cos(rad)).toFixed(1);
+      const y1 = (50 + 42 * Math.sin(rad)).toFixed(1);
+      const x2 = (50 + (deg % 90 === 0 ? 33 : 37) * Math.cos(rad)).toFixed(1);
+      const y2 = (50 + (deg % 90 === 0 ? 33 : 37) * Math.sin(rad)).toFixed(1);
+      const isMajor = deg % 90 === 0;
+      return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${isMajor ? '#ffffff' : 'rgba(255,255,255,0.45)'}" stroke-width="${isMajor ? 2.2 : 1}"/>`;
+    }).join('');
+
+    spotlightPreview.innerHTML = `
+      <div class="spotlight-clock-card">
+        <div class="spotlight-clock-dial-wrapper">
+          <svg class="spotlight-clock-dial" viewBox="0 0 100 100" width="105" height="105">
+            <circle cx="50" cy="50" r="47" fill="#18181a" stroke="rgba(255,255,255,0.22)" stroke-width="2"/>
+            ${ticks}
+            <!-- Hour Hand -->
+            <line x1="50" y1="50" x2="50" y2="25" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" transform="rotate(${hDeg} 50 50)"/>
+            <!-- Minute Hand -->
+            <line x1="50" y1="50" x2="50" y2="15" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" transform="rotate(${mDeg} 50 50)"/>
+            <!-- Center Dot -->
+            <circle cx="50" cy="50" r="3.5" fill="#ff9500"/>
+            <!-- Second Hand -->
+            <line x1="50" y1="60" x2="50" y2="10" stroke="#ff9500" stroke-width="1.2" stroke-linecap="round" transform="rotate(${sDeg} 50 50)"/>
+            <circle cx="50" cy="50" r="1.5" fill="#18181a"/>
+          </svg>
+        </div>
+        <div class="spotlight-clock-city">${c.name} (${c.country})</div>
+        <div class="spotlight-clock-digital">${timeStr}</div>
+        <div class="spotlight-clock-date">${dateStr}</div>
+        <div class="spotlight-clock-offset">${c.offsetName} • ${c.diffText}</div>
+        <button class="spotlight-action-btn" onclick="executeSpotlightItemByIndex(${item.flatIndex})">
+          <span>${dict.spotlight_open_clock || '在时钟中打开'}</span> ➜
+        </button>
+      </div>
+    `;
+    return;
+  }
+
+  if (item.type === 'converter') {
+    spotlightPreview.innerHTML = `
+      <div class="spotlight-preview-icon">${item.iconHtml}</div>
+      <div class="spotlight-preview-title">${item.title}</div>
+      <div class="spotlight-preview-category">${dict.spotlight_category_converter || '单位换算'}</div>
+      <div class="spotlight-preview-math-box">
+        <div class="spotlight-math-expr">${item.fromStr || ''}</div>
+        <div class="spotlight-math-result">${item.toStr || item.title}</div>
+      </div>
+      <button class="spotlight-action-btn" onclick="executeSpotlightItemByIndex(${item.flatIndex})">
+        <span>${dict.spotlight_copy_result || '拷贝结果'}</span>
+      </button>
+    `;
+    return;
+  }
 
   if (item.type === 'calc') {
     spotlightPreview.innerHTML = `
@@ -14931,6 +18451,100 @@ if (spotlightInput) {
     }
   });
 
+  // Spotlight lookup tables for Weather, World Clock & Unit Converter
+  const SPOTLIGHT_WEATHER_DATA = {
+    'beijing': { name: '北京', temp: 24, high: 28, low: 18, condition: '多云', icon: 'cloud.sun.fill', precip: 10, humidity: 45, wind: '11 km/h', uv: '3 中等', aqi: '38 优', hourly: [
+      { time: '现在', icon: 'cloud.sun.fill', temp: 24 },
+      { time: '16:00', icon: 'cloud.sun.fill', temp: 25 },
+      { time: '17:00', icon: 'sun.max.fill', temp: 24 },
+      { time: '18:00', icon: 'sun.max.fill', temp: 22 },
+      { time: '19:00', icon: 'moon.stars.fill', temp: 20 }
+    ]},
+    'shanghai': { name: '上海', temp: 26, high: 29, low: 21, condition: '晴', icon: 'sun.max.fill', precip: 0, humidity: 58, wind: '14 km/h', uv: '6 高', aqi: '42 优', hourly: [
+      { time: '现在', icon: 'sun.max.fill', temp: 26 },
+      { time: '16:00', icon: 'sun.max.fill', temp: 27 },
+      { time: '17:00', icon: 'sun.max.fill', temp: 25 },
+      { time: '18:00', icon: 'cloud.sun.fill', temp: 24 },
+      { time: '19:00', icon: 'moon.fill', temp: 22 }
+    ]},
+    'guangzhou': { name: '广州', temp: 29, high: 32, low: 25, condition: '阵雨', icon: 'cloud.rain.fill', precip: 75, humidity: 82, wind: '9 km/h', uv: '4 中等', aqi: '28 优', hourly: [
+      { time: '现在', icon: 'cloud.rain.fill', temp: 29 },
+      { time: '16:00', icon: 'cloud.heavyrain.fill', temp: 28 },
+      { time: '17:00', icon: 'cloud.rain.fill', temp: 28 },
+      { time: '18:00', icon: 'cloud.sun.rain.fill', temp: 27 },
+      { time: '19:00', icon: 'cloud.moon.fill', temp: 26 }
+    ]},
+    'shenzhen': { name: '深圳', temp: 29, high: 31, low: 24, condition: '雷阵雨', icon: 'cloud.bolt.rain.fill', precip: 80, humidity: 84, wind: '12 km/h', uv: '4 中等', aqi: '25 优', hourly: [
+      { time: '现在', icon: 'cloud.bolt.rain.fill', temp: 29 },
+      { time: '16:00', icon: 'cloud.bolt.fill', temp: 28 },
+      { time: '17:00', icon: 'cloud.rain.fill', temp: 28 },
+      { time: '18:00', icon: 'cloud.sun.fill', temp: 27 },
+      { time: '19:00', icon: 'cloud.moon.fill', temp: 26 }
+    ]},
+    'tokyo': { name: '东京', temp: 22, high: 25, low: 17, condition: '晴间多云', icon: 'cloud.sun.fill', precip: 5, humidity: 52, wind: '10 km/h', uv: '5 中等', aqi: '20 优', hourly: [
+      { time: '现在', icon: 'cloud.sun.fill', temp: 22 },
+      { time: '17:00', icon: 'sun.max.fill', temp: 23 },
+      { time: '18:00', icon: 'cloud.sun.fill', temp: 21 },
+      { time: '19:00', icon: 'moon.fill', temp: 19 },
+      { time: '20:00', icon: 'moon.stars.fill', temp: 18 }
+    ]},
+    'london': { name: '伦敦', temp: 17, high: 19, low: 12, condition: '小雨', icon: 'cloud.drizzle.fill', precip: 65, humidity: 82, wind: '20 km/h', uv: '2 低', aqi: '18 优', hourly: [
+      { time: '现在', icon: 'cloud.drizzle.fill', temp: 17 },
+      { time: '09:00', icon: 'cloud.rain.fill', temp: 17 },
+      { time: '10:00', icon: 'cloud.fill', temp: 18 },
+      { time: '11:00', icon: 'cloud.sun.fill', temp: 19 },
+      { time: '12:00', icon: 'sun.max.fill', temp: 19 }
+    ]},
+    'newyork': { name: '纽约', temp: 20, high: 23, low: 15, condition: '晴朗', icon: 'sun.max.fill', precip: 0, humidity: 50, wind: '13 km/h', uv: '5 中等', aqi: '32 优', hourly: [
+      { time: '现在', icon: 'sun.max.fill', temp: 20 },
+      { time: '04:00', icon: 'moon.stars.fill', temp: 19 },
+      { time: '05:00', icon: 'sun.dust.fill', temp: 18 },
+      { time: '06:00', icon: 'sun.max.fill', temp: 20 },
+      { time: '07:00', icon: 'sun.max.fill', temp: 22 }
+    ]},
+    'paris': { name: '巴黎', temp: 19, high: 22, low: 14, condition: '多云', icon: 'cloud.sun.fill', precip: 15, humidity: 56, wind: '11 km/h', uv: '4 中等', aqi: '24 优', hourly: [
+      { time: '现在', icon: 'cloud.sun.fill', temp: 19 },
+      { time: '10:00', icon: 'cloud.fill', temp: 20 },
+      { time: '11:00', icon: 'cloud.sun.fill', temp: 21 },
+      { time: '12:00', icon: 'sun.max.fill', temp: 22 },
+      { time: '13:00', icon: 'sun.max.fill', temp: 22 }
+    ]},
+    'sanfrancisco': { name: '旧金山', temp: 18, high: 21, low: 13, condition: '晴', icon: 'sun.max.fill', precip: 0, humidity: 64, wind: '16 km/h', uv: '5 中等', aqi: '22 优', hourly: [
+      { time: '现在', icon: 'sun.max.fill', temp: 18 },
+      { time: '01:00', icon: 'moon.fill', temp: 17 },
+      { time: '02:00', icon: 'moon.fill', temp: 16 },
+      { time: '03:00', icon: 'moon.stars.fill', temp: 15 },
+      { time: '04:00', icon: 'moon.stars.fill', temp: 14 }
+    ]}
+  };
+
+  const SPOTLIGHT_CLOCK_DATA = {
+    'beijing': { name: '北京', country: '中国', timeZone: 'Asia/Shanghai', offsetHours: 8, offsetName: 'GMT+8 (CST)', diffText: '与本地相同' },
+    'shanghai': { name: '上海', country: '中国', timeZone: 'Asia/Shanghai', offsetHours: 8, offsetName: 'GMT+8 (CST)', diffText: '与本地相同' },
+    'tokyo': { name: '东京', country: '日本', timeZone: 'Asia/Tokyo', offsetHours: 9, offsetName: 'GMT+9 (JST)', diffText: '比本地快 1 小时' },
+    'london': { name: '伦敦', country: '英国', timeZone: 'Europe/London', offsetHours: 1, offsetName: 'GMT+1 (BST)', diffText: '比本地慢 7 小时' },
+    'paris': { name: '巴黎', country: '法国', timeZone: 'Europe/Paris', offsetHours: 2, offsetName: 'GMT+2 (CEST)', diffText: '比本地慢 6 小时' },
+    'newyork': { name: '纽约', country: '美国', timeZone: 'America/New_York', offsetHours: -4, offsetName: 'GMT-4 (EDT)', diffText: '比本地慢 12 小时' },
+    'sanfrancisco': { name: '旧金山', country: '美国', timeZone: 'America/Los_Angeles', offsetHours: -7, offsetName: 'GMT-7 (PDT)', diffText: '比本地慢 15 小时' },
+    'sydney': { name: '悉尼', country: '澳大利亚', timeZone: 'Australia/Sydney', offsetHours: 10, offsetName: 'GMT+10 (AEST)', diffText: '比本地快 2 小时' },
+    'singapore': { name: '新加坡', country: '新加坡', timeZone: 'Asia/Singapore', offsetHours: 8, offsetName: 'GMT+8 (SGT)', diffText: '与本地相同' }
+  };
+
+  const UNIT_CONVERSIONS = [
+    { regex: /^(\d+(?:\.\d+)?)\s*(?:km|千米|公里)\s*(?:in|to|=|转)?\s*(?:mi|mile|miles|英里)$/i, fn: (v) => ({ val: (v * 0.621371).toFixed(2), fromUnit: `${v} 千米 (km)`, toUnit: `${(v * 0.621371).toFixed(2)} 英里 (mi)` }) },
+    { regex: /^(\d+(?:\.\d+)?)\s*(?:mi|mile|miles|英里)\s*(?:in|to|=|转)?\s*(?:km|千米|公里)$/i, fn: (v) => ({ val: (v * 1.60934).toFixed(2), fromUnit: `${v} 英里 (mi)`, toUnit: `${(v * 1.60934).toFixed(2)} 千米 (km)` }) },
+    { regex: /^(\d+(?:\.\d+)?)\s*(?:m|米)\s*(?:in|to|=|转)?\s*(?:ft|feet|英尺)$/i, fn: (v) => ({ val: (v * 3.28084).toFixed(2), fromUnit: `${v} 米 (m)`, toUnit: `${(v * 3.28084).toFixed(2)} 英尺 (ft)` }) },
+    { regex: /^(\d+(?:\.\d+)?)\s*(?:ft|feet|英尺)\s*(?:in|to|=|转)?\s*(?:m|米)$/i, fn: (v) => ({ val: (v * 0.3048).toFixed(2), fromUnit: `${v} 英尺 (ft)`, toUnit: `${(v * 0.3048).toFixed(2)} 米 (m)` }) },
+    { regex: /^(\d+(?:\.\d+)?)\s*(?:cm|厘米)\s*(?:in|to|=|转)?\s*(?:inch|inches|英寸)$/i, fn: (v) => ({ val: (v * 0.393701).toFixed(2), fromUnit: `${v} 厘米 (cm)`, toUnit: `${(v * 0.393701).toFixed(2)} 英寸 (in)` }) },
+    { regex: /^(\d+(?:\.\d+)?)\s*(?:inch|inches|英寸)\s*(?:in|to|=|转)?\s*(?:cm|厘米)$/i, fn: (v) => ({ val: (v * 2.54).toFixed(2), fromUnit: `${v} 英寸 (in)`, toUnit: `${(v * 2.54).toFixed(2)} 厘米 (cm)` }) },
+    { regex: /^(\d+(?:\.\d+)?)\s*(?:kg|千克|公斤)\s*(?:in|to|=|转)?\s*(?:lb|lbs|pound|pounds|磅)$/i, fn: (v) => ({ val: (v * 2.20462).toFixed(2), fromUnit: `${v} 千克 (kg)`, toUnit: `${(v * 2.20462).toFixed(2)} 磅 (lb)` }) },
+    { regex: /^(\d+(?:\.\d+)?)\s*(?:lb|lbs|pound|pounds|磅)\s*(?:in|to|=|转)?\s*(?:kg|千克|公斤)$/i, fn: (v) => ({ val: (v * 0.453592).toFixed(2), fromUnit: `${v} 磅 (lb)`, toUnit: `${(v * 0.453592).toFixed(2)} 千克 (kg)` }) },
+    { regex: /^(\d+(?:\.\d+)?)\s*(?:c|摄氏度|℃)\s*(?:in|to|=|转)?\s*(?:f|华氏度|℉)$/i, fn: (v) => ({ val: ((v * 9/5) + 32).toFixed(1), fromUnit: `${v} °C`, toUnit: `${((v * 9/5) + 32).toFixed(1)} °F` }) },
+    { regex: /^(\d+(?:\.\d+)?)\s*(?:f|华氏度|℉)\s*(?:in|to|=|转)?\s*(?:c|摄氏度|℃)$/i, fn: (v) => ({ val: (((v - 32) * 5) / 9).toFixed(1), fromUnit: `${v} °F`, toUnit: `${(((v - 32) * 5) / 9).toFixed(1)} °C` }) },
+    { regex: /^(\d+(?:\.\d+)?)\s*(?:gb)\s*(?:in|to|=|转)?\s*(?:tb)$/i, fn: (v) => ({ val: (v / 1024).toFixed(3), fromUnit: `${v} GB`, toUnit: `${(v / 1024).toFixed(3)} TB` }) },
+    { regex: /^(\d+(?:\.\d+)?)\s*(?:mb)\s*(?:in|to|=|转)?\s*(?:gb)$/i, fn: (v) => ({ val: (v / 1024).toFixed(2), fromUnit: `${v} MB`, toUnit: `${(v / 1024).toFixed(2)} GB` }) }
+  ];
+
   // Spotlight input live search query listener
   spotlightInput.addEventListener('input', async () => {
     const query = spotlightInput.value.trim().toLowerCase();
@@ -14945,6 +18559,87 @@ if (spotlightInput) {
 
     const dict = getSpotlightDict();
     const results = [];
+
+    // 0. macOS Spotlight Weather Cards
+    let matchedWeatherKey = null;
+    if (query === 'weather' || query === '天气' || query === 'tianqi' || query === 'tian qi') {
+      matchedWeatherKey = 'beijing';
+    } else {
+      for (const [k, data] of Object.entries(SPOTLIGHT_WEATHER_DATA)) {
+        if (query.includes(k) || query.includes(data.name) || (data.name + '天气').includes(query) || (k + ' weather').includes(query)) {
+          matchedWeatherKey = k;
+          break;
+        }
+      }
+    }
+    if (matchedWeatherKey && SPOTLIGHT_WEATHER_DATA[matchedWeatherKey]) {
+      const w = SPOTLIGHT_WEATHER_DATA[matchedWeatherKey];
+      results.push({
+        type: 'weather',
+        category: results.length === 0 ? 'top_hit' : 'weather',
+        title: `${w.name} • ${w.temp}° ${w.condition}`,
+        subtitle: `最高 ${w.high}° 最低 ${w.low}° • 降水概率 ${w.precip}% • 湿度 ${w.humidity}%`,
+        badge: results.length === 0 ? (dict.spotlight_top_hit || '最佳匹配') : (dict.spotlight_category_weather || '天气'),
+        weatherData: w,
+        iconHtml: getSFSymbol(w.icon, 22, '#ff9500'),
+        action: () => launchWeather()
+      });
+    }
+
+    // 0.5. macOS Spotlight World Clock Cards
+    let matchedClockKey = null;
+    if (query === 'time' || query === '时间' || query === 'clock' || query === '时钟' || query === 'shijian') {
+      matchedClockKey = 'beijing';
+    } else {
+      for (const [k, data] of Object.entries(SPOTLIGHT_CLOCK_DATA)) {
+        if (query.includes(k) || query.includes(data.name) || (data.name + '时间').includes(query) || (k + ' time').includes(query)) {
+          matchedClockKey = k;
+          break;
+        }
+      }
+    }
+    if (matchedClockKey && SPOTLIGHT_CLOCK_DATA[matchedClockKey]) {
+      const c = SPOTLIGHT_CLOCK_DATA[matchedClockKey];
+      const now = new Date();
+      const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+      const targetDate = new Date(utc + (3600000 * c.offsetHours));
+      const timeStr = `${String(targetDate.getHours()).padStart(2, '0')}:${String(targetDate.getMinutes()).padStart(2, '0')}`;
+      results.push({
+        type: 'world_clock',
+        category: results.length === 0 ? 'top_hit' : 'world_clock',
+        title: `${c.name}时间 • ${timeStr}`,
+        subtitle: `${c.offsetName} • ${c.diffText}`,
+        badge: results.length === 0 ? (dict.spotlight_top_hit || '最佳匹配') : (dict.spotlight_category_clock || '世界时钟'),
+        clockData: c,
+        iconHtml: getSFSymbol('clock', 22, '#007aff'),
+        action: () => launchClock()
+      });
+    }
+
+    // 0.8. macOS Spotlight Unit Converter
+    for (const conv of UNIT_CONVERSIONS) {
+      const m = query.match(conv.regex);
+      if (m) {
+        const val = parseFloat(m[1]);
+        const resObj = conv.fn(val);
+        results.push({
+          type: 'converter',
+          category: 'converter',
+          title: resObj.toUnit,
+          subtitle: `${resObj.fromUnit} = ${resObj.toUnit} (${dict.spotlight_click_to_copy || '点击复制'})`,
+          fromStr: resObj.fromUnit,
+          toStr: resObj.toUnit,
+          iconHtml: getSFSymbol('arrow.left.arrow.right', 22, '#34c759'),
+          action: () => {
+            navigator.clipboard.writeText(resObj.toUnit);
+            if (typeof showNotification === 'function') {
+              showNotification(dict.spotlight_unit_converter || '单位换算', dict.spotlight_copied || '已复制到剪贴板！');
+            }
+          }
+        });
+        break;
+      }
+    }
 
     // 1. Math calculation & expressions
     try {
@@ -15033,13 +18728,27 @@ if (spotlightInput) {
       }
     });
 
-    // 4. Quick System Settings Search
+    // 4. Quick System Settings & Actions Search
     const sysSettings = [
-      { q: ['深色', '浅色', 'dark', 'light', '外观', 'theme'], title: '外观：切换深色 / 浅色模式', action: () => toggleDarkMode(), icon: getSFSymbol('moon.fill', 22, '#a855f7'), desc: '切换全局色彩模式与毛玻璃光影效果。' },
-      { q: ['锁屏', '锁定', 'lock'], title: '锁定屏幕', action: () => lockScreen(), icon: getSFSymbol('lock.fill', 22, '#ff9500'), desc: '立即锁定当前系统并开启锁屏壁纸。' },
+      { q: ['清空废纸篓', '废纸篓', '垃圾桶', 'trash', 'empty trash'], title: '清空废纸篓', action: () => emptyTrash(), icon: getSFSymbol('trash', 22, '#ff3b30'), desc: '清空废纸篓中的已删除项目。' },
+      { q: ['截屏', '截图', '屏幕截图', 'screenshot', 'capture'], title: '截取屏幕', action: () => { if (typeof startScreenshotMode === 'function') startScreenshotMode(); }, icon: getSFSymbol('camera', 22, '#34c759'), desc: '即时捕获当前屏幕区域或全屏并保存到桌面。' },
+      { q: ['深色', '浅色', 'dark', 'light', '外观', 'theme', '模式'], title: '外观：切换深色 / 浅色模式', action: () => toggleDarkMode(), icon: getSFSymbol('moon.fill', 22, '#a855f7'), desc: '切换全局色彩模式与毛玻璃光影效果。' },
+      { q: ['锁屏', '锁定', 'lock', 'lockscreen'], title: '锁定屏幕', action: () => lockScreen(), icon: getSFSymbol('lock.fill', 22, '#ff9500'), desc: '立即锁定当前系统并开启锁屏壁纸。' },
+      { q: ['屏幕保护', '屏保', 'screensaver', 'screen saver'], title: '屏幕保护程序', action: () => startScreensaver(), icon: getSFSymbol('sparkles', 22, '#38bdf8'), desc: '开启 macOS Sonoma / Sequoia 慢速慢镜头航拍动态屏保。' },
+      { q: ['小组件', '小部件', 'widget', 'widgets', '添加小组件'], title: '编辑小组件...', action: () => openWidgetGallerySheet(), icon: getSFSymbol('plus.rectangle.on.rectangle', 22, '#007aff'), desc: '打开 macOS Sonoma 桌面小组件图库，浏览并添加小组件。' },
+      { q: ['睡眠', '休眠', '待机', 'sleep'], title: '睡眠', action: () => lockScreen(), icon: getSFSymbol('powersleep', 22, '#007aff'), desc: '让系统进入节能待机与锁屏模式。' },
+      { q: ['专注', '专注模式', '勿扰', '勿扰模式', 'dnd', 'focus'], title: '专注模式：勿扰', action: () => toggleCCDND(), icon: getSFSymbol('moon.stars.fill', 22, '#a855f7'), desc: '开启勿扰模式，静音系统弹窗通知。' },
+      { q: ['台前调度', '舞台管理', 'stage manager', 'stagemanager'], title: '台前调度 (Stage Manager)', action: () => toggleStageManager(), icon: getSFSymbol('rectangle.on.rectangle', 22, '#007aff'), desc: '切换 macOS 原生台前调度窗口集合管理。' },
       { q: ['wifi', '无线', '网络', '网络设置', 'net'], title: '无线局域网 (Wi-Fi)', action: () => toggleWifiPopover(), icon: getSFSymbol('wifi', 22, '#007aff'), desc: '查看已知网络并连接 Wi-Fi。' },
-      { q: ['隔空投送', 'airdrop'], title: '隔空投送 (AirDrop)', action: () => launchAirDrop(), icon: getSFSymbol('airdrop', 22, '#007aff'), desc: '在附近苹果与 AliceOS 设备间传输文件。' },
-      { q: ['关于', 'about', 'mac'], title: '关于本机', action: () => launchHostMonitor(), icon: getSFSymbol('info.circle', 22, '#38bdf8'), desc: '查看系统规格、硬件状态与系统版本。' }
+      { q: ['隔空投送', 'airdrop', '快传'], title: '隔空投送 (AirDrop)', action: () => launchAirDrop(), icon: getSFSymbol('airdrop', 22, '#007aff'), desc: '在附近苹果与 AliceOS 设备间传输文件。' },
+      { q: ['活动监视器', '任务管理', '进程', 'activity', 'task'], title: '活动监视器', action: () => launchTaskMgr(), icon: getSFSymbol('waveform.path.ecg', 22, '#34c759'), desc: '查看系统资源利用率、后台进程与硬件状态。' },
+      { q: ['终端', '命令行', 'terminal', 'shell', 'bash'], title: '终端', action: () => launchTerminal(), icon: getSFSymbol('terminal', 22, '#1d1d1f'), desc: '启动 AliceOS 原生 UNIX 终端。' },
+      { q: ['关于', '关于本机', 'about', 'mac'], title: '关于本机', action: () => launchHostMonitor(), icon: getSFSymbol('info.circle', 22, '#38bdf8'), desc: '查看系统规格、硬件状态与系统版本。' },
+      { q: ['时间机器', '备份', 'timemachine', 'time machine', 'backup', '快照'], title: '时间机器 (Time Machine)', action: () => toggleTimeMachinePopover(), icon: getSFSymbol('clock.arrow.circlepath', 22, '#38bdf8'), desc: '查看时间机器备份状态并立即创建 APFS 系统快照。' },
+      { q: ['屏幕镜像', '镜像', '随航', 'sidecar', 'screen mirroring', 'airplay'], title: '屏幕镜像与随航 (Screen Mirroring)', action: () => toggleScreenMirrorPopover(), icon: getSFSymbol('display', 22, '#007aff'), desc: '通过隔空播放或随航无线连接 iPad Pro 或外部显示器。' },
+      { q: ['蓝牙', 'bluetooth', 'bt', 'airpods', '耳机', '键盘', '鼠标', '触控板'], title: '蓝牙 (Bluetooth)', action: () => toggleBluetoothPopover(), icon: getSFSymbol('wave.3.right', 22, '#007aff'), desc: '管理已连接的 AirPods、Magic Keyboard 与无线配件。' },
+      { q: ['快捷键', 'shortcuts', '键盘快捷键', 'cheatsheet', '按键'], title: 'macOS 键盘快捷键速查', action: () => toggleShortcutsModal(), icon: getSFSymbol('command', 22, '#ff9500'), desc: '查看系统、访达与应用程序全局快捷键速查表 (⌘/)。' },
+      { q: ['系统设置', '设置', 'settings', 'preferences'], title: '系统设置', action: () => launchSettings(), icon: getSFSymbol('gear', 22, '#8e8e93'), desc: '调整网络、声音、显示器、壁纸等全局偏好设置。' }
     ];
 
     sysSettings.forEach(s => {
@@ -15105,8 +18814,8 @@ if (spotlightInput) {
 
 function resetIdleTimer() {
   clearTimeout(idleTimer);
-  if (loginScreen.style.display !== 'none') return;
-  idleTimer = setTimeout(startScreensaver, 60000); // 1 minute for lock
+  if (loginScreen.style.display !== 'none' || (typeof isScreensaverActive !== 'undefined' && isScreensaverActive)) return;
+  idleTimer = setTimeout(startScreensaver, 60000); // 1 minute for screensaver
 }
 
 // Listen to all activity
@@ -19933,6 +23642,115 @@ function skipTrack(dir) {
   }
 }
 
+window.updateCCSlider = function(el, isUserInteraction = false) {
+  if (!el) return;
+  const val = parseInt(el.value) || 0;
+  el.style.setProperty('--val', val);
+  if (el.parentElement) {
+    el.parentElement.style.setProperty('--val', val);
+  }
+
+  // Dynamic icon adaptation: when value is very low (e.g. muted/0%), icon should stay clearly visible
+  const iconWrap = el.parentElement ? el.parentElement.querySelector('.cc-capsule-icon') : null;
+  if (iconWrap) {
+    if (val < 10) {
+      iconWrap.style.color = document.body.classList.contains('dark-mode') ? 'rgba(255, 255, 255, 0.85)' : '#1d1d1f';
+    } else {
+      iconWrap.style.color = '#1d1d1f';
+    }
+  }
+
+  if (el.id === 'cc-brightness') {
+    const overlay = document.getElementById('brightness-overlay');
+    if (overlay) {
+      overlay.style.opacity = ((100 - val) * 0.008).toFixed(2);
+    }
+  } else if (el.id === 'cc-volume') {
+    const volIcon = document.getElementById('cc-volume-icon');
+    if (volIcon) {
+      volIcon.innerHTML = getVolumeSvg(val, 15);
+    }
+    const soundPopSlider = document.getElementById('sound-pop-slider');
+    if (soundPopSlider && soundPopSlider.value != val) {
+      soundPopSlider.value = val;
+      const soundPopPct = document.getElementById('sound-pop-pct');
+      if (soundPopPct) soundPopPct.innerText = `${val}%`;
+      const soundPopIcon = document.getElementById('sound-pop-icon');
+      if (soundPopIcon) soundPopIcon.innerHTML = getVolumeSvg(val, 16);
+    }
+    const menubarBtn = document.getElementById('sound-btn');
+    if (menubarBtn) menubarBtn.innerHTML = getVolumeSvg(val, 15);
+
+    if (isUserInteraction && typeof showVolumeHUD === 'function') {
+      showVolumeHUD(val);
+    }
+    if (isUserInteraction && window.AppleAudioEngine) {
+      window.AppleAudioEngine.playThrottledVolumePop(Math.max(0.2, val / 100));
+    }
+  } else if (el.id === 'cc-kb-brightness') {
+    const pctEl = document.getElementById('cc-kb-pct');
+    if (pctEl) pctEl.innerText = `${val}%`;
+    window.aliceKeyboardBrightness = val;
+    if (isUserInteraction && window.AppleAudioEngine && window.AppleAudioEngine.playHapticClick) {
+      window.AppleAudioEngine.playHapticClick('light');
+    }
+  }
+};
+
+function updateCCKeyboardBrightness(val) {
+  const slider = document.getElementById('cc-kb-brightness');
+  if (slider) {
+    slider.value = val;
+    if (typeof window.updateCCSlider === 'function') {
+      window.updateCCSlider(slider, true);
+    }
+  }
+  const pct = document.getElementById('cc-kb-pct');
+  if (pct) pct.innerText = `${val}%`;
+  if (typeof showKeyboardHUD === 'function') {
+    showKeyboardHUD(val);
+  }
+}
+window.updateCCKeyboardBrightness = updateCCKeyboardBrightness;
+
+window.toggleCCDND = function() {
+  const btn = document.getElementById('cc-dnd-btn');
+  if (!btn) return;
+  btn.classList.toggle('active');
+  const isActive = btn.classList.contains('active');
+  if (typeof showNotification === 'function') {
+    showNotification('勿扰模式', isActive ? '已开启勿扰模式' : '已关闭勿扰模式');
+  }
+};
+
+window.toggleCCAirdrop = function() {
+  const wrap = document.getElementById('cc-airdrop-icon-wrap');
+  const sub = document.getElementById('cc-airdrop-status');
+  if (!wrap) return;
+  const isOff = wrap.classList.contains('cc-off');
+  if (isOff) {
+    wrap.classList.remove('cc-off');
+    wrap.classList.add('cc-blue');
+    if (sub) sub.innerText = '所有人';
+    if (typeof showNotification === 'function') showNotification('AirDrop', '已开启：所有人');
+  } else {
+    wrap.classList.remove('cc-blue');
+    wrap.classList.add('cc-off');
+    if (sub) sub.innerText = '已关闭';
+    if (typeof showNotification === 'function') showNotification('AirDrop', '已关闭隔空投送');
+  }
+};
+
+window.toggleScreenMirroring = function() {
+  const btn = document.getElementById('cc-mirror-btn');
+  if (!btn) return;
+  btn.classList.toggle('active');
+  const isActive = btn.classList.contains('active');
+  if (typeof showNotification === 'function') {
+    showNotification('屏幕镜像', isActive ? '正在搜索隔空播放设备...' : '已停止屏幕镜像');
+  }
+};
+
 // ==========================================
 // macOS Dock Badge Initializer
 // ==========================================
@@ -19962,6 +23780,54 @@ function toggleQuickNote() {
 // ==========================================
 let hotCornerTimer = null;
 let activeHotCorner = null;
+
+const DEFAULT_HOT_CORNERS = {
+  'top-left': 'mission-control',
+  'top-right': 'control-center',
+  'bottom-left': 'desktop',
+  'bottom-right': 'quick-note'
+};
+window.hotCornersConfig = { ...DEFAULT_HOT_CORNERS };
+
+function executeHotCornerAction(action) {
+  if (!action || action === 'none') return;
+  switch (action) {
+    case 'mission-control':
+      if (typeof toggleMissionControl === 'function') toggleMissionControl();
+      break;
+    case 'desktop':
+      if (typeof toggleRevealDesktop === 'function') toggleRevealDesktop();
+      break;
+    case 'control-center':
+      if (typeof toggleControlCenter === 'function') toggleControlCenter();
+      break;
+    case 'notification-center':
+      if (typeof toggleNotificationCenter === 'function') toggleNotificationCenter();
+      break;
+    case 'quick-note':
+      if (typeof toggleQuickNote === 'function') toggleQuickNote();
+      break;
+    case 'lock-screen':
+      if (typeof lockScreen === 'function') lockScreen();
+      break;
+    case 'screensaver':
+      if (typeof startScreensaver === 'function') startScreensaver();
+      break;
+    case 'launchpad':
+      if (typeof toggleLaunchpad === 'function') toggleLaunchpad();
+      break;
+  }
+}
+
+function triggerHotCorner(corner) {
+  const config = window.hotCornersConfig || DEFAULT_HOT_CORNERS;
+  const action = config[corner] || DEFAULT_HOT_CORNERS[corner];
+  if (!action || action === 'none') return;
+  if (window.AppleAudioEngine && window.AppleAudioEngine.playPop) {
+    try { window.AppleAudioEngine.playPop(); } catch (e) {}
+  }
+  executeHotCornerAction(action);
+}
 
 function initHotCorners() {
   document.addEventListener('mousemove', (e) => {
@@ -19996,25 +23862,640 @@ function initHotCorners() {
   });
 }
 
-function triggerHotCorner(corner) {
+function openHotCornersModal() {
+  const modal = document.getElementById('hot-corners-modal');
+  if (!modal) return;
+  const cfg = window.hotCornersConfig || DEFAULT_HOT_CORNERS;
+  const tl = document.getElementById('hc-select-top-left');
+  const tr = document.getElementById('hc-select-top-right');
+  const bl = document.getElementById('hc-select-bottom-left');
+  const br = document.getElementById('hc-select-bottom-right');
+  if (tl) tl.value = cfg['top-left'] || 'mission-control';
+  if (tr) tr.value = cfg['top-right'] || 'control-center';
+  if (bl) bl.value = cfg['bottom-left'] || 'desktop';
+  if (br) br.value = cfg['bottom-right'] || 'quick-note';
+
+  modal.style.display = 'flex';
+}
+
+function closeHotCornersModal() {
+  const modal = document.getElementById('hot-corners-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+async function saveHotCornersModal() {
+  const tl = document.getElementById('hc-select-top-left');
+  const tr = document.getElementById('hc-select-top-right');
+  const bl = document.getElementById('hc-select-bottom-left');
+  const br = document.getElementById('hc-select-bottom-right');
+
+  window.hotCornersConfig = {
+    'top-left': tl ? tl.value : 'mission-control',
+    'top-right': tr ? tr.value : 'control-center',
+    'bottom-left': bl ? bl.value : 'desktop',
+    'bottom-right': br ? br.value : 'quick-note'
+  };
+
+  if (window.aliceOS && window.aliceOS.vfs) {
+    try {
+      let curSettings = {};
+      const sData = await window.aliceOS.vfs.readFile('/Users/alice/settings.json');
+      if (sData && sData.success && sData.data) {
+        curSettings = JSON.parse(sData.data);
+      }
+      curSettings.hotCorners = window.hotCornersConfig;
+      await window.aliceOS.vfs.writeFile('/Users/alice/settings.json', JSON.stringify(curSettings));
+    } catch (e) {}
+  }
+
   if (window.AppleAudioEngine && window.AppleAudioEngine.playPop) {
     try { window.AppleAudioEngine.playPop(); } catch (e) {}
   }
-  switch (corner) {
-    case 'top-left':
-      if (typeof toggleMissionControl === 'function') toggleMissionControl();
-      break;
-    case 'top-right':
-      if (typeof toggleControlCenter === 'function') toggleControlCenter();
-      break;
-    case 'bottom-left':
-      if (typeof toggleRevealDesktop === 'function') toggleRevealDesktop();
-      break;
-    case 'bottom-right':
-      if (typeof toggleQuickNote === 'function') toggleQuickNote();
-      break;
-  }
+
+  closeHotCornersModal();
 }
+
+window.openHotCornersModal = openHotCornersModal;
+window.closeHotCornersModal = closeHotCornersModal;
+window.saveHotCornersModal = saveHotCornersModal;
+window.triggerHotCorner = triggerHotCorner;
+
+// ==========================================
+// macOS Sequoia 15.x — Passwords App 1:1 Engine
+// ==========================================
+async function launchPasswordsApp() {
+  if (window.aliceOS && window.setDockBadge) window.setDockBadge('passwords', 0);
+  let pid = Date.now();
+  if (window.aliceOS && window.aliceOS.pm) {
+    const res = await window.aliceOS.pm.spawn('passwords');
+    if (res && res.success) pid = res.data.pid;
+  }
+
+  const DEFAULT_PASSWORDS = [
+    {
+      id: 'pwd-1',
+      domain: 'apple.com',
+      title: 'Apple ID / iCloud',
+      username: 'alice@icloud.com',
+      password: 'Tr0ng!Apple#2026',
+      category: 'passkeys',
+      hasPasskey: true,
+      totpSeed: 'APPLEKEY2026',
+      notes: 'Primary Apple Account for iCloud, App Store, and Developer Portal.',
+      updatedAt: '2026-09-15'
+    },
+    {
+      id: 'pwd-2',
+      domain: 'github.com',
+      title: 'GitHub',
+      username: 'alice-developer',
+      password: 'Gh_p@ssw0rd*99x!',
+      category: 'codes',
+      hasPasskey: false,
+      totpSeed: 'GITHUBTOTP99',
+      notes: 'Work & Open Source repositories 2FA active.',
+      updatedAt: '2026-09-12'
+    },
+    {
+      id: 'pwd-3',
+      domain: 'google.com',
+      title: 'Google Workspace',
+      username: 'alice.workspace@google.com',
+      password: 'G00gle!Secur1ty#77',
+      category: 'codes',
+      hasPasskey: true,
+      totpSeed: 'GOOGLESEC77',
+      notes: 'Gmail, Google Drive, and Cloud Console.',
+      updatedAt: '2026-09-08'
+    },
+    {
+      id: 'pwd-4',
+      domain: 'router.lan',
+      title: 'Home Wi-Fi Gateway',
+      username: 'admin',
+      password: 'password123',
+      category: 'security',
+      hasPasskey: false,
+      totpSeed: null,
+      notes: 'Gateway IP 192.168.1.1 (Security Warning: Weak password!).',
+      updatedAt: '2026-08-20'
+    },
+    {
+      id: 'pwd-5',
+      domain: 'netflix.com',
+      title: 'Netflix',
+      username: 'alice@icloud.com',
+      password: 'Netf!ixStream#24',
+      category: 'passkeys',
+      hasPasskey: true,
+      totpSeed: null,
+      notes: 'Family streaming account.',
+      updatedAt: '2026-08-14'
+    }
+  ];
+
+  let passwordStore = [...DEFAULT_PASSWORDS];
+  if (window.aliceOS && window.aliceOS.vfs) {
+    try {
+      const res = await window.aliceOS.vfs.readFile('/Users/alice/passwords.json');
+      if (res && res.success && res.data) {
+        const parsed = JSON.parse(res.data);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          passwordStore = parsed;
+        }
+      } else {
+        await window.aliceOS.vfs.writeFile('/Users/alice/passwords.json', JSON.stringify(DEFAULT_PASSWORDS, null, 2));
+      }
+    } catch(e) {}
+  }
+
+  async function persistPasswords() {
+    if (window.aliceOS && window.aliceOS.vfs) {
+      try {
+        await window.aliceOS.vfs.writeFile('/Users/alice/passwords.json', JSON.stringify(passwordStore, null, 2));
+      } catch(e) {}
+    }
+  }
+
+  function computeTOTP(seed, step = 30) {
+    if (!seed) return '------';
+    const epoch = Math.floor(Date.now() / 1000);
+    const slot = Math.floor(epoch / step);
+    let hash = 0;
+    const str = `${seed}-${slot}`;
+    for (let i = 0; i < str.length; i++) {
+      hash = ((hash << 5) - hash) + str.charCodeAt(i);
+      hash |= 0;
+    }
+    const code = Math.abs(hash % 900000) + 100000;
+    const s = code.toString();
+    return `${s.slice(0, 3)} ${s.slice(3)}`;
+  }
+
+  function generateApplePassword() {
+    const chars = 'abcdefghjkmnpqrstuvwxyz';
+    const nums = '23456789';
+    function seg() {
+      let r = '';
+      for (let i = 0; i < 4; i++) {
+        r += (i % 2 === 0) ? chars[Math.floor(Math.random() * chars.length)] : nums[Math.floor(Math.random() * nums.length)];
+      }
+      return r;
+    }
+    return `${seg()}-${seg()}-${seg()}`;
+  }
+
+  let activeCategory = 'all';
+  let searchQuery = '';
+  let activeId = passwordStore[0]?.id || null;
+  let revealedPass = false;
+
+  const titleText = (i18nDict[currentSystemLang] && i18nDict[currentSystemLang].app_passwords) || '密码';
+
+  const contentHtml = `
+    <div class="passwords-app" id="pwd-app-${pid}">
+      <!-- Left Navigation Sidebar -->
+      <div class="passwords-sidebar">
+        <div>
+          <div style="display:flex;align-items:center;gap:8px;padding:4px 8px 14px 8px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:8px;">
+            <div style="width:24px;height:24px;border-radius:6px;background:linear-gradient(135deg,#ffe600,#ff9100);display:flex;align-items:center;justify-content:center;color:#000;font-size:13px;font-weight:700;">🔑</div>
+            <span style="font-weight:700;font-size:14px;letter-spacing:-0.2px;">${titleText}</span>
+          </div>
+          <div class="passwords-nav-group">
+            <div class="passwords-nav-item active" data-cat="all">
+              <span style="display:flex;align-items:center;gap:8px;"><span>🔑</span> <span>全部密码</span></span>
+              <span class="passwords-badge" id="pwd-count-all-${pid}">0</span>
+            </div>
+            <div class="passwords-nav-item" data-cat="passkeys">
+              <span style="display:flex;align-items:center;gap:8px;"><span>🔐</span> <span>通行密钥</span></span>
+              <span class="passwords-badge" id="pwd-count-passkeys-${pid}">0</span>
+            </div>
+            <div class="passwords-nav-item" data-cat="codes">
+              <span style="display:flex;align-items:center;gap:8px;"><span>🔢</span> <span>验证码</span></span>
+              <span class="passwords-badge" id="pwd-count-codes-${pid}">0</span>
+            </div>
+            <div class="passwords-nav-item" data-cat="security">
+              <span style="display:flex;align-items:center;gap:8px;"><span>⚠️</span> <span>安全性建议</span></span>
+              <span class="passwords-badge" id="pwd-count-security-${pid}">0</span>
+            </div>
+            <div class="passwords-nav-item" data-cat="trash">
+              <span style="display:flex;align-items:center;gap:8px;"><span>🗑️</span> <span>最近删除</span></span>
+              <span class="passwords-badge" id="pwd-count-trash-${pid}">0</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="passwords-new-btn" id="pwd-new-btn-${pid}">
+          <span>➕</span>
+          <span>新建密码</span>
+        </button>
+      </div>
+
+      <!-- Middle List Column -->
+      <div class="passwords-list-pane">
+        <div class="passwords-search-wrap">
+          <span class="passwords-search-icon">🔍</span>
+          <input type="text" class="passwords-search-input" id="pwd-search-${pid}" placeholder="搜索密码与网站...">
+        </div>
+        <div class="passwords-list" id="pwd-list-${pid}"></div>
+      </div>
+
+      <!-- Right Detail Column -->
+      <div class="passwords-detail-pane" id="pwd-detail-${pid}"></div>
+
+      <!-- New Password Modal Dialog (Hidden initially) -->
+      <div class="passwords-dialog-overlay" id="pwd-dialog-${pid}" style="display:none;">
+        <div class="passwords-dialog">
+          <div class="passwords-dialog-title">新建密码条目</div>
+          <div>
+            <label style="font-size:11px;opacity:0.6;font-weight:600;">网站域名</label>
+            <input type="text" id="pwd-add-domain-${pid}" class="passwords-input" placeholder="例如：apple.com">
+          </div>
+          <div>
+            <label style="font-size:11px;opacity:0.6;font-weight:600;">条目名称</label>
+            <input type="text" id="pwd-add-title-${pid}" class="passwords-input" placeholder="例如：Apple ID">
+          </div>
+          <div>
+            <label style="font-size:11px;opacity:0.6;font-weight:600;">用户名 / 邮箱</label>
+            <input type="text" id="pwd-add-user-${pid}" class="passwords-input" placeholder="alice@icloud.com">
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+              <label style="font-size:11px;opacity:0.6;font-weight:600;">密码</label>
+              <button id="pwd-gen-btn-${pid}" style="background:none;border:none;color:#38bdf8;font-size:11px;cursor:pointer;font-weight:600;">🎲 生成建议密码</button>
+            </div>
+            <input type="text" id="pwd-add-pass-${pid}" class="passwords-input mono" placeholder="输入或生成密码">
+          </div>
+          <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:6px;">
+            <button id="pwd-dialog-cancel-${pid}" class="hc-btn-cancel">取消</button>
+            <button id="pwd-dialog-save-${pid}" class="hc-btn-done">存储</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const win = createWindow(pid, titleText, contentHtml, 'passwords');
+  win.dataset.appKey = 'passwords';
+  win.style.width = '840px';
+  win.style.height = '540px';
+
+  const root = win.querySelector(`#pwd-app-${pid}`);
+  if (!root) return win;
+
+  const navItems = root.querySelectorAll('.passwords-nav-item');
+  const searchInput = root.querySelector(`#pwd-search-${pid}`);
+  const listEl = root.querySelector(`#pwd-list-${pid}`);
+  const detailEl = root.querySelector(`#pwd-detail-${pid}`);
+  const dialogEl = root.querySelector(`#pwd-dialog-${pid}`);
+  const newBtn = root.querySelector(`#pwd-new-btn-${pid}`);
+
+  function updateCounts() {
+    const cAll = passwordStore.filter(p => !p.deleted).length;
+    const cPasskey = passwordStore.filter(p => !p.deleted && p.hasPasskey).length;
+    const cCode = passwordStore.filter(p => !p.deleted && p.totpSeed).length;
+    const cSec = passwordStore.filter(p => !p.deleted && (p.category === 'security' || p.password.length < 8 || p.password === 'password123')).length;
+    const cTrash = passwordStore.filter(p => p.deleted).length;
+
+    const elAll = root.querySelector(`#pwd-count-all-${pid}`);
+    const elPass = root.querySelector(`#pwd-count-passkeys-${pid}`);
+    const elCode = root.querySelector(`#pwd-count-codes-${pid}`);
+    const elSec = root.querySelector(`#pwd-count-security-${pid}`);
+    const elTrash = root.querySelector(`#pwd-count-trash-${pid}`);
+
+    if (elAll) elAll.innerText = cAll;
+    if (elPass) elPass.innerText = cPasskey;
+    if (elCode) elCode.innerText = cCode;
+    if (elSec) elSec.innerText = cSec;
+    if (elTrash) elTrash.innerText = cTrash;
+  }
+
+  function getFilteredItems() {
+    return passwordStore.filter(p => {
+      if (activeCategory === 'trash') {
+        if (!p.deleted) return false;
+      } else {
+        if (p.deleted) return false;
+        if (activeCategory === 'passkeys' && !p.hasPasskey) return false;
+        if (activeCategory === 'codes' && !p.totpSeed) return false;
+        if (activeCategory === 'security' && !(p.category === 'security' || p.password.length < 8 || p.password === 'password123')) return false;
+      }
+      if (searchQuery) {
+        const q = searchQuery.toLowerCase();
+        return (p.title && p.title.toLowerCase().includes(q)) ||
+               (p.domain && p.domain.toLowerCase().includes(q)) ||
+               (p.username && p.username.toLowerCase().includes(q));
+      }
+      return true;
+    });
+  }
+
+  function renderList() {
+    const items = getFilteredItems();
+    if (!items.find(i => i.id === activeId) && items.length > 0) {
+      activeId = items[0].id;
+    } else if (items.length === 0) {
+      activeId = null;
+    }
+
+    if (items.length === 0) {
+      listEl.innerHTML = `
+        <div style="text-align:center;padding:40px 10px;opacity:0.5;font-size:12px;">
+          无匹配的密码项目
+        </div>
+      `;
+    } else {
+      listEl.innerHTML = items.map(it => {
+        const isActive = it.id === activeId;
+        const initial = (it.title || it.domain || 'P')[0].toUpperCase();
+        return `
+          <div class="passwords-row ${isActive ? 'active' : ''}" data-id="${it.id}">
+            <div class="passwords-row-icon">${initial}</div>
+            <div class="passwords-row-info">
+              <div class="passwords-row-title">${it.title || it.domain}</div>
+              <div class="passwords-row-user">${it.username || '无用户名'}</div>
+            </div>
+            ${it.hasPasskey ? '<span style="font-size:11px;" title="通行密钥">🔐</span>' : ''}
+          </div>
+        `;
+      }).join('');
+
+      listEl.querySelectorAll('.passwords-row').forEach(row => {
+        row.onclick = () => {
+          activeId = row.dataset.id;
+          revealedPass = false;
+          renderList();
+          renderDetail();
+        };
+      });
+    }
+  }
+
+  function renderDetail() {
+    const item = passwordStore.find(p => p.id === activeId);
+    if (!item) {
+      detailEl.innerHTML = `
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;opacity:0.5;gap:12px;">
+          <div style="font-size:48px;">🔑</div>
+          <div style="font-size:14px;font-weight:600;">未选择密码条目</div>
+          <div style="font-size:12px;">从左侧列表中选取一项以查看凭证详情</div>
+        </div>
+      `;
+      return;
+    }
+
+    const initial = (item.title || item.domain || 'P')[0].toUpperCase();
+    const isWeak = (item.password.length < 8 || item.password === 'password123');
+    const totpCode = item.totpSeed ? computeTOTP(item.totpSeed) : null;
+    const secsLeft = 30 - (Math.floor(Date.now() / 1000) % 30);
+
+    detailEl.innerHTML = `
+      <div class="passwords-detail-header">
+        <div class="passwords-detail-icon">${initial}</div>
+        <div style="flex:1;">
+          <div style="font-size:18px;font-weight:700;">${item.title || item.domain}</div>
+          <div style="font-size:12px;opacity:0.6;margin-top:2px;">上次修改时间：${item.updatedAt || '最近'}</div>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button class="passwords-icon-btn" id="pwd-del-btn-${pid}" title="删除此密码">🗑️</button>
+        </div>
+      </div>
+
+      ${item.totpSeed ? `
+        <!-- 2FA Dynamic Token Card -->
+        <div class="passwords-totp-card">
+          <div>
+            <div style="font-size:11px;font-weight:600;opacity:0.75;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">双重认证验证码 (2FA)</div>
+            <div class="passwords-totp-code" id="pwd-totp-val-${pid}">${totpCode}</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div class="passwords-timer-ring-wrap">
+              <svg width="36" height="36" viewBox="0 0 36 36">
+                <circle cx="18" cy="18" r="14" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="3"/>
+                <circle id="pwd-ring-circle-${pid}" cx="18" cy="18" r="14" fill="none" stroke="#38bdf8" stroke-width="3"
+                  stroke-dasharray="88" stroke-dashoffset="${(88 * (30 - secsLeft)) / 30}" stroke-linecap="round"
+                  transform="rotate(-90 18 18)"/>
+              </svg>
+              <div class="passwords-timer-secs" id="pwd-ring-sec-${pid}">${secsLeft}</div>
+            </div>
+            <button class="hc-btn-cancel" id="pwd-copy-totp-${pid}" style="padding:4px 12px;font-size:11px;">复制</button>
+          </div>
+        </div>
+      ` : ''}
+
+      <div class="passwords-card">
+        <div class="passwords-field-row">
+          <div class="passwords-field-label">网站 / 域名</div>
+          <div class="passwords-field-val-wrap">
+            <span class="passwords-field-val">${item.domain}</span>
+            <button class="passwords-icon-btn" id="pwd-copy-domain-${pid}" title="复制域名">📋</button>
+          </div>
+        </div>
+
+        <div style="height:1px;background:rgba(255,255,255,0.06);"></div>
+
+        <div class="passwords-field-row">
+          <div class="passwords-field-label">用户名</div>
+          <div class="passwords-field-val-wrap">
+            <span class="passwords-field-val">${item.username}</span>
+            <button class="passwords-icon-btn" id="pwd-copy-user-${pid}" title="复制用户名">📋</button>
+          </div>
+        </div>
+
+        <div style="height:1px;background:rgba(255,255,255,0.06);"></div>
+
+        <div class="passwords-field-row">
+          <div>
+            <div class="passwords-field-label">密码</div>
+            ${isWeak ? '<div style="font-size:11px;color:#f87171;margin-top:2px;">⚠️ 密码较弱或存在安全泄露隐患</div>' : ''}
+          </div>
+          <div class="passwords-field-val-wrap">
+            <span class="passwords-field-val mono" id="pwd-val-span-${pid}">
+              ${revealedPass ? item.password : '••••••••••••••••'}
+            </span>
+            <button class="passwords-icon-btn" id="pwd-eye-btn-${pid}" title="${revealedPass ? '隐藏密码' : '显示明文'}">
+              ${revealedPass ? '🙈' : '👁️'}
+            </button>
+            <button class="passwords-icon-btn" id="pwd-copy-pass-${pid}" title="复制密码">📋</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="passwords-card">
+        <div class="passwords-field-label">备注</div>
+        <textarea id="pwd-notes-${pid}" style="width:100%;height:60px;background:transparent;border:none;color:white;font-size:12.5px;resize:none;outline:none;font-family:inherit;" placeholder="添加备注信息...">${item.notes || ''}</textarea>
+      </div>
+    `;
+
+    // Bind item actions
+    const delBtn = detailEl.querySelector(`#pwd-del-btn-${pid}`);
+    if (delBtn) {
+      delBtn.onclick = async () => {
+        item.deleted = true;
+        await persistPasswords();
+        updateCounts();
+        renderList();
+        renderDetail();
+        if (window.AppleAudioEngine && window.AppleAudioEngine.playTrash) window.AppleAudioEngine.playTrash();
+      };
+    }
+
+    const copyDomain = detailEl.querySelector(`#pwd-copy-domain-${pid}`);
+    if (copyDomain) {
+      copyDomain.onclick = () => {
+        navigator.clipboard?.writeText(item.domain);
+        copyDomain.innerText = '✓';
+        setTimeout(() => copyDomain.innerText = '📋', 1200);
+      };
+    }
+
+    const copyUser = detailEl.querySelector(`#pwd-copy-user-${pid}`);
+    if (copyUser) {
+      copyUser.onclick = () => {
+        navigator.clipboard?.writeText(item.username);
+        copyUser.innerText = '✓';
+        setTimeout(() => copyUser.innerText = '📋', 1200);
+      };
+    }
+
+    const eyeBtn = detailEl.querySelector(`#pwd-eye-btn-${pid}`);
+    if (eyeBtn) {
+      eyeBtn.onclick = () => {
+        revealedPass = !revealedPass;
+        renderDetail();
+      };
+    }
+
+    const copyPass = detailEl.querySelector(`#pwd-copy-pass-${pid}`);
+    if (copyPass) {
+      copyPass.onclick = () => {
+        navigator.clipboard?.writeText(item.password);
+        copyPass.innerText = '✓';
+        setTimeout(() => copyPass.innerText = '📋', 1200);
+      };
+    }
+
+    const copyTotp = detailEl.querySelector(`#pwd-copy-totp-${pid}`);
+    if (copyTotp) {
+      copyTotp.onclick = () => {
+        const rawCode = totpCode.replace(' ', '');
+        navigator.clipboard?.writeText(rawCode);
+        copyTotp.innerText = '已复制';
+        setTimeout(() => copyTotp.innerText = '复制', 1200);
+      };
+    }
+
+    const notesArea = detailEl.querySelector(`#pwd-notes-${pid}`);
+    if (notesArea) {
+      notesArea.onblur = async () => {
+        item.notes = notesArea.value;
+        await persistPasswords();
+      };
+    }
+  }
+
+  // Live 1-second 2FA countdown runner
+  const totpInterval = setInterval(() => {
+    if (!document.contains(win)) {
+      clearInterval(totpInterval);
+      return;
+    }
+    const item = passwordStore.find(p => p.id === activeId);
+    if (!item || !item.totpSeed) return;
+
+    const secsLeft = 30 - (Math.floor(Date.now() / 1000) % 30);
+    const totpCode = computeTOTP(item.totpSeed);
+
+    const valEl = detailEl.querySelector(`#pwd-totp-val-${pid}`);
+    const secEl = detailEl.querySelector(`#pwd-ring-sec-${pid}`);
+    const ringEl = detailEl.querySelector(`#pwd-ring-circle-${pid}`);
+
+    if (valEl) valEl.innerText = totpCode;
+    if (secEl) secEl.innerText = secsLeft;
+    if (ringEl) {
+      const circ = 88; // 2 * PI * 14
+      ringEl.style.strokeDashoffset = (circ * (30 - secsLeft)) / 30;
+    }
+  }, 1000);
+
+  // Nav category selection
+  navItems.forEach(nav => {
+    nav.onclick = () => {
+      navItems.forEach(n => n.classList.remove('active'));
+      nav.classList.add('active');
+      activeCategory = nav.dataset.cat;
+      renderList();
+      renderDetail();
+    };
+  });
+
+  // Search input
+  searchInput.oninput = (e) => {
+    searchQuery = e.target.value;
+    renderList();
+    renderDetail();
+  };
+
+  // Add password dialog
+  newBtn.onclick = () => {
+    dialogEl.style.display = 'flex';
+    const domIn = root.querySelector(`#pwd-add-domain-${pid}`);
+    if (domIn) domIn.focus();
+  };
+
+  const cancelAddBtn = root.querySelector(`#pwd-dialog-cancel-${pid}`);
+  if (cancelAddBtn) {
+    cancelAddBtn.onclick = () => { dialogEl.style.display = 'none'; };
+  }
+
+  const genBtn = root.querySelector(`#pwd-gen-btn-${pid}`);
+  if (genBtn) {
+    genBtn.onclick = () => {
+      const passIn = root.querySelector(`#pwd-add-pass-${pid}`);
+      if (passIn) passIn.value = generateApplePassword();
+    };
+  }
+
+  const saveAddBtn = root.querySelector(`#pwd-dialog-save-${pid}`);
+  if (saveAddBtn) {
+    saveAddBtn.onclick = async () => {
+      const domVal = root.querySelector(`#pwd-add-domain-${pid}`)?.value.trim() || 'example.com';
+      const titleVal = root.querySelector(`#pwd-add-title-${pid}`)?.value.trim() || domVal;
+      const userVal = root.querySelector(`#pwd-add-user-${pid}`)?.value.trim() || 'alice';
+      const passVal = root.querySelector(`#pwd-add-pass-${pid}`)?.value.trim() || generateApplePassword();
+
+      const newItem = {
+        id: `pwd-${Date.now()}`,
+        domain: domVal,
+        title: titleVal,
+        username: userVal,
+        password: passVal,
+        category: 'all',
+        hasPasskey: false,
+        totpSeed: null,
+        notes: '',
+        updatedAt: new Date().toISOString().slice(0, 10)
+      };
+
+      passwordStore.unshift(newItem);
+      await persistPasswords();
+      dialogEl.style.display = 'none';
+      activeId = newItem.id;
+      updateCounts();
+      renderList();
+      renderDetail();
+      if (window.AppleAudioEngine && window.AppleAudioEngine.playPop) window.AppleAudioEngine.playPop();
+    };
+  }
+
+  updateCounts();
+  renderList();
+  renderDetail();
+
+  return win;
+}
+window.launchPasswordsApp = launchPasswordsApp;
+
 
 function initQuickNote() {
   const peek = document.getElementById('quick-note-peek');
@@ -20122,21 +24603,10 @@ window.playVolumeFeedbackBeep = playVolumeFeedbackBeep;
 
 function initCCSliderHaptics() {
   const volSlider = document.getElementById('cc-volume');
-  const volIcon = document.getElementById('cc-volume-icon');
   const brightSlider = document.getElementById('cc-brightness');
 
-  if (volSlider && volIcon) {
-    volSlider.addEventListener('input', (e) => {
-      const val = parseInt(e.target.value);
-      volIcon.innerHTML = getVolumeSvg(val, 15);
-      if (typeof showVolumeHUD === 'function') {
-        showVolumeHUD(val);
-      }
-      if (window.AppleAudioEngine) {
-        window.AppleAudioEngine.playThrottledVolumePop(Math.max(0.2, val / 100));
-      }
-    });
-
+  if (volSlider) {
+    updateCCSlider(volSlider);
     volSlider.addEventListener('change', () => {
       if (window.AppleAudioEngine) {
         window.AppleAudioEngine.playPop();
@@ -20145,13 +24615,7 @@ function initCCSliderHaptics() {
   }
 
   if (brightSlider) {
-    brightSlider.addEventListener('input', (e) => {
-      const val = parseInt(e.target.value);
-      const overlay = document.getElementById('brightness-overlay');
-      if (overlay) {
-        overlay.style.opacity = ((100 - val) * 0.008).toFixed(2);
-      }
-    });
+    updateCCSlider(brightSlider);
   }
 }
 
@@ -20174,26 +24638,7 @@ function toggleSoundPopover() {
   }
 }
 
-function selectSoundDevice(el, deviceName, icon) {
-  const pop = document.getElementById('sound-popover');
-  if (!pop) return;
-  const items = pop.querySelectorAll('.sound-device-item');
-  items.forEach(item => {
-    item.classList.remove('active');
-    const chk = item.querySelector('.sound-check');
-    if (chk) chk.style.display = 'none';
-  });
-  el.classList.add('active');
-  const chk = el.querySelector('.sound-check');
-  if (chk) chk.style.display = 'inline';
-
-  if (typeof playVolumeFeedbackBeep === 'function') {
-    playVolumeFeedbackBeep();
-  }
-  if (typeof showNotification === 'function') {
-    showNotification(t('sound_output', 'Sound Output'), t('notif_sound_output', 'Switched audio output to %s').replace('%s', deviceName), 'Sound');
-  }
-}
+// Note: selectSoundDevice is fully implemented above with AirPods Pro controls support
 
 function initSoundPopover() {
   const slider = document.getElementById('sound-pop-slider');
@@ -20213,9 +24658,10 @@ function initSoundPopover() {
       const ccVol = document.getElementById('cc-volume');
       if (ccVol && ccVol !== e.target) {
         ccVol.value = val;
+        if (typeof window.updateCCSlider === 'function') {
+          window.updateCCSlider(ccVol, false);
+        }
       }
-      const ccVolIcon = document.getElementById('cc-volume-icon');
-      if (ccVolIcon) ccVolIcon.innerHTML = getVolumeSvg(val, 15);
 
       if (window.AppleAudioEngine) {
         window.AppleAudioEngine.playThrottledVolumePop(Math.max(0.2, val / 100));
@@ -20636,7 +25082,7 @@ window.updateStandByClock = updateStandByClock;
 // ==========================================
 // Floating Volume HUD Capsule Controller
 // ==========================================
-let volumeHudTimer = null;
+var volumeHudTimer = null;
 
 function showVolumeHUD(val) {
   const hud = document.getElementById('volume-hud');
@@ -20667,6 +25113,78 @@ function showVolumeHUD(val) {
 }
 
 window.showVolumeHUD = showVolumeHUD;
+
+// ==========================================
+// Floating Display Brightness HUD Controller
+// ==========================================
+var brightnessHudTimer = null;
+var currentBrightness = 80;
+
+function showBrightnessHUD(val) {
+  const hud = document.getElementById('brightness-hud');
+  const bar = document.getElementById('brightness-hud-bar');
+  if (!hud || !bar) return;
+
+  val = Math.max(10, Math.min(100, Math.round(val)));
+  currentBrightness = val;
+  bar.style.width = `${val}%`;
+
+  // Adjust display brightness effect
+  const desktop = document.getElementById('desktop');
+  if (desktop) {
+    desktop.style.filter = `brightness(${0.4 + (val / 100) * 0.6})`;
+  }
+
+  // Sync Control Center slider if present
+  const ccDisplay = document.getElementById('cc-display-slider');
+  if (ccDisplay && ccDisplay.value != val) {
+    ccDisplay.value = val;
+  }
+
+  hud.style.display = 'flex';
+  void hud.offsetWidth; // force reflow
+  hud.style.opacity = '1';
+  hud.style.transform = 'translateX(-50%) scale(1)';
+
+  if (brightnessHudTimer) clearTimeout(brightnessHudTimer);
+  brightnessHudTimer = setTimeout(() => {
+    hud.style.opacity = '0';
+    hud.style.transform = 'translateX(-50%) scale(0.9)';
+    setTimeout(() => {
+      if (hud.style.opacity === '0') hud.style.display = 'none';
+    }, 250);
+  }, 1400);
+}
+window.showBrightnessHUD = showBrightnessHUD;
+
+// ==========================================
+// Floating Keyboard Backlight HUD Controller
+// ==========================================
+var keyboardHudTimer = null;
+
+function showKeyboardHUD(val) {
+  const hud = document.getElementById('keyboard-hud');
+  const bar = document.getElementById('keyboard-hud-bar');
+  if (!hud || !bar) return;
+
+  val = Math.max(0, Math.min(100, Math.round(val)));
+  bar.style.width = `${val}%`;
+
+  hud.style.display = 'flex';
+  void hud.offsetWidth; // force reflow
+  hud.style.opacity = '1';
+  hud.style.transform = 'translateX(-50%) scale(1)';
+
+  if (keyboardHudTimer) clearTimeout(keyboardHudTimer);
+  keyboardHudTimer = setTimeout(() => {
+    hud.style.opacity = '0';
+    hud.style.transform = 'translateX(-50%) scale(0.9)';
+    setTimeout(() => {
+      if (hud.style.opacity === '0') hud.style.display = 'none';
+    }, 250);
+  }, 1400);
+}
+window.showKeyboardHUD = showKeyboardHUD;
 
 // ==========================================
 // macOS Sequoia Window Tile Popover
@@ -20706,6 +25224,124 @@ function scheduleHideTilePopover() {
   }, 250);
 }
 
+// ============================================================
+// macOS Sequoia Window Tiling Engine (Shortcuts & Visual HUD)
+// ============================================================
+let _tilingHudTimer = null;
+function showTilingHud(mode) {
+  const pill = document.getElementById('tiling-hud-pill');
+  const icon = document.getElementById('tiling-hud-icon');
+  const label = document.getElementById('tiling-hud-label');
+  if (!pill || !icon || !label) return;
+
+  const labels = {
+    left: '左侧半屏',
+    right: '右侧半屏',
+    full: '全屏铺满',
+    center: '居中放置',
+    topleft: '左上四分之一',
+    topright: '右上四分之一',
+    botleft: '左下四分之一',
+    botright: '右下四分之一'
+  };
+
+  icon.className = 'tiling-hud-icon icon-' + mode;
+  label.innerText = labels[mode] || '窗口平铺';
+
+  pill.style.display = 'flex';
+  const triggerPillOpen = () => pill.classList.add('open');
+  if (typeof requestAnimationFrame === 'function') requestAnimationFrame(triggerPillOpen);
+  setTimeout(triggerPillOpen, 20);
+
+  if (_tilingHudTimer) clearTimeout(_tilingHudTimer);
+  _tilingHudTimer = setTimeout(() => {
+    pill.classList.remove('open');
+    setTimeout(() => {
+      if (!pill.classList.contains('open')) pill.style.display = 'none';
+    }, 250);
+  }, 1100);
+}
+window.showTilingHud = showTilingHud;
+
+function applyTiling(mode, explicitWin = null) {
+  let targetWin = explicitWin;
+  if (!targetWin) {
+    if (typeof _tilingTargetWin !== 'undefined' && _tilingTargetWin && !_tilingTargetWin.classList.contains('iphone-mirroring-window')) {
+      targetWin = _tilingTargetWin;
+    } else if (typeof activeTileWin !== 'undefined' && activeTileWin && !activeTileWin.classList.contains('iphone-mirroring-window')) {
+      targetWin = activeTileWin;
+    } else {
+      targetWin = document.querySelector('.window.is-active:not(.iphone-mirroring-window)') ||
+        Array.from(document.querySelectorAll('.window:not(.iphone-mirroring-window)'))
+          .filter(w => !w.dataset.isMinimized && w.style.display !== 'none')
+          .sort((a, b) => parseInt(b.style.zIndex || 0) - parseInt(a.style.zIndex || 0))[0];
+    }
+  }
+  if (!targetWin) return;
+
+  if (typeof hideTilingMenu === 'function') hideTilingMenu();
+  if (typeof hideWindowTilePopover === 'function') hideWindowTilePopover();
+
+  targetWin.style.transition = 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
+  if (mode === 'left') {
+    targetWin.style.left = '8px';
+    targetWin.style.top = '36px';
+    targetWin.style.width = 'calc(50vw - 12px)';
+    targetWin.style.height = 'calc(100vh - 126px)';
+    targetWin.dataset.snapped = 'left';
+  } else if (mode === 'right') {
+    targetWin.style.left = 'calc(50vw + 4px)';
+    targetWin.style.top = '36px';
+    targetWin.style.width = 'calc(50vw - 12px)';
+    targetWin.style.height = 'calc(100vh - 126px)';
+    targetWin.dataset.snapped = 'right';
+  } else if (mode === 'full') {
+    targetWin.style.left = '8px';
+    targetWin.style.top = '36px';
+    targetWin.style.width = 'calc(100vw - 16px)';
+    targetWin.style.height = 'calc(100vh - 126px)';
+    targetWin.dataset.snapped = 'top';
+  } else if (mode === 'center') {
+    targetWin.style.left = 'calc(50vw - 325px)';
+    targetWin.style.top = 'calc(50vh - 210px)';
+    targetWin.style.width = '650px';
+    targetWin.style.height = '420px';
+    delete targetWin.dataset.snapped;
+  } else if (mode === 'topleft') {
+    targetWin.style.left = '8px';
+    targetWin.style.top = '36px';
+    targetWin.style.width = 'calc(50vw - 12px)';
+    targetWin.style.height = 'calc(50vh - 66px)';
+    targetWin.dataset.snapped = 'top-left';
+  } else if (mode === 'topright') {
+    targetWin.style.left = 'calc(50vw + 4px)';
+    targetWin.style.top = '36px';
+    targetWin.style.width = 'calc(50vw - 12px)';
+    targetWin.style.height = 'calc(50vh - 66px)';
+    targetWin.dataset.snapped = 'top-right';
+  } else if (mode === 'botleft') {
+    targetWin.style.left = '8px';
+    targetWin.style.top = 'calc(50vh - 22px)';
+    targetWin.style.width = 'calc(50vw - 12px)';
+    targetWin.style.height = 'calc(50vh - 72px)';
+    targetWin.dataset.snapped = 'bottom-left';
+  } else if (mode === 'botright') {
+    targetWin.style.left = 'calc(50vw + 4px)';
+    targetWin.style.top = 'calc(50vh - 22px)';
+    targetWin.style.width = 'calc(50vw - 12px)';
+    targetWin.style.height = 'calc(50vh - 72px)';
+    targetWin.dataset.snapped = 'bottom-right';
+  }
+
+  focusWindow(targetWin);
+  showTilingHud(mode);
+  if (window.appleAudio && typeof window.appleAudio.playPop === 'function') {
+    window.appleAudio.playPop();
+  }
+  setTimeout(() => { if (targetWin) targetWin.style.transition = 'none'; }, 350);
+}
+window.applyTiling = applyTiling;
+
 function initWindowTilePopover() {
   const popover = document.getElementById('window-tile-popover');
   if (!popover) return;
@@ -20718,59 +25354,51 @@ function initWindowTilePopover() {
   });
 
   document.getElementById('tile-act-left')?.addEventListener('click', () => {
-    if (!activeTileWin) return;
-    activeTileWin.style.transition = 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
-    activeTileWin.style.left = '8px';
-    activeTileWin.style.top = '36px';
-    activeTileWin.style.width = 'calc(50vw - 12px)';
-    activeTileWin.style.height = 'calc(100vh - 126px)';
-    activeTileWin.dataset.snapped = 'left';
-    focusWindow(activeTileWin);
-    hideWindowTilePopover();
-    setTimeout(() => activeTileWin.style.transition = 'none', 350);
+    applyTiling('left', activeTileWin);
   });
 
   document.getElementById('tile-act-right')?.addEventListener('click', () => {
-    if (!activeTileWin) return;
-    activeTileWin.style.transition = 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
-    activeTileWin.style.left = 'calc(50vw + 4px)';
-    activeTileWin.style.top = '36px';
-    activeTileWin.style.width = 'calc(50vw - 12px)';
-    activeTileWin.style.height = 'calc(100vh - 126px)';
-    activeTileWin.dataset.snapped = 'right';
-    focusWindow(activeTileWin);
-    hideWindowTilePopover();
-    setTimeout(() => activeTileWin.style.transition = 'none', 350);
+    applyTiling('right', activeTileWin);
   });
 
   document.getElementById('tile-act-zoom')?.addEventListener('click', () => {
-    if (!activeTileWin) return;
-    activeTileWin.style.transition = 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
-    activeTileWin.style.left = '8px';
-    activeTileWin.style.top = '36px';
-    activeTileWin.style.width = 'calc(100vw - 16px)';
-    activeTileWin.style.height = 'calc(100vh - 126px)';
-    activeTileWin.dataset.snapped = 'top';
-    focusWindow(activeTileWin);
-    hideWindowTilePopover();
-    setTimeout(() => activeTileWin.style.transition = 'none', 350);
+    applyTiling('full', activeTileWin);
   });
 
   document.getElementById('tile-act-center')?.addEventListener('click', () => {
-    if (!activeTileWin) return;
-    activeTileWin.style.transition = 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
-    activeTileWin.style.left = 'calc(50vw - 325px)';
-    activeTileWin.style.top = 'calc(50vh - 210px)';
-    activeTileWin.style.width = '650px';
-    activeTileWin.style.height = '420px';
-    delete activeTileWin.dataset.snapped;
-    focusWindow(activeTileWin);
-    hideWindowTilePopover();
-    setTimeout(() => activeTileWin.style.transition = 'none', 350);
+    applyTiling('center', activeTileWin);
   });
 }
 
 initWindowTilePopover();
+
+// Global macOS Sequoia Window Tiling Keyboard Shortcuts
+window.addEventListener('keydown', (e) => {
+  const isTilingCombo = (e.ctrlKey && e.altKey) || (e.metaKey && e.altKey);
+  if (!isTilingCombo) return;
+
+  let mode = null;
+  if (e.shiftKey) {
+    if (e.key === 'ArrowLeft') mode = 'topleft';
+    else if (e.key === 'ArrowRight') mode = 'topright';
+    else if (e.key === 'ArrowDown') mode = 'botleft';
+    else if (e.key === 'ArrowUp') mode = 'botright';
+  } else {
+    if (e.key === 'ArrowLeft') mode = 'left';
+    else if (e.key === 'ArrowRight') mode = 'right';
+    else if (e.key === 'ArrowUp') mode = 'full';
+    else if (e.key === 'ArrowDown') mode = 'center';
+    else if (e.key === 'Enter') mode = 'full';
+    else if (e.key === 'c' || e.key === 'C') mode = 'center';
+    else if (e.key === 'f' || e.key === 'F') mode = 'full';
+  }
+
+  if (mode) {
+    e.preventDefault();
+    e.stopPropagation();
+    applyTiling(mode);
+  }
+}, true);
 
 // ==========================================
 // iOS / macOS Face ID Biometric Unlock
@@ -20834,7 +25462,7 @@ window.triggerFaceID = triggerTouchID; // backward compatibility
 // ====================================================
 let widgetJiggleMode = false;
 let activeContextWidget = null;
-const availableWidgetTypes = ['clock', 'weather', 'sys', 'battery', 'calendar', 'music'];
+const availableWidgetTypes = ['clock', 'weather', 'battery', 'calendar', 'reminders', 'music', 'sys', 'photos'];
 
 function getWidgetContentHtml(type) {
   const dict = i18nDict[currentSystemLang] || i18nDict.en;
@@ -20950,6 +25578,46 @@ function getWidgetContentHtml(type) {
         <span onclick="event.stopPropagation(); if(typeof skipTrack==='function') skipTrack(-1);" style="cursor:pointer;font-size:14px;">⏮</span>
         <span onclick="event.stopPropagation(); if(typeof toggleCCMusic==='function') toggleCCMusic();" style="cursor:pointer;font-size:16px;">${isPlaying ? '⏸' : '▶️'}</span>
         <span onclick="event.stopPropagation(); if(typeof skipTrack==='function') skipTrack(1);" style="cursor:pointer;font-size:14px;">⏭</span>
+      </div>
+    `;
+  } else if (type === 'reminders') {
+    return `
+      <div class="widget-action-group">
+        <button class="widget-action-btn widget-change-btn" onclick="cycleWidget(this.closest('.sonoma-widget'), event)" title="更换小组件">🔄</button>
+        <button class="widget-action-btn widget-close-btn" onclick="removeWidget(this.closest('.sonoma-widget'), event)" title="关闭/删除小组件">✕</button>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+        <div style="font-size:13px;font-weight:700;color:#ff9500;display:flex;align-items:center;gap:6px;"><span>📋</span> <span>${dict.w_type_reminders || '提醒事项'}</span></div>
+        <span style="font-size:10px;color:rgba(255,255,255,0.5);font-weight:600;">今天</span>
+      </div>
+      <div class="widget-reminder-list">
+        <div class="widget-reminder-item" onclick="toggleWidgetReminder(this, event)">
+          <span class="widget-chk-circle"></span>
+          <span class="widget-reminder-text">设计 macOS Sequoia 视觉规范</span>
+        </div>
+        <div class="widget-reminder-item" onclick="toggleWidgetReminder(this, event)">
+          <span class="widget-chk-circle"></span>
+          <span class="widget-reminder-text">完善 AliceOS 原生小组件库</span>
+        </div>
+        <div class="widget-reminder-item done" onclick="toggleWidgetReminder(this, event)">
+          <span class="widget-chk-circle checked"></span>
+          <span class="widget-reminder-text">发布 AliceOS 免安装便携版</span>
+        </div>
+      </div>
+    `;
+  } else if (type === 'photos') {
+    return `
+      <div class="widget-action-group">
+        <button class="widget-action-btn widget-change-btn" onclick="cycleWidget(this.closest('.sonoma-widget'), event)" title="更换小组件">🔄</button>
+        <button class="widget-action-btn widget-close-btn" onclick="removeWidget(this.closest('.sonoma-widget'), event)" title="关闭/删除小组件">✕</button>
+      </div>
+      <div style="position:relative;width:100%;height:105px;border-radius:14px;overflow:hidden;background:linear-gradient(135deg,#1c3b57,#2c628f);display:flex;flex-direction:column;justify-content:flex-end;padding:12px;box-sizing:border-box;">
+        <div style="position:absolute;inset:0;background:radial-gradient(circle at top right, rgba(255,255,255,0.25), transparent 70%);"></div>
+        <div style="position:relative;z-index:2;color:white;">
+          <div style="font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;opacity:0.85;">回忆 • 精选照片</div>
+          <div style="font-size:14px;font-weight:700;margin-top:2px;">加利福尼亚海岸线</div>
+          <div style="font-size:10px;opacity:0.65;margin-top:2px;">2026年9月17日</div>
+        </div>
       </div>
     `;
   }
@@ -21112,18 +25780,254 @@ function loadWidgetsState() {
   checkEmptyWidgetsPlaceholder();
 }
 
+// macOS Sonoma / Sequoia Widget Gallery Catalog
+const WIDGET_GALLERY_CATALOG = [
+  {
+    type: 'clock',
+    category: 'clock',
+    appName: '时钟',
+    title: '世界时钟',
+    icon: '⏰',
+    desc: '查看主要国际时区的当地时间。',
+    previewHtml: `
+      <div style="font-size:11px;font-weight:600;opacity:0.8;">Cupertino</div>
+      <div style="font-size:28px;font-weight:200;color:#007aff;line-height:1.1;margin:2px 0;">15:40</div>
+      <div style="font-size:10px;opacity:0.6;">UTC-7 • 比本地慢 15 小时</div>
+    `
+  },
+  {
+    type: 'weather',
+    category: 'weather',
+    appName: '天气',
+    title: '天气预报',
+    icon: '⛅',
+    desc: '查看当前地点的天气状况与全天温度走势。',
+    previewHtml: `
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div>
+          <div style="font-size:11px;font-weight:600;">北京</div>
+          <div style="font-size:26px;font-weight:300;line-height:1.1;">24°</div>
+          <div style="font-size:10px;opacity:0.7;">多云 • H:28° L:18°</div>
+        </div>
+        <div style="font-size:32px;">⛅</div>
+      </div>
+    `
+  },
+  {
+    type: 'battery',
+    category: 'battery',
+    appName: '电池',
+    title: '状态指示',
+    icon: '🔋',
+    desc: '监控已连接的 Mac、AirPods 及外设电量。',
+    previewHtml: `
+      <div style="font-size:11px;display:flex;flex-direction:column;gap:5px;">
+        <div style="display:flex;justify-content:space-between;"><span>💻 MacBook</span><span style="color:#34c759;font-weight:700;">98%</span></div>
+        <div style="display:flex;justify-content:space-between;"><span>🎧 AirPods</span><span style="color:#34c759;font-weight:700;">100%</span></div>
+      </div>
+    `
+  },
+  {
+    type: 'calendar',
+    category: 'calendar',
+    appName: '日历',
+    title: '日程安排',
+    icon: '📅',
+    desc: '直观浏览当天日程与下一个即将开始的日程事项。',
+    previewHtml: `
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="background:rgba(255,59,48,0.25);border-radius:10px;padding:4px 8px;text-align:center;">
+          <div style="font-size:9px;font-weight:700;color:#ff3b30;">9月</div>
+          <div style="font-size:18px;font-weight:800;color:white;">17</div>
+        </div>
+        <div style="font-size:11px;flex:1;">
+          <div style="font-weight:700;">星期四</div>
+          <div style="font-size:10px;opacity:0.7;">14:00 团队会议</div>
+        </div>
+      </div>
+    `
+  },
+  {
+    type: 'reminders',
+    category: 'reminders',
+    appName: '提醒事项',
+    title: '待办清单',
+    icon: '📋',
+    desc: '时刻追踪重要待办任务并直接在桌面完成打勾。',
+    previewHtml: `
+      <div style="font-size:11px;display:flex;flex-direction:column;gap:4px;">
+        <div style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:50%;border:1px solid rgba(255,255,255,0.5);"></span><span>设计 Sequoia 规范</span></div>
+        <div style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:50%;border:1px solid rgba(255,255,255,0.5);"></span><span>完善桌面小组件</span></div>
+      </div>
+    `
+  },
+  {
+    type: 'music',
+    category: 'music',
+    appName: '音乐',
+    title: '播放控制器',
+    icon: '🎵',
+    desc: '直接在桌面控制音轨、切换音乐与调节音量。',
+    previewHtml: `
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#ff2d55,#ff9500);display:flex;align-items:center;justify-content:center;font-size:14px;">🎵</div>
+        <div style="font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+          <div style="font-weight:700;">Alice Symphony</div>
+          <div style="font-size:9.5px;opacity:0.6;">Cupertino Soundscape</div>
+        </div>
+      </div>
+    `
+  },
+  {
+    type: 'sys',
+    category: 'sys',
+    appName: '系统监控',
+    title: '硬件活动',
+    icon: '📈',
+    desc: '实时观察 CPU、内存及系统负载动态。',
+    previewHtml: `
+      <div style="font-size:11px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span>CPU: 24%</span><span>RAM: 5.8 GB</span></div>
+        <div style="width:100%;height:4px;background:rgba(255,255,255,0.2);border-radius:2px;overflow:hidden;"><div style="width:36%;height:100%;background:#007aff;"></div></div>
+      </div>
+    `
+  },
+  {
+    type: 'photos',
+    category: 'photos',
+    appName: '照片',
+    title: '精选回忆',
+    icon: '🖼️',
+    desc: '桌面动态回忆相框，呈现加州海岸精选图景。',
+    previewHtml: `
+      <div style="border-radius:8px;overflow:hidden;background:linear-gradient(135deg,#1c3b57,#2c628f);padding:8px;color:white;">
+        <div style="font-size:9px;opacity:0.8;font-weight:700;">回忆 • 精选</div>
+        <div style="font-size:12px;font-weight:700;">加利福尼亚海岸线</div>
+      </div>
+    `
+  }
+];
+
+let currentWidgetGalleryCategory = 'all';
+
+function renderWidgetGallery(category = 'all', filterText = '') {
+  currentWidgetGalleryCategory = category;
+  const container = document.getElementById('wg-cards-container');
+  if (!container) return;
+  container.innerHTML = '';
+
+  const q = (filterText || '').toLowerCase().trim();
+  const filtered = WIDGET_GALLERY_CATALOG.filter(w => {
+    const matchCat = category === 'all' || w.category === category || (category === 'sys' && w.category === 'system');
+    const matchQuery = !q || w.title.toLowerCase().includes(q) || w.appName.toLowerCase().includes(q) || w.desc.toLowerCase().includes(q);
+    return matchCat && matchQuery;
+  });
+
+  if (filtered.length === 0) {
+    container.innerHTML = `<div style="padding:40px;text-align:center;width:100%;opacity:0.5;font-size:13px;">未找到匹配的小组件</div>`;
+    return;
+  }
+
+  filtered.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'wg-card';
+    card.innerHTML = `
+      <div class="wg-card-header">
+        <span class="wg-card-icon">${item.icon}</span>
+        <div class="wg-card-meta">
+          <div class="wg-card-title">${item.title}</div>
+          <div class="wg-card-cat">${item.appName}</div>
+        </div>
+      </div>
+      <div class="wg-card-preview">
+        ${item.previewHtml}
+      </div>
+      <button class="wg-add-btn" onclick="onWidgetGalleryAdd('${item.type}', this)">
+        <span>+ 添加小组件</span>
+      </button>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function selectWidgetGalleryCategory(cat) {
+  const btns = document.querySelectorAll('.wg-cat-btn');
+  btns.forEach(b => {
+    if (b.dataset.cat === cat) b.classList.add('active');
+    else b.classList.remove('active');
+  });
+  const searchInput = document.getElementById('wg-search-input');
+  renderWidgetGallery(cat, searchInput ? searchInput.value : '');
+}
+
+function filterWidgetGallery(text) {
+  renderWidgetGallery(currentWidgetGalleryCategory, text);
+}
+
+function onWidgetGalleryAdd(type, btn) {
+  addWidgetToDesktop(type);
+  if (btn) {
+    const origText = btn.innerHTML;
+    btn.classList.add('added');
+    btn.innerHTML = '<span>✓ 已添加</span>';
+    setTimeout(() => {
+      btn.classList.remove('added');
+      btn.innerHTML = origText;
+    }, 1200);
+  }
+  if (window.AppleAudioEngine) window.AppleAudioEngine.playAirDrop();
+  showNotification('小组件资料库', `已将 ${type} 小组件添加到桌面！`, 'Widgets', '🧩');
+}
+
+function toggleWidgetReminder(el, ev) {
+  if (ev) ev.stopPropagation();
+  if (!el) return;
+  const isDone = el.classList.toggle('done');
+  const chk = el.querySelector('.widget-chk-circle');
+  if (chk) {
+    if (isDone) chk.classList.add('checked');
+    else chk.classList.remove('checked');
+  }
+  if (window.AppleAudioEngine) window.AppleAudioEngine.playHapticClick('medium');
+}
+
+function setWidgetStylePreference(style) {
+  closeWidgetContextMenu();
+  const container = document.getElementById('desktop-widgets');
+  if (!container) return;
+  container.classList.remove('tinted', 'forced-color');
+  if (style === 'monochrome') {
+    container.classList.add('tinted');
+  } else if (style === 'vibrant') {
+    container.classList.add('forced-color');
+  }
+  try {
+    localStorage.setItem('alice_widget_style_pref', style);
+  } catch(e) {}
+  showNotification('小组件样式', `已切换为：${style === 'auto' ? '自动适应' : (style === 'monochrome' ? '单色灰度' : '彩色常亮')}`, 'Widgets', '🎨');
+  if (window.AppleAudioEngine) window.AppleAudioEngine.playHapticClick('light');
+}
+
 function openWidgetGallery() {
   closeWidgetContextMenu();
   const sheet = document.getElementById('widget-gallery-sheet');
   if (!sheet) return;
+  sheet.style.display = 'flex';
+  void sheet.offsetWidth;
   sheet.classList.add('open');
   setWidgetJiggleMode(true);
+  renderWidgetGallery('all');
+  if (window.AppleAudioEngine) window.AppleAudioEngine.playHapticClick('medium');
 }
 
 function closeWidgetGallery() {
   const sheet = document.getElementById('widget-gallery-sheet');
-  if (sheet) sheet.classList.remove('open');
+  if (!sheet) return;
+  sheet.classList.remove('open');
   setWidgetJiggleMode(false);
+  setTimeout(() => {
+    if (!sheet.classList.contains('open')) sheet.style.display = 'none';
+  }, 300);
 }
 
 function setWidgetJiggleMode(enabled) {
@@ -21135,8 +26039,22 @@ function setWidgetJiggleMode(enabled) {
   widgets.forEach(w => {
     if (enabled) {
       w.classList.add('jiggling');
+      if (!w.querySelector('.widget-delete-badge')) {
+        const del = document.createElement('div');
+        del.className = 'widget-delete-badge';
+        del.innerText = '−';
+        del.title = '移除小组件';
+        del.onclick = (e) => {
+          e.stopPropagation();
+          removeWidget(w, e);
+          if (window.AppleAudioEngine) window.AppleAudioEngine.playHapticClick('heavy');
+        };
+        w.appendChild(del);
+      }
     } else {
       w.classList.remove('jiggling');
+      const del = w.querySelector('.widget-delete-badge');
+      if (del) del.remove();
     }
   });
 }
@@ -21157,6 +26075,19 @@ function addWidgetToDesktop(type, shouldSave = true) {
   w.oncontextmenu = (ev) => openWidgetContextMenu(ev, w);
 
   container.appendChild(w);
+
+  if (widgetJiggleMode) {
+    const del = document.createElement('div');
+    del.className = 'widget-delete-badge';
+    del.innerText = '−';
+    del.title = '移除小组件';
+    del.onclick = (e) => {
+      e.stopPropagation();
+      removeWidget(w, e);
+      if (window.AppleAudioEngine) window.AppleAudioEngine.playHapticClick('heavy');
+    };
+    w.appendChild(del);
+  }
 
   requestAnimationFrame(() => {
     w.style.transform = 'scale(1)';
@@ -21195,6 +26126,12 @@ window.closeWidgetContextMenu = closeWidgetContextMenu;
 window.removeActiveWidget = removeActiveWidget;
 window.replaceActiveWidget = replaceActiveWidget;
 window.toggleDesktopWidgets = toggleDesktopWidgets;
+window.renderWidgetGallery = renderWidgetGallery;
+window.selectWidgetGalleryCategory = selectWidgetGalleryCategory;
+window.filterWidgetGallery = filterWidgetGallery;
+window.onWidgetGalleryAdd = onWidgetGalleryAdd;
+window.toggleWidgetReminder = toggleWidgetReminder;
+window.setWidgetStylePreference = setWidgetStylePreference;
 
 // ====================================================
 // Phase 67: iOS 17 / macOS Expandable 3D Sliders Controller
@@ -21217,7 +26154,9 @@ function openCCExpandedSlider(type) {
 
   const currentVal = type === 'volume' 
     ? (document.getElementById('cc-volume')?.value || 50)
-    : (document.getElementById('cc-brightness')?.value || 100);
+    : (type === 'keyboard' 
+        ? (document.getElementById('cc-kb-brightness')?.value || 75)
+        : (document.getElementById('cc-brightness')?.value || 100));
 
   if (type === 'volume') {
     title.innerText = t('cc_sound_volume', 'Sound & Volume');
@@ -21229,6 +26168,18 @@ function openCCExpandedSlider(type) {
       <div class="cc-preset-pill ${currentVal == 50 ? 'active' : ''}" onclick="setCCExpandedSliderVal(50)"><span style="display:flex;align-items:center;">${getVolumeSvg(50, 16)}</span><span>50%</span></div>
       <div class="cc-preset-pill ${currentVal == 100 ? 'active' : ''}" onclick="setCCExpandedSliderVal(100)"><span style="display:flex;align-items:center;">${getVolumeSvg(100, 16)}</span><span>100%</span></div>
       <div class="cc-preset-pill ${isSpatialAudioActive ? 'active' : ''}" onclick="toggleSpatialAudio(this)"><span style="display:flex;align-items:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></span><span>${t('cc_spatial_audio', 'Spatial Audio')}</span></div>
+    `;
+  } else if (type === 'keyboard') {
+    title.innerText = t('cc_kb_brightness', '键盘亮度');
+    subtitle.innerText = t('cc_kb_sub', 'Magic Keyboard 背光与微弱光感应');
+    const kbSvg = (sz) => `<svg width="${sz}" height="${sz}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="14" width="16" height="6" rx="1.5"/><path d="M7 17h.01M10 17h.01M13 17h.01M16 17h.01"/><path d="M12 4v4M7.76 5.24l2.83 2.83M16.24 5.24l-2.83 2.83"/></svg>`;
+    icon.innerHTML = kbSvg(22);
+    thumbGlyph.innerHTML = kbSvg(18);
+    presetsContainer.innerHTML = `
+      <div class="cc-preset-pill ${currentVal == 0 ? 'active' : ''}" onclick="setCCExpandedSliderVal(0)"><span>关闭</span></div>
+      <div class="cc-preset-pill ${currentVal == 50 ? 'active' : ''}" onclick="setCCExpandedSliderVal(50)"><span>50%</span></div>
+      <div class="cc-preset-pill ${currentVal == 100 ? 'active' : ''}" onclick="setCCExpandedSliderVal(100)"><span>100%</span></div>
+      <div class="cc-preset-pill active" onclick="this.classList.toggle('active')"><span>微弱光线自动调节</span></div>
     `;
   } else {
     title.innerText = t('cc_display_brightness', 'Display & Brightness');
@@ -21292,6 +26243,14 @@ function updateCCExpandedSliderVal(percent) {
       modalIcon.innerHTML = getVolumeSvg(percent, 22);
     }
     if (typeof showVolumeHUD === 'function') showVolumeHUD(percent);
+  } else if (currentCCSliderType === 'keyboard') {
+    const kbInput = document.getElementById('cc-kb-brightness');
+    if (kbInput) {
+      kbInput.value = percent;
+      if (typeof updateCCKeyboardBrightness === 'function') {
+        updateCCKeyboardBrightness(percent);
+      }
+    }
   } else {
     const briInput = document.getElementById('cc-brightness');
     if (briInput) {
@@ -21389,6 +26348,7 @@ window.toggleSpatialAudio = toggleSpatialAudio;
 window.toggleNightShift = toggleNightShift;
 window.toggleTrueTone = toggleTrueTone;
 window.toggleSystemDarkMode = toggleSystemDarkMode;
+window.toggleDarkMode = toggleSystemDarkMode;
 
 // ==========================================
 // macOS Interactive Screenshot Tool & Floating Thumbnail Controller
@@ -21624,7 +26584,7 @@ if (ssOverlay) {
   });
 }
 
-// Global hotkeys: Cmd/Ctrl + Shift + 4 (Area crop), Cmd/Ctrl + Shift + 3 (Fullscreen)
+// Global hotkeys: Cmd/Ctrl + Shift + 4 (Area crop), Cmd/Ctrl + Shift + 3 (Fullscreen), Cmd/Ctrl + Shift + 5 (Utility Bar), Cmd/Ctrl + Shift + G (Go To Folder)
 document.addEventListener('keydown', (e) => {
   if ((e.metaKey || e.ctrlKey) && e.shiftKey && (e.key === '4' || e.code === 'Digit4')) {
     e.preventDefault();
@@ -21632,8 +26592,382 @@ document.addEventListener('keydown', (e) => {
   } else if ((e.metaKey || e.ctrlKey) && e.shiftKey && (e.key === '3' || e.code === 'Digit3')) {
     e.preventDefault();
     captureFullscreen();
+  } else if ((e.metaKey || e.ctrlKey) && e.shiftKey && (e.key === '5' || e.code === 'Digit5')) {
+    e.preventDefault();
+    toggleScreenshotUtilityBar();
+  } else if ((e.metaKey || e.ctrlKey) && e.shiftKey && (e.key === 'g' || e.key === 'G' || e.code === 'KeyG')) {
+    e.preventDefault();
+    if (typeof openGoToFolderModal === 'function') openGoToFolderModal();
+  } else if ((e.metaKey || e.ctrlKey) && !e.shiftKey && !e.altKey && (e.key === '1' || e.key === '2' || e.key === '3')) {
+    const fw = typeof getActiveFinderWindow === 'function' ? getActiveFinderWindow() : null;
+    if (fw) {
+      e.preventDefault();
+      const mode = (e.key === '1') ? 'icon' : (e.key === '2' ? 'list' : 'column');
+      if (typeof setFinderActiveViewMode === 'function') setFinderActiveViewMode(mode);
+    }
+  } else if ((e.metaKey || e.ctrlKey) && e.shiftKey && (e.key === 'n' || e.code === 'KeyN')) {
+    e.preventDefault();
+    toggleNotificationCenter();
+  } else if (e.key === 'F10') {
+    e.preventDefault();
+    toggleNotificationCenter();
+  } else if (e.key === 'Escape') {
+    if (isScreenshotBarOpen) {
+      closeScreenshotUtilityBar();
+    }
+    if (isNotificationCenterOpen) {
+      closeNotificationCenter();
+    }
+    if (typeof closeGoToFolderModal === 'function') {
+      closeGoToFolderModal();
+    }
+  } else if (e.key === 'Enter' && isScreenshotBarOpen) {
+    e.preventDefault();
+    executeScreenshotAction();
   }
 });
+
+// ==========================================================================
+// macOS Sequoia Screen Capture Floating Utility Bar Controller (⌘⇧5)
+// ==========================================================================
+let screenshotBarMode = 'portion'; // 'portion', 'window', 'screen', 'rec_portion', 'rec_screen'
+let screenshotSaveLoc = 'desktop'; // 'desktop', 'documents', 'clipboard'
+let screenshotTimerSeconds = 0; // 0, 5, 10
+let screenshotShowThumb = true;
+let isScreenshotBarOpen = false;
+let cropRect = { x: Math.max(40, Math.round(window.innerWidth * 0.2)), y: Math.max(60, Math.round(window.innerHeight * 0.2)), width: 640, height: 400 };
+let activeHoveredWindow = null;
+let isCropDragging = false;
+let isCropResizing = false;
+let currentResizeHandle = null;
+let cropDragStartX = 0;
+let cropDragStartY = 0;
+let cropInitialRect = null;
+
+function toggleScreenshotUtilityBar() {
+  if (isScreenshotBarOpen) {
+    closeScreenshotUtilityBar();
+  } else {
+    openScreenshotUtilityBar();
+  }
+}
+
+function openScreenshotUtilityBar() {
+  const bar = document.getElementById('screenshot-bar-hud');
+  if (!bar) return;
+  
+  if (typeof cancelScreenshotMode === 'function') cancelScreenshotMode();
+  isScreenshotBarOpen = true;
+  bar.style.display = 'flex';
+  
+  setScreenshotMode(screenshotBarMode || 'portion');
+  updateCropBoxPosition();
+}
+
+function closeScreenshotUtilityBar() {
+  const bar = document.getElementById('screenshot-bar-hud');
+  const cropBox = document.getElementById('screenshot-crop-box');
+  const popover = document.getElementById('ss-options-popover');
+  const timerOverlay = document.getElementById('screenshot-timer-overlay');
+  
+  if (bar) bar.style.display = 'none';
+  if (cropBox) cropBox.style.display = 'none';
+  if (popover) popover.style.display = 'none';
+  if (timerOverlay) timerOverlay.style.display = 'none';
+  
+  clearWindowHighlight();
+  isScreenshotBarOpen = false;
+}
+
+function setScreenshotMode(mode) {
+  screenshotBarMode = mode;
+  const bar = document.getElementById('screenshot-bar-hud');
+  const cropBox = document.getElementById('screenshot-crop-box');
+  const actionBtn = document.getElementById('ss-bar-action-btn');
+  if (!bar) return;
+
+  bar.querySelectorAll('.ss-bar-btn').forEach(btn => {
+    if (btn.id !== 'ss-options-btn' && !btn.classList.contains('ss-bar-close')) {
+      btn.classList.remove('active');
+    }
+  });
+
+  const activeBtn = document.getElementById(`ss-btn-${mode}`);
+  if (activeBtn) activeBtn.classList.add('active');
+
+  clearWindowHighlight();
+
+  if (actionBtn) {
+    if (mode.startsWith('rec_')) {
+      actionBtn.textContent = '录制';
+      actionBtn.classList.add('recording');
+    } else {
+      actionBtn.textContent = '捕捉';
+      actionBtn.classList.remove('recording');
+    }
+  }
+
+  if (mode === 'portion' || mode === 'rec_portion') {
+    if (cropBox) {
+      cropBox.style.display = 'block';
+      updateCropBoxPosition();
+    }
+  } else {
+    if (cropBox) cropBox.style.display = 'none';
+  }
+}
+
+function updateCropBoxPosition() {
+  const cropBox = document.getElementById('screenshot-crop-box');
+  const sizeTag = document.getElementById('ss-crop-size-tag');
+  if (!cropBox) return;
+
+  cropBox.style.left = `${cropRect.x}px`;
+  cropBox.style.top = `${cropRect.y}px`;
+  cropBox.style.width = `${cropRect.width}px`;
+  cropBox.style.height = `${cropRect.height}px`;
+
+  if (sizeTag) {
+    sizeTag.textContent = `${cropRect.width} × ${cropRect.height}`;
+  }
+}
+
+function toggleScreenshotOptions(e) {
+  if (e) e.stopPropagation();
+  const popover = document.getElementById('ss-options-popover');
+  if (!popover) return;
+  popover.style.display = (popover.style.display === 'none' || !popover.style.display) ? 'block' : 'none';
+}
+
+function setScreenshotSaveLocation(loc) {
+  screenshotSaveLoc = loc;
+  ['desktop', 'documents', 'clipboard'].forEach(l => {
+    const el = document.getElementById(`ss-save-${l}`);
+    if (el) {
+      const chk = el.querySelector('.ss-opt-check');
+      if (chk) chk.textContent = (l === loc) ? '✓' : '';
+    }
+  });
+  const popover = document.getElementById('ss-options-popover');
+  if (popover) popover.style.display = 'none';
+}
+
+function setScreenshotTimer(sec) {
+  screenshotTimerSeconds = sec;
+  [0, 5, 10].forEach(s => {
+    const el = document.getElementById(`ss-timer-${s}`);
+    if (el) {
+      const chk = el.querySelector('.ss-opt-check');
+      if (chk) chk.textContent = (s === sec) ? '✓' : '';
+    }
+  });
+  const popover = document.getElementById('ss-options-popover');
+  if (popover) popover.style.display = 'none';
+}
+
+function toggleScreenshotOptThumb() {
+  screenshotShowThumb = !screenshotShowThumb;
+  const el = document.getElementById('ss-opt-thumb');
+  if (el) {
+    const chk = el.querySelector('.ss-opt-check');
+    if (chk) chk.textContent = screenshotShowThumb ? '✓' : '';
+  }
+}
+
+function toggleScreenshotOptPointer() {
+  const el = document.getElementById('ss-opt-pointer');
+  if (el) {
+    const chk = el.querySelector('.ss-opt-check');
+    if (chk) chk.textContent = chk.textContent ? '' : '✓';
+  }
+}
+
+function clearWindowHighlight() {
+  if (activeHoveredWindow) {
+    activeHoveredWindow.classList.remove('screenshot-window-target');
+    activeHoveredWindow = null;
+  }
+}
+
+// Window detection during window mode
+document.addEventListener('mousemove', (e) => {
+  if (!isScreenshotBarOpen || screenshotBarMode !== 'window') return;
+  const target = document.elementFromPoint(e.clientX, e.clientY);
+  const win = target ? target.closest('.window') : null;
+  if (win !== activeHoveredWindow) {
+    clearWindowHighlight();
+    if (win) {
+      win.classList.add('screenshot-window-target');
+      activeHoveredWindow = win;
+    }
+  }
+});
+
+document.addEventListener('click', (e) => {
+  if (!isScreenshotBarOpen || screenshotBarMode !== 'window') return;
+  const bar = document.getElementById('screenshot-bar-hud');
+  if (bar && bar.contains(e.target)) return;
+  if (activeHoveredWindow && activeHoveredWindow.contains(e.target)) {
+    e.stopPropagation();
+    const rect = activeHoveredWindow.getBoundingClientRect();
+    executeScreenshotActionWithRect({
+      x: Math.round(rect.left),
+      y: Math.round(rect.top),
+      width: Math.round(rect.width),
+      height: Math.round(rect.height)
+    });
+  }
+});
+
+// Crop Box Mouse Interactivity
+const cropBoxEl = document.getElementById('screenshot-crop-box');
+if (cropBoxEl) {
+  cropBoxEl.addEventListener('mousedown', (e) => {
+    if (e.target.classList.contains('ss-crop-handle')) {
+      isCropResizing = true;
+      currentResizeHandle = e.target.dataset.handle;
+    } else {
+      isCropDragging = true;
+    }
+    cropDragStartX = e.clientX;
+    cropDragStartY = e.clientY;
+    cropInitialRect = { ...cropRect };
+    e.preventDefault();
+  });
+}
+
+window.addEventListener('mousemove', (e) => {
+  if (!isScreenshotBarOpen) return;
+  if (isCropDragging && cropInitialRect) {
+    const dx = e.clientX - cropDragStartX;
+    const dy = e.clientY - cropDragStartY;
+    cropRect.x = Math.max(0, Math.min(window.innerWidth - cropRect.width, cropInitialRect.x + dx));
+    cropRect.y = Math.max(30, Math.min(window.innerHeight - cropRect.height - 40, cropInitialRect.y + dy));
+    updateCropBoxPosition();
+  } else if (isCropResizing && cropInitialRect && currentResizeHandle) {
+    const dx = e.clientX - cropDragStartX;
+    const dy = e.clientY - cropDragStartY;
+    let newX = cropInitialRect.x;
+    let newY = cropInitialRect.y;
+    let newW = cropInitialRect.width;
+    let newH = cropInitialRect.height;
+
+    if (currentResizeHandle.includes('e')) newW = Math.max(80, cropInitialRect.width + dx);
+    if (currentResizeHandle.includes('s')) newH = Math.max(60, cropInitialRect.height + dy);
+    if (currentResizeHandle.includes('w')) {
+      const dw = cropInitialRect.width - dx;
+      if (dw >= 80) {
+        newX = cropInitialRect.x + dx;
+        newW = dw;
+      }
+    }
+    if (currentResizeHandle.includes('n')) {
+      const dh = cropInitialRect.height - dy;
+      if (dh >= 60) {
+        newY = cropInitialRect.y + dy;
+        newH = dh;
+      }
+    }
+
+    cropRect = { x: newX, y: newY, width: newW, height: newH };
+    updateCropBoxPosition();
+  }
+});
+
+window.addEventListener('mouseup', () => {
+  isCropDragging = false;
+  isCropResizing = false;
+  currentResizeHandle = null;
+  cropInitialRect = null;
+});
+
+async function runCountdownTimer(seconds) {
+  const overlay = document.getElementById('screenshot-timer-overlay');
+  const circle = document.getElementById('screenshot-timer-circle');
+  if (!overlay || !circle) return;
+
+  overlay.style.display = 'flex';
+  for (let s = seconds; s >= 1; s--) {
+    circle.textContent = String(s);
+    if (window.playKeySound) window.playKeySound();
+    await new Promise(r => setTimeout(r, 1000));
+  }
+  overlay.style.display = 'none';
+}
+
+async function executeScreenshotAction() {
+  if (screenshotTimerSeconds > 0) {
+    await runCountdownTimer(screenshotTimerSeconds);
+  }
+  
+  if (screenshotBarMode.startsWith('rec_')) {
+    executeRecordingAction();
+    return;
+  }
+
+  if (screenshotBarMode === 'screen') {
+    closeScreenshotUtilityBar();
+    captureFullscreen();
+  } else if (screenshotBarMode === 'portion') {
+    const targetRect = { ...cropRect };
+    closeScreenshotUtilityBar();
+    finishAreaScreenshot(targetRect);
+  } else if (screenshotBarMode === 'window') {
+    if (activeHoveredWindow) {
+      const rect = activeHoveredWindow.getBoundingClientRect();
+      closeScreenshotUtilityBar();
+      finishAreaScreenshot({
+        x: Math.round(rect.left),
+        y: Math.round(rect.top),
+        width: Math.round(rect.width),
+        height: Math.round(rect.height)
+      });
+    } else {
+      closeScreenshotUtilityBar();
+      captureFullscreen();
+    }
+  }
+}
+
+async function executeScreenshotActionWithRect(rect) {
+  if (screenshotTimerSeconds > 0) {
+    await runCountdownTimer(screenshotTimerSeconds);
+  }
+  closeScreenshotUtilityBar();
+  finishAreaScreenshot(rect);
+}
+
+function executeRecordingAction() {
+  closeScreenshotUtilityBar();
+  if (window.AppleAudioEngine) window.AppleAudioEngine.playShutter();
+  if (typeof showNotification === 'function') {
+    showNotification('屏幕录制已开启', '点击动态岛或控制中心可随时停止屏幕录制。', '屏幕录制', '🎥');
+  }
+
+  setTimeout(() => {
+    const now = new Date();
+    const pad = (n) => String(n).padStart(2, '0');
+    const filename = `屏幕录制 ${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}.${pad(now.getMinutes())}.mov`;
+    if (window.aliceOS && window.aliceOS.vfs) {
+      window.aliceOS.vfs.writeFile(`/home/${currentUser}/Desktop/${filename}`, 'ALICE_SCREEN_RECORDING_DATA');
+    }
+    if (typeof showNotification === 'function') {
+      showNotification('屏幕录制已存储', `已保存至桌面: ${filename}`, '屏幕录制', '🎥');
+    }
+  }, 3000);
+}
+
+window.toggleScreenshotUtilityBar = toggleScreenshotUtilityBar;
+window.openScreenshotUtilityBar = openScreenshotUtilityBar;
+window.closeScreenshotUtilityBar = closeScreenshotUtilityBar;
+window.setScreenshotMode = setScreenshotMode;
+window.toggleScreenshotOptions = toggleScreenshotOptions;
+window.setScreenshotSaveLocation = setScreenshotSaveLocation;
+window.setScreenshotTimer = setScreenshotTimer;
+window.toggleScreenshotOptThumb = toggleScreenshotOptThumb;
+window.toggleScreenshotOptPointer = toggleScreenshotOptPointer;
+window.executeScreenshotAction = executeScreenshotAction;
+
 
 // Markup Quick Look Modal Logic
 let markupColor = '#ff3b30';
@@ -21743,6 +27077,8 @@ window.launchCalendar = launchCalendar;
 window.launchClock = launchClock;
 window.launchReminders = launchReminders;
 window.launchTextEdit = launchTextEdit;
+window.launchTerminal = launchTerminal;
+window.launchIPhoneMirroring = launchIPhoneMirroring;
 window.updateDockCalendarIcon = updateDockCalendarIcon;
 
 // ============================================================
@@ -21766,50 +27102,7 @@ function hideTilingMenu() {
   _tilingTargetWin = null;
 }
 
-function applyTiling(mode) {
-  const win = _tilingTargetWin || (typeof activeTileWin !== 'undefined' ? activeTileWin : document.querySelector('.window:not([style*="display: none"]):last-of-type'));
-  hideTilingMenu();
-  if (typeof hideWindowTilePopover === 'function') hideWindowTilePopover();
-  if (!win) return;
-
-  const mb = 28; // menubar height
-  const db = 82; // dock height + padding
-  const gap = 8;
-  const vw = window.innerWidth;
-  const vh = window.innerHeight;
-
-  const halfW  = Math.floor((vw - gap * 3) / 2);
-  const halfH  = Math.floor((vh - mb - db - gap * 3) / 2);
-  const fullH  = vh - mb - db - gap * 2;
-  const fullW  = vw - gap * 2;
-  const centerW = Math.min(760, vw - 100);
-  const centerH = Math.min(520, vh - mb - db - 60);
-
-  const positions = {
-    full:     { left: gap,           top: mb + gap,               width: fullW,  height: fullH  },
-    left:     { left: gap,           top: mb + gap,               width: halfW,  height: fullH  },
-    right:    { left: halfW+gap*2,   top: mb + gap,               width: halfW,  height: fullH  },
-    center:   { left: (vw-centerW)/2,top: mb + (vh-mb-db-centerH)/2, width: centerW, height: centerH },
-    topleft:  { left: gap,           top: mb + gap,               width: halfW,  height: halfH  },
-    topright: { left: halfW+gap*2,   top: mb + gap,               width: halfW,  height: halfH  },
-    botleft:  { left: gap,           top: mb + halfH + gap*2,     width: halfW,  height: halfH  },
-    botright: { left: halfW+gap*2,   top: mb + halfH + gap*2,     width: halfW,  height: halfH  },
-  };
-
-  const p = positions[mode];
-  if (!p) return;
-
-  win.style.transition = 'all 0.38s cubic-bezier(0.16, 1, 0.3, 1)';
-  Object.assign(win.style, {
-    left:   p.left   + 'px',
-    top:    p.top    + 'px',
-    width:  p.width  + 'px',
-    height: p.height + 'px',
-  });
-  win.dataset.snapped = mode;
-  if (typeof focusWindow === 'function') focusWindow(win);
-  setTimeout(() => win.style.transition = '', 400);
-}
+// applyTiling is defined above with HUD pill and shortcuts support
 
 // Hook green button to show our new tiling menu
 document.addEventListener('DOMContentLoaded', () => {
@@ -21831,3 +27124,1806 @@ document.addEventListener('DOMContentLoaded', () => {
 window.applyTiling  = applyTiling;
 window.showTilingMenu = showTilingMenu;
 window.hideTilingMenu = hideTilingMenu;
+
+// ============================================================
+// macOS Sequoia "About This Mac" (关于本机) Engine
+// ============================================================
+function openAboutMac() {
+  const modal = document.getElementById('about-mac-modal');
+  if (modal) {
+    modal.classList.add('show');
+  }
+}
+
+function closeAboutMac(e) {
+  if (e && e.target !== e.currentTarget && !e.target.classList.contains('close')) return;
+  const modal = document.getElementById('about-mac-modal');
+  if (modal) {
+    modal.classList.remove('show');
+  }
+}
+
+function copyMacSerial() {
+  const serialText = document.getElementById('about-mac-serial')?.innerText || 'C02G879XP0D9';
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(serialText);
+  }
+  const btn = document.querySelector('.about-mac-copy-btn');
+  if (btn) {
+    btn.innerText = '已复制 ✓';
+    btn.style.background = '#34c759';
+    setTimeout(() => {
+      btn.innerText = '复制';
+      btn.style.background = '';
+    }, 1600);
+  }
+  if (typeof window.notifyIslandLocal === 'function') {
+    window.notifyIslandLocal('📋', '序列号已复制', 100);
+  } else if (typeof showNotification === 'function') {
+    showNotification('剪贴板', `序列号 ${serialText} 已复制到剪贴板`, '系统设置', 'assets/icons/settings.png');
+  }
+}
+
+function checkMacSoftwareUpdate() {
+  closeAboutMac();
+  if (typeof showNotification === 'function') {
+    showNotification('软件更新', '正在检查 macOS 软件更新...', '系统设置', 'assets/icons/settings.png');
+    setTimeout(() => {
+      showNotification('软件更新', 'macOS Sequoia 15.2 · 您的 Mac 已是最新版本。', '系统设置', 'assets/icons/settings.png');
+    }, 1800);
+  }
+}
+
+// ============================================================
+// macOS Realistic Dock App Bounce Manager (Squash & Stretch)
+// ============================================================
+const _dockBounceTimers = new Map();
+
+function startDockBounce(appKey) {
+  if (!appKey) return;
+  const icon = document.querySelector(`.dock-icon[data-app="${appKey}"]`);
+  if (!icon) return;
+
+  icon.classList.add('dock-bouncing');
+
+  if (_dockBounceTimers.has(appKey)) {
+    clearTimeout(_dockBounceTimers.get(appKey));
+  }
+  // Max safety timeout 8 seconds
+  const t = setTimeout(() => {
+    stopDockBounce(appKey);
+  }, 8000);
+  _dockBounceTimers.set(appKey, t);
+}
+
+function stopDockBounce(appKey) {
+  if (!appKey) return;
+  const icon = document.querySelector(`.dock-icon[data-app="${appKey}"]`);
+  if (icon) {
+    icon.classList.remove('dock-bouncing');
+  }
+  if (_dockBounceTimers.has(appKey)) {
+    clearTimeout(_dockBounceTimers.get(appKey));
+    _dockBounceTimers.delete(appKey);
+  }
+}
+
+// Expose globally
+window.openAboutMac = openAboutMac;
+window.closeAboutMac = closeAboutMac;
+window.copyMacSerial = copyMacSerial;
+window.checkMacSoftwareUpdate = checkMacSoftwareUpdate;
+window.startDockBounce = startDockBounce;
+window.stopDockBounce = stopDockBounce;
+
+// ============================================================
+// macOS Menubar Calendar Popover
+// ============================================================
+if (!window._calViewDate) window._calViewDate = new Date();
+
+function renderMenubarCalendar() {
+  const grid = document.getElementById('cal-grid');
+  const label = document.getElementById('cal-month-label');
+  if (!grid || !label) return;
+
+  const today = new Date();
+  const y = _calViewDate.getFullYear();
+  const m = _calViewDate.getMonth();
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  label.textContent = `${months[m]} ${y}`;
+
+  const firstDay = new Date(y, m, 1).getDay(); // 0=Sun
+  const daysInMonth = new Date(y, m + 1, 0).getDate();
+
+  grid.innerHTML = '';
+  // Empty cells before first day
+  for (let i = 0; i < firstDay; i++) {
+    const blank = document.createElement('div');
+    blank.style.cssText = 'height:28px;';
+    grid.appendChild(blank);
+  }
+  for (let d = 1; d <= daysInMonth; d++) {
+    const cell = document.createElement('div');
+    const isToday = (d === today.getDate() && m === today.getMonth() && y === today.getFullYear());
+    cell.textContent = d;
+    if (isToday) {
+      cell.dataset.today = 'true';
+      cell.style.cssText = 'height:28px;line-height:28px;font-size:12px;border-radius:50%;cursor:default;background:#ff3b30;color:#ffffff !important;font-weight:700;box-shadow:0 2px 6px rgba(255,59,48,0.4);';
+    } else {
+      cell.style.cssText = 'height:28px;line-height:28px;font-size:12px;border-radius:50%;cursor:default;transition:background 0.1s;color:rgba(255,255,255,0.88);';
+      cell.addEventListener('mouseenter', () => { cell.style.background = 'rgba(255,255,255,0.12)'; });
+      cell.addEventListener('mouseleave', () => { cell.style.background = ''; });
+    }
+    grid.appendChild(cell);
+  }
+}
+
+window.toggleMenubarCalendar = function(e) {
+  if (typeof toggleNotificationCenter === 'function') {
+    toggleNotificationCenter(e);
+    return;
+  }
+  if (e) e.stopPropagation();
+  const cal = document.getElementById('menubar-calendar');
+  const timeBtn = document.getElementById('time-display');
+  if (!cal) return;
+  if (cal.style.display === 'none' || !cal.style.display) {
+    _calViewDate = new Date();
+    cal.style.display = 'block';
+    cal.style.animation = 'contextMenuIn 0.18s cubic-bezier(0.16,1,0.3,1) forwards';
+    if (timeBtn) timeBtn.classList.add('active');
+    renderMenubarCalendar();
+  } else {
+    cal.style.display = 'none';
+    if (timeBtn) timeBtn.classList.remove('active');
+  }
+};
+
+window.calNavMonth = function(dir) {
+  if (!_calViewDate) _calViewDate = new Date();
+  _calViewDate.setMonth(_calViewDate.getMonth() + dir);
+  renderMenubarCalendar();
+  if (typeof renderNCCalendar === 'function') renderNCCalendar();
+};
+
+// Close calendar and Notification Center on outside click
+document.addEventListener('click', (e) => {
+  const cal = document.getElementById('menubar-calendar');
+  if (cal) cal.style.display = 'none';
+
+  const nc = document.getElementById('nc-panel');
+  const timeBtn = document.getElementById('time-display');
+  if (nc && nc.classList.contains('open')) {
+    if (!nc.contains(e.target) && (!timeBtn || !timeBtn.contains(e.target))) {
+      closeNotificationCenter();
+    }
+  }
+
+  const ssOpts = document.getElementById('ss-options-popover');
+  const optBtn = document.getElementById('ss-options-btn');
+  if (ssOpts && ssOpts.style.display !== 'none' && !ssOpts.contains(e.target)) {
+    if (!optBtn || !optBtn.contains(e.target)) {
+      ssOpts.style.display = 'none';
+    }
+  }
+});
+
+// ============================================================
+// Component 1: macOS Universal Clipboard Continuity Capsule HUD
+// ============================================================
+let _clipboardHudTimer = null;
+
+function showUniversalClipboardHUD(sourceDevice = 'iPhone', customText = null) {
+  const hud = document.getElementById('clipboard-sync-hud');
+  if (!hud) return;
+  const label = document.getElementById('clipboard-sync-label');
+  const icon = document.getElementById('clipboard-sync-icon');
+
+  if (label) {
+    label.innerText = customText || (sourceDevice === 'Mac' ? '从 Mac 粘贴...' : `从 ${sourceDevice} 粘贴...`);
+  }
+
+  if (icon) {
+    if (sourceDevice === 'Mac' || sourceDevice === 'MacBook') {
+      icon.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`;
+    } else {
+      icon.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="3"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>`;
+    }
+  }
+
+  hud.style.display = 'flex';
+  // Trigger DOM reflow for CSS transition
+  void hud.offsetWidth;
+  hud.classList.add('open');
+
+  if (window.AppleAudioEngine && typeof window.AppleAudioEngine.playPop === 'function') {
+    window.AppleAudioEngine.playPop();
+  }
+
+  if (_clipboardHudTimer) clearTimeout(_clipboardHudTimer);
+  _clipboardHudTimer = setTimeout(() => {
+    hud.classList.remove('open');
+    setTimeout(() => {
+      if (!hud.classList.contains('open')) {
+        hud.style.display = 'none';
+      }
+    }, 360);
+  }, 1800);
+}
+
+// Global paste listener for Continuity
+document.addEventListener('paste', (e) => {
+  if (e.target && e.target.closest && e.target.closest('.iphone-mirroring-window')) {
+    showUniversalClipboardHUD('Mac', '从 Mac 粘贴...');
+  }
+});
+
+// Expose Universal Clipboard HUD globally
+window.showUniversalClipboardHUD = showUniversalClipboardHUD;
+
+// ============================================================
+// Component 2: macOS AirDrop Incoming Flow & Auto-Save to ~/Downloads
+// ============================================================
+let _incomingAirDropData = null;
+
+function triggerIncomingAirDrop(fromDevice = 'Alice 的 iPhone 16 Pro', fileName = 'Sequoia_Shot_2026.png', fileSize = '3.8 MB', fileContent = null, icon = '🖼️') {
+  _incomingAirDropData = { fromDevice, fileName, fileSize, fileContent, icon };
+  
+  // 1. Update notification banner if present
+  const banner = document.getElementById('airdrop-incoming-banner');
+  if (banner) {
+    const devEl = document.getElementById('airdrop-inc-device');
+    const nameEl = document.getElementById('airdrop-inc-name');
+    const metaEl = document.getElementById('airdrop-inc-meta');
+    const actionsEl = document.getElementById('airdrop-inc-actions');
+    const progressEl = document.getElementById('airdrop-inc-progress');
+    const barEl = document.getElementById('airdrop-inc-bar');
+    const statusEl = document.getElementById('airdrop-inc-status');
+    const iconEl = banner.querySelector('.airdrop-banner-file-icon');
+
+    if (devEl) devEl.innerText = `“${fromDevice}” 想要共享 1 个项目：`;
+    if (nameEl) nameEl.innerText = fileName;
+    if (metaEl) metaEl.innerText = fileSize;
+    if (iconEl) iconEl.innerText = icon;
+
+    if (actionsEl) {
+      actionsEl.style.display = 'flex';
+      actionsEl.innerHTML = `
+        <button class="airdrop-btn-decline" onclick="declineIncomingAirDrop()">拒绝</button>
+        <button class="airdrop-btn-accept" id="airdrop-inc-accept-btn" onclick="acceptIncomingAirDrop()">接受</button>
+      `;
+    }
+    if (progressEl) progressEl.style.display = 'none';
+    if (barEl) barEl.style.width = '0%';
+    if (statusEl) statusEl.innerText = '正在接收...';
+
+    banner.style.display = 'flex';
+    banner.style.opacity = '1';
+    banner.style.transform = 'translateY(0) scale(1)';
+  }
+
+  // 2. Update macOS Sequoia 1:1 Center Modal if present
+  const modal = document.getElementById('airdrop-incoming-modal');
+  if (modal) {
+    const senderName = document.getElementById('airdrop-modal-sender-name');
+    const mFileName = document.getElementById('airdrop-modal-file-name');
+    const mFileSize = document.getElementById('airdrop-modal-file-size');
+    const mFileIcon = document.getElementById('airdrop-modal-file-icon');
+    const mActions = document.getElementById('airdrop-modal-actions');
+    const mProgress = document.getElementById('airdrop-modal-progress');
+    const mBar = document.getElementById('airdrop-modal-bar');
+    const mStatus = document.getElementById('airdrop-modal-status');
+
+    if (senderName) senderName.innerText = fromDevice;
+    if (mFileName) mFileName.innerText = fileName;
+    if (mFileSize) mFileSize.innerText = `${fileSize} · 隔空投送项目`;
+    if (mFileIcon) mFileIcon.innerText = icon;
+
+    if (mActions) {
+      mActions.style.display = 'flex';
+      mActions.innerHTML = `
+        <button class="airdrop-btn airdrop-btn-decline" onclick="declineIncomingAirDrop()">拒绝</button>
+        <button class="airdrop-btn airdrop-btn-accept" onclick="acceptIncomingAirDrop()">接受</button>
+      `;
+    }
+    if (mProgress) mProgress.style.display = 'none';
+    if (mBar) mBar.style.width = '0%';
+    if (mStatus) mStatus.innerText = '正在接收...';
+
+    modal.style.display = 'flex';
+  }
+
+  if (window.AppleAudioEngine && typeof window.AppleAudioEngine.playAirDrop === 'function') {
+    window.AppleAudioEngine.playAirDrop();
+  }
+}
+
+function declineIncomingAirDrop() {
+  const banner = document.getElementById('airdrop-incoming-banner');
+  if (banner) {
+    banner.style.transition = 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)';
+    banner.style.opacity = '0';
+    banner.style.transform = 'translateY(-16px) scale(0.96)';
+    setTimeout(() => {
+      banner.style.display = 'none';
+      banner.style.transition = '';
+    }, 260);
+  }
+
+  const modal = document.getElementById('airdrop-incoming-modal');
+  if (modal) {
+    modal.style.display = 'none';
+  }
+
+  if (window.AppleAudioEngine && typeof window.AppleAudioEngine.playPop === 'function') {
+    window.AppleAudioEngine.playPop();
+  }
+  _incomingAirDropData = null;
+}
+
+async function acceptIncomingAirDrop() {
+  if (!_incomingAirDropData) return;
+  const banner = document.getElementById('airdrop-incoming-banner');
+  const modal = document.getElementById('airdrop-incoming-modal');
+
+  const actionsEl = document.getElementById('airdrop-inc-actions');
+  const progressEl = document.getElementById('airdrop-inc-progress');
+  const barEl = document.getElementById('airdrop-inc-bar');
+  const statusEl = document.getElementById('airdrop-inc-status');
+
+  const mActions = document.getElementById('airdrop-modal-actions');
+  const mProgress = document.getElementById('airdrop-modal-progress');
+  const mBar = document.getElementById('airdrop-modal-bar');
+  const mStatus = document.getElementById('airdrop-modal-status');
+
+  if (actionsEl) actionsEl.style.display = 'none';
+  if (progressEl) progressEl.style.display = 'flex';
+  if (mActions) mActions.style.display = 'none';
+  if (mProgress) mProgress.style.display = 'flex';
+
+  const { fromDevice, fileName, fileContent } = _incomingAirDropData;
+
+  // Step 1: Simulated high-speed wireless transfer progress
+  const setBar = (pct) => {
+    if (barEl) barEl.style.width = pct + '%';
+    if (mBar) mBar.style.width = pct + '%';
+  };
+
+  setBar(35);
+  await new Promise(r => setTimeout(r, 220));
+  setBar(78);
+  await new Promise(r => setTimeout(r, 260));
+  setBar(100);
+  await new Promise(r => setTimeout(r, 200));
+
+  // Step 2: Write file to VFS ~/Downloads
+  try {
+    const defaultData = fileContent || `AliceOS AirDrop Transfer Item\nSource Device: ${fromDevice}\nTimestamp: ${new Date().toLocaleString()}\nFile Name: ${fileName}\nFormat: APFS / Universal Transfer`;
+    if (window.aliceOS && window.aliceOS.vfs) {
+      await window.aliceOS.vfs.writeFile(`/Users/alice/Downloads/${fileName}`, defaultData);
+    }
+  } catch (err) {
+    console.warn('AirDrop VFS save error:', err);
+  }
+
+  // Step 3: Success chime and action buttons
+  if (window.AppleAudioEngine && typeof window.AppleAudioEngine.playAirDrop === 'function') {
+    window.AppleAudioEngine.playAirDrop();
+  }
+
+  if (statusEl) statusEl.innerText = '已存储到“下载”文件夹 ✓';
+  if (mStatus) mStatus.innerText = '已存储到“下载”文件夹 ✓';
+
+  const doneButtons = `
+    <button class="airdrop-btn airdrop-btn-accept" onclick="showAirDropFileInFinder('${fileName}')" style="background:#34c759;">在访达中显示</button>
+    <button class="airdrop-btn airdrop-btn-decline" onclick="declineIncomingAirDrop()">关闭</button>
+  `;
+  if (actionsEl) {
+    actionsEl.innerHTML = doneButtons;
+    actionsEl.style.display = 'flex';
+  }
+  if (mActions) {
+    mActions.innerHTML = doneButtons;
+    mActions.style.display = 'flex';
+  }
+
+  if (window.notifyIsland) {
+    window.notifyIsland('📡', `已接收: ${fileName}`, 100);
+  } else if (typeof showNotification === 'function') {
+    showNotification('隔空投送', `已接收来自 ${fromDevice} 的 ${fileName}，已存入“下载”文件夹。`, '访达', 'assets/icons/finder.png');
+  }
+}
+
+async function showAirDropFileInFinder(fileName) {
+  declineIncomingAirDrop();
+  if (typeof launchFinder === 'function') {
+    await launchFinder();
+    setTimeout(() => {
+      const dlItem = document.querySelector('.finder-sidebar-item[data-path="/Users/alice/Downloads"]');
+      if (dlItem) dlItem.click();
+    }, 350);
+  }
+}
+
+function simulateIncomingAirDrop() {
+  const samples = [
+    { fromDevice: "Alice 的 iPhone 16 Pro", name: "Sequoia_Shot_2026.png", size: "3.8 MB", icon: "🖼️" },
+    { fromDevice: "Alice 的 iPad Pro M4", name: "Design_System_Spec.pdf", size: "1.9 MB", icon: "📄" },
+    { fromDevice: "设计师的 MacBook Pro", name: "macOS_Liquid_Glass.svg", size: "840 KB", icon: "🎨" },
+    { fromDevice: "朋友的 iPhone 15", name: "IMG_3892_Vacation.mov", size: "34.2 MB", icon: "🎬" }
+  ];
+  const item = samples[Math.floor(Math.random() * samples.length)];
+  triggerIncomingAirDrop(item.fromDevice, item.name, item.size, null, item.icon);
+}
+
+// Expose AirDrop incoming methods globally
+window.triggerIncomingAirDrop = triggerIncomingAirDrop;
+window.declineIncomingAirDrop = declineIncomingAirDrop;
+window.acceptIncomingAirDrop = acceptIncomingAirDrop;
+window.simulateIncomingAirDrop = simulateIncomingAirDrop;
+window.showAirDropFileInFinder = showAirDropFileInFinder;
+
+// ============================================================
+// Component 3: macOS Sequoia Dynamic Weather Wallpaper Canvas Engine
+// ============================================================
+const _weatherState = {
+  active: false,
+  condition: 'rain', // 'rain', 'snow', 'sunny', 'stars'
+  animId: null,
+  canvas: null,
+  ctx: null,
+  width: 0,
+  height: 0,
+  particles: [],
+  splashes: [],
+  stars: [],
+  shootingStars: [],
+  lightningAlpha: 0,
+  sunRaysAngle: 0
+};
+
+function resizeWeatherCanvas() {
+  if (!_weatherState.canvas) return;
+  _weatherState.width = _weatherState.canvas.width = window.innerWidth;
+  _weatherState.height = _weatherState.canvas.height = window.innerHeight;
+}
+
+function initWeatherParticles(condition) {
+  _weatherState.condition = condition;
+  _weatherState.particles = [];
+  _weatherState.splashes = [];
+  _weatherState.stars = [];
+  _weatherState.shootingStars = [];
+  _weatherState.lightningAlpha = 0;
+
+  const w = _weatherState.width || window.innerWidth;
+  const h = _weatherState.height || window.innerHeight;
+
+  if (condition === 'rain') {
+    for (let i = 0; i < 160; i++) {
+      _weatherState.particles.push({
+        x: Math.random() * (w + 200) - 100,
+        y: Math.random() * h,
+        len: Math.random() * 20 + 15,
+        speed: Math.random() * 10 + 18,
+        angle: 0.18,
+        opacity: Math.random() * 0.4 + 0.35,
+        thickness: Math.random() * 1.2 + 0.8
+      });
+    }
+  } else if (condition === 'snow') {
+    for (let i = 0; i < 130; i++) {
+      _weatherState.particles.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        radius: Math.random() * 2.8 + 1.2,
+        speed: Math.random() * 1.5 + 0.8,
+        swaySpeed: Math.random() * 0.02 + 0.01,
+        swayOffset: Math.random() * Math.PI * 2,
+        opacity: Math.random() * 0.5 + 0.4
+      });
+    }
+  } else if (condition === 'sunny') {
+    for (let i = 0; i < 60; i++) {
+      _weatherState.particles.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        radius: Math.random() * 3 + 1,
+        speedY: -(Math.random() * 0.4 + 0.15),
+        speedX: (Math.random() - 0.5) * 0.3,
+        opacity: Math.random() * 0.6 + 0.2,
+        pulseSpeed: Math.random() * 0.03 + 0.01,
+        pulse: Math.random() * Math.PI
+      });
+    }
+  } else if (condition === 'stars') {
+    for (let i = 0; i < 180; i++) {
+      _weatherState.stars.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        radius: Math.random() * 1.6 + 0.6,
+        alpha: Math.random() * 0.8 + 0.2,
+        twinkleSpeed: Math.random() * 0.04 + 0.01,
+        phase: Math.random() * Math.PI * 2
+      });
+    }
+  }
+}
+
+function updateAndDrawWeather() {
+  if (!_weatherState.active || !_weatherState.ctx) return;
+  const ctx = _weatherState.ctx;
+  const w = _weatherState.width;
+  const h = _weatherState.height;
+
+  ctx.clearRect(0, 0, w, h);
+
+  const cond = _weatherState.condition;
+
+  if (cond === 'rain') {
+    // Slanted rain drops
+    ctx.lineCap = 'round';
+    for (let i = 0; i < _weatherState.particles.length; i++) {
+      const p = _weatherState.particles[i];
+      p.x += Math.sin(p.angle) * p.speed;
+      p.y += Math.cos(p.angle) * p.speed;
+
+      ctx.lineWidth = p.thickness;
+      ctx.strokeStyle = `rgba(210, 230, 255, ${p.opacity})`;
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y);
+      ctx.lineTo(p.x + Math.sin(p.angle) * p.len, p.y + Math.cos(p.angle) * p.len);
+      ctx.stroke();
+
+      if (p.y > h - 30) {
+        if (Math.random() < 0.2) {
+          _weatherState.splashes.push({
+            x: p.x,
+            y: h - Math.random() * 20 - 5,
+            rx: 1,
+            ry: 0.5,
+            maxR: Math.random() * 10 + 4,
+            opacity: 0.7
+          });
+        }
+        p.y = -p.len - 10;
+        p.x = Math.random() * (w + 200) - 100;
+      }
+    }
+
+    // Splashes & ripples
+    for (let j = _weatherState.splashes.length - 1; j >= 0; j--) {
+      const s = _weatherState.splashes[j];
+      s.rx += 0.8;
+      s.ry += 0.4;
+      s.opacity -= 0.04;
+      if (s.opacity <= 0 || s.rx >= s.maxR) {
+        _weatherState.splashes.splice(j, 1);
+        continue;
+      }
+      ctx.strokeStyle = `rgba(220, 240, 255, ${s.opacity})`;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.ellipse(s.x, s.y, s.rx, s.ry, 0, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
+    // Thunder lightning flash
+    if (Math.random() < 0.003 && _weatherState.lightningAlpha <= 0) {
+      _weatherState.lightningAlpha = 0.28;
+    }
+    if (_weatherState.lightningAlpha > 0) {
+      ctx.fillStyle = `rgba(255, 255, 255, ${_weatherState.lightningAlpha})`;
+      ctx.fillRect(0, 0, w, h);
+      _weatherState.lightningAlpha -= 0.035;
+    }
+
+  } else if (cond === 'snow') {
+    for (let i = 0; i < _weatherState.particles.length; i++) {
+      const p = _weatherState.particles[i];
+      p.swayOffset += p.swaySpeed;
+      p.x += Math.sin(p.swayOffset) * 0.9;
+      p.y += p.speed;
+
+      if (p.y > h) {
+        p.y = -p.radius;
+        p.x = Math.random() * w;
+      }
+      if (p.x < 0) p.x = w;
+      if (p.x > w) p.x = 0;
+
+      ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+  } else if (cond === 'sunny') {
+    _weatherState.sunRaysAngle += 0.0015;
+    const sunX = w - 80;
+    const sunY = 60;
+
+    const sunGrad = ctx.createRadialGradient(sunX, sunY, 10, sunX, sunY, 450);
+    sunGrad.addColorStop(0, 'rgba(255, 230, 160, 0.4)');
+    sunGrad.addColorStop(0.3, 'rgba(255, 200, 100, 0.18)');
+    sunGrad.addColorStop(1, 'rgba(255, 180, 50, 0)');
+    ctx.fillStyle = sunGrad;
+    ctx.fillRect(0, 0, w, h);
+
+    for (let i = 0; i < _weatherState.particles.length; i++) {
+      const p = _weatherState.particles[i];
+      p.pulse += p.pulseSpeed;
+      p.x += p.speedX;
+      p.y += p.speedY;
+
+      if (p.y < 0) {
+        p.y = h + 10;
+        p.x = Math.random() * w;
+      }
+
+      const alpha = p.opacity * (0.6 + 0.4 * Math.sin(p.pulse));
+      ctx.fillStyle = `rgba(255, 245, 200, ${alpha})`;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+  } else if (cond === 'stars') {
+    for (let i = 0; i < _weatherState.stars.length; i++) {
+      const s = _weatherState.stars[i];
+      s.phase += s.twinkleSpeed;
+      const alpha = s.alpha * (0.5 + 0.5 * Math.sin(s.phase));
+      ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    if (Math.random() < 0.015 && _weatherState.shootingStars.length < 2) {
+      _weatherState.shootingStars.push({
+        x: Math.random() * w * 0.7,
+        y: Math.random() * h * 0.4,
+        len: Math.random() * 80 + 60,
+        speed: Math.random() * 15 + 18,
+        alpha: 1
+      });
+    }
+
+    ctx.lineCap = 'round';
+    for (let m = _weatherState.shootingStars.length - 1; m >= 0; m--) {
+      const st = _weatherState.shootingStars[m];
+      st.x += st.speed;
+      st.y += st.speed * 0.55;
+      st.alpha -= 0.025;
+
+      if (st.alpha <= 0 || st.x > w || st.y > h) {
+        _weatherState.shootingStars.splice(m, 1);
+        continue;
+      }
+
+      const grad = ctx.createLinearGradient(st.x, st.y, st.x - st.len, st.y - st.len * 0.55);
+      grad.addColorStop(0, `rgba(255, 255, 255, ${st.alpha})`);
+      grad.addColorStop(1, `rgba(255, 255, 255, 0)`);
+
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 1.8;
+      ctx.beginPath();
+      ctx.moveTo(st.x, st.y);
+      ctx.lineTo(st.x - st.len, st.y - st.len * 0.55);
+      ctx.stroke();
+    }
+  }
+
+  _weatherState.animId = requestAnimationFrame(updateAndDrawWeather);
+}
+
+function initWeatherWallpaperEngine(condition = 'rain') {
+  const canvas = document.getElementById('weather-wallpaper-canvas');
+  if (!canvas) return;
+  _weatherState.canvas = canvas;
+  _weatherState.ctx = canvas.getContext('2d');
+  _weatherState.active = true;
+
+  resizeWeatherCanvas();
+  window.removeEventListener('resize', resizeWeatherCanvas);
+  window.addEventListener('resize', resizeWeatherCanvas);
+
+  initWeatherParticles(condition);
+
+  canvas.classList.add('active');
+
+  if (_weatherState.animId) cancelAnimationFrame(_weatherState.animId);
+  _weatherState.animId = requestAnimationFrame(updateAndDrawWeather);
+}
+
+function stopWeatherWallpaperEngine() {
+  _weatherState.active = false;
+  if (_weatherState.animId) {
+    cancelAnimationFrame(_weatherState.animId);
+    _weatherState.animId = null;
+  }
+  const canvas = document.getElementById('weather-wallpaper-canvas');
+  if (canvas) {
+    canvas.classList.remove('active');
+    const ctx = canvas.getContext('2d');
+    if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+}
+
+function setWeatherCondition(condition) {
+  if (!_weatherState.active) {
+    initWeatherWallpaperEngine(condition);
+  } else {
+    initWeatherParticles(condition);
+  }
+}
+
+function getWeatherCondition() {
+  return _weatherState.condition;
+}
+
+// Expose weather engine globally
+window.initWeatherWallpaperEngine = initWeatherWallpaperEngine;
+window.stopWeatherWallpaperEngine = stopWeatherWallpaperEngine;
+window.setWeatherCondition = setWeatherCondition;
+window.getWeatherCondition = getWeatherCondition;
+
+// Auto-start dynamic weather on boot if configured in settings
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    const curWp = typeof window.getWallpaperSetting === 'function' ? window.getWallpaperSetting() : '';
+    if (curWp === 'dynamic-weather') {
+      initWeatherWallpaperEngine('rain');
+    }
+  }, 500);
+});
+
+// ============================================================
+// macOS Apple Menu Recent Items Flyout Engine
+// ============================================================
+let _recentSubmenuTimer = null;
+
+function openRecentSubmenu() {
+  if (_recentSubmenuTimer) clearTimeout(_recentSubmenuTimer);
+  const submenu = document.getElementById('apple-recent-submenu');
+  if (submenu) {
+    submenu.style.display = 'block';
+  }
+}
+
+function scheduleCloseRecentSubmenu() {
+  if (_recentSubmenuTimer) clearTimeout(_recentSubmenuTimer);
+  _recentSubmenuTimer = setTimeout(() => {
+    const submenu = document.getElementById('apple-recent-submenu');
+    if (submenu) submenu.style.display = 'none';
+  }, 250);
+}
+
+function cancelCloseRecentSubmenu() {
+  if (_recentSubmenuTimer) clearTimeout(_recentSubmenuTimer);
+}
+
+function clearRecentItems() {
+  const appsList = document.getElementById('recent-apps-list');
+  const docsList = document.getElementById('recent-docs-list');
+  if (appsList) appsList.innerHTML = '<div class="menu-dropdown-item" style="opacity:0.4;pointer-events:none;">无最近打开的应用</div>';
+  if (docsList) docsList.innerHTML = '<div class="menu-dropdown-item" style="opacity:0.4;pointer-events:none;">无最近打开的文稿</div>';
+  if (window.AppleAudioEngine && window.AppleAudioEngine.playPop) window.AppleAudioEngine.playPop();
+}
+
+function openRecentDoc(docName) {
+  if (typeof launchFinder === 'function') {
+    launchFinder();
+    setTimeout(() => {
+      const dlItem = document.querySelector('.finder-sidebar-item[data-path="/Users/alice/Downloads"]');
+      if (dlItem) dlItem.click();
+    }, 350);
+  }
+}
+
+window.openRecentSubmenu = openRecentSubmenu;
+window.scheduleCloseRecentSubmenu = scheduleCloseRecentSubmenu;
+window.cancelCloseRecentSubmenu = cancelCloseRecentSubmenu;
+window.clearRecentItems = clearRecentItems;
+window.openRecentDoc = openRecentDoc;
+
+// ============================================================
+// macOS Force Quit Applications Dialog (⌥⌘⎋) Engine
+// ============================================================
+let _selectedForceQuitApp = null;
+
+function openForceQuitDialog() {
+  const modal = document.getElementById('force-quit-modal');
+  const listEl = document.getElementById('force-quit-list');
+  const actionBtn = document.getElementById('force-quit-action-btn');
+  if (!modal || !listEl) return;
+
+  // Gather active windows & finder
+  const activeWins = Array.from(windows.values()).filter(w => !w.dataset.isMinimized);
+  const appMap = new Map();
+
+  // Finder is always running on macOS
+  appMap.set('finder', {
+    appKey: 'finder',
+    title: '访达',
+    iconSrc: 'assets/icons/finder.png',
+    pid: 'finder-root',
+    isFinder: true
+  });
+
+  activeWins.forEach(win => {
+    const appKey = win.dataset.app || 'app';
+    const title = win.querySelector('.window-title')?.innerText || win.dataset.title || '应用程序';
+    const iconImg = document.querySelector(`.dock-icon[data-app="${appKey}"] img`)?.src || 'assets/icons/finder.png';
+    appMap.set(appKey, {
+      appKey,
+      title,
+      iconSrc: iconImg,
+      pid: win.dataset.pid || win.id,
+      isFinder: (appKey === 'finder')
+    });
+  });
+
+  const apps = Array.from(appMap.values());
+  listEl.innerHTML = '';
+
+  apps.forEach((app, idx) => {
+    const item = document.createElement('div');
+    item.className = 'force-quit-item' + (idx === 0 ? ' selected' : '');
+    item.dataset.appKey = app.appKey;
+    item.dataset.pid = app.pid;
+    item.dataset.isFinder = app.isFinder ? 'true' : 'false';
+
+    item.innerHTML = `
+      <img class="force-quit-item-icon" src="${app.iconSrc}" alt="${app.title}" onerror="this.src='assets/icons/finder.png'" />
+      <span class="force-quit-item-name">${app.title}</span>
+    `;
+
+    item.onclick = () => {
+      listEl.querySelectorAll('.force-quit-item').forEach(it => it.classList.remove('selected'));
+      item.classList.add('selected');
+      _selectedForceQuitApp = app;
+      if (actionBtn) {
+        if (app.isFinder) {
+          actionBtn.innerText = '重新开启';
+        } else {
+          actionBtn.innerText = '强制退出';
+        }
+      }
+    };
+
+    listEl.appendChild(item);
+  });
+
+  _selectedForceQuitApp = apps[0];
+  if (actionBtn) {
+    if (_selectedForceQuitApp && _selectedForceQuitApp.isFinder) {
+      actionBtn.innerText = '重新开启';
+    } else {
+      actionBtn.innerText = '强制退出';
+    }
+  }
+
+  modal.style.display = 'flex';
+  if (window.AppleAudioEngine && window.AppleAudioEngine.playPop) window.AppleAudioEngine.playPop();
+}
+
+function closeForceQuitDialog() {
+  const modal = document.getElementById('force-quit-modal');
+  if (modal) modal.style.display = 'none';
+  _selectedForceQuitApp = null;
+}
+
+function toggleForceQuitDialog() {
+  const modal = document.getElementById('force-quit-modal');
+  if (modal && modal.style.display !== 'none') {
+    closeForceQuitDialog();
+  } else {
+    openForceQuitDialog();
+  }
+}
+
+function executeForceQuit() {
+  if (!_selectedForceQuitApp) return;
+  const { appKey, pid, isFinder } = _selectedForceQuitApp;
+
+  if (isFinder) {
+    if (typeof refreshDesktop === 'function') refreshDesktop();
+    if (window.AppleAudioEngine && window.AppleAudioEngine.playPop) window.AppleAudioEngine.playPop();
+    if (typeof showNotification === 'function') {
+      showNotification('访达', '访达已重新开启。', '系统操作', 'assets/icons/finder.png');
+    }
+    closeForceQuitDialog();
+    return;
+  }
+
+  const win = Array.from(windows.values()).find(w => (w.dataset.pid === pid || w.id === pid || w.dataset.app === appKey));
+  if (win) {
+    if (typeof closeWindow === 'function') {
+      closeWindow(win);
+    } else {
+      win.remove();
+    }
+  }
+
+  if (typeof stopDockBounce === 'function') stopDockBounce(appKey);
+  if (window.AppleAudioEngine && window.AppleAudioEngine.playPop) window.AppleAudioEngine.playPop();
+
+  openForceQuitDialog();
+}
+
+window.openForceQuitDialog = openForceQuitDialog;
+window.closeForceQuitDialog = closeForceQuitDialog;
+window.toggleForceQuitDialog = toggleForceQuitDialog;
+window.executeForceQuit = executeForceQuit;
+
+// ============================================================
+// macOS Native Power (Restart & Shut Down 60s Countdown) Engine
+// ============================================================
+let _powerActionType = 'restart';
+let _powerCountdownTimer = null;
+let _powerCountdownSecs = 60;
+
+function confirmMacRestart() {
+  _powerActionType = 'restart';
+  _powerCountdownSecs = 60;
+  const modal = document.getElementById('mac-power-modal');
+  const title = document.getElementById('mac-power-title');
+  const desc = document.getElementById('mac-power-desc');
+  const icon = document.getElementById('mac-power-icon');
+  const confirmBtn = document.getElementById('mac-power-confirm-btn');
+
+  if (title) title.innerText = '您确定要现在重新启动吗？';
+  if (desc) desc.innerHTML = '如果您不进行任何操作，Mac 将在 <span id="mac-power-countdown">60</span> 秒后自动重新启动。';
+  if (confirmBtn) {
+    confirmBtn.innerText = '重新启动';
+    confirmBtn.style.background = '#007aff';
+  }
+  if (icon) {
+    icon.innerHTML = `
+      <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+        <circle cx="32" cy="32" r="30" fill="url(#restart-grad)"/>
+        <path d="M44 26A14 14 0 1 0 46 32h-4" stroke="white" stroke-width="4" stroke-linecap="round"/>
+        <polyline points="40 18 46 26 52 18" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        <defs>
+          <linearGradient id="restart-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#007aff"/>
+            <stop offset="100%" stop-color="#5856d6"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    `;
+  }
+
+  if (modal) modal.style.display = 'flex';
+  if (window.AppleAudioEngine && window.AppleAudioEngine.playPop) window.AppleAudioEngine.playPop();
+
+  startPowerCountdown();
+}
+
+function confirmMacShutdown() {
+  _powerActionType = 'shutdown';
+  _powerCountdownSecs = 60;
+  const modal = document.getElementById('mac-power-modal');
+  const title = document.getElementById('mac-power-title');
+  const desc = document.getElementById('mac-power-desc');
+  const icon = document.getElementById('mac-power-icon');
+  const confirmBtn = document.getElementById('mac-power-confirm-btn');
+
+  if (title) title.innerText = '您确定要现在关机吗？';
+  if (desc) desc.innerHTML = '如果您不进行任何操作，Mac 将在 <span id="mac-power-countdown">60</span> 秒后自动关机。';
+  if (confirmBtn) {
+    confirmBtn.innerText = '关机';
+    confirmBtn.style.background = '#ff3b30';
+  }
+  if (icon) {
+    icon.innerHTML = `
+      <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+        <circle cx="32" cy="32" r="30" fill="url(#shutdown-grad)"/>
+        <path d="M32 16v16M20 22a16 16 0 1 0 24 0" stroke="white" stroke-width="4" stroke-linecap="round"/>
+        <defs>
+          <linearGradient id="shutdown-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ff9500"/>
+            <stop offset="100%" stop-color="#ff3b30"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    `;
+  }
+
+  if (modal) modal.style.display = 'flex';
+  if (window.AppleAudioEngine && window.AppleAudioEngine.playPop) window.AppleAudioEngine.playPop();
+
+  startPowerCountdown();
+}
+
+function startPowerCountdown() {
+  if (_powerCountdownTimer) clearInterval(_powerCountdownTimer);
+  _powerCountdownTimer = setInterval(() => {
+    _powerCountdownSecs--;
+    const cdEl = document.getElementById('mac-power-countdown');
+    if (cdEl) cdEl.innerText = _powerCountdownSecs;
+    if (_powerCountdownSecs <= 0) {
+      clearInterval(_powerCountdownTimer);
+      executeMacPowerAction();
+    }
+  }, 1000);
+}
+
+function cancelMacPowerAction() {
+  if (_powerCountdownTimer) clearInterval(_powerCountdownTimer);
+  const modal = document.getElementById('mac-power-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+function executeMacPowerAction() {
+  cancelMacPowerAction();
+
+  document.body.style.transition = 'opacity 0.6s ease, filter 0.6s ease';
+  document.body.style.opacity = '0';
+  document.body.style.filter = 'brightness(0.3) blur(8px)';
+
+  setTimeout(() => {
+    if (_powerActionType === 'restart') {
+      location.reload();
+    } else {
+      if (window.aliceOS && typeof window.aliceOS.closeWindow === 'function') {
+        window.aliceOS.closeWindow();
+      } else {
+        window.close();
+      }
+    }
+  }, 650);
+}
+
+window.confirmMacRestart = confirmMacRestart;
+window.confirmMacShutdown = confirmMacShutdown;
+window.cancelMacPowerAction = cancelMacPowerAction;
+window.executeMacPowerAction = executeMacPowerAction;
+
+// ============================================================
+// macOS Native Display Sleep & Wake Engine
+// ============================================================
+let _isDisplaySleeping = false;
+
+function sleepMacDisplay() {
+  _isDisplaySleeping = true;
+  const sleepEl = document.getElementById('mac-display-sleep');
+  if (!sleepEl) return;
+
+  sleepEl.style.display = 'flex';
+  void sleepEl.offsetWidth;
+  sleepEl.classList.add('active');
+
+  function onWakeTrigger(e) {
+    if (!_isDisplaySleeping) return;
+    window.removeEventListener('keydown', onWakeTrigger, true);
+    window.removeEventListener('mousemove', onWakeTrigger, true);
+    window.removeEventListener('mousedown', onWakeTrigger, true);
+    wakeMacDisplay();
+  }
+
+  setTimeout(() => {
+    window.addEventListener('keydown', onWakeTrigger, true);
+    window.addEventListener('mousemove', onWakeTrigger, true);
+    window.addEventListener('mousedown', onWakeTrigger, true);
+  }, 400);
+}
+
+function wakeMacDisplay() {
+  _isDisplaySleeping = false;
+  const sleepEl = document.getElementById('mac-display-sleep');
+  if (sleepEl) {
+    sleepEl.classList.remove('active');
+    setTimeout(() => {
+      sleepEl.style.display = 'none';
+    }, 450);
+  }
+  if (typeof lockScreen === 'function') {
+    lockScreen();
+  }
+}
+
+window.sleepMacDisplay = sleepMacDisplay;
+window.wakeMacDisplay = wakeMacDisplay;
+
+// Global Shortcuts for macOS 1:1 Parity
+document.addEventListener('keydown', (e) => {
+  // Option + Command + Esc (⌥⌘⎋) or Alt + Esc: Force Quit Applications
+  if ((e.altKey && e.metaKey && e.code === 'Escape') || (e.altKey && e.code === 'Escape')) {
+    e.preventDefault();
+    toggleForceQuitDialog();
+    return;
+  }
+
+  // Ctrl + Command + Q (⌃⌘Q): Lock Screen
+  if ((e.ctrlKey && e.metaKey && e.code === 'KeyQ') || (e.altKey && e.ctrlKey && e.code === 'KeyQ')) {
+    e.preventDefault();
+    lockScreen();
+    return;
+  }
+});
+
+// ============================================================
+// Component 1: macOS Finder AirDrop Radar Sonar & Device Sharing
+// ============================================================
+let _airDropDiscoveryMode = 'everyone';
+
+function renderAirDropRadarView(container, pid) {
+  if (!container) return;
+  container.innerHTML = '';
+
+  const stage = document.createElement('div');
+  stage.className = 'finder-airdrop-stage';
+  stage.innerHTML = `
+    <div class="airdrop-radar-area">
+      <div class="airdrop-sonar-ring r1"></div>
+      <div class="airdrop-sonar-ring r2"></div>
+      <div class="airdrop-sonar-ring r3"></div>
+
+      <!-- Center User Mac Node -->
+      <div class="airdrop-center-node">
+        <div class="airdrop-center-avatar">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="white">
+            <path d="M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2zm-2 13h20v1H2v-1z"/>
+          </svg>
+        </div>
+        <div class="airdrop-center-label">Alice 的 Mac</div>
+        <div class="airdrop-center-sub">本机 • 准备就绪</div>
+      </div>
+
+      <!-- Orbit Device 1: iPhone 16 Pro -->
+      <div class="airdrop-device-orbit" id="airdrop-orbit-iphone" style="top: 25px; right: 35px;" onclick="sendAirDropItemTo('Bob 的 iPhone 16 Pro', this)">
+        <div class="airdrop-device-avatar">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="5" y="2" width="14" height="20" rx="3"/>
+            <line x1="12" y1="18" x2="12.01" y2="18"/>
+          </svg>
+          <svg class="airdrop-progress-ring-svg" viewBox="0 0 60 60" style="display:none;">
+            <circle cx="30" cy="30" r="26" fill="none" stroke="#007aff" stroke-width="3.5" stroke-dasharray="163.36" stroke-dashoffset="163.36" stroke-linecap="round" style="transition: stroke-dashoffset 0.8s ease;"/>
+          </svg>
+        </div>
+        <div class="airdrop-device-name">Bob 的 iPhone 16 Pro</div>
+        <div class="airdrop-device-sub">附近 • 点击或拖拽投送</div>
+      </div>
+
+      <!-- Orbit Device 2: iPad Pro M4 -->
+      <div class="airdrop-device-orbit" id="airdrop-orbit-ipad" style="bottom: 40px; right: 40px;" onclick="sendAirDropItemTo('Alice 的 iPad Pro M4', this)">
+        <div class="airdrop-device-avatar">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="2" width="16" height="20" rx="2.5"/>
+            <line x1="12" y1="18" x2="12.01" y2="18"/>
+          </svg>
+          <svg class="airdrop-progress-ring-svg" viewBox="0 0 60 60" style="display:none;">
+            <circle cx="30" cy="30" r="26" fill="none" stroke="#007aff" stroke-width="3.5" stroke-dasharray="163.36" stroke-dashoffset="163.36" stroke-linecap="round" style="transition: stroke-dashoffset 0.8s ease;"/>
+          </svg>
+        </div>
+        <div class="airdrop-device-name">Alice 的 iPad Pro M4</div>
+        <div class="airdrop-device-sub">附近 • 点击或拖拽投送</div>
+      </div>
+
+      <!-- Orbit Device 3: MacBook Air -->
+      <div class="airdrop-device-orbit" id="airdrop-orbit-macbook" style="bottom: 50px; left: 35px;" onclick="sendAirDropItemTo('设计组 MacBook Air', this)">
+        <div class="airdrop-device-avatar">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="12" rx="2"/>
+            <path d="M2 20h20"/>
+          </svg>
+          <svg class="airdrop-progress-ring-svg" viewBox="0 0 60 60" style="display:none;">
+            <circle cx="30" cy="30" r="26" fill="none" stroke="#007aff" stroke-width="3.5" stroke-dasharray="163.36" stroke-dashoffset="163.36" stroke-linecap="round" style="transition: stroke-dashoffset 0.8s ease;"/>
+          </svg>
+        </div>
+        <div class="airdrop-device-name">设计组 MacBook Air</div>
+        <div class="airdrop-device-sub">同一无线局域网</div>
+      </div>
+    </div>
+
+    <!-- Bottom Controls -->
+    <div class="airdrop-footer-bar">
+      <div class="airdrop-discovery-row">
+        <span>允许这些人发现我：</span>
+        <select class="airdrop-discovery-select" onchange="changeAirDropDiscovery(this.value)">
+          <option value="everyone" ${_airDropDiscoveryMode === 'everyone' ? 'selected' : ''}>所有人</option>
+          <option value="contacts" ${_airDropDiscoveryMode === 'contacts' ? 'selected' : ''}>仅限联系人</option>
+          <option value="off" ${_airDropDiscoveryMode === 'off' ? 'selected' : ''}>关闭</option>
+        </select>
+        <button class="airdrop-test-sim-btn" onclick="simulateIncomingAirDrop()" style="margin-left:auto;">向本机模拟隔空投送...</button>
+      </div>
+      <div style="font-size:11px;opacity:0.55;">未看到您要找的人？请确保双方设备均已开启 Wi-Fi 和蓝牙。</div>
+    </div>
+  `;
+  container.appendChild(stage);
+
+  // Setup drag and drop listeners on device nodes
+  stage.querySelectorAll('.airdrop-device-orbit').forEach(node => {
+    node.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      node.classList.add('drag-over');
+    });
+    node.addEventListener('dragleave', () => {
+      node.classList.remove('drag-over');
+    });
+    node.addEventListener('drop', (e) => {
+      e.preventDefault();
+      node.classList.remove('drag-over');
+      const devName = node.querySelector('.airdrop-device-name').innerText;
+      sendAirDropItemTo(devName, node, '共享文稿.zip');
+    });
+  });
+}
+
+function sendAirDropItemTo(deviceName, el, fileName = 'Presentation_Keynote_2026.key') {
+  const ringSvg = el ? el.querySelector('.airdrop-progress-ring-svg') : null;
+  const circle = ringSvg ? ringSvg.querySelector('circle') : null;
+  if (ringSvg && circle) {
+    ringSvg.style.display = 'block';
+    circle.style.strokeDashoffset = '163.36';
+    setTimeout(() => {
+      circle.style.strokeDashoffset = '0';
+    }, 50);
+  }
+
+  if (window.AppleAudioEngine && typeof window.AppleAudioEngine.playAirDrop === 'function') {
+    window.AppleAudioEngine.playAirDrop();
+  }
+
+  setTimeout(() => {
+    if (ringSvg) ringSvg.style.display = 'none';
+    showNotification('隔空投送', `已成功将“${fileName}”投送至“${deviceName}”。`, '访达', 'assets/icons/finder.png');
+    if (window.AppleAudioEngine && typeof window.AppleAudioEngine.playHapticClick === 'function') {
+      window.AppleAudioEngine.playHapticClick('heavy');
+    }
+  }, 950);
+}
+
+function changeAirDropDiscovery(mode) {
+  _airDropDiscoveryMode = mode;
+  const dict = { everyone: '所有人', contacts: '仅限联系人', off: '关闭' };
+  showNotification('隔空投送', `已将隔空投送可见性设置为：${dict[mode] || mode}`);
+  if (window.AppleAudioEngine && typeof window.AppleAudioEngine.playHapticClick === 'function') {
+    window.AppleAudioEngine.playHapticClick('light');
+  }
+}
+
+// ============================================================
+// Component 2: macOS Finder Recents Timeline Grouping View
+// ============================================================
+async function renderRecentsTimelineView(container, pid) {
+  if (!container) return;
+  container.innerHTML = '';
+
+  const wrap = document.createElement('div');
+  wrap.className = 'finder-recents-container';
+
+  const dirs = ['/Users/alice/Desktop', '/Users/alice/Documents', '/Users/alice/Downloads'];
+  let allFiles = [];
+  for (const d of dirs) {
+    try {
+      if (window.aliceOS && window.aliceOS.vfs) {
+        const res = await window.aliceOS.vfs.readDir(d);
+        if (res && res.data && Array.isArray(res.data)) {
+          res.data.forEach(item => {
+            if (!item.name.startsWith('.')) {
+              allFiles.push({
+                name: item.name,
+                path: `${d}/${item.name}`,
+                type: item.type,
+                size: item.size || 1024 * (Math.floor(Math.random() * 600) + 20),
+                mtime: item.mtime || Date.now() - Math.floor(Math.random() * 86400000 * 5)
+              });
+            }
+          });
+        }
+      }
+    } catch(e) {}
+  }
+
+  if (allFiles.length === 0) {
+    allFiles = [
+      { name: 'Sequoia_Shot_2026.png', path: '/Users/alice/Downloads/Sequoia_Shot_2026.png', type: 'file', size: 3984588, mtime: Date.now() - 1000 * 60 * 20 },
+      { name: 'Apple_Intelligence_Notes.txt', path: '/Users/alice/Documents/Apple_Intelligence_Notes.txt', type: 'file', size: 4520, mtime: Date.now() - 1000 * 60 * 180 },
+      { name: 'Project_AliceOS_Spec.md', path: '/Users/alice/Documents/Project_AliceOS_Spec.md', type: 'file', size: 28400, mtime: Date.now() - 1000 * 86400 * 1.2 },
+      { name: 'Xcode_Config.xcconfig', path: '/Users/alice/Desktop/Xcode_Config.xcconfig', type: 'file', size: 1280, mtime: Date.now() - 1000 * 86400 * 1.5 },
+      { name: 'Financial_Q3_Budget.xlsx', path: '/Users/alice/Documents/Financial_Q3_Budget.xlsx', type: 'file', size: 145000, mtime: Date.now() - 1000 * 86400 * 4 },
+      { name: 'Design_System_Icons.svg', path: '/Users/alice/Desktop/Design_System_Icons.svg', type: 'file', size: 84000, mtime: Date.now() - 1000 * 86400 * 6 }
+    ];
+  }
+
+  allFiles.sort((a, b) => (b.mtime || 0) - (a.mtime || 0));
+
+  const now = Date.now();
+  const oneDay = 86400000;
+  const groups = {
+    today: { title: '今天', items: [] },
+    yesterday: { title: '昨天', items: [] },
+    pastWeek: { title: '过去 7 天', items: [] }
+  };
+
+  allFiles.forEach((file, idx) => {
+    const diff = now - (file.mtime || now);
+    if (diff < oneDay || idx < 2) {
+      groups.today.items.push(file);
+    } else if (diff < oneDay * 2 || idx < 4) {
+      groups.yesterday.items.push(file);
+    } else {
+      groups.pastWeek.items.push(file);
+    }
+  });
+
+  Object.values(groups).forEach(grp => {
+    if (grp.items.length === 0) return;
+    const grpDiv = document.createElement('div');
+    grpDiv.className = 'finder-recents-group';
+    grpDiv.innerHTML = `
+      <div class="finder-recents-group-title">
+        <span>${grp.title}</span>
+        <span style="font-weight:400;opacity:0.7;">${grp.items.length} 个项目</span>
+      </div>
+    `;
+
+    grp.items.forEach(file => {
+      const row = document.createElement('div');
+      row.className = 'finder-recents-row';
+      const ext = file.name.split('.').pop().toLowerCase();
+      let icon = '📄';
+      if (['png', 'jpg', 'jpeg', 'gif', 'svg'].includes(ext)) icon = '🖼️';
+      else if (['mp4', 'mov', 'webm'].includes(ext)) icon = '🎬';
+      else if (['mp3', 'wav', 'aac'].includes(ext)) icon = '🎵';
+      else if (['zip', 'tar', 'gz'].includes(ext)) icon = '📦';
+      else if (file.type === 'dir') icon = '📁';
+
+      const dateStr = new Date(file.mtime || now).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const sizeStr = file.size > 1048576 ? `${(file.size / 1048576).toFixed(1)} MB` : `${Math.round(file.size / 1024)} KB`;
+      const kindStr = ext ? ext.toUpperCase() + ' 文稿' : '文件';
+
+      row.innerHTML = `
+        <div class="finder-recents-col-icon">${icon}</div>
+        <div class="finder-recents-col-name" title="${file.name}">${file.name}</div>
+        <div class="finder-recents-col-sub">${dateStr}</div>
+        <div class="finder-recents-col-sub">${sizeStr}</div>
+        <div class="finder-recents-col-sub">${kindStr}</div>
+      `;
+
+      row.addEventListener('click', () => {
+        wrap.querySelectorAll('.finder-recents-row').forEach(r => r.classList.remove('active'));
+        row.classList.add('active');
+        window.selectedFile = file;
+      });
+
+      row.addEventListener('dblclick', () => {
+        if (typeof handleFileOpen === 'function') handleFileOpen(file, file.path, false);
+      });
+
+      row.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        wrap.querySelectorAll('.finder-recents-row').forEach(r => r.classList.remove('active'));
+        row.classList.add('active');
+        window.selectedFile = file;
+        if (typeof showFileContextMenu === 'function') showFileContextMenu(e, file);
+      });
+
+      grpDiv.appendChild(row);
+    });
+
+    wrap.appendChild(grpDiv);
+  });
+
+  container.appendChild(wrap);
+}
+
+// ============================================================
+// Component 3: macOS Native Trash Confirmation Modal (⇧⌘⌫)
+// ============================================================
+function confirmEmptyTrash(skipConfirm = false) {
+  if (skipConfirm) {
+    executeEmptyTrash();
+    return;
+  }
+  const modal = document.getElementById('trash-confirm-modal');
+  if (modal) {
+    modal.style.display = 'flex';
+    if (window.AppleAudioEngine && typeof window.AppleAudioEngine.playHapticClick === 'function') {
+      window.AppleAudioEngine.playHapticClick('medium');
+    }
+  } else {
+    executeEmptyTrash();
+  }
+}
+
+function closeTrashConfirmModal() {
+  const modal = document.getElementById('trash-confirm-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+async function executeEmptyTrash() {
+  closeTrashConfirmModal();
+  if (window.AppleAudioEngine && window.AppleAudioEngine.playTrash) {
+    window.AppleAudioEngine.playTrash();
+  }
+  try {
+    if (window.aliceOS && window.aliceOS.vfs) {
+      const res = await window.aliceOS.vfs.readDir('/Users/alice/.Trash');
+      if (res && res.data && Array.isArray(res.data)) {
+        for (const item of res.data) {
+          try {
+            await window.aliceOS.vfs.rm(`/Users/alice/.Trash/${item.name}`);
+          } catch(e) {}
+        }
+      }
+    }
+  } catch(e) {}
+
+  if (typeof checkAndUpdateTrashState === 'function') checkAndUpdateTrashState();
+  if (typeof renderActiveFinderView === 'function') renderActiveFinderView();
+  showNotification('废纸篓', '已永久抹掉废纸篓中的所有项目。', '访达', 'assets/icons/trash-empty.png');
+}
+
+// ============================================================
+// Component 4: macOS Native Screen Mirroring & Sidecar Popover
+// ============================================================
+let screenMirrorConnectedDevice = null;
+let screenMirrorMode = 'mirror';
+
+function toggleScreenMirrorPopover() {
+  const pop = document.getElementById('screen-mirroring-popover');
+  if (!pop) return;
+  const wasOpen = pop.style.display === 'block';
+  closeAllTopMenus();
+
+  const wifi = document.getElementById('wifi-popover');
+  if (wifi) wifi.style.display = 'none';
+  const sound = document.getElementById('sound-popover');
+  if (sound) sound.style.display = 'none';
+  const bat = document.getElementById('battery-popover');
+  if (bat) bat.style.display = 'none';
+
+  if (wasOpen) {
+    pop.style.display = 'none';
+  } else {
+    pop.style.display = 'block';
+    if (window.AppleAudioEngine && window.AppleAudioEngine.playHapticClick) {
+      window.AppleAudioEngine.playHapticClick('medium');
+    }
+  }
+}
+
+function closeScreenMirrorPopover() {
+  const pop = document.getElementById('screen-mirroring-popover');
+  if (pop) pop.style.display = 'none';
+}
+
+async function connectScreenMirrorDevice(deviceId) {
+  const statusEl = document.getElementById('screen-mirror-status');
+  const chkIpad = document.getElementById('mirror-check-ipad');
+  const chkAppletv = document.getElementById('mirror-check-appletv');
+  const chkStudio = document.getElementById('mirror-check-studio');
+  if (chkIpad) chkIpad.style.display = 'none';
+  if (chkAppletv) chkAppletv.style.display = 'none';
+  if (chkStudio) chkStudio.style.display = 'none';
+
+  document.querySelectorAll('.mirror-device-item').forEach(it => it.classList.remove('active'));
+
+  if (screenMirrorConnectedDevice === deviceId) {
+    screenMirrorConnectedDevice = null;
+    if (statusEl) statusEl.innerText = '未连接';
+    showNotification('屏幕镜像', '已断开无线显示器连接。');
+    return;
+  }
+
+  screenMirrorConnectedDevice = deviceId;
+  const targetItem = document.getElementById(`mirror-device-${deviceId}`);
+  if (targetItem) targetItem.classList.add('active');
+  const targetCheck = document.getElementById(`mirror-check-${deviceId}`);
+  if (targetCheck) targetCheck.style.display = 'inline';
+
+  let devName = '外部显示器';
+  if (deviceId === 'ipad') devName = 'Alice 的 iPad Pro（随航 Sidecar）';
+  else if (deviceId === 'appletv') devName = '客厅 Apple TV 4K';
+  else if (deviceId === 'studio') devName = 'Studio Display';
+
+  if (statusEl) statusEl.innerText = `已连接至 ${devName}`;
+
+  if (window.AppleAudioEngine && window.AppleAudioEngine.playHapticClick) {
+    window.AppleAudioEngine.playHapticClick('heavy');
+  }
+
+  showNotification('屏幕镜像', `已成功连接至 ${devName}。模式：${screenMirrorMode === 'mirror' ? '镜像内置视网膜显示器' : '用作单独的显示器'}`);
+
+  if (deviceId === 'ipad' && typeof launchHostScreen === 'function') {
+    closeScreenMirrorPopover();
+    await launchHostScreen();
+  }
+}
+
+function setScreenMirrorMode(mode) {
+  screenMirrorMode = mode;
+  if (screenMirrorConnectedDevice) {
+    showNotification('屏幕镜像', `已切换显示模式为：${mode === 'mirror' ? '镜像内置视网膜显示器' : '用作单独的显示器'}`);
+  }
+}
+
+function openDisplaySettingsFromMirror() {
+  closeScreenMirrorPopover();
+  if (typeof launchSettings === 'function') launchSettings();
+}
+
+// Global exports
+window.renderAirDropRadarView = renderAirDropRadarView;
+window.sendAirDropItemTo = sendAirDropItemTo;
+window.changeAirDropDiscovery = changeAirDropDiscovery;
+window.renderRecentsTimelineView = renderRecentsTimelineView;
+window.confirmEmptyTrash = confirmEmptyTrash;
+window.closeTrashConfirmModal = closeTrashConfirmModal;
+window.executeEmptyTrash = executeEmptyTrash;
+window.toggleScreenMirrorPopover = toggleScreenMirrorPopover;
+window.closeScreenMirrorPopover = closeScreenMirrorPopover;
+window.connectScreenMirrorDevice = connectScreenMirrorDevice;
+window.setScreenMirrorMode = setScreenMirrorMode;
+window.openDisplaySettingsFromMirror = openDisplaySettingsFromMirror;
+
+// ============================================================
+// Component 5: macOS Time Machine (时间机器) Engine
+// ============================================================
+let isTimeMachineBackingUp = false;
+
+function toggleTimeMachinePopover() {
+  const pop = document.getElementById('timemachine-popover');
+  if (!pop) return;
+  const wasOpen = pop.style.display === 'block';
+  closeAllMenubarPopovers();
+
+  if (wasOpen) {
+    pop.style.display = 'none';
+  } else {
+    pop.style.display = 'block';
+    if (window.AppleAudioEngine && window.AppleAudioEngine.playHapticClick) {
+      window.AppleAudioEngine.playHapticClick('medium');
+    }
+  }
+}
+
+function closeTimeMachinePopover() {
+  const pop = document.getElementById('timemachine-popover');
+  if (pop) pop.style.display = 'none';
+}
+
+async function startManualTimeMachineBackup() {
+  if (isTimeMachineBackingUp) return;
+  isTimeMachineBackingUp = true;
+
+  const btnIcon = document.getElementById('tm-backup-icon');
+  const menubarBtn = document.getElementById('timemachine-btn');
+  const statusText = document.getElementById('tm-backup-status-text');
+  const descText = document.getElementById('tm-backup-desc');
+  const lastTimeEl = document.getElementById('tm-last-backup-time');
+
+  if (btnIcon) btnIcon.classList.add('tm-backing-up');
+  if (menubarBtn) menubarBtn.classList.add('tm-backing-up');
+  if (statusText) statusText.innerText = '正在准备备份...';
+  if (descText) descText.innerText = '正在扫描并整理个人快照目录';
+
+  if (window.AppleAudioEngine && window.AppleAudioEngine.playHapticClick) {
+    window.AppleAudioEngine.playHapticClick('medium');
+  }
+
+  // Step 1: Scan & prepare
+  await new Promise(r => setTimeout(r, 600));
+  if (statusText) statusText.innerText = '正在备份个人文件...';
+  if (descText) descText.innerText = '正在创建 APFS 增量只读快照 (254.9 MB)';
+
+  // Real VFS snapshot creation
+  try {
+    if (window.aliceOS && window.aliceOS.vfs) {
+      await window.aliceOS.vfs.mkdir('/TimeMachine');
+      await window.aliceOS.vfs.mkdir('/TimeMachine/Backups.backupdb');
+      await window.aliceOS.vfs.mkdir('/TimeMachine/Backups.backupdb/Alice-MacBook-Pro');
+      
+      const now = new Date();
+      const pad = n => String(n).padStart(2, '0');
+      const stamp = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}-${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
+      const snapPath = `/TimeMachine/Backups.backupdb/Alice-MacBook-Pro/${stamp}`;
+      await window.aliceOS.vfs.mkdir(snapPath);
+      await window.aliceOS.vfs.mkdir(`${snapPath}/Macintosh HD`);
+      await window.aliceOS.vfs.mkdir(`${snapPath}/Macintosh HD/Users`);
+      await window.aliceOS.vfs.mkdir(`${snapPath}/Macintosh HD/Users/alice`);
+
+      // Write snapshot manifest
+      const manifest = {
+        timestamp: now.toISOString(),
+        device: 'MacBook Pro (16-inch, Nov 2024)',
+        macosVersion: 'macOS Sequoia 15.2',
+        volume: 'Macintosh HD',
+        backupType: 'APFS Snapshot Incremental',
+        snapshotId: `com.apple.TimeMachine.${stamp}.local`
+      };
+      await window.aliceOS.vfs.writeFile(`${snapPath}/SnapshotManifest.plist`, JSON.stringify(manifest, null, 2));
+
+      // Mirror Desktop items into snapshot
+      const deskRes = await window.aliceOS.vfs.readDir('/Users/alice/Desktop');
+      if (deskRes && deskRes.data && Array.isArray(deskRes.data)) {
+        await window.aliceOS.vfs.mkdir(`${snapPath}/Macintosh HD/Users/alice/Desktop`);
+        for (const it of deskRes.data) {
+          if (it.type !== 'dir') {
+            const content = await window.aliceOS.vfs.readFile(`/Users/alice/Desktop/${it.name}`);
+            if (content && content.data) {
+              await window.aliceOS.vfs.writeFile(`${snapPath}/Macintosh HD/Users/alice/Desktop/${it.name}`, content.data);
+            }
+          }
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('Time Machine snapshot vfs error:', err);
+  }
+
+  await new Promise(r => setTimeout(r, 900));
+  if (statusText) statusText.innerText = '正在整理备份...';
+  await new Promise(r => setTimeout(r, 500));
+
+  // Finished
+  isTimeMachineBackingUp = false;
+  if (btnIcon) btnIcon.classList.remove('tm-backing-up');
+  if (menubarBtn) menubarBtn.classList.remove('tm-backing-up');
+  if (statusText) statusText.innerText = '立即备份';
+  if (descText) descText.innerText = '为当前个人目录创建只读系统快照';
+
+  const d = new Date();
+  const timeStr = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+  if (lastTimeEl) lastTimeEl.innerText = `上次备份：今天 ${timeStr}`;
+
+  if (window.AppleAudioEngine && window.AppleAudioEngine.playHero) {
+    window.AppleAudioEngine.playHero();
+  }
+
+  showNotification('时间机器', `已完成备份：快照已安全保存至“时间机器”备份宗卷 (${timeStr})。`, '时间机器', 'assets/icons/timemachine.png');
+
+  if (typeof renderActiveFinderView === 'function') {
+    renderActiveFinderView();
+  }
+}
+
+function openTimeMachineBrowser() {
+  closeTimeMachinePopover();
+  if (typeof launchFinder === 'function') {
+    launchFinder('/TimeMachine/Backups.backupdb');
+  }
+  showNotification('时间机器', '已进入“时间机器”备份目录，您可以浏览或恢复历史文件。', '时间机器');
+}
+
+function openTimeMachineSettings() {
+  closeTimeMachinePopover();
+  if (typeof launchSettings === 'function') {
+    launchSettings();
+  }
+}
+
+// Global Time Machine exports
+window.toggleTimeMachinePopover = toggleTimeMachinePopover;
+window.closeTimeMachinePopover = closeTimeMachinePopover;
+window.startManualTimeMachineBackup = startManualTimeMachineBackup;
+window.openTimeMachineBrowser = openTimeMachineBrowser;
+window.openTimeMachineSettings = openTimeMachineSettings;
+
+// ============================================================
+// Component 6: macOS Bluetooth Engine
+// ============================================================
+let isBluetoothOn = true;
+const bluetoothDevices = {
+  airpods: { connected: true, name: 'AirPods Pro (第 2 代)', sub: '已连接 · 空间音频' },
+  keyboard: { connected: true, name: 'Magic Keyboard with Touch ID', sub: '已连接 · 电量 90%' },
+  trackpad: { connected: true, name: 'Magic Trackpad', sub: '已连接 · 电量 78%' }
+};
+
+function toggleBluetoothPopover() {
+  const pop = document.getElementById('bluetooth-popover');
+  if (!pop) return;
+  const wasOpen = pop.style.display === 'block';
+  closeAllMenubarPopovers();
+
+  if (wasOpen) {
+    pop.style.display = 'none';
+  } else {
+    pop.style.display = 'block';
+    if (window.AppleAudioEngine && window.AppleAudioEngine.playHapticClick) {
+      window.AppleAudioEngine.playHapticClick('medium');
+    }
+  }
+}
+
+function closeBluetoothPopover() {
+  const pop = document.getElementById('bluetooth-popover');
+  if (pop) pop.style.display = 'none';
+}
+
+function toggleBluetoothPower(enabled) {
+  isBluetoothOn = enabled;
+  const list = document.getElementById('bt-device-list');
+  if (list) list.style.opacity = enabled ? '1' : '0.35';
+  if (list) list.style.pointerEvents = enabled ? 'auto' : 'none';
+
+  if (window.AppleAudioEngine && window.AppleAudioEngine.playHapticClick) {
+    window.AppleAudioEngine.playHapticClick('light');
+  }
+
+  showNotification('蓝牙', enabled ? '蓝牙已开启，已重新连接到周边配件。' : '蓝牙已关闭');
+}
+
+function toggleBluetoothDevice(devId) {
+  if (!isBluetoothOn) return;
+  const dev = bluetoothDevices[devId];
+  if (!dev) return;
+
+  dev.connected = !dev.connected;
+  const card = document.getElementById(`bt-dev-${devId}`);
+  const chk = document.getElementById(`bt-check-${devId}`);
+  const sub = document.getElementById(`bt-${devId}-sub`);
+
+  if (card) {
+    if (dev.connected) card.classList.add('active');
+    else card.classList.remove('active');
+  }
+  if (chk) chk.style.display = dev.connected ? 'inline' : 'none';
+
+  if (devId === 'airpods') {
+    if (sub) sub.innerText = dev.connected ? '已连接 · 空间音频' : '未连接';
+  } else if (devId === 'keyboard') {
+    if (sub) sub.innerText = dev.connected ? '已连接 · 电量 90%' : '未连接';
+  } else if (devId === 'trackpad') {
+    if (sub) sub.innerText = dev.connected ? '已连接 · 电量 78%' : '未连接';
+  }
+
+  if (window.AppleAudioEngine && window.AppleAudioEngine.playHapticClick) {
+    window.AppleAudioEngine.playHapticClick('medium');
+  }
+
+  showNotification('蓝牙', dev.connected ? `已成功连接至 ${dev.name}` : `已断开与 ${dev.name} 的连接`);
+}
+
+function openBluetoothSettings() {
+  closeBluetoothPopover();
+  if (typeof launchSettings === 'function') {
+    launchSettings();
+  }
+}
+
+// Global Bluetooth exports
+window.toggleBluetoothPopover = toggleBluetoothPopover;
+window.closeBluetoothPopover = closeBluetoothPopover;
+window.toggleBluetoothPower = toggleBluetoothPower;
+window.toggleBluetoothDevice = toggleBluetoothDevice;
+window.openBluetoothSettings = openBluetoothSettings;
+
+// ============================================================
+// Component 7: macOS Keyboard Shortcuts Sheet (⌘/)
+// ============================================================
+function openShortcutsModal() {
+  const modal = document.getElementById('shortcuts-modal');
+  if (!modal) return;
+  closeAllTopMenus();
+  closeAllMenubarPopovers();
+  modal.style.display = 'flex';
+  if (window.AppleAudioEngine && window.AppleAudioEngine.playHapticClick) {
+    window.AppleAudioEngine.playHapticClick('medium');
+  }
+}
+
+function closeShortcutsModal() {
+  const modal = document.getElementById('shortcuts-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+function toggleShortcutsModal() {
+  const modal = document.getElementById('shortcuts-modal');
+  if (!modal) return;
+  if (modal.style.display === 'flex') closeShortcutsModal();
+  else openShortcutsModal();
+}
+
+window.openShortcutsModal = openShortcutsModal;
+window.closeShortcutsModal = closeShortcutsModal;
+window.toggleShortcutsModal = toggleShortcutsModal;
+
+
+
+
